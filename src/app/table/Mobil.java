@@ -75,11 +75,11 @@ public class Mobil implements Serializable {
     @Column(name = "BAHAN_BAKAR", length = 32)
     private String bahanBakar;
     @Column(name = "DP_PERTAMA")
-    private Integer dpPertama;
+    private long dpPertama;
     @Column(name = "HARGA_JUAL")
-    private Integer hargaJual;
+    private long hargaJual;
     @Column(name = "HARGA_PEMBELIAN")
-    private Integer hargaPembelian;
+    private long hargaPembelian;
     @Lob
     @Column(name = "INTERIOR_I")
     private String interiorI;
@@ -208,32 +208,32 @@ public class Mobil implements Serializable {
         changeSupport.firePropertyChange("bahanBakar", oldBahanBakar, bahanBakar);
     }
 
-    public Integer getDpPertama() {
+    public long getDpPertama() {
         return dpPertama;
     }
 
-    public void setDpPertama(Integer dpPertama) {
-        Integer oldDpPertama = this.dpPertama;
+    public void setDpPertama(long dpPertama) {
+        long oldDpPertama = this.dpPertama;
         this.dpPertama = dpPertama;
         changeSupport.firePropertyChange("dpPertama", oldDpPertama, dpPertama);
     }
 
-    public Integer getHargaJual() {
+    public long getHargaJual() {
         return hargaJual;
     }
 
-    public void setHargaJual(Integer hargaJual) {
-        Integer oldHargaJual = this.hargaJual;
+    public void setHargaJual(long hargaJual) {
+        long oldHargaJual = this.hargaJual;
         this.hargaJual = hargaJual;
         changeSupport.firePropertyChange("hargaJual", oldHargaJual, hargaJual);
     }
 
-    public Integer getHargaPembelian() {
+    public long getHargaPembelian() {
         return hargaPembelian;
     }
 
-    public void setHargaPembelian(Integer hargaPembelian) {
-        Integer oldHargaPembelian = this.hargaPembelian;
+    public void setHargaPembelian(long hargaPembelian) {
+        long oldHargaPembelian = this.hargaPembelian;
         this.hargaPembelian = hargaPembelian;
         changeSupport.firePropertyChange("hargaPembelian", oldHargaPembelian, hargaPembelian);
     }

@@ -9,12 +9,24 @@ import app.table.Bpkb;
 import app.table.Debitur;
 import app.table.KeuanganMobil;
 import app.table.Mobil;
+import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import static javafx.collections.FXCollections.observableList;
 import javafx.collections.ObservableList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jdesktop.observablecollections.ObservableCollections;
 
 /**
@@ -29,6 +41,25 @@ public class panelMobil extends javax.swing.JPanel {
     public panelMobil() {
         
         initComponents();
+        this.mobilList
+                .stream()
+                .filter(a-> !a.getStatusMobil().contains("CLOSE"))
+                .forEach((Mobil a) -> {
+                    this.jTabbedPane1.add(new app.view.panel.mobil.subPanelMobil(),
+                            a.getMobilId()+";"+
+                            a.getMerk()+";"+
+                            a.getType()+";"+
+                            a.getTahun()+";"
+                                    );                
+                }
+                
+                );
+        for (int i = 0; i < this.jTable1.getColumnCount(); i++) {
+                this.jTable1.getColumnModel().getColumn(i).setPreferredWidth(250);
+        }
+        for (int i = 0; i < this.jTable2.getColumnCount(); i++) {
+                this.jTable1.getColumnModel().getColumn(i).setPreferredWidth(250);
+        }
     }
 
     /**
@@ -39,6 +70,7 @@ public class panelMobil extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         blessingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
@@ -53,11 +85,17 @@ public class panelMobil extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jTextField13 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jTextField14 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jTextField16 = new javax.swing.JTextField();
+        jTextField17 = new javax.swing.JTextField();
+        jTextField18 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -99,6 +137,13 @@ public class panelMobil extends javax.swing.JPanel {
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jTextField15 = new javax.swing.JTextField();
+        jDialog2 = new javax.swing.JDialog();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser2 = new javax.swing.JFileChooser();
+        jFileChooser3 = new javax.swing.JFileChooser();
+        jFileChooser4 = new javax.swing.JFileChooser();
+        jFileChooser5 = new javax.swing.JFileChooser();
+        jFileChooser6 = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -120,37 +165,107 @@ public class panelMobil extends javax.swing.JPanel {
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
 
+        jDialog1.setTitle("Mobil Baru");
+        jDialog1.setSize(new java.awt.Dimension(800, 6));
+
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
         jScrollPane4.setPreferredSize(new java.awt.Dimension(400, 713));
 
-        jPanel4.setLayout(new java.awt.GridLayout(0, 1, 10, 10));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
         jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Depan"));
-        jPanel4.add(jLabel6);
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel6, new java.awt.GridBagConstraints());
+
+        jTextField7.setText("jTextField7");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel4.add(jTextField7, gridBagConstraints);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
         jLabel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Samping Kiri"));
-        jPanel4.add(jLabel5);
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        jPanel4.add(jLabel5, gridBagConstraints);
+
+        jTextField13.setText("jTextField7");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel4.add(jTextField13, gridBagConstraints);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
         jLabel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Samping Kanan"));
-        jPanel4.add(jLabel4);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        jPanel4.add(jLabel4, gridBagConstraints);
+
+        jTextField14.setText("jTextField7");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel4.add(jTextField14, gridBagConstraints);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
         jLabel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Belakang"));
-        jPanel4.add(jLabel3);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        jPanel4.add(jLabel3, gridBagConstraints);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
-        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Interior I"));
-        jPanel4.add(jLabel1);
+        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Interior II"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        jPanel4.add(jLabel1, gridBagConstraints);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
-        jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Interior II"));
-        jPanel4.add(jLabel2);
+        jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Interior I"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        jPanel4.add(jLabel2, gridBagConstraints);
+
+        jTextField16.setText("jTextField7");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel4.add(jTextField16, gridBagConstraints);
+
+        jTextField17.setText("jTextField7");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel4.add(jTextField17, gridBagConstraints);
+
+        jTextField18.setText("jTextField7");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel4.add(jTextField18, gridBagConstraints);
 
         jScrollPane4.setViewportView(jPanel4);
 
@@ -309,265 +424,332 @@ public class panelMobil extends javax.swing.JPanel {
 
         jDialog1.getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
 
-        setLayout(new java.awt.BorderLayout());
+        jFileChooser1.setAcceptAllFileFilterUsed(false);
+        jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser1.setApproveButtonText("Open");
+        jFileChooser1.setApproveButtonToolTipText("");
+        jFileChooser1.setDialogTitle("SCAN KTP");
+        jFileChooser1.setFileFilter(new FileNameExtensionFilter(
+            "Image files(jpg,png,bmp)", ImageIO.getReaderFileSuffixes()));
+    jFileChooser1.setDragEnabled(true);
+    jFileChooser1.setRequestFocusEnabled(false);
+    jFileChooser1.setSelectedFiles(null);
+    jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jFileChooser1ActionPerformed(evt);
+        }
+    });
 
-        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+    jFileChooser2.setAcceptAllFileFilterUsed(false);
+    jFileChooser2.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+    jFileChooser2.setApproveButtonText("Open");
+    jFileChooser2.setApproveButtonToolTipText("");
+    jFileChooser2.setDialogTitle("SCAN KTP");
+    jFileChooser2.setFileFilter(new FileNameExtensionFilter(
+        "Image files(jpg,png,bmp)", ImageIO.getReaderFileSuffixes()));
+jFileChooser2.setDragEnabled(true);
+jFileChooser2.setRequestFocusEnabled(false);
+jFileChooser2.setSelectedFiles(null);
+jFileChooser2.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jFileChooser2ActionPerformed(evt);
+    }
+    });
 
-        jPanel5.setLayout(new java.awt.BorderLayout());
+    jFileChooser3.setAcceptAllFileFilterUsed(false);
+    jFileChooser3.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+    jFileChooser3.setApproveButtonText("Open");
+    jFileChooser3.setApproveButtonToolTipText("");
+    jFileChooser3.setDialogTitle("SCAN KTP");
+    jFileChooser3.setFileFilter(new FileNameExtensionFilter(
+        "Image files(jpg,png,bmp)", ImageIO.getReaderFileSuffixes()));
+jFileChooser3.setDragEnabled(true);
+jFileChooser3.setRequestFocusEnabled(false);
+jFileChooser3.setSelectedFiles(null);
+jFileChooser3.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jFileChooser3ActionPerformed(evt);
+    }
+    });
 
-        jButton3.setText("TAMBAH");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButton3);
+    jFileChooser4.setAcceptAllFileFilterUsed(false);
+    jFileChooser4.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+    jFileChooser4.setApproveButtonText("Open");
+    jFileChooser4.setApproveButtonToolTipText("");
+    jFileChooser4.setDialogTitle("SCAN KTP");
+    jFileChooser4.setFileFilter(new FileNameExtensionFilter(
+        "Image files(jpg,png,bmp)", ImageIO.getReaderFileSuffixes()));
+jFileChooser4.setDragEnabled(true);
+jFileChooser4.setRequestFocusEnabled(false);
+jFileChooser4.setSelectedFiles(null);
+jFileChooser4.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jFileChooser4ActionPerformed(evt);
+    }
+    });
 
-        jButton4.setText("SIMPAN");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButton4);
+    jFileChooser5.setAcceptAllFileFilterUsed(false);
+    jFileChooser5.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+    jFileChooser5.setApproveButtonText("Open");
+    jFileChooser5.setApproveButtonToolTipText("");
+    jFileChooser5.setDialogTitle("SCAN KTP");
+    jFileChooser5.setFileFilter(new FileNameExtensionFilter(
+        "Image files(jpg,png,bmp)", ImageIO.getReaderFileSuffixes()));
+jFileChooser5.setDragEnabled(true);
+jFileChooser5.setRequestFocusEnabled(false);
+jFileChooser5.setSelectedFiles(null);
+jFileChooser5.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jFileChooser5ActionPerformed(evt);
+    }
+    });
 
-        jButton6.setText("HAPUS");
-        jPanel7.add(jButton6);
+    jFileChooser6.setAcceptAllFileFilterUsed(false);
+    jFileChooser6.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+    jFileChooser6.setApproveButtonText("Open");
+    jFileChooser6.setApproveButtonToolTipText("");
+    jFileChooser6.setDialogTitle("SCAN KTP");
+    jFileChooser6.setFileFilter(new FileNameExtensionFilter(
+        "Image files(jpg,png,bmp)", ImageIO.getReaderFileSuffixes()));
+jFileChooser6.setDragEnabled(true);
+jFileChooser6.setRequestFocusEnabled(false);
+jFileChooser6.setSelectedFiles(null);
+jFileChooser6.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jFileChooser6ActionPerformed(evt);
+    }
+    });
 
-        jPanel5.add(jPanel7, java.awt.BorderLayout.NORTH);
+    setLayout(new java.awt.BorderLayout());
 
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+    jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mobilList}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobilId}"));
-        columnBinding.setColumnName("Mobil Id");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bahanBakar}"));
-        columnBinding.setColumnName("Bahan Bakar");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bpkb}"));
-        columnBinding.setColumnName("Bpkb");
-        columnBinding.setColumnClass(app.table.Bpkb.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debitur}"));
-        columnBinding.setColumnName("Debitur");
-        columnBinding.setColumnClass(app.table.Debitur.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dpPertama}"));
-        columnBinding.setColumnName("Dp Pertama");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaJual}"));
-        columnBinding.setColumnName("Harga Jual");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaPembelian}"));
-        columnBinding.setColumnName("Harga Pembelian");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${interiorI}"));
-        columnBinding.setColumnName("Interior I");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${interiorIi}"));
-        columnBinding.setColumnName("Interior Ii");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
-        columnBinding.setColumnName("Jenis");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
-        columnBinding.setColumnName("Keterangan");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keuanganMobils}"));
-        columnBinding.setColumnName("Keuangan Mobils");
-        columnBinding.setColumnClass(java.util.List.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${merk}"));
-        columnBinding.setColumnName("Merk");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noMesin}"));
-        columnBinding.setColumnName("No Mesin");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiAktif}"));
-        columnBinding.setColumnName("No Polisi Aktif");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiLama}"));
-        columnBinding.setColumnName("No Polisi Lama");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noRangka}"));
-        columnBinding.setColumnName("No Rangka");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${no_bpkb}"));
-        columnBinding.setColumnName("No_bpkb");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemilikBaru}"));
-        columnBinding.setColumnName("Pemilik Baru");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemilikLama}"));
-        columnBinding.setColumnName("Pemilik Lama");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${penjual}"));
-        columnBinding.setColumnName("Penjual");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${silinder}"));
-        columnBinding.setColumnName("Silinder");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${statusMobil}"));
-        columnBinding.setColumnName("Status Mobil");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tahun}"));
-        columnBinding.setColumnName("Tahun");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tampilanBlkg}"));
-        columnBinding.setColumnName("Tampilan Blkg");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tampilanDepan}"));
-        columnBinding.setColumnName("Tampilan Depan");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tampilanSmpKanan}"));
-        columnBinding.setColumnName("Tampilan Smp Kanan");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tampilanSmpKiri}"));
-        columnBinding.setColumnName("Tampilan Smp Kiri");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalBeli}"));
-        columnBinding.setColumnName("Tanggal Beli");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalJual}"));
-        columnBinding.setColumnName("Tanggal Jual");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tangglPelunasanPembelian}"));
-        columnBinding.setColumnName("Tanggl Pelunasan Pembelian");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${type}"));
-        columnBinding.setColumnName("Type");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${warna}"));
-        columnBinding.setColumnName("Warna");
-        columnBinding.setColumnClass(String.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane1.setViewportView(jTable1);
+    jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jPanel5.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+    jButton3.setText("TAMBAH");
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton3ActionPerformed(evt);
+        }
+    });
+    jPanel7.add(jButton3);
 
-        jTabbedPane1.addTab("MOBIL", jPanel5);
+    jButton4.setText("SIMPAN");
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton4ActionPerformed(evt);
+        }
+    });
+    jPanel7.add(jButton4);
 
-        BPKB.setLayout(new java.awt.BorderLayout());
+    jButton6.setText("HAPUS");
+    jButton6.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton6ActionPerformed(evt);
+        }
+    });
+    jPanel7.add(jButton6);
 
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    jPanel5.add(jPanel7, java.awt.BorderLayout.NORTH);
 
-        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+    jTable1.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+    jTable1.setDefaultRenderer(long.class, new app.utils.CurrencyTableCellRenderer());
+    jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+    jTable1.setRowHeight(24);
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bpkbList1}");
-        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable2);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${anBpkb}"));
-        columnBinding.setColumnName("An Bpkb");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bpkbId}"));
-        columnBinding.setColumnName("Bpkb Id");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ket}"));
-        columnBinding.setColumnName("Ket");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil}"));
-        columnBinding.setColumnName("Mobil");
-        columnBinding.setColumnClass(app.table.Mobil.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noBpkb}"));
-        columnBinding.setColumnName("No Bpkb");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiAktif}"));
-        columnBinding.setColumnName("No Polisi Aktif");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${posisi}"));
-        columnBinding.setColumnName("Posisi");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${status}"));
-        columnBinding.setColumnName("Status");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${stnk}"));
-        columnBinding.setColumnName("Stnk");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglBbn}"));
-        columnBinding.setColumnName("Tgl Bbn");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglCb}"));
-        columnBinding.setColumnName("Tgl Cb");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglKembaliBbn}"));
-        columnBinding.setColumnName("Tgl Kembali Bbn");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglKembaliCb}"));
-        columnBinding.setColumnName("Tgl Kembali Cb");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglLeasing}"));
-        columnBinding.setColumnName("Tgl Leasing");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglTerima}"));
-        columnBinding.setColumnName("Tgl Terima");
-        columnBinding.setColumnClass(java.util.Date.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane2.setViewportView(jTable2);
+    org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mobilList}");
+    org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
+    org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobilId}"));
+    columnBinding.setColumnName("Ref");
+    columnBinding.setColumnClass(Integer.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiAktif}"));
+    columnBinding.setColumnName("No Polisi Aktif");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiLama}"));
+    columnBinding.setColumnName("No Polisi Lama");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemilikBaru}"));
+    columnBinding.setColumnName("Pemilik Baru");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemilikLama}"));
+    columnBinding.setColumnName("Pemilik Lama");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${merk}"));
+    columnBinding.setColumnName("Merk");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${type}"));
+    columnBinding.setColumnName("Type");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
+    columnBinding.setColumnName("Jenis");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tahun}"));
+    columnBinding.setColumnName("Tahun");
+    columnBinding.setColumnClass(Integer.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${warna}"));
+    columnBinding.setColumnName("Warna");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${silinder}"));
+    columnBinding.setColumnName("Silinder");
+    columnBinding.setColumnClass(Integer.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noRangka}"));
+    columnBinding.setColumnName("No Rangka");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noMesin}"));
+    columnBinding.setColumnName("No Mesin");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bahanBakar}"));
+    columnBinding.setColumnName("Bahan Bakar");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bpkb.noBpkb}"));
+    columnBinding.setColumnName("Bpkb");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debitur.nama}"));
+    columnBinding.setColumnName("Debitur");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+    columnBinding.setColumnName("Keterangan");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaPembelian}"));
+    columnBinding.setColumnName("Harga Beli");
+    columnBinding.setColumnClass(Long.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalBeli}"));
+    columnBinding.setColumnName("Tanggal Beli");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaJual}"));
+    columnBinding.setColumnName("Harga Jual");
+    columnBinding.setColumnClass(Long.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalJual}"));
+    columnBinding.setColumnName("Tanggal Jual");
+    columnBinding.setColumnClass(java.util.Date.class);
+    bindingGroup.addBinding(jTableBinding);
+    jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${hapus}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+    bindingGroup.addBinding(binding);
 
-        BPKB.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+    jScrollPane1.setViewportView(jTable1);
+    if (jTable1.getColumnModel().getColumnCount() > 0) {
+        jTable1.getColumnModel().getColumn(15).setResizable(false);
+    }
 
-        jButton7.setText("SIMPAN");
-        jPanel8.add(jButton7);
+    jPanel5.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jButton8.setText("LIHAT MOBIL");
-        jPanel8.add(jButton8);
+    jTabbedPane1.addTab("MOBIL", jPanel5);
 
-        BPKB.add(jPanel8, java.awt.BorderLayout.PAGE_START);
+    BPKB.setLayout(new java.awt.BorderLayout());
 
-        jTabbedPane1.addTab("BPKB", BPKB);
+    jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        jPanel9.setLayout(new java.awt.BorderLayout());
+    jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+    jTable2.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+    jTable2.setRowHeight(24);
 
-        jTable3.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bpkbList1}");
+    jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable2);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bpkbId}"));
+    columnBinding.setColumnName("Ref");
+    columnBinding.setColumnClass(Integer.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noBpkb}"));
+    columnBinding.setColumnName("No Bpkb");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${anBpkb}"));
+    columnBinding.setColumnName("An Bpkb");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglTerima}"));
+    columnBinding.setColumnName("Tgl Terima");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglCb}"));
+    columnBinding.setColumnName("Tgl Cb");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglKembaliCb}"));
+    columnBinding.setColumnName("Tgl Kembali Cb");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglBbn}"));
+    columnBinding.setColumnName("Tgl Bbn");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglKembaliBbn}"));
+    columnBinding.setColumnName("Tgl Kembali Bbn");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglLeasing}"));
+    columnBinding.setColumnName("Tgl Leasing");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${posisi}"));
+    columnBinding.setColumnName("Posisi");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
+    columnBinding.setColumnName("Ref");
+    columnBinding.setColumnClass(Integer.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.noPolisiAktif}"));
+    columnBinding.setColumnName("No Polisi Aktif");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ket}"));
+    columnBinding.setColumnName("Ket");
+    columnBinding.setColumnClass(String.class);
+    bindingGroup.addBinding(jTableBinding);
+    jTableBinding.bind();
+    jScrollPane2.setViewportView(jTable2);
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${debiturList1}");
-        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable3);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alamat}"));
-        columnBinding.setColumnName("Alamat");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bank}"));
-        columnBinding.setColumnName("Bank");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debiturId}"));
-        columnBinding.setColumnName("Debitur Id");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil}"));
-        columnBinding.setColumnName("Mobil");
-        columnBinding.setColumnClass(app.table.Mobil.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nama}"));
-        columnBinding.setColumnName("Nama");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noHp}"));
-        columnBinding.setColumnName("No Hp");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noKtp}"));
-        columnBinding.setColumnName("No Ktp");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${norek}"));
-        columnBinding.setColumnName("Norek");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pembayaran}"));
-        columnBinding.setColumnName("Pembayaran");
-        columnBinding.setColumnClass(String.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane3.setViewportView(jTable3);
+    BPKB.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jPanel9.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+    jButton7.setText("SIMPAN");
+    jPanel8.add(jButton7);
 
-        jButton9.setText("SIMPAN");
-        jPanel10.add(jButton9);
+    jButton8.setText("LIHAT MOBIL");
+    jPanel8.add(jButton8);
 
-        jButton10.setText("LIHAT MOBIL");
-        jPanel10.add(jButton10);
+    BPKB.add(jPanel8, java.awt.BorderLayout.PAGE_START);
 
-        jPanel9.add(jPanel10, java.awt.BorderLayout.PAGE_START);
+    jTabbedPane1.addTab("BPKB", BPKB);
 
-        jTabbedPane1.addTab("DEBITUR", jPanel9);
+    jPanel9.setLayout(new java.awt.BorderLayout());
 
-        add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+    jTable3.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+    jTable3.setRowHeight(24);
 
-        bindingGroup.bind();
+    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${debiturList1}");
+    jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable3);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debiturId}"));
+    columnBinding.setColumnName("Ref");
+    columnBinding.setColumnClass(Integer.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nama}"));
+    columnBinding.setColumnName("Nama");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alamat}"));
+    columnBinding.setColumnName("Alamat");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noHp}"));
+    columnBinding.setColumnName("No Hp");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noKtp}"));
+    columnBinding.setColumnName("No Ktp");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${norek}"));
+    columnBinding.setColumnName("Norek");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bank}"));
+    columnBinding.setColumnName("Bank");
+    columnBinding.setColumnClass(String.class);
+    bindingGroup.addBinding(jTableBinding);
+    jTableBinding.bind();
+    jScrollPane3.setViewportView(jTable3);
+
+    jPanel9.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+
+    jButton9.setText("SIMPAN");
+    jPanel10.add(jButton9);
+
+    jButton10.setText("LIHAT MOBIL");
+    jPanel10.add(jButton10);
+
+    jPanel9.add(jPanel10, java.awt.BorderLayout.PAGE_START);
+
+    jTabbedPane1.addTab("DEBITUR", jPanel9);
+
+    add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+
+    bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
@@ -630,7 +812,12 @@ public class panelMobil extends javax.swing.JPanel {
         );
         this.debiturList1.add(debitur);
         this.bpkbList1.add(bpkb);
-        
+        this.jTabbedPane1.add(new app.view.panel.mobil.subPanelMobil(),
+                            baru.getMobilId()+";"+
+                            baru.getMerk()+";"+
+                            baru.getType()+";"+
+                            baru.getTahun()+";"
+                                    ); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public List<Mobil> getMobilList() {
@@ -660,6 +847,98 @@ public class panelMobil extends javax.swing.JPanel {
         this.jDialog1.setLocationRelativeTo(null);
         this.jDialog1.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        System.out.println("app.view.panel.mobil.panelMobil.jButton6ActionPerformed()");
+        if (!this.blessingPUEntityManager.getTransaction().isActive()) 
+                this.blessingPUEntityManager.getTransaction().begin();        
+        this.blessingPUEntityManager.remove(this.getHapus());
+        this.blessingPUEntityManager.getTransaction().commit();
+        boolean remove = this.mobilList.remove(this.getHapus());
+//        System.out.println(this.getHapus().getDebitur());
+//        this.debiturList1.remove(this.getHapus().getDebitur());
+//        this.bpkbList1.remove(this.getHapus().getBpkb());
+        javax.swing.JOptionPane.showMessageDialog(this.getRootPane(), 
+                (remove ? "Berhasil":"Gagal" )+" Menghapus\nNama Product = "+ this.jTextField1.getText()
+        );        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    int returnVal = this.jFileChooser1.showOpenDialog(this);
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+        try {
+            this.jTextField7.setText(this.jFileChooser1.getSelectedFile().getCanonicalPath());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    } else {
+        System.out.println("File access cancelled by user.");
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MouseClicked
+    File gambar1;
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        gambar1 = jFileChooser1.getSelectedFile();
+        System.out.println("app.view.panel.mobil.panelMobil.jFileChooser1ActionPerformed()");
+        System.out.println(evt.getActionCommand());
+        System.out.println(evt.getID());
+        System.out.println(evt.getSource());
+            try {
+                BufferedImage img = ImageIO.read(gambar1);
+                ImageIcon ii = new javax.swing.ImageIcon(new ImageIcon
+                                (gambar1.toString()).getImage().getScaledInstance(300, 140, Image.SCALE_DEFAULT));
+                jLabel6.setIcon(ii);
+            } catch (IOException ex) {
+            }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
+    File gambar2,gambar3,gambar4,gambar5,gambar6;
+    private void jFileChooser2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser2ActionPerformed
+        gambar2 = jFileChooser1.getSelectedFile();
+        System.out.println("app.view.panel.mobil.panelMobil.jFileChooser2ActionPerformed()");
+        System.out.println(evt.getActionCommand());
+        System.out.println(evt.getID());
+        System.out.println(evt.getSource());
+            try {
+                BufferedImage img = ImageIO.read(gambar2);
+                ImageIcon ii = new javax.swing.ImageIcon(new ImageIcon
+                                (gambar2.toString()).getImage().getScaledInstance(300, 140, Image.SCALE_DEFAULT));
+                jLabel5.setIcon(ii);
+            } catch (IOException ex) {
+            }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser2ActionPerformed
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+    int returnVal = this.jFileChooser2.showOpenDialog(this);
+    
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+        try {
+            this.jTextField13.setText(this.jFileChooser1.getSelectedFile().getCanonicalPath());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    } else {
+        System.out.println("File access cancelled by user.");
+    }
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jFileChooser3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser3ActionPerformed
+
+    private void jFileChooser4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser4ActionPerformed
+
+    private void jFileChooser5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser5ActionPerformed
+
+    private void jFileChooser6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser6ActionPerformed
 
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -700,6 +979,13 @@ public class panelMobil extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
+    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser jFileChooser2;
+    private javax.swing.JFileChooser jFileChooser3;
+    private javax.swing.JFileChooser jFileChooser4;
+    private javax.swing.JFileChooser jFileChooser5;
+    private javax.swing.JFileChooser jFileChooser6;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
@@ -748,12 +1034,18 @@ public class panelMobil extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
+    private javax.swing.JTextField jTextField13;
+    private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField16;
+    private javax.swing.JTextField jTextField17;
+    private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private com.toedter.calendar.JYearChooser jYearChooser1;
@@ -762,7 +1054,8 @@ public class panelMobil extends javax.swing.JPanel {
     private javax.persistence.Query mobilQuery;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-        
+
+    
     public void persist(Object object) {
         if (!this.blessingPUEntityManager.getTransaction().isActive())         
             blessingPUEntityManager.getTransaction().begin();
@@ -777,4 +1070,14 @@ public class panelMobil extends javax.swing.JPanel {
             System.out.println(object+"=persisted");
         }
     }
+    private Mobil hapus = new Mobil();
+
+    public Mobil getHapus() {
+        return hapus;
+    }
+
+    public void setHapus(Mobil hapus) {
+        this.hapus = hapus;
+    }
+    
 }
