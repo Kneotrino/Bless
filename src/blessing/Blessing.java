@@ -27,6 +27,12 @@ public class Blessing {
            // create directories
            // print
            System.out.println("Directory created? "+f.exists() +"\nDatabase Location :\t"+ f.getCanonicalPath());
+           f = new File("C:\\Users\\blessing\\sd");         
+           System.out.println("Directory created? "+f.exists() +"\nResource Location :\t"+ f.getCanonicalPath());
+            if (!f.exists()) {
+                f.mkdirs();                
+                System.out.println("Directory created? "+f.exists() +"\nResource Location :\t"+ f.getCanonicalPath());
+            }
 
         }catch(Exception e){
            // if any error occurs

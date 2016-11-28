@@ -5,11 +5,18 @@
  */
 package app.table;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,6 +34,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -390,6 +399,55 @@ public class Mobil implements Serializable {
 
     public String getTampilanDepan() {
         return tampilanDepan;
+    }
+    public javax.swing.Icon getGambar1()
+    {
+        Icon ii = null;
+        ImageIcon ico = new javax.swing.ImageIcon(new ImageIcon
+                                        (this.tampilanDepan).getImage().getScaledInstance(300, 120, Image.SCALE_DEFAULT));
+        ii = ico;
+        return ii;
+    }
+    public javax.swing.Icon getGambar2()
+    {
+        Icon ii = null;
+        ImageIcon ico = new javax.swing.ImageIcon(new ImageIcon
+                                                (this.tampilanSmpKanan).getImage().getScaledInstance(300, 120, Image.SCALE_DEFAULT));
+        ii = ico;
+        return ii;
+    }
+    public javax.swing.Icon getGambar3()
+    {
+        Icon ii = null;
+                ImageIcon ico = new javax.swing.ImageIcon(new ImageIcon
+                                        (this.tampilanSmpKiri).getImage().getScaledInstance(300, 120, Image.SCALE_DEFAULT));
+        ii = ico;
+        return ii;
+    }
+    public javax.swing.Icon getGambar4()
+    {
+        Icon ii = null;
+        ImageIcon ico = new javax.swing.ImageIcon(new ImageIcon
+                                        (this.tampilanBlkg).getImage().getScaledInstance(300, 120, Image.SCALE_DEFAULT));
+        ii = ico;
+        return ii;
+    }
+    
+    public javax.swing.Icon getGambar5()
+    {
+        Icon ii = null;
+                ImageIcon ico = new javax.swing.ImageIcon(new ImageIcon
+                                        (this.interiorI).getImage().getScaledInstance(300, 120, Image.SCALE_DEFAULT));
+        ii = ico;
+        return ii;
+    }
+    public javax.swing.Icon getGambar6()
+    {
+        Icon ii = null;
+                ImageIcon ico = new javax.swing.ImageIcon(new ImageIcon
+                                        (this.interiorIi).getImage().getScaledInstance(300, 120, Image.SCALE_DEFAULT));
+        ii = ico;
+        return ii;
     }
 
     public void setTampilanDepan(String tampilanDepan) {

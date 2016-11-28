@@ -5,6 +5,7 @@
  */
 package app.view.panel.mobil;
 
+import app.table.Mobil;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,16 @@ public class subPanelMobil extends javax.swing.JPanel {
      * Creates new form subPanelMobil
      */
     File gambar;
+    private Mobil Pilih;
+
+    public Mobil getPilih() {
+        return Pilih;
+    }
+
+    public void setPilih(Mobil Pilih) {
+        this.Pilih = Pilih;
+    }
+    
     public subPanelMobil() {
         initComponents();
         this.jFileChooser1.addActionListener((ActionEvent e) -> {
