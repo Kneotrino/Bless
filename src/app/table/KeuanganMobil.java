@@ -5,6 +5,8 @@
  */
 package app.table;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -23,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "KeuanganMobil.findByKredit", query = "SELECT k FROM KeuanganMobil k WHERE k.kredit = :kredit"),
     @NamedQuery(name = "KeuanganMobil.findByTanggal", query = "SELECT k FROM KeuanganMobil k WHERE k.tanggal = :tanggal")})
 public class KeuanganMobil implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,7 +70,9 @@ public class KeuanganMobil implements Serializable {
     }
 
     public void setMobils(Mobil mobils) {
+        Mobil oldMobils = this.mobils;
         this.mobils = mobils;
+        changeSupport.firePropertyChange("mobils", oldMobils, mobils);
     }
 
     public KeuanganMobil() {
@@ -79,7 +87,9 @@ public class KeuanganMobil implements Serializable {
     }
 
     public void setKeuanganMobilId(Integer keuanganMobilId) {
+        Integer oldKeuanganMobilId = this.keuanganMobilId;
         this.keuanganMobilId = keuanganMobilId;
+        changeSupport.firePropertyChange("keuanganMobilId", oldKeuanganMobilId, keuanganMobilId);
     }
 
     public long getDebit() {
@@ -87,7 +97,9 @@ public class KeuanganMobil implements Serializable {
     }
 
     public void setDebit(long debit) {
+        long oldDebit = this.debit;
         this.debit = debit;
+        changeSupport.firePropertyChange("debit", oldDebit, debit);
     }
 
     public String getKeterangan() {
@@ -95,7 +107,9 @@ public class KeuanganMobil implements Serializable {
     }
 
     public void setKeterangan(String keterangan) {
+        String oldKeterangan = this.keterangan;
         this.keterangan = keterangan;
+        changeSupport.firePropertyChange("keterangan", oldKeterangan, keterangan);
     }
 
     public long getKredit() {
@@ -103,7 +117,9 @@ public class KeuanganMobil implements Serializable {
     }
 
     public void setKredit(long kredit) {
+        long oldKredit = this.kredit;
         this.kredit = kredit;
+        changeSupport.firePropertyChange("kredit", oldKredit, kredit);
     }
 
     public Date getTanggal() {
@@ -111,7 +127,9 @@ public class KeuanganMobil implements Serializable {
     }
 
     public void setTanggal(Date tanggal) {
+        Date oldTanggal = this.tanggal;
         this.tanggal = tanggal;
+        changeSupport.firePropertyChange("tanggal", oldTanggal, tanggal);
     }
 
     @Override
@@ -137,6 +155,14 @@ public class KeuanganMobil implements Serializable {
     @Override
     public String toString() {
         return "app.table.KeuanganMobil[ keuanganMobilId=" + keuanganMobilId + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

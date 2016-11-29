@@ -6,23 +6,18 @@
 package app.table;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -37,11 +32,6 @@ import javax.persistence.Transient;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.xml.bind.annotation.XmlRootElement;
-
-/**
- *
- * @author SEED
- */
 @Entity
 @Table(name = "MOBIL", catalog = "", schema = "BLESSING")
 @XmlRootElement
@@ -155,19 +145,59 @@ public class Mobil implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Bpkb bpkb;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "mobils")
+//    private List<KeuanganMobil> keuanganMobils;
     private List<KeuanganMobil> keuanganMobils;
+    
+//org.jdesktop.observablecollections.ObservableCollections.observableList(bpkbQuery1.getResultList());
+
     @Transient 
     private String no_bpkb;
-
+    @Transient 
+    private long TotalKredit;
+    
     public String getNo_bpkb() {
         return this.getBpkb().getNoBpkb();
     }
+
+    public static final String PROP_TOTALKREDIT = "TotalKredit";
+
+    /**
+     * Get the value of TotalKredit
+     *
+     * @return the value of TotalKredit
+     */
+    public long getTotalKredit() {        
+        TotalKredit = 0l;
+        for (KeuanganMobil l : keuanganMobils) {
+            TotalKredit += l.getKredit();
+        }
+        return TotalKredit;
+    }
+
+    /**
+     * Set the value of TotalKredit
+     *
+     * @param TotalKredit new value of TotalKredit
+     */
+//    public void setTotalKredit(long TotalKredit) {
+//        long oldTotalKredit = this.TotalKredit;
+//        this.TotalKredit = TotalKredit;
+//        changeSupport.firePropertyChange(PROP_TOTALKREDIT, oldTotalKredit, TotalKredit);
+//    }
+
     public List<KeuanganMobil> getKeuanganMobils() {
+        this.keuanganMobils = org.jdesktop.observablecollections.ObservableCollections.observableList(this.keuanganMobils);
         return keuanganMobils;
+    }
+    public List<KeuanganMobil> getKeuanganMobil2() {
+        return (this.getKeuanganMobils());
     }
 
     public void setKeuanganMobils(List<KeuanganMobil> keuanganMobils) {
+        this.keuanganMobils = org.jdesktop.observablecollections.ObservableCollections.observableList(this.keuanganMobils);
+        List<KeuanganMobil> oldkeuanganMobils = this.keuanganMobils; 
         this.keuanganMobils = keuanganMobils;
+         changeSupport.firePropertyChange("KeuanganMobils", oldkeuanganMobils, keuanganMobils);
     }
     
     public Bpkb getBpkb() {

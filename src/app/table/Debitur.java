@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import java.awt.Image;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -64,6 +67,33 @@ public class Debitur implements Serializable {
     private String norek;
     @Column(name = "PEMBAYARAN", length = 16)
     private String pembayaran;
+    @Column(name = "SCAN", length = 256)
+    private String scan;
+
+    public static final String PROP_SCAN = "scan";
+
+    /**
+     * Get the value of scan
+     *
+     * @return the value of scan
+     */
+    public String getScan() {
+        return scan;
+    }
+
+    /**
+     * Set the value of scan
+     *
+     * @param scan new value of scan
+     */
+    public void setScan(String scan) {
+        String oldScan = this.scan;
+        this.scan = scan;
+        changeSupport.firePropertyChange(PROP_SCAN, oldScan, scan);
+    }
+
+//    @Column(name = "PEMBAYARAN", length = 16)
+    
     @JoinColumn(name = "mobil_id")  
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "debitur")
     private Mobil mobil;
@@ -156,7 +186,15 @@ public class Debitur implements Serializable {
     public String getPembayaran() {
         return pembayaran;
     }
-
+    
+    public  javax.swing.Icon getGambar1()
+    {
+        Icon ii = null;
+        ImageIcon ico = new javax.swing.ImageIcon(new ImageIcon
+                                        (this.scan).getImage().getScaledInstance(300, 140, Image.SCALE_DEFAULT));
+        ii = ico;
+        return ii;
+    }
     public void setPembayaran(String pembayaran) {
         String oldPembayaran = this.pembayaran;
         this.pembayaran = pembayaran;
@@ -195,5 +233,5 @@ public class Debitur implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+
 }
