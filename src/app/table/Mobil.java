@@ -197,7 +197,7 @@ public class Mobil implements Serializable {
         this.keuanganMobils = org.jdesktop.observablecollections.ObservableCollections.observableList(this.keuanganMobils);
         List<KeuanganMobil> oldkeuanganMobils = this.keuanganMobils; 
         this.keuanganMobils = keuanganMobils;
-         changeSupport.firePropertyChange("KeuanganMobils", oldkeuanganMobils, keuanganMobils);
+        changeSupport.firePropertyChange("KeuanganMobils", oldkeuanganMobils, keuanganMobils);
     }
     
     public Bpkb getBpkb() {

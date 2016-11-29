@@ -6,6 +6,7 @@
 package app.view;
 
 import app.utils.TimerThread;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -38,7 +39,13 @@ public class main extends javax.swing.JFrame {
 
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jDialog1 = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
+        bankPanel1 = new app.view.panel.bank.bankPanel();
+        panelMobil1 = new app.view.panel.mobil.panelMobil();
+        jPanel1 = new app.view.panel.inven.Inventaris();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -47,9 +54,8 @@ public class main extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
         managementMenu = new javax.swing.JMenu();
         Mobil = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
+        Keuangan = new javax.swing.JMenuItem();
+        Asset = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -58,13 +64,25 @@ public class main extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
+        jDialog1.setTitle("Content");
+
+        jTextPane1.setText("hello");
+        jScrollPane1.setViewportView(jTextPane1);
+
+        jDialog1.getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jLabel1, org.jdesktop.beansbinding.ELProperty.create("${text}"), this, org.jdesktop.beansbinding.BeanProperty.create("title"));
         bindingGroup.addBinding(binding);
 
-        getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
-        getContentPane().add(jLabel2);
+        getContentPane().setLayout(new java.awt.CardLayout());
+        getContentPane().add(jLabel2, "card2");
+        getContentPane().add(bankPanel1, "card4");
+        getContentPane().add(panelMobil1, "card3");
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        getContentPane().add(jPanel1, "card6");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -110,17 +128,23 @@ public class main extends javax.swing.JFrame {
         });
         managementMenu.add(Mobil);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        managementMenu.add(copyMenuItem);
+        Keuangan.setMnemonic('y');
+        Keuangan.setText("Keuangan");
+        Keuangan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KeuanganActionPerformed(evt);
+            }
+        });
+        managementMenu.add(Keuangan);
 
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        managementMenu.add(pasteMenuItem);
-
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        managementMenu.add(deleteMenuItem);
+        Asset.setMnemonic('d');
+        Asset.setText("Asset/Inventaris");
+        Asset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AssetActionPerformed(evt);
+            }
+        });
+        managementMenu.add(Asset);
 
         menuBar.add(managementMenu);
 
@@ -138,6 +162,11 @@ public class main extends javax.swing.JFrame {
 
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(aboutMenuItem);
 
         menuBar.add(helpMenu);
@@ -155,24 +184,51 @@ public class main extends javax.swing.JFrame {
 
     private void contentsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contentsMenuItemActionPerformed
         // TODO add your handling code here:
-
+        this.jDialog1.setSize(500,400);
+        this.jDialog1.setLocationRelativeTo(null);
+        this.jDialog1.show();
+        
     }//GEN-LAST:event_contentsMenuItemActionPerformed
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-        if (getContentPane().getComponentCount() > 1 ) {
-            getContentPane().remove(1);    
-        }
-        this.jLabel2.setVisible(true);
-        this.pack();
+        CardLayout cardLayout = (CardLayout) this.getContentPane().getLayout();
+        cardLayout.show(this.getContentPane(), "card2");
+//        this.getContentPane().sh
+//        this.jLabel2.setVisible(true);
+//        this.pack();
 //        System.out.println(getContentPane().getComponentCount() );
     }//GEN-LAST:event_openMenuItemActionPerformed
 
+//        javax.swing.JPanel mob = new app.view.panel.mobil.panelMobil();
+//        javax.swing.JPanel bank = new app.view.panel.bank.bankPanel();
+//        javax.swing.JPanel t = new app.view.NewJPanel();
     private void MobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MobilActionPerformed
+                CardLayout cardLayout = (CardLayout) this.getContentPane().getLayout();
+
+        cardLayout.show(this.getContentPane(), "card3");
         System.out.println("app.view.main.MobilActionPerformed()");
-        this.jLabel2.setVisible(false);
-        this.getContentPane().add(new app.view.panel.mobil.panelMobil());
+//        this.jLabel2.setVisible(false);
+//        this.getContentPane().add(mob);
         // TODO add your handling code here:
+
     }//GEN-LAST:event_MobilActionPerformed
+
+    private void KeuanganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KeuanganActionPerformed
+        CardLayout cardLayout = (CardLayout) this.getContentPane().getLayout();
+        cardLayout.show(this.getContentPane(), "card4");
+//        this.jLabel2.setVisible(false);
+//        this.getContentPane().add(bank);        // TODO add your handling code here:
+    }//GEN-LAST:event_KeuanganActionPerformed
+
+    private void AssetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssetActionPerformed
+        CardLayout cardLayout = (CardLayout) this.getContentPane().getLayout();
+        cardLayout.show(this.getContentPane(), "card6");        // TODO add your handling code here:
+    }//GEN-LAST:event_AssetActionPerformed
+
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        // TODO add your handling code here:
+        javax.swing.JOptionPane.showMessageDialog(null, "Hello dunia");
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,21 +266,26 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Asset;
+    private javax.swing.JMenuItem Keuangan;
     private javax.swing.JMenuItem Mobil;
     private javax.swing.JMenuItem aboutMenuItem;
+    private app.view.panel.bank.bankPanel bankPanel1;
     private javax.swing.JMenuItem contentsMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JMenu managementMenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem pasteMenuItem;
+    private app.view.panel.mobil.panelMobil panelMobil1;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

@@ -20,6 +20,9 @@ public class Blessing {
      */
     public static void main(String[] args) {
         System.out.println("blessing.Blessing.main()");
+        EntityManager blessingPUEntityManager = 
+                java.beans.Beans.isDesignTime() ? 
+                    null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         try{      
            // returns pathnames for files and directory
            File f = null;
@@ -30,7 +33,7 @@ public class Blessing {
            f = new File("C:\\Users\\blessing\\sd");         
            System.out.println("Directory created? "+f.exists() +"\nResource Location :\t"+ f.getCanonicalPath());
             if (!f.exists()) {
-                f.mkdirs();                
+                f.mkdir();                
                 System.out.println("Directory created? "+f.exists() +"\nResource Location :\t"+ f.getCanonicalPath());
             }
 
@@ -39,9 +42,6 @@ public class Blessing {
            e.printStackTrace();
         }
         feel();
-        EntityManager blessingPUEntityManager = 
-                java.beans.Beans.isDesignTime() ? 
-                    null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
 //        
         app.view.main form = new app.view.main();
         form.show();

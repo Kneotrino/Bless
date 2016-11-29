@@ -14,6 +14,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -37,7 +38,11 @@ public class panelMobil extends javax.swing.JPanel {
     public panelMobil() {
 //        this.gambar1 = new File(ClassLoader.getSystemResource("/app/view/panel/mobil/1.PNG"));
 //        ClassLoader cl = getClass().getClassLoader();
-        this.gambar1 = new File(ClassLoader.getSystemResource("\\app\\view\\panel\\mobil\\1.PNG").getFile());
+        URL systemResource = getClass().getResource("/app/view/panel/mobil/1.PNG");
+        if (systemResource == null) {
+            throw new RuntimeException("null di sini");
+        }
+        this.gambar1 = new File(systemResource.getFile());
         System.out.println("app.view.panel.mobil.panelMobil.<init>()");
         gambar6 =gambar5 =gambar4 =gambar3 =gambar2 = gambar1;
         initComponents();

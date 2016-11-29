@@ -6,8 +6,11 @@
     <class>app.table.Bpkb</class>
     <class>app.table.Mobil</class>
     <class>app.table.KeuanganMobil</class>
-    <class>app.table.jj</class>
     <class>app.table.Login</class>
+    <class>app.view.panel.bank.Bank</class>
+    <class>app.table.Bank</class>
+    <class>app.table.Saldo</class>
+    <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>
       <property name="javax.persistence.jdbc.user" value="blessing"/>
