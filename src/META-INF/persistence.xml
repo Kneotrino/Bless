@@ -10,6 +10,7 @@
     <class>app.view.panel.bank.Bank</class>
     <class>app.table.Bank</class>
     <class>app.table.Saldo</class>
+    <class>app.table.Asset</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>

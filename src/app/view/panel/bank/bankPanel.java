@@ -83,7 +83,7 @@ public class bankPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
-        jDialog1.getContentPane().setLayout(new java.awt.GridLayout());
+        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel3.setLayout(new java.awt.GridLayout(0, 2));
 
@@ -191,9 +191,9 @@ public class bankPanel extends javax.swing.JPanel {
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.saldoList}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, eLProperty, jTable3);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId}"));
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId.bankId}"));
         columnBinding.setColumnName("Bank Id");
-        columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debit}"));
         columnBinding.setColumnName("Debit");
         columnBinding.setColumnClass(Long.class);
@@ -324,9 +324,9 @@ public class bankPanel extends javax.swing.JPanel {
         jTable2.setRowHeight(25);
 
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, saldoList, jTable2);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId.nama}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId.bankId}"));
         columnBinding.setColumnName("Ref Bank");
-        columnBinding.setColumnClass(String.class);
+        columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);

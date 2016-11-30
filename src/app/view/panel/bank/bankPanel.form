@@ -277,9 +277,9 @@
                       </Properties>
                       <BindingProperties>
                         <BindingProperty name="elements" source="jTable1" sourcePath="${selectedElement.saldoList}" target="jTable3" targetPath="elements" updateStrategy="0" immediately="true">
-                          <Subbinding sourcePath="${bankId}">
+                          <Subbinding sourcePath="${bankId.bankId}">
                             <BindingParameter name="NAME" value="Bank Id"/>
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                           </Subbinding>
                           <Subbinding sourcePath="${debit}">
                             <BindingParameter name="NAME" value="Debit"/>
@@ -595,9 +595,9 @@
               </Properties>
               <BindingProperties>
                 <BindingProperty name="elements" source="saldoList" target="jTable2" targetPath="elements" updateStrategy="0" immediately="true">
-                  <Subbinding sourcePath="${bankId.nama}">
+                  <Subbinding sourcePath="${bankId.bankId}">
                     <BindingParameter name="NAME" value="Ref Bank"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                   </Subbinding>
                   <Subbinding sourcePath="${keterangan}">
                     <BindingParameter name="NAME" value="Keterangan"/>

@@ -5,6 +5,11 @@
  */
 package app.view.panel.inven;
 
+import app.table.Asset;
+import com.toedter.calendar.JDateChooserCellEditor;
+import java.text.DecimalFormat;
+import java.util.Date;
+
 /**
  *
  * @author SEED
@@ -17,6 +22,7 @@ public class Inventaris extends javax.swing.JPanel {
     public Inventaris() {
         System.out.println("app.view.panel.inven.Inventaris.<init>()");
         initComponents();
+        this.update();
     }
 
     /**
@@ -27,50 +33,167 @@ public class Inventaris extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        blessingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
+        assetQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT a FROM Asset a");
+        assetList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(assetQuery.getResultList());
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setLayout(new java.awt.BorderLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTable1.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, assetList, jTable1);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${assetId}"));
+        columnBinding.setColumnName("Ref asset");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${namaAsset}"));
+        columnBinding.setColumnName("Nama Asset");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalStock}"));
+        columnBinding.setColumnName("Tanggal Store");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaBeli}"));
+        columnBinding.setColumnName("Harga Beli");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${stock}"));
+        columnBinding.setColumnName("Stock");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${status}"));
+        columnBinding.setColumnName("Status");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${as}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
+
         jScrollPane1.setViewportView(jTable1);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jButton1.setText("TAMBAH");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
 
         jButton2.setText("SIMPAN");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
 
         jButton3.setText("HAPUS");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
 
+        jLabel1.setText("Total Asset IDR");
+        jPanel1.add(jLabel1);
+
+        jTextField1.setPreferredSize(new java.awt.Dimension(100, 40));
+        jPanel1.add(jTextField1);
+
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
+        Asset asset = new app.table.Asset();
+        asset.setTanggalStock(new java.util.Date());
+        this.persist(asset);
+        this.assetList.add(asset);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+    Asset as;
 
+    public Asset getAs() {
+        return as;
+    }
+
+    public void setAs(Asset as) {
+        this.as = as;
+    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.out.println("app.view.panel.bank.bankPanel.jButton4ActionPerformed()");
+        this.update();
+        if (!this.blessingPUEntityManager.getTransaction().isActive()) 
+                this.blessingPUEntityManager.getTransaction().begin();
+        this.blessingPUEntityManager.getTransaction().commit(); 
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        System.out.println("app.view.panel.inven.Inventaris.jButton3ActionPerformed()");
+        if (!this.blessingPUEntityManager.getTransaction().isActive()) 
+                this.blessingPUEntityManager.getTransaction().begin();        
+        this.blessingPUEntityManager.remove(this.getAs());
+        this.blessingPUEntityManager.getTransaction().commit();
+        boolean remove = this.assetList.remove(as);
+                javax.swing.JOptionPane.showMessageDialog(this.getRootPane(), 
+                (remove ? "Berhasil":"Gagal" )+" Menghapus\n"
+        );        // TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void persist(Object object) {
+        if (!this.blessingPUEntityManager.getTransaction().isActive())         
+            blessingPUEntityManager.getTransaction().begin();
+        try {
+            blessingPUEntityManager.persist(object);
+            blessingPUEntityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            blessingPUEntityManager.getTransaction().rollback();
+        } finally {
+//            blessingPUEntityManager.close();
+            System.out.println(object+"=persisted");
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.util.List<app.table.Asset> assetList;
+    private javax.persistence.Query assetQuery;
+    private javax.persistence.EntityManager blessingPUEntityManager;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+                private final DecimalFormat Rp = new DecimalFormat("#,##0");
+
+    private void update() {
+        System.out.println("app.view.panel.mobil.panelMobil.UpdatePDP()");
+        long tk =
+                this.assetList
+                .stream()
+                .mapToLong(i -> i.getHargaBeli())
+                .sum();
+        this.jTextField1.setText(Rp.format(tk));
+
+    }
 }
