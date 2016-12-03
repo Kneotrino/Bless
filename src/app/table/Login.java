@@ -5,14 +5,18 @@
  */
 package app.table;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,8 +33,21 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Login.findByPass", query = "SELECT l FROM Login l WHERE l.pass = :pass")})
 public class Login implements Serializable {
 
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+
+    @Column(name = "STATUS", length = 25)
+    private String status;
+    @Column(name = "ALAMAT", length = 255)
+    private String alamat;
+    @Column(name = "NOMORHP", length = 255)
+    private String nomorhp;
+    @Column(name = "KELAS", length = 25)
+    private String kelas;
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Integer id;
@@ -51,7 +68,9 @@ public class Login implements Serializable {
     }
 
     public void setId(Integer id) {
+        Integer oldId = this.id;
         this.id = id;
+        changeSupport.firePropertyChange("id", oldId, id);
     }
 
     public String getNama() {
@@ -59,7 +78,9 @@ public class Login implements Serializable {
     }
 
     public void setNama(String nama) {
+        String oldNama = this.nama;
         this.nama = nama;
+        changeSupport.firePropertyChange("nama", oldNama, nama);
     }
 
     public String getPass() {
@@ -67,7 +88,9 @@ public class Login implements Serializable {
     }
 
     public void setPass(String pass) {
+        String oldPass = this.pass;
         this.pass = pass;
+        changeSupport.firePropertyChange("pass", oldPass, pass);
     }
 
     @Override
@@ -93,6 +116,54 @@ public class Login implements Serializable {
     @Override
     public String toString() {
         return "app.table.Login[ id=" + id + " ]";
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        String oldStatus = this.status;
+        this.status = status;
+        changeSupport.firePropertyChange("status", oldStatus, status);
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        String oldAlamat = this.alamat;
+        this.alamat = alamat;
+        changeSupport.firePropertyChange("alamat", oldAlamat, alamat);
+    }
+
+    public String getNomorhp() {
+        return nomorhp;
+    }
+
+    public void setNomorhp(String nomorhp) {
+        String oldNomorhp = this.nomorhp;
+        this.nomorhp = nomorhp;
+        changeSupport.firePropertyChange("nomorhp", oldNomorhp, nomorhp);
+    }
+
+    public String getKelas() {
+        return kelas;
+    }
+
+    public void setKelas(String kelas) {
+        String oldKelas = this.kelas;
+        this.kelas = kelas;
+        changeSupport.firePropertyChange("kelas", oldKelas, kelas);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

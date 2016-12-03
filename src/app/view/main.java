@@ -52,6 +52,8 @@ public class main extends javax.swing.JFrame {
         jPanel2 = new app.view.panel.laporan.panelMaster(app.table.Pemasukan.class)
         ;
         panelLaporan1 = new app.view.panel.laporan.panelLaporan();
+        panelRental1 = new app.view.panel.bank.panelRental();
+        panelPegawai1 = new app.view.panel.Pegawai.PanelPegawai();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -68,6 +70,8 @@ public class main extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -99,9 +103,11 @@ public class main extends javax.swing.JFrame {
         getContentPane().add(jPanel3, "card10");
         getContentPane().add(jPanel2, "card9");
         getContentPane().add(panelLaporan1, "card8");
+        getContentPane().add(panelRental1, "card12");
+        getContentPane().add(panelPegawai1, "card11");
 
         fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
+        fileMenu.setText("Akuntasi");
 
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Beranda");
@@ -200,6 +206,22 @@ public class main extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         managementMenu.add(jMenu1);
+
+        jMenuItem6.setText("Pegawai");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        managementMenu.add(jMenuItem6);
+
+        jMenuItem7.setText("Rental");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        managementMenu.add(jMenuItem7);
 
         menuBar.add(managementMenu);
 
@@ -317,6 +339,16 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        this.chandePanel("card11");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        this.chandePanel("card12");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -372,6 +404,8 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -383,6 +417,8 @@ public class main extends javax.swing.JFrame {
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.panel.laporan.panelLaporan panelLaporan1;
     private app.view.panel.mobil.panelMobil panelMobil1;
+    private app.view.panel.Pegawai.PanelPegawai panelPegawai1;
+    private app.view.panel.bank.panelRental panelRental1;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

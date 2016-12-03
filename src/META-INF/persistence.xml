@@ -18,6 +18,8 @@
     <class>app.table.Laporan</class>
     <class>app.table.Pemasukan</class>
     <class>app.table.Pengeluaran</class>
+    <class>app.table.Rental</class>
+    <class>app.table.Bayarrental</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>
