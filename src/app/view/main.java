@@ -46,6 +46,7 @@ public class main extends javax.swing.JFrame {
         bankPanel1 = new app.view.panel.bank.bankPanel();
         panelMobil1 = new app.view.panel.mobil.panelMobil();
         jPanel1 = new app.view.panel.inven.Inventaris();
+        panelHutang1 = new app.view.panel.hutang.panelHutang();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -56,6 +57,9 @@ public class main extends javax.swing.JFrame {
         Mobil = new javax.swing.JMenuItem();
         Keuangan = new javax.swing.JMenuItem();
         Asset = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -65,6 +69,7 @@ public class main extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         jDialog1.setTitle("Content");
+        jDialog1.getContentPane().setLayout(new java.awt.BorderLayout());
 
         jTextPane1.setText("hello");
         jScrollPane1.setViewportView(jTextPane1);
@@ -83,6 +88,7 @@ public class main extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         getContentPane().add(jPanel1, "card6");
+        getContentPane().add(panelHutang1, "card7");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -145,6 +151,21 @@ public class main extends javax.swing.JFrame {
             }
         });
         managementMenu.add(Asset);
+
+        jMenu1.setText("Hutang/Piutang");
+
+        jMenuItem1.setText("Hutang");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Piutang");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        managementMenu.add(jMenu1);
 
         menuBar.add(managementMenu);
 
@@ -230,6 +251,13 @@ public class main extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(null, "Hello dunia");
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        CardLayout cardLayout = (CardLayout) this.getContentPane().getLayout();
+        cardLayout.show(this.getContentPane(), "card7");        // TODO add your handling code here:
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -279,12 +307,16 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JMenu managementMenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
+    private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.panel.mobil.panelMobil panelMobil1;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
