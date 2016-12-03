@@ -14,6 +14,10 @@
     <class>app.view.panel.hutang.Bayarhutang</class>
     <class>app.table.Hutang</class>
     <class>app.table.Bayarhutang</class>
+    <class>app.view.panel.laporan.Pemasukan</class>
+    <class>app.table.Laporan</class>
+    <class>app.table.Pemasukan</class>
+    <class>app.table.Pengeluaran</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>
