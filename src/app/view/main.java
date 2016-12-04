@@ -54,6 +54,7 @@ public class main extends javax.swing.JFrame {
         panelLaporan1 = new app.view.panel.laporan.panelLaporan();
         panelRental1 = new app.view.panel.bank.panelRental();
         panelPegawai1 = new app.view.panel.Pegawai.PanelPegawai();
+        panelPiutang1 = new app.view.panel.hutang.panelPiutang();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -105,6 +106,7 @@ public class main extends javax.swing.JFrame {
         getContentPane().add(panelLaporan1, "card8");
         getContentPane().add(panelRental1, "card12");
         getContentPane().add(panelPegawai1, "card11");
+        getContentPane().add(panelPiutang1, "card13");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Akuntasi");
@@ -195,6 +197,11 @@ public class main extends javax.swing.JFrame {
         jMenu1.setText("Hutang/Piutang");
 
         jMenuItem1.setText("Hutang");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Piutang");
@@ -349,6 +356,11 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.chandePanel("card13");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -418,6 +430,7 @@ public class main extends javax.swing.JFrame {
     private app.view.panel.laporan.panelLaporan panelLaporan1;
     private app.view.panel.mobil.panelMobil panelMobil1;
     private app.view.panel.Pegawai.PanelPegawai panelPegawai1;
+    private app.view.panel.hutang.panelPiutang panelPiutang1;
     private app.view.panel.bank.panelRental panelRental1;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;

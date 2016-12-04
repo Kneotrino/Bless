@@ -20,13 +20,15 @@
     <class>app.table.Pengeluaran</class>
     <class>app.table.Rental</class>
     <class>app.table.Bayarrental</class>
+    <class>app.table.Piutang</class>
+    <class>app.table.Bayarpihutang</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>
       <property name="javax.persistence.jdbc.user" value="blessing"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.password" value="blessing"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
   <persistence-unit name="DEFAULT_PU" transaction-type="RESOURCE_LOCAL">
