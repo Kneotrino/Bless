@@ -55,6 +55,8 @@ public class main extends javax.swing.JFrame {
         panelRental1 = new app.view.panel.bank.panelRental();
         panelPegawai1 = new app.view.panel.Pegawai.PanelPegawai();
         panelPiutang1 = new app.view.panel.hutang.panelPiutang();
+        panelJasa1 = new app.view.panel.jasa.panelJasa();
+        panelPerjalanan1 = new app.view.panel.perjalanan.panelPerjalanan();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -73,6 +75,8 @@ public class main extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -107,6 +111,8 @@ public class main extends javax.swing.JFrame {
         getContentPane().add(panelRental1, "card12");
         getContentPane().add(panelPegawai1, "card11");
         getContentPane().add(panelPiutang1, "card13");
+        getContentPane().add(panelJasa1, "card14");
+        getContentPane().add(panelPerjalanan1, "card15");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Akuntasi");
@@ -229,6 +235,22 @@ public class main extends javax.swing.JFrame {
             }
         });
         managementMenu.add(jMenuItem7);
+
+        jMenuItem8.setText("Cabut Berkas");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        managementMenu.add(jMenuItem8);
+
+        jMenuItem9.setText("Lap. Perjalanan");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        managementMenu.add(jMenuItem9);
 
         menuBar.add(managementMenu);
 
@@ -360,6 +382,16 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        this.chandePanel("card14");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        this.chandePanel("card15");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -417,6 +449,8 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -426,9 +460,11 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private app.view.panel.hutang.panelHutang panelHutang1;
+    private app.view.panel.jasa.panelJasa panelJasa1;
     private app.view.panel.laporan.panelLaporan panelLaporan1;
     private app.view.panel.mobil.panelMobil panelMobil1;
     private app.view.panel.Pegawai.PanelPegawai panelPegawai1;
+    private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;
     private app.view.panel.hutang.panelPiutang panelPiutang1;
     private app.view.panel.bank.panelRental panelRental1;
     private javax.swing.JMenuItem saveAsMenuItem;
