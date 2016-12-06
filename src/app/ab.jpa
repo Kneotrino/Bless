@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" v="2.6.5" status="GENERATED" sm="false" xs="false" id="_1481053907632170" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:entity xre="false" abs="false" class="Bayarjasa" visibile="true" minimized="false" rootElement="_1481053907632170" id="_1481053907633171">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="keterangan" id="_1481053907640174">
+                <jpa:column name="KETERANGAN" unique="false" nullable="true" insertable="true" updatable="true" table="BAYARJASA"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="pembayaran" id="_1481053907640175">
+                <jpa:column name="PEMBAYARAN" unique="false" nullable="true" insertable="true" updatable="true" table="BAYARJASA"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tanggal" id="_1481053907640176">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGAL" unique="false" nullable="true" insertable="true" updatable="true" table="BAYARJASA"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="Integer" visibile="true" name="bpkbtitipid" id="_1481053907640177">
+                <jpa:column name="BPKBTITIPID" unique="false" nullable="true" insertable="true" updatable="true" table="BAYARJASA"/>
+            </jpa:basic>
+            <jpa:id attribute-type="Integer" visibile="true" name="bayarpihutangid" id="_1481053907640173">
+                <jpa:column name="BAYARPIHUTANGID" unique="false" nullable="false" insertable="true" updatable="true" table="BAYARJASA"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="BAYARJASA"/>
+    </jpa:entity>
+    <jpa:entity xre="false" abs="false" class="Bpkbtitipan" visibile="true" minimized="false" rootElement="_1481053907632170" id="_1481053907638172">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="anBpkb" id="_1481053907640179">
+                <jpa:column name="AN_BPKB" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="ket" id="_1481053907640180">
+                <jpa:column name="KET" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="128"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="noBpkb" id="_1481053907640181">
+                <jpa:column name="NO_BPKB" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="noPolisiAktif" id="_1481053907640182">
+                <jpa:column name="NO_POLISI_AKTIF" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="posisi" id="_1481053907640183">
+                <jpa:column name="POSISI" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="status" id="_1481053907640184">
+                <jpa:column name="STATUS" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="stnk" id="_1481053907640185">
+                <jpa:column name="STNK" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglBbn" id="_1481053907640186">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_BBN" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglCb" id="_1481053907640187">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_CB" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglKembaliBbn" id="_1481053907640188">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_KEMBALI_BBN" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglKembaliCb" id="_1481053907640189">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_KEMBALI_CB" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglLeasing" id="_1481053907640190">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_LEASING" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglTerima" id="_1481053907640191">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_TERIMA" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:id attribute-type="Integer" visibile="true" name="bpkbId" id="_1481053907640178">
+                <jpa:column name="BPKB_ID" unique="false" nullable="false" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="BPKBTITIPAN"/>
+    </jpa:entity>
+    <jpa:snp e="true" loc="BEFORE_PACKAGE">/**
+ * This file was generated by the JPA Modeler
+ */</jpa:snp>
+    <jpa:inf e="true" n="java.io.Serializable"/>
+    <jpa:diagram>
+        <plane elementRef="_1481053907632170"/>
+    </jpa:diagram>
+</jpa:entity-mappings>
