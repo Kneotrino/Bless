@@ -57,6 +57,7 @@ public class main extends javax.swing.JFrame {
         panelPiutang1 = new app.view.panel.hutang.panelPiutang();
         panelJasa1 = new app.view.panel.jasa.panelJasa();
         panelPerjalanan1 = new app.view.panel.perjalanan.panelPerjalanan();
+        jPanel4 = new app.view.panel.leasing.panelLeasing();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -77,6 +78,7 @@ public class main extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -113,6 +115,7 @@ public class main extends javax.swing.JFrame {
         getContentPane().add(panelPiutang1, "card13");
         getContentPane().add(panelJasa1, "card14");
         getContentPane().add(panelPerjalanan1, "card15");
+        getContentPane().add(jPanel4, "card16");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Akuntasi");
@@ -251,6 +254,14 @@ public class main extends javax.swing.JFrame {
             }
         });
         managementMenu.add(jMenuItem9);
+
+        jMenuItem10.setText("Kredit Leasing");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        managementMenu.add(jMenuItem10);
 
         menuBar.add(managementMenu);
 
@@ -392,6 +403,12 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        this.chandePanel("card16");
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -443,6 +460,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -454,6 +472,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JMenu managementMenu;
