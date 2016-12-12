@@ -252,9 +252,6 @@ public class panelMaster extends JPanel {
         TypedQuery<? extends Laporan> createQuery = entityManager.createQuery(que, clazz);
         List<? extends Laporan> res = createQuery.getResultList();
         
-        System.out.println(this.query);
-        
-        
         java.util.List data = query.getResultList();
         List<Laporan> laps = data;
         Predicate<Laporan> predPem = lp -> lp instanceof app.table.Pengeluaran;

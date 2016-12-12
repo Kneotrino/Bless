@@ -23,7 +23,7 @@ public class TimerThread extends Thread {
         protected JLabel timeLabel;
 
         protected SimpleDateFormat dateFormat = 
-                new SimpleDateFormat(" dd/MM/yyyy");
+                new SimpleDateFormat(" dd MMM yyyy");
         protected SimpleDateFormat timeFormat =
                 new SimpleDateFormat("hh:mm:ss a");
 

@@ -497,7 +497,6 @@ public class main extends javax.swing.JFrame {
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         ImageIcon home = new javax.swing.ImageIcon(getClass().getResource("/app/main.png"));
-//        ImageIcon imageIcon = new ImageIcon("./img/imageName.png"); // load the image to a imageIcon
         Image image = home.getImage(); // transform it 
         Image newimg = image.getScaledInstance(dim.width, dim.height,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
         home = new ImageIcon(newimg);
