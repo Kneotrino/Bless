@@ -42,7 +42,7 @@ public class panelLaporan extends JPanel {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l");
+        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l order by l.tanggal");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         saveButton = new javax.swing.JButton();
         newButton = new javax.swing.JButton();
@@ -54,6 +54,8 @@ public class panelLaporan extends JPanel {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
         refreshButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -131,6 +133,13 @@ public class panelLaporan extends JPanel {
         jTextField2.setText("jTextField1");
         jPanel1.add(jTextField2);
 
+        jLabel3.setText("Profit");
+        jPanel1.add(jLabel3);
+
+        jTextField3.setEditable(false);
+        jTextField3.setText("jTextField3");
+        jPanel1.add(jTextField3);
+
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
@@ -204,6 +213,7 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
         }
         this.jTextField1.setText(numberFormat.format(pemasukan));
         this.jTextField2.setText(numberFormat.format(pengeluaran));
+        this.jTextField3.setText(numberFormat.format(pemasukan.subtract(pengeluaran)));
     }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int[] selected = masterTable.getSelectedRows();
@@ -250,9 +260,11 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private java.util.List<app.table.Laporan> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

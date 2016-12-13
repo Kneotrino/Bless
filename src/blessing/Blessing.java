@@ -43,7 +43,7 @@ public class Blessing {
         }
         feel();
 //        
-        app.view.main form = new app.view.main();
+        app.view.ShowRoom form = new app.view.ShowRoom();
         form.show();
     }
 
