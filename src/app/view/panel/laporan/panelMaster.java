@@ -37,6 +37,7 @@ public class panelMaster extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
+        
     }
     
     private Class<? extends Laporan> clazz;
@@ -91,6 +92,7 @@ public class panelMaster extends JPanel {
         FormListener formListener = new FormListener();
 
         jDialog1.setTitle("Data Baru");
+        jDialog1.setAlwaysOnTop(true);
         jDialog1.setType(java.awt.Window.Type.UTILITY);
         jDialog1.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
 
@@ -201,23 +203,23 @@ public class panelMaster extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == idField) {
-                panelMaster.this.idFieldActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton) {
-                panelMaster.this.saveButtonActionPerformed(evt);
+            if (evt.getSource() == newButton) {
+                panelMaster.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == refreshButton) {
                 panelMaster.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newButton) {
-                panelMaster.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelMaster.this.deleteButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton1) {
                 panelMaster.this.jButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == idField) {
+                panelMaster.this.idFieldActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelMaster.this.saveButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -48,6 +49,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Bpkbtitipan.findByTglKembaliCb", query = "SELECT b FROM Bpkbtitipan b WHERE b.tglKembaliCb = :tglKembaliCb")
     , @NamedQuery(name = "Bpkbtitipan.findByTglLeasing", query = "SELECT b FROM Bpkbtitipan b WHERE b.tglLeasing = :tglLeasing")
     , @NamedQuery(name = "Bpkbtitipan.findByTglTerima", query = "SELECT b FROM Bpkbtitipan b WHERE b.tglTerima = :tglTerima")})
+//@ListUrutan({"anBpkb", "posisi", "tglBbn"})
+ @ListUrutan({"anBpkb","ket","noBpkb","noPolisiAktif","posisi","status","stnk","tglBbn","tglCb","tglKembaliBbn"
+         ,"tglKembaliCb","tglLeasing","tglTerima"})
+
 public class Bpkbtitipan implements Serializable {
 
     @Transient
@@ -55,8 +60,8 @@ public class Bpkbtitipan implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)     @GeneratedValue
-
+    @Basic(optional = false)     
+    @GeneratedValue
     @Column(name = "BPKB_ID", nullable = false)
     private Integer bpkbId;
     @Column(name = "AN_BPKB", length = 64)
