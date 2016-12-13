@@ -58,16 +58,16 @@ public class Laporan implements Serializable {
     private Long id;
     @Column(name = "DTYPE", length = 31)
     private String dtype;
-    @Column(name = "JUMLAH")
-    private BigInteger jumlah;
+    @Column(name = "JUMLAH", nullable = false)
+    private BigInteger jumlah = BigInteger.ZERO;
     @Lob
     @Column(name = "KETERANGAN")
     private String keterangan;
-    @Column(name = "SALDO")
+    @Column(name = "SALDO", nullable = false)
     private BigInteger saldo;
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date tanggal;
+    private Date tanggal = new Date();
     @Column(name = "TIPE", length = 255)
     private String tipe;
     
@@ -97,10 +97,21 @@ public class Laporan implements Serializable {
         this.dtype = dtype;
         changeSupport.firePropertyChange("dtype", oldDtype, dtype);
     }
-
+        @Transient
+        boolean name = !(this instanceof Pemasukan);
     public BigInteger getJumlah() {
         return jumlah;
     }
+        
+    public BigInteger getPemasukan() {
+        return name? BigInteger.ZERO : jumlah;
+    }
+    
+    public BigInteger getPengeluaran() {
+        return name? jumlah : BigInteger.ZERO ;
+    }
+    
+
 
     public void setJumlah(BigInteger jumlah) {
         BigInteger oldJumlah = this.jumlah;
@@ -180,6 +191,5 @@ public class Laporan implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-
 
 }

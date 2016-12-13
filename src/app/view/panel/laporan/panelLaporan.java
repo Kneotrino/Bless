@@ -5,9 +5,14 @@
  */
 package app.view.panel.laporan;
 
+import app.table.Laporan;
+import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
@@ -40,7 +45,6 @@ public class panelLaporan extends JPanel {
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         saveButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
@@ -50,14 +54,15 @@ public class panelLaporan extends JPanel {
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        refreshButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
         saveButton.setText("Save");
         saveButton.addActionListener(formListener);
-
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
 
         newButton.setText("New");
         newButton.addActionListener(formListener);
@@ -71,42 +76,73 @@ public class panelLaporan extends JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        masterTable.setRowHeight(25);
+
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
-        columnBinding.setColumnName("Id");
+        columnBinding.setColumnName("Ref");
         columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
         columnBinding.setColumnName("Jumlah");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dtype}"));
-        columnBinding.setColumnName("Dtype");
-        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
         columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
 
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
+
         jLabel1.setText("Total Pemasukan");
         jPanel1.add(jLabel1);
 
+        jTextField1.setEditable(false);
         jTextField1.setText("jTextField1");
         jPanel1.add(jTextField1);
 
         jLabel2.setText("Total Pengeluaran");
         jPanel1.add(jLabel2);
 
+        jTextField2.setEditable(false);
         jTextField2.setText("jTextField1");
         jPanel1.add(jTextField2);
+
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(formListener);
+        jPanel1.add(refreshButton);
+
+        jButton1.setText("Filter");
+        jPanel1.add(jButton1);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(jComboBox1);
+
+        jButton2.setText("Print");
+        jPanel1.add(jButton2);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -118,11 +154,11 @@ public class panelLaporan extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == saveButton) {
-                panelLaporan.this.saveButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
+            if (evt.getSource() == refreshButton) {
                 panelLaporan.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelLaporan.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton) {
                 panelLaporan.this.newButtonActionPerformed(evt);
@@ -138,21 +174,36 @@ public class panelLaporan extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        java.util.Collection data = query.getResultList();
-        for (Object entity : data) {
-            entityManager.refresh(entity);
+        java.util.List<app.table.Laporan> data = query.getResultList();
+        java.math.BigInteger saldo = new java.math.BigInteger("1");
+        
+        
+        for (Laporan laporan : data) {
+            entityManager.refresh(laporan);
+            saldo = saldo.subtract(laporan.getPengeluaran());
+            saldo = saldo.add(laporan.getPemasukan());
+//            System.out.println("jumlah = "+ laporan.getJumlah());
+//            System.out.println("Pemasukan" +laporan.getPemasukan());
+//            System.out.println("Pengeluaran" +laporan.getPengeluaran());
+            laporan.setSaldo(saldo);
+            
         }
+        
         list.clear();
         list.addAll(data);
     }//GEN-LAST:event_refreshButtonActionPerformed
-
+DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
     public void Refresh(){
-        java.util.Collection data = query.getResultList();
-        for (Object entity : data) {
-            entityManager.refresh(entity);
+        System.out.println("app.view.panel.laporan.panelLaporan.Refresh()");    
+        this.refreshButtonActionPerformed(null);
+        BigInteger pemasukan = BigInteger.ZERO,
+                pengeluaran = pemasukan;
+        for (Laporan laporan : list) {
+            pemasukan = pemasukan.add(laporan.getPemasukan());
+            pengeluaran = pengeluaran.add(laporan.getPengeluaran());
         }
-        list.clear();
-        list.addAll(data);
+        this.jTextField1.setText(numberFormat.format(pemasukan));
+        this.jTextField2.setText(numberFormat.format(pengeluaran));
     }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int[] selected = masterTable.getSelectedRows();
@@ -194,6 +245,9 @@ public class panelLaporan extends JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
     private javax.persistence.EntityManager entityManager;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -204,7 +258,7 @@ public class panelLaporan extends JPanel {
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
     private javax.persistence.Query query;
-    private javax.swing.JButton refreshButton;
+    javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
