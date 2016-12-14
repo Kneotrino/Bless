@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import static javaslang.API.*;
 import javaslang.Tuple;
 import javaslang.Tuple3;
+import javaslang.Tuple4;
 import javaslang.collection.HashSet;
 import javaslang.collection.List;
 import javaslang.collection.Set;
@@ -74,14 +75,15 @@ public class Foo {
                 });
     }
     
-    public List<Tuple3<Class<?>, JLabel, JComponent>> doAnotherFuckingThing(Class<?> clazz) throws NoSuchFieldException {
-        ListUrutan annotation = clazz.getAnnotation(ListUrutan.class);
+    public List<Tuple4<Class<?>, JLabel, JComponent, String>> doAnotherFuckingThing(Class<?> clazz) throws NoSuchFieldException {
+        ListUrutan annotation;
+        annotation = clazz.getAnnotation(ListUrutan.class);
         if (annotation == null) {
             throw new RuntimeException("Class " + clazz.getName() + " tidak mempunyai annotation ListUrutan");
         }
         
         String[] urutan = annotation.value();
-        List<Tuple3<Class<?>, JLabel, JComponent>> result = List.empty();
+        List<Tuple4<Class<?>, JLabel, JComponent, String>> result = List.empty();
         for (int i = 0; i < urutan.length; i++) {
             String str = urutan[i];
             Field field = clazz.getDeclaredField(str);
@@ -101,7 +103,7 @@ public class Foo {
                  comp = new JTextField();
             }
             
-            result = result.append(Tuple.of(fieldType, label, comp));
+            result = result.append(Tuple.of(fieldType, label, comp, str));
         }
         
         return result;

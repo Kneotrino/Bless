@@ -6,15 +6,25 @@
 package app.utils;
 
 import app.Foo;
+import app.table.Laporan;
+import com.toedter.calendar.JDateChooser;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaslang.Tuple3;
+import javaslang.Tuple4;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.apache.commons.beanutils.BeanUtils;
+import org.jdesktop.beansbinding.BindingGroup;
 
 /**
  *
@@ -27,26 +37,54 @@ public class inputPanel extends javax.swing.JPanel {
      */
     public inputPanel() {
         initComponents();
-        Foo list = new Foo();
-        javaslang.collection.List<Tuple3<Class<?>, JLabel, JComponent>> doFuck = null;
-        try {
-            doFuck = (new Foo()).doAnotherFuckingThing(app.table.Bpkbtitipan.class);
-        } catch (NoSuchFieldException ex) {
-            Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        doFuck.forEach( tup -> {
-             Class<?> tipeField = tup._1();
-            JLabel label = tup._2();
-            JComponent comp = tup._3();            
-            add(label);
-            add(comp);
-        });       
     }
-    public inputPanel(Object kelas)
+        javaslang.collection.List<Tuple4<Class<?>, JLabel, JComponent,String>> doFuck = null;
+    private Class clazz;
+
+             Class<?> theClass = null;
+    public Object getTarget() {
+            doFuck.forEach(new Consumer<Tuple4<Class<?>, JLabel, JComponent, String>>() {
+                @Override
+                public void accept(Tuple4<Class<?>, JLabel, JComponent, String> a) {
+                    Object Value = null;
+                    if (a._3 instanceof javax.swing.JTextField) {
+                        System.out.println("JT ="+((JTextField)a._3).getText());
+                        Value = ((JTextField)a._3).getText();
+                    }
+                    else if (a._3 instanceof JDateChooser)
+                    {
+                        System.out.println("JD = " + ((JDateChooser)a._3).getDate());
+                        boolean N = ((JDateChooser)a._3).getDate()==null;
+                        if (N) 
+                            Value = new java.util.Date();                            
+                        else    
+                            Value = ((JDateChooser)a._3).getDate();                        
+                    }
+                    try {
+                        BeanUtils.setProperty(target,a._4,Value);
+                    } catch (IllegalAccessException | InvocationTargetException ex) {
+                        Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });            
+       return target;
+    }
+//    List<javax.swing.JComponent> compList = java.util.Collections.emptyList();
+//    List<javax.swing.JLabel> labelList = java.util.Collections.emptyList();
+    public inputPanel(Object kelas) 
     {
         this.initComponents();
+        this.clazz = (Class) kelas;
+       Constructor cons;
+        try {
+            cons = clazz.getConstructor();
+            target = cons.newInstance();            
+            System.out.println("Target = " + target.toString());
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex) {
+            Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         Foo list = new Foo();
-        javaslang.collection.List<Tuple3<Class<?>, JLabel, JComponent>> doFuck = null;
         try {
             doFuck = (new Foo()).doAnotherFuckingThing((Class) kelas);
         } catch (NoSuchFieldException ex) {
@@ -58,9 +96,18 @@ public class inputPanel extends javax.swing.JPanel {
             JComponent comp = tup._3();            
             add(label);
             add(comp);
+            
+            
         }); 
     }
-
+    public inputPanel(BindingGroup bG, JTable table, Object kelas)
+    {
+        this.initComponents();
+    }
+    public void binding()
+    {
+    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,7 +119,7 @@ public class inputPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.GridLayout(0, 2));
     }// </editor-fold>//GEN-END:initComponents
-
+private Object target;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

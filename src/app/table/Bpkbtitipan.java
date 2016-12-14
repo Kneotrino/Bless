@@ -50,8 +50,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Bpkbtitipan.findByTglLeasing", query = "SELECT b FROM Bpkbtitipan b WHERE b.tglLeasing = :tglLeasing")
     , @NamedQuery(name = "Bpkbtitipan.findByTglTerima", query = "SELECT b FROM Bpkbtitipan b WHERE b.tglTerima = :tglTerima")})
 //@ListUrutan({"anBpkb", "posisi", "tglBbn"})
- @ListUrutan({"anBpkb","ket","noBpkb","noPolisiAktif","posisi","status","stnk","tglBbn","tglCb","tglKembaliBbn"
-         ,"tglKembaliCb","tglLeasing","tglTerima"})
+ @ListUrutan({"anBpkb","ket","noBpkb","noPolisiAktif","posisi","status","stnk","tglTerima"})
 
 public class Bpkbtitipan implements Serializable {
 
@@ -95,7 +94,7 @@ public class Bpkbtitipan implements Serializable {
     private Date tglLeasing;
     @Column(name = "TGL_TERIMA")
     @Temporal(TemporalType.DATE)
-    private Date tglTerima;
+    private Date tglTerima = new Date();
     @OneToMany(mappedBy = "bpkbtitipid")
     private List<Bayarjasa> bayarjasaList;
 

@@ -9,15 +9,19 @@ import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import org.apache.commons.beanutils.BeanUtils;
 
 /**
  *
@@ -45,44 +49,15 @@ public class panelJasa extends JPanel {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT B FROM Bpkbtitipan B");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
-        jDialog1 = new javax.swing.JDialog();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jLabel10 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jLabel11 = new javax.swing.JLabel();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
-        jLabel12 = new javax.swing.JLabel();
-        jDateChooser4 = new com.toedter.calendar.JDateChooser();
-        jLabel13 = new javax.swing.JLabel();
-        jDateChooser5 = new com.toedter.calendar.JDateChooser();
-        jLabel14 = new javax.swing.JLabel();
-        jDateChooser6 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
-        jPanel2 = new app.utils.inputPanel(app.table.Bpkbtitipan.class);
+        inputPanel1 = new app.utils.inputPanel(app.table.Bpkbtitipan.class);
+        newButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        newButton = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         newDetailButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
@@ -91,129 +66,12 @@ public class panelJasa extends JPanel {
 
         FormListener formListener = new FormListener();
 
-        jDialog1.setTitle("DATA BPKB TITIPAN");
-        jDialog1.setAlwaysOnTop(true);
-        jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog1.setType(java.awt.Window.Type.POPUP);
-        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
-
-        jLabel1.setText("Ref");
-        jDialog1.getContentPane().add(jLabel1);
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkbId}"), jTextField1, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jTextField1);
-
-        jLabel2.setText("Atas Nama BPKB");
-        jDialog1.getContentPane().add(jLabel2);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkbId}"), jTextField2, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jTextField2);
-
-        jLabel3.setText("Ket");
-        jDialog1.getContentPane().add(jLabel3);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkbId}"), jTextField3, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jTextField3);
-
-        jLabel4.setText("No BPKB");
-        jDialog1.getContentPane().add(jLabel4);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkbId}"), jTextField4, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jTextField4);
-
-        jLabel5.setText("No Polisi Aktif");
-        jDialog1.getContentPane().add(jLabel5);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkbId}"), jTextField5, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jTextField5);
-
-        jLabel6.setText("Posisi");
-        jDialog1.getContentPane().add(jLabel6);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkbId}"), jTextField6, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jTextField6);
-
-        jLabel7.setText("Status");
-        jDialog1.getContentPane().add(jLabel7);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkbId}"), jTextField7, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jTextField7);
-
-        jLabel8.setText("Stnk");
-        jDialog1.getContentPane().add(jLabel8);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkbId}"), jTextField8, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jTextField8);
-
-        jLabel9.setText("Tanggal BBN");
-        jDialog1.getContentPane().add(jLabel9);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tglBbn}"), jDateChooser1, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jDateChooser1);
-
-        jLabel10.setText("Tanggal BBN kembali");
-        jDialog1.getContentPane().add(jLabel10);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tglBbn}"), jDateChooser2, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jDateChooser2);
-
-        jLabel11.setText("Tanggal Cabut berkas");
-        jDialog1.getContentPane().add(jLabel11);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tglBbn}"), jDateChooser3, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jDateChooser3);
-
-        jLabel12.setText("Tanggal Cabut Berkas kembali");
-        jDialog1.getContentPane().add(jLabel12);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tglBbn}"), jDateChooser4, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jDateChooser4);
-
-        jLabel13.setText("Tanggal Lepas");
-        jDialog1.getContentPane().add(jLabel13);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tglBbn}"), jDateChooser5, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jDateChooser5);
-
-        jLabel14.setText("Tanggal Di terima");
-        jDialog1.getContentPane().add(jLabel14);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tglBbn}"), jDateChooser6, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jDialog1.getContentPane().add(jDateChooser6);
-
-        jButton1.setText("SIMPAN");
-        jDialog1.getContentPane().add(jButton1);
-
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog2.getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
+
+        newButton.setText("Simpan");
+        newButton.addActionListener(formListener);
+        jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -268,7 +126,7 @@ public class panelJasa extends JPanel {
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
 
-        add(masterScrollPane, java.awt.BorderLayout.WEST);
+        add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
 
@@ -291,9 +149,6 @@ public class panelJasa extends JPanel {
         columnBinding.setColumnName("Ref bpkb");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bpkbtitipid.noPolisiAktif}"));
-        columnBinding.setColumnName("Nopol");
-        columnBinding.setColumnClass(String.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -301,13 +156,13 @@ public class panelJasa extends JPanel {
 
         add(detailScrollPane, java.awt.BorderLayout.EAST);
 
-        newButton.setText("New");
-        newButton.addActionListener(formListener);
-        jPanel1.add(newButton);
+        jButton2.setText("Baru");
+        jButton2.addActionListener(formListener);
+        jPanel1.add(jButton2);
 
         deleteButton.setText("Delete");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         deleteButton.addActionListener(formListener);
@@ -364,6 +219,9 @@ public class panelJasa extends JPanel {
             }
             else if (evt.getSource() == saveButton) {
                 panelJasa.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton2) {
+                panelJasa.this.jButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -434,7 +292,7 @@ public class panelJasa extends JPanel {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        app.table.Bpkbtitipan B = new app.table.Bpkbtitipan();
+        app.table.Bpkbtitipan B = (app.table.Bpkbtitipan) this.inputPanel1.getTarget() ;
         entityManager.persist(B);
         list.add(B);
         int row = list.size() - 1;
@@ -462,6 +320,13 @@ public class panelJasa extends JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.jDialog2.setSize(500, 600);
+        this.jDialog2.setLocationRelativeTo(null);
+        this.jDialog2.show();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -469,39 +334,10 @@ public class panelJasa extends JPanel {
     private javax.swing.JScrollPane detailScrollPane;
     private javax.swing.JTable detailTable;
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
-    private com.toedter.calendar.JDateChooser jDateChooser4;
-    private com.toedter.calendar.JDateChooser jDateChooser5;
-    private com.toedter.calendar.JDateChooser jDateChooser6;
-    private javax.swing.JDialog jDialog1;
+    private app.utils.inputPanel inputPanel1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JDialog jDialog2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private java.util.List<app.table.Bpkbtitipan> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
