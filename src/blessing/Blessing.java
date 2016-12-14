@@ -6,8 +6,11 @@
 package blessing;
 
 import app.view.main;
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import java.io.File;
 import javax.persistence.EntityManager;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -18,7 +21,7 @@ public class Blessing {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException {
         System.out.println("blessing.Blessing.main()");
         EntityManager blessingPUEntityManager = 
                 java.beans.Beans.isDesignTime() ? 
@@ -42,14 +45,15 @@ public class Blessing {
            e.printStackTrace();
         }
         feel();
-//        
+        
+//        UIManager.setLookAndFeel( new  com.jgoodies.looks.windows.WindowsLookAndFeel() );
         app.view.ShowRoom form = new app.view.ShowRoom();
         form.show();
     }
-
     private static void feel() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                System.out.println("info.getName() = " + info.getName());
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;

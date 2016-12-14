@@ -92,7 +92,7 @@
     </Container>
     <Container class="javax.swing.JDialog" name="jDialog3">
       <Properties>
-        <Property name="title" type="java.lang.String" value="Input pembayaran"/>
+        <Property name="title" type="java.lang.String" value="Input pemasukan"/>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="APPLICATION_MODAL"/>
         </Property>
@@ -131,7 +131,7 @@
     </Container>
     <Container class="javax.swing.JDialog" name="jDialog4">
       <Properties>
-        <Property name="title" type="java.lang.String" value="Input pembayaran"/>
+        <Property name="title" type="java.lang.String" value="Input Pengeluaran"/>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="APPLICATION_MODAL"/>
         </Property>
@@ -383,16 +383,6 @@
                   <Renderer/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title value="Pemasukan"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title value="Pengeluaran"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -431,14 +421,6 @@
                 <BindingParameter name="NAME" value="Jumlah"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${pemasukan}">
-                <BindingParameter name="NAME" value="Pemasukan"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${pengeluaran}">
-                <BindingParameter name="NAME" value="Pengeluaran"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-              </Subbinding>
               <Subbinding sourcePath="${bpkbtitipid.bpkbId}">
                 <BindingParameter name="NAME" value="Ref bpkb"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
@@ -451,7 +433,7 @@
             </BindingProperty>
           </BindingProperties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());"/>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
           </AuxValues>

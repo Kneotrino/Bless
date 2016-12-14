@@ -89,7 +89,7 @@ public class panelJasa extends JPanel {
         newButton.addActionListener(formListener);
         jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
-        jDialog3.setTitle("Input pembayaran");
+        jDialog3.setTitle("Input pemasukan");
         jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
@@ -97,7 +97,7 @@ public class panelJasa extends JPanel {
         newButton1.addActionListener(formListener);
         jDialog3.getContentPane().add(newButton1, java.awt.BorderLayout.PAGE_START);
 
-        jDialog4.setTitle("Input pembayaran");
+        jDialog4.setTitle("Input Pengeluaran");
         jDialog4.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog4.getContentPane().add(inputPanel3, java.awt.BorderLayout.CENTER);
 
@@ -161,6 +161,7 @@ public class panelJasa extends JPanel {
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setRowHeight(25);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarjasaList}");
@@ -178,12 +179,6 @@ public class panelJasa extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
         columnBinding.setColumnName("Jumlah");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Pemasukan");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
-        columnBinding.setColumnName("Pengeluaran");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bpkbtitipid.bpkbId}"));
         columnBinding.setColumnName("Ref bpkb");
         columnBinding.setColumnClass(Integer.class);
@@ -195,10 +190,6 @@ public class panelJasa extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
-        if (detailTable.getColumnModel().getColumnCount() > 0) {
-            detailTable.getColumnModel().getColumn(4).setHeaderValue("Pemasukan");
-            detailTable.getColumnModel().getColumn(5).setHeaderValue("Pengeluaran");
-        }
 
         add(detailScrollPane, java.awt.BorderLayout.EAST);
 
