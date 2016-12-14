@@ -25,12 +25,27 @@
     <class>app.table.Trips</class>
     <class>app.table.Leasing</class>
     <class>app.table.Listleasing</class>
+    <class>app.table.BayarJasaPemasukan</class>
+    <class>app.table.BayarJasaPengeluaran</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>
       <property name="javax.persistence.jdbc.user" value="blessing"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.password" value="blessing"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="DEFAULT_PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>app.table.Bayarjasa</class>
+    <class>app.table.BayarJasaPemasukan</class>
+    <class>app.table.BayarJasaPengeluaran</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
+      <property name="javax.persistence.jdbc.password" value="app"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="javax.persistence.jdbc.user" value="app"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>

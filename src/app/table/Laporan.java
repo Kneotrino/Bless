@@ -98,22 +98,32 @@ public class Laporan implements Serializable {
         changeSupport.firePropertyChange("dtype", oldDtype, dtype);
     }
         @Transient
-        boolean name = !(this instanceof Pemasukan);
+        boolean name = (this instanceof Pemasukan) || (this instanceof BayarJasaPemasukan) ;
     public BigInteger getJumlah() {
         return jumlah;
     }
         
     public BigInteger getPemasukan() {
-        return name? BigInteger.ZERO : jumlah;
+        return name? jumlah :BigInteger.ZERO ;
     }
     
     public BigInteger getPengeluaran() {
-        return name? jumlah : BigInteger.ZERO ;
+        return name? BigInteger.ZERO : jumlah;
     }
     
 
 
+    public void setPemasukan(BigInteger jumlah) {
+        BigInteger oldJumlah = this.jumlah;
+        this.jumlah = jumlah;
+        changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
+    }
     public void setJumlah(BigInteger jumlah) {
+        BigInteger oldJumlah = this.jumlah;
+        this.jumlah = jumlah;
+        changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
+    }
+    public void setPengeluaran(BigInteger jumlah) {
         BigInteger oldJumlah = this.jumlah;
         this.jumlah = jumlah;
         changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);

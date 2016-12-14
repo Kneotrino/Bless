@@ -111,6 +111,9 @@ public class panelLaporan extends JPanel {
         columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dtype}"));
+        columnBinding.setColumnName("tipe");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);

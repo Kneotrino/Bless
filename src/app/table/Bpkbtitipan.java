@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -95,7 +96,7 @@ public class Bpkbtitipan implements Serializable {
     @Column(name = "TGL_TERIMA")
     @Temporal(TemporalType.DATE)
     private Date tglTerima = new Date();
-    @OneToMany(mappedBy = "bpkbtitipid")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Bayarjasa> bayarjasaList;
 
     public Bpkbtitipan() {

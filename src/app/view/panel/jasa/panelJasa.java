@@ -54,8 +54,11 @@ public class panelJasa extends JPanel {
         inputPanel1 = new app.utils.inputPanel(app.table.Bpkbtitipan.class);
         newButton = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
-        inputPanel2 = new app.utils.inputPanel(app.table.Bayarjasa.class);
+        inputPanel2 = new app.utils.inputPanel(app.table.BayarJasaPemasukan.class);
         newButton1 = new javax.swing.JButton();
+        jDialog4 = new javax.swing.JDialog();
+        inputPanel3 = new app.utils.inputPanel(app.table.BayarJasaPengeluaran.class);
+        newButton2 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
@@ -67,6 +70,7 @@ public class panelJasa extends JPanel {
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -77,6 +81,7 @@ public class panelJasa extends JPanel {
 
         newDetailButton.addActionListener(formListener);
 
+        jDialog2.setTitle("Input BPKB titipan");
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
@@ -84,12 +89,21 @@ public class panelJasa extends JPanel {
         newButton.addActionListener(formListener);
         jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
+        jDialog3.setTitle("Input pembayaran");
         jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
-        newButton1.setText("Simpan");
+        newButton1.setText("Tambah");
         newButton1.addActionListener(formListener);
         jDialog3.getContentPane().add(newButton1, java.awt.BorderLayout.PAGE_START);
+
+        jDialog4.setTitle("Input pembayaran");
+        jDialog4.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog4.getContentPane().add(inputPanel3, java.awt.BorderLayout.CENTER);
+
+        newButton2.setText("Tambah");
+        newButton2.addActionListener(formListener);
+        jDialog4.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -147,30 +161,44 @@ public class panelJasa extends JPanel {
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        detailTable.setRowHeight(25);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarjasaList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bayarpihutangid}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("Ref");
-        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setColumnClass(Long.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pembayaran}"));
-        columnBinding.setColumnName("Pembayaran");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
+        columnBinding.setColumnName("Jumlah");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bpkbtitipid.bpkbId}"));
         columnBinding.setColumnName("Ref bpkb");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dtype}"));
+        columnBinding.setColumnName("Dtype");
+        columnBinding.setColumnClass(String.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
+        if (detailTable.getColumnModel().getColumnCount() > 0) {
+            detailTable.getColumnModel().getColumn(4).setHeaderValue("Pemasukan");
+            detailTable.getColumnModel().getColumn(5).setHeaderValue("Pengeluaran");
+        }
 
         add(detailScrollPane, java.awt.BorderLayout.EAST);
 
@@ -202,13 +230,21 @@ public class panelJasa extends JPanel {
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
-        jButton3.setText("Baru");
+        jButton3.setText("Pemasukan");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, newDetailButton, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), jButton3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         jButton3.addActionListener(formListener);
         jPanel1.add(jButton3);
+
+        jButton4.setText("Pengeluaran");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, newDetailButton, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), jButton4, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jButton4.addActionListener(formListener);
+        jPanel1.add(jButton4);
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -220,14 +256,11 @@ public class panelJasa extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                panelJasa.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == jButton2) {
+                panelJasa.this.jButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelJasa.this.deleteButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newDetailButton) {
-                panelJasa.this.newDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteDetailButton) {
                 panelJasa.this.deleteDetailButtonActionPerformed(evt);
@@ -238,14 +271,23 @@ public class panelJasa extends JPanel {
             else if (evt.getSource() == saveButton) {
                 panelJasa.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton2) {
-                panelJasa.this.jButton2ActionPerformed(evt);
+            else if (evt.getSource() == jButton3) {
+                panelJasa.this.jButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton4) {
+                panelJasa.this.jButton4ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton) {
+                panelJasa.this.newDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
+                panelJasa.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton1) {
                 panelJasa.this.newButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton3) {
-                panelJasa.this.jButton3ActionPerformed(evt);
+            else if (evt.getSource() == newButton2) {
+                panelJasa.this.newButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -281,7 +323,16 @@ public class panelJasa extends JPanel {
             bs = new LinkedList<app.table.Bayarjasa>();
             B.setBayarjasaList((List) bs);
         }
-        app.table.Bayarjasa b = (app.table.Bayarjasa) this.inputPanel2.getTarget();
+        
+        app.table.Bayarjasa b;
+        if (pemasukan) {        
+            b = (app.table.Bayarjasa) this.inputPanel2.getTarget();
+            
+        }
+        else    {
+            b = (app.table.Bayarjasa) this.inputPanel3.getTarget();
+            
+        }
         entityManager.persist(b);
         b.setBpkbtitipid(B);
         bs.add(b);
@@ -355,14 +406,27 @@ public class panelJasa extends JPanel {
         this.newDetailButtonActionPerformed(null);
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
-
+    boolean pemasukan;
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.jDialog3.setSize(300, 200);
         this.jDialog3.setLocationRelativeTo(null);
         this.jDialog3.show();
-
+        pemasukan = true;
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.jDialog4.setSize(300, 200);
+        this.jDialog4.setLocationRelativeTo(null);
+        this.jDialog4.show();
+        pemasukan = false;
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
+        // TODO add your handling code here:
+        this.newDetailButtonActionPerformed(evt);
+    }//GEN-LAST:event_newButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -373,16 +437,20 @@ public class panelJasa extends JPanel {
     private javax.persistence.EntityManager entityManager;
     private app.utils.inputPanel inputPanel1;
     private app.utils.inputPanel inputPanel2;
+    private app.utils.inputPanel inputPanel3;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
+    private javax.swing.JDialog jDialog4;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Bpkbtitipan> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
     private javax.swing.JButton newButton1;
+    private javax.swing.JButton newButton2;
     private javax.swing.JButton newDetailButton;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;

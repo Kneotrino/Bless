@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -51,6 +52,20 @@ public class Foo {
         return labName;
     }
     
+    public Vector<Field> getAllFields(Class clazz) {
+        return getAllFieldsRec(clazz, new Vector<Field>());
+    }
+
+    private Vector<Field> getAllFieldsRec(Class clazz, Vector<Field> vector) {
+        Class superClazz = clazz.getSuperclass();
+        if(superClazz != null){
+            getAllFieldsRec(superClazz, vector);
+        }
+        Vector<Field> vec = new Vector<>(Arrays.asList(clazz.getDeclaredFields()));
+        vector.addAll(vec);
+        return vector;
+    }
+    
     public List<Tuple3<Class<?>, JLabel, JComponent>>  doFuck(Class<?> clazz) {
         Method[] methods = clazz.getMethods();
         System.out.println("methods = " + methods.length);
@@ -89,7 +104,7 @@ public class Foo {
         List<Tuple4<Class<?>, JLabel, JComponent, String>> result = List.empty();
         for (int i = 0; i < urutan.length; i++) {
             String str = urutan[i];
-            Field field = clazz.getDeclaredField(str);
+            Field field = this.getFieldTillRoot(clazz, str);
             Class<?> fieldType = field.getType();
             String labText = this.createLabelName(field.getName());
             JLabel label = new JLabel(labText);
@@ -109,7 +124,7 @@ public class Foo {
             }
             else 
             {
-                    comp = new javax.swing.JFormattedTextField("foo");                                                         
+                    comp = new javax.swing.JFormattedTextField("Input");                                                         
             }
   
             
@@ -117,6 +132,29 @@ public class Foo {
         }
         
         return result;
+    }
+    
+    private Field getFieldTillRoot(Class<?> cls, String name) {
+        System.out.println("class name = " + cls.getName());
+        Field field = getField(cls, name);
+        if (field != null) {
+            return field;
+        } else {
+            Class<?> sup = cls.getSuperclass();
+            return getFieldTillRoot(sup, name);
+        }
+    }
+    
+    private Field getField(Class<?> cls, String name) {
+        try {
+            return cls.getDeclaredField(name);
+        } catch (NoSuchFieldException ex) {
+            Logger.getLogger(Foo.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (SecurityException ex) {
+            Logger.getLogger(Foo.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public static void main(String[] args) {
