@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -38,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Bayarjasa.findByBayarpihutangid", query = "SELECT b FROM Bayarjasa b WHERE b.bayarpihutangid = :bayarpihutangid")
     , @NamedQuery(name = "Bayarjasa.findByPembayaran", query = "SELECT b FROM Bayarjasa b WHERE b.pembayaran = :pembayaran")
     , @NamedQuery(name = "Bayarjasa.findByTanggal", query = "SELECT b FROM Bayarjasa b WHERE b.tanggal = :tanggal")})
+ @ListUrutan({"keterangan","pembayaran","tanggal" })
 public class Bayarjasa implements Serializable {
 
     @Transient
@@ -53,7 +55,7 @@ public class Bayarjasa implements Serializable {
     @Column(name = "KETERANGAN")
     private String keterangan;
     @Column(name = "PEMBAYARAN")
-    private BigInteger pembayaran;
+    private BigInteger pembayaran ;
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggal;

@@ -7,9 +7,12 @@ package app;
 
 import com.toedter.calendar.JDateChooser;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import static javaslang.API.*;
 import javaslang.Tuple;
@@ -91,17 +94,25 @@ public class Foo {
             String labText = this.createLabelName(field.getName());
             JLabel label = new JLabel(labText);
             JComponent comp = null;
+            System.out.println("Gen = "+ fieldType.getName());
+            Object ob = null;
             
-//            if (fieldType.equals(String.class)) {
-//                comp = new JTextField();
-//            } else 
             if (fieldType.equals(Date.class)) {
-                comp = new JDateChooser();
+                comp = new JDateChooser(new java.util.Date());
             }
-                else
+            else if ( Number.class.isAssignableFrom(fieldType)) {
+                try {
+                    ob = org.apache.commons.beanutils.ConstructorUtils.invokeConstructor(fieldType, "0");
+                    comp = new javax.swing.JFormattedTextField(ob);                                             
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ex) {
+                    Logger.getLogger(Foo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else 
             {
-                 comp = new JTextField();
+                    comp = new javax.swing.JFormattedTextField("foo");                                                         
             }
+  
             
             result = result.append(Tuple.of(fieldType, label, comp, str));
         }

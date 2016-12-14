@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javaslang.Tuple3;
 import javaslang.Tuple4;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -47,21 +48,23 @@ public class inputPanel extends javax.swing.JPanel {
                 @Override
                 public void accept(Tuple4<Class<?>, JLabel, JComponent, String> a) {
                     Object Value = null;
-                    if (a._3 instanceof javax.swing.JTextField) {
-                        System.out.println("JT ="+((JTextField)a._3).getText());
+                    
+                    if(a._3 instanceof JFormattedTextField)
+                    {
+                            Value = ((JFormattedTextField)a._3).getValue();        
+                            System.out.println("Value = " + Value);
+                    }
+                    else if (a._3 instanceof javax.swing.JTextField) {
                         Value = ((JTextField)a._3).getText();
                     }
                     else if (a._3 instanceof JDateChooser)
                     {
-                        System.out.println("JD = " + ((JDateChooser)a._3).getDate());
-                        boolean N = ((JDateChooser)a._3).getDate()==null;
-                        if (N) 
-                            Value = new java.util.Date();                            
-                        else    
                             Value = ((JDateChooser)a._3).getDate();                        
+                            System.out.println("tap2");                            
                     }
                     try {
                         BeanUtils.setProperty(target,a._4,Value);
+                        System.out.println("Value class = " + Value.getClass().getName());;
                     } catch (IllegalAccessException | InvocationTargetException ex) {
                         Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -80,6 +83,7 @@ public class inputPanel extends javax.swing.JPanel {
             cons = clazz.getConstructor();
             target = cons.newInstance();            
             System.out.println("Target = " + target.toString());
+            System.out.println("Acces = " + this.getClass().getName());
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex) {
             Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -18,13 +18,13 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Bpkbtitipan b = new app.table.Bpkbtitipan() ;
+        Bayarjasa b = new app.table.Bayarjasa();                               
         Field[] fields = b.getClass().getDeclaredFields();
             System.out.print(" @ListUrutan({");
         for (Field field : fields) {
             System.out.print(",\"" + field.getName()+"\"");
         }
-            System.out.print(" })");
+            System.out.print(" })\n");
     }
     
 }

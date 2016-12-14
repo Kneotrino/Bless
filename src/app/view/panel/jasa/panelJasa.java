@@ -49,9 +49,13 @@ public class panelJasa extends JPanel {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT B FROM Bpkbtitipan B");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
+        newDetailButton = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Bpkbtitipan.class);
         newButton = new javax.swing.JButton();
+        jDialog3 = new javax.swing.JDialog();
+        inputPanel2 = new app.utils.inputPanel(app.table.Bayarjasa.class);
+        newButton1 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
@@ -59,12 +63,19 @@ public class panelJasa extends JPanel {
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        newDetailButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
+
+        newDetailButton.setText("New");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton.addActionListener(formListener);
 
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
@@ -72,6 +83,13 @@ public class panelJasa extends JPanel {
         newButton.setText("Simpan");
         newButton.addActionListener(formListener);
         jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
+
+        jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
+
+        newButton1.setText("Simpan");
+        newButton1.addActionListener(formListener);
+        jDialog3.getContentPane().add(newButton1, java.awt.BorderLayout.PAGE_START);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -160,23 +178,15 @@ public class panelJasa extends JPanel {
         jButton2.addActionListener(formListener);
         jPanel1.add(jButton2);
 
-        deleteButton.setText("Delete");
+        deleteButton.setText("Hapus BPKB");
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
 
-        newDetailButton.setText("New");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        newDetailButton.addActionListener(formListener);
-        jPanel1.add(newDetailButton);
-
-        deleteDetailButton.setText("Delete");
+        deleteDetailButton.setText("Hapus Pembayaran");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -188,9 +198,17 @@ public class panelJasa extends JPanel {
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
 
-        saveButton.setText("Save");
+        saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
+
+        jButton3.setText("Baru");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, newDetailButton, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), jButton3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jButton3.addActionListener(formListener);
+        jPanel1.add(jButton3);
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -222,6 +240,12 @@ public class panelJasa extends JPanel {
             }
             else if (evt.getSource() == jButton2) {
                 panelJasa.this.jButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton1) {
+                panelJasa.this.newButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton3) {
+                panelJasa.this.jButton3ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -257,7 +281,7 @@ public class panelJasa extends JPanel {
             bs = new LinkedList<app.table.Bayarjasa>();
             B.setBayarjasaList((List) bs);
         }
-        app.table.Bayarjasa b = new app.table.Bayarjasa();
+        app.table.Bayarjasa b = (app.table.Bayarjasa) this.inputPanel2.getTarget();
         entityManager.persist(b);
         b.setBpkbtitipid(B);
         bs.add(b);
@@ -327,6 +351,19 @@ public class panelJasa extends JPanel {
         this.jDialog2.show();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+        this.newDetailButtonActionPerformed(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        this.jDialog3.setSize(500, 600);
+        this.jDialog3.setLocationRelativeTo(null);
+        this.jDialog3.show();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -335,13 +372,17 @@ public class panelJasa extends JPanel {
     private javax.swing.JTable detailTable;
     private javax.persistence.EntityManager entityManager;
     private app.utils.inputPanel inputPanel1;
+    private app.utils.inputPanel inputPanel2;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Bpkbtitipan> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
+    private javax.swing.JButton newButton1;
     private javax.swing.JButton newDetailButton;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
