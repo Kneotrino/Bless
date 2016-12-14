@@ -357,7 +357,7 @@ public class panelJasa extends JPanel {
     }//GEN-LAST:event_newButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        this.jDialog3.setSize(500, 600);
+        this.jDialog3.setSize(300, 200);
         this.jDialog3.setLocationRelativeTo(null);
         this.jDialog3.show();
 

@@ -63,7 +63,7 @@ public class Laporan implements Serializable {
     @Lob
     @Column(name = "KETERANGAN")
     private String keterangan;
-    @Column(name = "SALDO", nullable = false)
+    @Column(name = "SALDO")
     private BigInteger saldo;
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)

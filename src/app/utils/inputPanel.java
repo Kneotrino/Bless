@@ -44,6 +44,13 @@ public class inputPanel extends javax.swing.JPanel {
 
              Class<?> theClass = null;
     public Object getTarget() {
+             System.out.println("clazz = " + clazz.getName());
+             try    {
+             target = clazz.newInstance();
+             }
+             catch (Exception ex) {
+            
+        }
             doFuck.forEach(new Consumer<Tuple4<Class<?>, JLabel, JComponent, String>>() {
                 @Override
                 public void accept(Tuple4<Class<?>, JLabel, JComponent, String> a) {
@@ -52,7 +59,6 @@ public class inputPanel extends javax.swing.JPanel {
                     if(a._3 instanceof JFormattedTextField)
                     {
                             Value = ((JFormattedTextField)a._3).getValue();        
-                            System.out.println("Value = " + Value);
                     }
                     else if (a._3 instanceof javax.swing.JTextField) {
                         Value = ((JTextField)a._3).getText();
@@ -60,11 +66,9 @@ public class inputPanel extends javax.swing.JPanel {
                     else if (a._3 instanceof JDateChooser)
                     {
                             Value = ((JDateChooser)a._3).getDate();                        
-                            System.out.println("tap2");                            
                     }
                     try {
                         BeanUtils.setProperty(target,a._4,Value);
-                        System.out.println("Value class = " + Value.getClass().getName());;
                     } catch (IllegalAccessException | InvocationTargetException ex) {
                         Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -74,6 +78,7 @@ public class inputPanel extends javax.swing.JPanel {
     }
 //    List<javax.swing.JComponent> compList = java.util.Collections.emptyList();
 //    List<javax.swing.JLabel> labelList = java.util.Collections.emptyList();
+    
     public inputPanel(Object kelas) 
     {
         this.initComponents();

@@ -94,7 +94,6 @@ public class Foo {
             String labText = this.createLabelName(field.getName());
             JLabel label = new JLabel(labText);
             JComponent comp = null;
-            System.out.println("Gen = "+ fieldType.getName());
             Object ob = null;
             
             if (fieldType.equals(Date.class)) {

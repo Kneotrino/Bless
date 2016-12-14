@@ -56,6 +56,8 @@ public class Pengeluaran extends Laporan implements Serializable {
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggal;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Bayarjasa bayarjasa;
 
     public Pengeluaran() {
     }

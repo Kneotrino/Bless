@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,8 +50,8 @@ public class Bayarjasa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "BAYARPIHUTANGID", nullable = false)     @GeneratedValue
-
+    @Column(name = "BAYARPIHUTANGID", nullable = false)     
+    @GeneratedValue
     private Integer bayarpihutangid;
     @Lob
     @Column(name = "KETERANGAN")
@@ -62,11 +64,15 @@ public class Bayarjasa implements Serializable {
     @JoinColumn(name = "BPKBTITIPID", referencedColumnName = "BPKB_ID")
     @ManyToOne
     private Bpkbtitipan bpkbtitipid;
-
+    @OneToOne(mappedBy = "bayarjasa",cascade = CascadeType.ALL)
+    private Pengeluaran pengeluaran;
     public Bayarjasa() {
+        this.pengeluaran = new Pengeluaran();
+        this.pengeluaran.setKeterangan("jasas");
     }
 
     public Bayarjasa(Integer bayarpihutangid) {
+        this.pengeluaran = new Pengeluaran();
         this.bayarpihutangid = bayarpihutangid;
     }
 
