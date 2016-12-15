@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -42,6 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Saldo.findByKredit", query = "SELECT s FROM Saldo s WHERE s.kredit = :kredit"),
     @NamedQuery(name = "Saldo.findByDebit", query = "SELECT s FROM Saldo s WHERE s.debit = :debit"),
     @NamedQuery(name = "Saldo.findBySaldo", query = "SELECT s FROM Saldo s WHERE s.saldo = :saldo")})
+@ListUrutan({"tanggal","keterangan","jumlah"})
 public class Saldo implements Serializable {
 
     @Transient

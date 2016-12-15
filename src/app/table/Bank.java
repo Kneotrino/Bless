@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -44,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Bank.findByTotalDebit", query = "SELECT b FROM Bank b WHERE b.totalDebit = :totalDebit"),
     @NamedQuery(name = "Bank.findByTotalKredit", query = "SELECT b FROM Bank b WHERE b.totalKredit = :totalKredit"),
     @NamedQuery(name = "Bank.findByNamaBank", query = "SELECT b FROM Bank b WHERE b.namaBank = :namaBank")})
+ @ListUrutan({"namaBank","norek","nama","alamat","nomorHp","nomorKtp","totalSaldo","totalDebit","totalKredit" })
 public class Bank implements Serializable {
 
     @Transient
@@ -185,12 +187,12 @@ public class Bank implements Serializable {
 
     @XmlTransient
     public List<Saldo> getSaldoList() {
-        this.saldoList = org.jdesktop.observablecollections.ObservableCollections.observableList(this.saldoList);
+//        this.saldoList = org.jdesktop.observablecollections.ObservableCollections.observableList(this.saldoList);
         return saldoList;
     }
 
     public void setSaldoList(List<Saldo> saldoList) {
-        this.saldoList = org.jdesktop.observablecollections.ObservableCollections.observableList(this.saldoList);
+//        this.saldoList = org.jdesktop.observablecollections.ObservableCollections.observableList(this.saldoList);
         List<Saldo> oldSaldo = this.saldoList; 
         this.saldoList = saldoList;
         changeSupport.firePropertyChange("saldo", oldSaldo, saldoList);
