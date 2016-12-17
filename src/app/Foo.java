@@ -148,11 +148,8 @@ public class Foo {
     private Field getField(Class<?> cls, String name) {
         try {
             return cls.getDeclaredField(name);
-        } catch (NoSuchFieldException ex) {
-            Logger.getLogger(Foo.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } catch (SecurityException ex) {
-            Logger.getLogger(Foo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchFieldException | SecurityException ex) {
+//            Logger.getLogger(Foo.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

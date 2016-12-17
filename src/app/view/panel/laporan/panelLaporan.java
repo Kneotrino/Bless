@@ -187,9 +187,7 @@ public class panelLaporan extends JPanel {
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         java.util.List<app.table.Laporan> data = query.getResultList();
-        java.math.BigInteger saldo = new java.math.BigInteger("1");
-        
-        
+        java.math.BigInteger saldo = new java.math.BigInteger("0");               
         for (Laporan laporan : data) {
             entityManager.refresh(laporan);
             saldo = saldo.subtract(laporan.getPengeluaran());

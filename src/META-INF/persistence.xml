@@ -27,6 +27,9 @@
     <class>app.table.Listleasing</class>
     <class>app.table.BayarJasaPemasukan</class>
     <class>app.table.BayarJasaPengeluaran</class>
+    <class>app.table.Kas</class>
+    <class>app.table.Penyimpanan</class>
+    <class>app.table.Transaksi</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>
@@ -41,6 +44,13 @@
     <class>app.table.Bayarjasa</class>
     <class>app.table.BayarJasaPemasukan</class>
     <class>app.table.BayarJasaPengeluaran</class>
+    <class>app.table.Saldo</class>
+    <class>app.table.Laporan</class>
+    <class>app.table.Bank</class>
+    <class>app.table.Pengeluaran</class>
+    <class>app.table.Pemasukan</class>
+    <class>app.table.Penyimpanan</class>
+    <class>app.table.Transaksi</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
       <property name="javax.persistence.jdbc.password" value="app"/>
