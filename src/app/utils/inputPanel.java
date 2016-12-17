@@ -51,7 +51,10 @@ public class inputPanel extends javax.swing.JPanel {
              catch (Exception ex) {
             
         }
-            doFuck.forEach(new Consumer<Tuple4<Class<?>, JLabel, JComponent, String>>() {
+             if (target instanceof app.table.Laporan) {
+                 System.out.println("Bank default KAS");                 
+        }
+             doFuck.forEach(new Consumer<Tuple4<Class<?>, JLabel, JComponent, String>>() {
                 @Override
                 public void accept(Tuple4<Class<?>, JLabel, JComponent, String> a) {
                     Object Value = null;

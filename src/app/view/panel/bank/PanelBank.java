@@ -5,6 +5,7 @@
  */
 package app.view.panel.bank;
 
+import app.table.Bank;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.util.ArrayList;
@@ -27,6 +28,25 @@ public class PanelBank extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
+        {            
+            Bank find = this.entityManager.find(app.table.Bank.class, 1);
+            System.out.println("find = " + find);
+            boolean name = find ==null;
+            if (find ==null) {
+            Bank bank = new app.table.Bank(1);
+            bank.setNamaBank("Kas");
+            entityManager.persist(bank);
+            list.add(bank);
+            int row = list.size() - 1;
+            masterTable.setRowSelectionInterval(row, row);
+            masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+            this.saveButtonActionPerformed(null);                
+            }
+//            this.persist(bank);
+        }
+
+//        this.list.isEmpty()
+
     }
 
     /**
@@ -54,10 +74,10 @@ public class PanelBank extends JPanel {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        newDetailButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        newDetailButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -71,10 +91,10 @@ public class PanelBank extends JPanel {
         jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog2.getContentPane().setLayout(new java.awt.GridLayout());
+        jDialog2.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog3.getContentPane().setLayout(new java.awt.GridLayout());
+        jDialog3.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         setLayout(new java.awt.BorderLayout());
 
@@ -117,12 +137,37 @@ public class PanelBank extends JPanel {
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.saldoList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldoId}"));
+        columnBinding.setColumnName("REF");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.tanggal}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.jumlah}"));
+        columnBinding.setColumnName("Jumlah");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.dtype}"));
+        columnBinding.setColumnName("Sumber");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId.namaBank}"));
+        columnBinding.setColumnName("Tujuan");
+        columnBinding.setColumnClass(String.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -142,14 +187,6 @@ public class PanelBank extends JPanel {
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
 
-        newDetailButton.setText("Simpan Transaksi");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        newDetailButton.addActionListener(formListener);
-        jPanel1.add(newDetailButton);
-
         deleteDetailButton.setText("Hapus Transaksi");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -165,6 +202,14 @@ public class PanelBank extends JPanel {
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
+
+        newDetailButton.setText("Baru Transaksi");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton.addActionListener(formListener);
+        jPanel1.add(newDetailButton);
 
         jButton2.setText("Tambah Pemasukan");
         jPanel1.add(jButton2);
@@ -182,26 +227,26 @@ public class PanelBank extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                PanelBank.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == jButton1) {
+                PanelBank.this.jButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 PanelBank.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == saveButton) {
-                PanelBank.this.saveButtonActionPerformed(evt);
+            else if (evt.getSource() == deleteDetailButton) {
+                PanelBank.this.deleteDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == refreshButton) {
                 PanelBank.this.refreshButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteDetailButton) {
-                PanelBank.this.deleteDetailButtonActionPerformed(evt);
+            else if (evt.getSource() == saveButton) {
+                PanelBank.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton) {
                 PanelBank.this.newDetailButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton1) {
-                PanelBank.this.jButton1ActionPerformed(evt);
+            else if (evt.getSource() == newButton) {
+                PanelBank.this.newButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -363,6 +408,22 @@ public class PanelBank extends JPanel {
                 frame.setVisible(true);
             }
         });
+    }
+
+    public void persist(Object object) {
+        boolean active = entityManager.getTransaction().isActive();
+        if (!active) {
+                entityManager.getTransaction().begin();            
+        }
+        try {
+            entityManager.persist(object);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+        }
     }
     
 }

@@ -23,6 +23,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -70,10 +72,23 @@ public class Saldo implements Serializable {
     @JoinColumn(name = "BANK_ID", referencedColumnName = "BANK_ID")
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Bank bankId;
+    @OneToOne(mappedBy = "Transaksi",cascade = CascadeType.ALL)
+    private Laporan Laporan = new Laporan();
 
-    public Saldo() {
+    public Laporan getLaporan() {
+        return Laporan;
     }
 
+    public void setLaporan(Laporan Laporan) {
+        this.Laporan = Laporan;
+    }
+    public Saldo() {
+    }
+    @PrePersist
+    void BankDefault()
+    {
+        
+    }
     public Saldo(Integer saldoId) {
         this.saldoId = saldoId;
     }

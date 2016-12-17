@@ -70,8 +70,19 @@ public class Laporan implements Serializable {
     private Date tanggal = new Date();
     @Column(name = "TIPE", length = 255)
     private String tipe;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Saldo Transaksi;
+
+    public Saldo getTransaksi() {
+        return Transaksi;
+    }
+
+    public void setTransaksi(Saldo Transaksi) {
+        this.Transaksi = Transaksi;
+    }
     
     public Laporan() {
+//        this.Transaksi.setBankId(new Bank(1));
     }
 
     public Laporan(Long id) {

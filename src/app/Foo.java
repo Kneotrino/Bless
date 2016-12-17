@@ -135,7 +135,7 @@ public class Foo {
     }
     
     private Field getFieldTillRoot(Class<?> cls, String name) {
-        System.out.println("class name = " + cls.getName());
+//        System.out.println("class name = " + cls.getName());
         Field field = getField(cls, name);
         if (field != null) {
             return field;
