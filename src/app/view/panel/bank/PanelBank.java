@@ -73,8 +73,8 @@ public class PanelBank extends JPanel {
         detailTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         newDetailButton = new javax.swing.JButton();
@@ -97,6 +97,8 @@ public class PanelBank extends JPanel {
         jDialog3.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         setLayout(new java.awt.BorderLayout());
+
+        masterTable.setCellSelectionEnabled(true);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId}"));
@@ -179,21 +181,21 @@ public class PanelBank extends JPanel {
         jButton1.addActionListener(formListener);
         jPanel1.add(jButton1);
 
-        deleteButton.setText("Hapus Bank");
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteButton.addActionListener(formListener);
-        jPanel1.add(deleteButton);
-
         deleteDetailButton.setText("Hapus Transaksi");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         deleteDetailButton.addActionListener(formListener);
         jPanel1.add(deleteDetailButton);
+
+        deleteButton.setText("Hapus Bank");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteButton.addActionListener(formListener);
+        jPanel1.add(deleteButton);
 
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
@@ -212,6 +214,7 @@ public class PanelBank extends JPanel {
         jPanel1.add(newDetailButton);
 
         jButton2.setText("Tambah Pemasukan");
+        jButton2.addActionListener(formListener);
         jPanel1.add(jButton2);
 
         jButton3.setText("Tambah Pengeluaran");
@@ -247,6 +250,9 @@ public class PanelBank extends JPanel {
             }
             else if (evt.getSource() == newButton) {
                 PanelBank.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton2) {
+                PanelBank.this.jButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -348,6 +354,10 @@ public class PanelBank extends JPanel {
         this.jDialog1.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

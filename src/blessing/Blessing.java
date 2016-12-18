@@ -9,6 +9,7 @@ import app.view.main;
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import java.io.File;
 import javax.persistence.EntityManager;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -47,7 +48,8 @@ public class Blessing {
         feel();
         
 //        UIManager.setLookAndFeel( new  com.jgoodies.looks.windows.WindowsLookAndFeel() );
-        app.view.ShowRoom form = new app.view.ShowRoom();
+//        app.view.ShowRoom form = new app.view.ShowRoom();
+        JFrame form = new app.view.ShowRoom();
         form.show();
     }
     private static void feel() {

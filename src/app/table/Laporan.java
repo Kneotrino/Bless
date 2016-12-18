@@ -71,7 +71,7 @@ public class Laporan implements Serializable {
     @Column(name = "TIPE", length = 255)
     private String tipe;
     @OneToOne(cascade = CascadeType.ALL)
-    private Saldo Transaksi;
+    private Saldo Transaksi = new Saldo();
 
     public Saldo getTransaksi() {
         return Transaksi;

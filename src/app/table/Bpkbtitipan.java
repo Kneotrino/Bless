@@ -96,7 +96,7 @@ public class Bpkbtitipan implements Serializable {
     @Column(name = "TGL_TERIMA")
     @Temporal(TemporalType.DATE)
     private Date tglTerima = new Date();
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Bayarjasa.class,cascade = CascadeType.ALL)
     private List<Bayarjasa> bayarjasaList;
 
     public Bpkbtitipan() {

@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.view.panel.inven;
+package app.view.FixPanel;
 
 import app.table.Asset;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.EventQueue;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Date;
+import javax.swing.JFrame;
 
 /**
  *
@@ -38,6 +41,9 @@ public class Inventaris extends javax.swing.JPanel {
         blessingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         assetQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT a FROM Asset a");
         assetList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(assetQuery.getResultList());
+        jDialog1 = new javax.swing.JDialog();
+        jButton4 = new javax.swing.JButton();
+        inputPanel1 = new app.utils.inputPanel(app.table.Asset.class);
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -47,9 +53,21 @@ public class Inventaris extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
 
+        jButton4.setText("TAMBAH");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jDialog1.getContentPane().add(jButton4, java.awt.BorderLayout.PAGE_END);
+        jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
+
         setLayout(new java.awt.BorderLayout());
 
         jTable1.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable1.setCellSelectionEnabled(true);
+        jTable1.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, assetList, jTable1);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${assetId}"));
@@ -63,7 +81,7 @@ public class Inventaris extends javax.swing.JPanel {
         columnBinding.setColumnClass(java.util.Date.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaBeli}"));
         columnBinding.setColumnName("Harga Beli");
-        columnBinding.setColumnClass(Long.class);
+        columnBinding.setColumnClass(BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${stock}"));
         columnBinding.setColumnName("Stock");
         columnBinding.setColumnClass(Integer.class);
@@ -118,11 +136,14 @@ public class Inventaris extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
-        Asset asset = new app.table.Asset();
-        asset.setTanggalStock(new java.util.Date());
-        this.persist(asset);
-        this.assetList.add(asset);
+        this.jDialog1.setSize(400, 400);
+        this.jDialog1.setLocationRelativeTo(null);
+        this.jDialog1.show();
+//        System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
+//        Asset asset = new app.table.Asset();
+//        asset.setTanggalStock(new java.util.Date());
+//        this.persist(asset);
+//        this.assetList.add(asset);
         
     }//GEN-LAST:event_jButton1ActionPerformed
     Asset as;
@@ -156,6 +177,16 @@ public class Inventaris extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
+        Asset asset = (Asset) this.inputPanel1.getTarget();
+//        asset.setTanggalStock(new java.util.Date());
+        this.persist(asset);
+        this.assetList.add(asset);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     public void persist(Object object) {
         if (!this.blessingPUEntityManager.getTransaction().isActive())         
             blessingPUEntityManager.getTransaction().begin();
@@ -174,9 +205,12 @@ public class Inventaris extends javax.swing.JPanel {
     private java.util.List<app.table.Asset> assetList;
     private javax.persistence.Query assetQuery;
     private javax.persistence.EntityManager blessingPUEntityManager;
+    private app.utils.inputPanel inputPanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -188,12 +222,47 @@ public class Inventaris extends javax.swing.JPanel {
 
     private void update() {
         System.out.println("app.view.panel.mobil.panelMobil.UpdatePDP()");
-        long tk =
-                this.assetList
+        long tk;
+        tk = this.assetList
                 .stream()
-                .mapToLong(i -> i.getHargaBeli())
+                .mapToLong(i -> (i.getHargaBeli().longValue()))
                 .sum();
         this.jTextField1.setText(Rp.format(tk));
 
+    }
+        public static void main(String[] args) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(panelJasa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(panelJasa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(panelJasa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(panelJasa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                JFrame frame = new JFrame();
+                frame.setContentPane(new Inventaris());
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
     }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.view.panel.jasa;
+package app.view.FixPanel;
 
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
@@ -59,6 +59,7 @@ public class panelJasa extends JPanel {
         jDialog4 = new javax.swing.JDialog();
         inputPanel3 = new app.utils.inputPanel(app.table.BayarJasaPengeluaran.class);
         newButton2 = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
@@ -66,9 +67,8 @@ public class panelJasa extends JPanel {
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        deleteDetailButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        deleteDetailButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -105,10 +105,14 @@ public class panelJasa extends JPanel {
         newButton2.addActionListener(formListener);
         jDialog4.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
 
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(formListener);
+
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -205,21 +209,17 @@ public class panelJasa extends JPanel {
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
 
-        deleteDetailButton.setText("Hapus Pembayaran");
+        saveButton.setText("Simpan");
+        saveButton.addActionListener(formListener);
+        jPanel1.add(saveButton);
+
+        deleteDetailButton.setText("Hapus Transaksi");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         deleteDetailButton.addActionListener(formListener);
         jPanel1.add(deleteDetailButton);
-
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel1.add(refreshButton);
-
-        saveButton.setText("Simpan");
-        saveButton.addActionListener(formListener);
-        jPanel1.add(saveButton);
 
         jButton3.setText("Pemasukan");
 
@@ -253,14 +253,11 @@ public class panelJasa extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelJasa.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteDetailButton) {
-                panelJasa.this.deleteDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                panelJasa.this.refreshButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == saveButton) {
                 panelJasa.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteDetailButton) {
+                panelJasa.this.deleteDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton3) {
                 panelJasa.this.jButton3ActionPerformed(evt);
@@ -279,6 +276,9 @@ public class panelJasa extends JPanel {
             }
             else if (evt.getSource() == newButton2) {
                 panelJasa.this.newButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton) {
+                panelJasa.this.refreshButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -316,13 +316,12 @@ public class panelJasa extends JPanel {
         }
         
         app.table.Bayarjasa b;
-        if (pemasukan) {        
+        System.out.println("pemasukan = " + pemasukan);
+        if (!pemasukan) {        
             b = (app.table.Bayarjasa) this.inputPanel2.getTarget();
-            
         }
         else    {
-            b = (app.table.Bayarjasa) this.inputPanel3.getTarget();
-            
+            b = (app.table.Bayarjasa) this.inputPanel3.getTarget();            
         }
         entityManager.persist(b);
         b.setBpkbtitipid(B);
@@ -330,8 +329,8 @@ public class panelJasa extends JPanel {
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = bs.size() - 1;
-        detailTable.setRowSelectionInterval(row, row);
-        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+//        detailTable.setRowSelectionInterval(row, row);
+//        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
     
     @SuppressWarnings("unchecked")
@@ -371,7 +370,7 @@ public class panelJasa extends JPanel {
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        try {
+        try {            
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
         } catch (RollbackException rex) {

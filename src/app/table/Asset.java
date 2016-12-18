@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -32,6 +33,7 @@ import javax.swing.ImageIcon;
  */
 @Entity
 @Table(name = "ASSET", catalog = "", schema = "BLESSING")
+ @ListUrutan({"namaAsset","hargaBeli","keterangan","status","stock","tanggalStock","gambar" })
 @NamedQueries({
     @NamedQuery(name = "Asset.findAll", query = "SELECT a FROM Asset a"),
     @NamedQuery(name = "Asset.findByAssetId", query = "SELECT a FROM Asset a WHERE a.assetId = :assetId"),
@@ -41,6 +43,7 @@ import javax.swing.ImageIcon;
     @NamedQuery(name = "Asset.findByStatus", query = "SELECT a FROM Asset a WHERE a.status = :status"),
     @NamedQuery(name = "Asset.findByStock", query = "SELECT a FROM Asset a WHERE a.stock = :stock"),
     @NamedQuery(name = "Asset.findByTanggalStock", query = "SELECT a FROM Asset a WHERE a.tanggalStock = :tanggalStock")})
+
 public class Asset implements Serializable {
 
     @Transient
@@ -55,7 +58,7 @@ public class Asset implements Serializable {
     @Column(name = "NAMA_ASSET", length = 64)
     private String namaAsset;
     @Column(name = "HARGA_BELI")
-    private long hargaBeli;
+    private BigInteger hargaBeli;
     @Column(name = "KETERANGAN", length = 64)
     private String keterangan;
     @Column(name = "STATUS", length = 32)
@@ -96,12 +99,12 @@ public class Asset implements Serializable {
         changeSupport.firePropertyChange("namaAsset", oldNamaAsset, namaAsset);
     }
 
-    public long getHargaBeli() {
+    public BigInteger getHargaBeli() {
         return hargaBeli;
     }
 
-    public void setHargaBeli(long hargaBeli) {
-        long oldHargaBeli = this.hargaBeli;
+    public void setHargaBeli(BigInteger hargaBeli) {
+        BigInteger oldHargaBeli = this.hargaBeli;
         this.hargaBeli = hargaBeli;
         changeSupport.firePropertyChange("hargaBeli", oldHargaBeli, hargaBeli);
     }

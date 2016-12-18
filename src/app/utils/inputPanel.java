@@ -6,7 +6,9 @@
 package app.utils;
 
 import app.Foo;
+import app.table.Bank;
 import app.table.Laporan;
+import app.table.Saldo;
 import com.toedter.calendar.JDateChooser;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -43,6 +45,7 @@ public class inputPanel extends javax.swing.JPanel {
     private Class clazz;
 
              Class<?> theClass = null;
+             
     public Object getTarget() {
              System.out.println("clazz = " + clazz.getName());
              try    {
@@ -52,7 +55,15 @@ public class inputPanel extends javax.swing.JPanel {
             
         }
              if (target instanceof app.table.Laporan) {
-                 System.out.println("Bank default KAS");                 
+                 
+//                 ((app.table.Laporan)target).setTransaksi(new Saldo());
+//                 Saldo transaksi = ((app.table.Laporan)target).getTransaksi();
+//                 Bank find = this.blessingPUEntityManager.find(app.table.Bank.class, 1);
+//                 System.out.println("find = " + find);
+////                 transaksi.setBankId(find);
+//                 Bank bankId = transaksi.getBankId();
+//                 System.out.print("bankId = " + bankId);
+//                 System.out.println(";Bank default KAS, Transaksai =" + transaksi); 
         }
              doFuck.forEach(new Consumer<Tuple4<Class<?>, JLabel, JComponent, String>>() {
                 @Override
@@ -128,10 +139,65 @@ public class inputPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        blessingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
+        loginQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT l FROM Login l");
+        loginList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : loginQuery.getResultList();
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, loginList, jTable1);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kelas}"));
+        columnBinding.setColumnName("Kelas");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomorhp}"));
+        columnBinding.setColumnName("Nomorhp");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alamat}"));
+        columnBinding.setColumnName("Alamat");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${status}"));
+        columnBinding.setColumnName("Status");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pass}"));
+        columnBinding.setColumnName("Pass");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nama}"));
+        columnBinding.setColumnName("Nama");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+        columnBinding.setColumnName("Id");
+        columnBinding.setColumnClass(Integer.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+
+        jScrollPane1.setViewportView(jTable1);
 
         setLayout(new java.awt.GridLayout(0, 2));
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 private Object target;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager blessingPUEntityManager;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private java.util.List<app.table.Login> loginList;
+    private javax.persistence.Query loginQuery;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    public void persist(Object object) {
+        blessingPUEntityManager.getTransaction().begin();
+        try {
+            blessingPUEntityManager.persist(object);
+            blessingPUEntityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            blessingPUEntityManager.getTransaction().rollback();
+        } finally {
+            blessingPUEntityManager.close();
+        }
+    }
 }

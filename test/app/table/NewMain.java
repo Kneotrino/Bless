@@ -18,7 +18,7 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Object b = new app.table.Bank();                               
+        Object b = new app.table.Asset();                               
         Field[] fields = b.getClass().getDeclaredFields();
             System.out.print(" @ListUrutan({");
         for (Field field : fields) {

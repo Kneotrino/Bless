@@ -152,6 +152,11 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
               </TableColumnModel>
             </Property>
             <Property name="rowHeight" type="int" value="25"/>
@@ -203,6 +208,11 @@
               <Subbinding sourcePath="${transaksi.bankId.namaBank}">
                 <BindingParameter name="NAME" value="Tujuan"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+              </Subbinding>
+              <Subbinding sourcePath="${transaksi}">
+                <BindingParameter name="NAME" value="Transaksi Ref"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Saldo.class"/>
               </Subbinding>
             </BindingProperty>
           </BindingProperties>

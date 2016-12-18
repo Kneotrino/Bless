@@ -70,10 +70,10 @@ public class Saldo implements Serializable {
     @Column(name = "KETERANGAN", length = 32700)
     private String keterangan;
     @JoinColumn(name = "BANK_ID", referencedColumnName = "BANK_ID")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Bank bankId;
     @OneToOne(mappedBy = "Transaksi",cascade = CascadeType.ALL)
-    private Laporan Laporan = new Laporan();
+    private Laporan Laporan;
 
     public Laporan getLaporan() {
         return Laporan;
