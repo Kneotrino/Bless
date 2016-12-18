@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Bank.findByTotalDebit", query = "SELECT b FROM Bank b WHERE b.totalDebit = :totalDebit"),
     @NamedQuery(name = "Bank.findByTotalKredit", query = "SELECT b FROM Bank b WHERE b.totalKredit = :totalKredit"),
     @NamedQuery(name = "Bank.findByNamaBank", query = "SELECT b FROM Bank b WHERE b.namaBank = :namaBank")})
- @ListUrutan({"namaBank","norek","nama","alamat","nomorHp","nomorKtp","totalSaldo","totalDebit","totalKredit" })
+ @ListUrutan({"namaBank","norek","nama","alamat","nomorHp","nomorKtp","totalDebit","totalKredit" })
 public class Bank implements Serializable {
 
     @Transient
@@ -75,7 +75,7 @@ public class Bank implements Serializable {
     private BigInteger totalKredit;
     @Column(name = "NAMA_BANK", length = 32)
     private String namaBank;
-    @OneToMany(mappedBy = "bankId", fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bankId", fetch = FetchType.EAGER , cascade = {CascadeType.REMOVE,CascadeType.MERGE})
     private List<Saldo> saldoList;
 
     public Bank() {

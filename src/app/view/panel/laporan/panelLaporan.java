@@ -199,9 +199,6 @@ public class panelLaporan extends JPanel {
             entityManager.refresh(laporan);
             saldo = saldo.subtract(laporan.getPengeluaran());
             saldo = saldo.add(laporan.getPemasukan());
-//            System.out.println("jumlah = "+ laporan.getJumlah());
-//            System.out.println("Pemasukan" +laporan.getPemasukan());
-//            System.out.println("Pengeluaran" +laporan.getPengeluaran());
             laporan.setSaldo(saldo);
             
         }

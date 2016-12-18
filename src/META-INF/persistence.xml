@@ -30,6 +30,7 @@
     <class>app.table.Kas</class>
     <class>app.table.Penyimpanan</class>
     <class>app.table.Transaksi</class>
+    <class>app.view.panel.bank.Bank</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>

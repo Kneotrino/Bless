@@ -128,7 +128,8 @@ public class panelJasa extends JPanel {
         newButton2.addActionListener(formListener);
         jDialog4.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankList, jComboBox2);
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jDialog4.getContentPane().add(jComboBox2, java.awt.BorderLayout.PAGE_END);
