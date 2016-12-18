@@ -282,6 +282,7 @@ public class panelMaster extends JPanel {
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        System.out.println("panelMaster.saveButtonActionPerformed....");
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();

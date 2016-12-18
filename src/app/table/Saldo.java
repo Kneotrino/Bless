@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -70,9 +71,9 @@ public class Saldo implements Serializable {
     @Column(name = "KETERANGAN", length = 32700)
     private String keterangan;
     @JoinColumn(name = "BANK_ID", referencedColumnName = "BANK_ID")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE,CascadeType.MERGE})
     private Bank bankId;
-    @OneToOne(mappedBy = "Transaksi",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "Transaksi", cascade = CascadeType.ALL)
     private Laporan Laporan;
 
     public Laporan getLaporan() {
@@ -87,7 +88,14 @@ public class Saldo implements Serializable {
     @PrePersist
     void BankDefault()
     {
-        
+        if (bankId == null) {
+            this.bankId = Util.findFirst();
+            System.out.println("bank.id = " + this.bankId.getBankId());
+        }
+    }
+    @PostPersist
+    void justLook() {
+//        System.out.println("And after persist bank.id = " + this.bankId);
     }
     public Saldo(Integer saldoId) {
         this.saldoId = saldoId;
@@ -185,7 +193,7 @@ public class Saldo implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Saldo[ saldoId=" + saldoId + " ]";
+        return "[ Transaksi Id=" + saldoId + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
