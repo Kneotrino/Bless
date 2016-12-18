@@ -221,7 +221,7 @@ public class Bank implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Bank[ bankId=" + bankId + " ]";
+        return "[ Tujuan ="+namaBank+"; Bank REF=" + bankId + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

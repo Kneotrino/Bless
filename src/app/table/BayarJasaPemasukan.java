@@ -13,5 +13,4 @@ import javax.persistence.Entity;
 @Entity
 @ListUrutan({"tanggal","keterangan","jumlah"})
 public class BayarJasaPemasukan extends Bayarjasa implements Serializable {
-
 }

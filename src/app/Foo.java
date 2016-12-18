@@ -22,6 +22,7 @@ import javaslang.Tuple4;
 import javaslang.collection.HashSet;
 import javaslang.collection.List;
 import javaslang.collection.Set;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -83,11 +84,13 @@ public class Foo {
                         label = new JLabel();
                         label.setText(getName(meth));
                         
-                    } else if (rt.equals(Date.class)) {
+                    } 
+                    else if (rt.equals(Date.class)) {
                         comp = new JDateChooser();
                         label = new JLabel();
                         label.setText(getName(meth));
-                    }
+                    }                    
+
                     
                     return Tuple.of(rt, label, comp);
                 });

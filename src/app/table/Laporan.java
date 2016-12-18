@@ -70,8 +70,8 @@ public class Laporan implements Serializable {
     private Date tanggal = new Date();
     @Column(name = "TIPE", length = 255)
     private String tipe;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Saldo Transaksi = new Saldo();
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private Saldo Transaksi;
 
     public Saldo getTransaksi() {
         return Transaksi;

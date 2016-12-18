@@ -22,11 +22,11 @@ public class Blessing {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws UnsupportedLookAndFeelException {
+    public static void main(String[] args) {
         System.out.println("blessing.Blessing.main()");
-        EntityManager blessingPUEntityManager = 
-                java.beans.Beans.isDesignTime() ? 
-                    null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
+//        EntityManager blessingPUEntityManager = 
+//                java.beans.Beans.isDesignTime() ? 
+//                    null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         try{      
            // returns pathnames for files and directory
            File f = null;

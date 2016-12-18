@@ -248,10 +248,12 @@ public class Bpkbtitipan implements Serializable {
 
     @XmlTransient
     public List<Bayarjasa> getBayarjasaList() {
+//        org.jdesktop.observablecollections.ObservableCollections.observableList(bayarjasaList);
         return bayarjasaList;
     }
 
     public void setBayarjasaList(List<Bayarjasa> bayarjasaList) {
+//        org.jdesktop.observablecollections.ObservableCollections.observableList(bayarjasaList);
         this.bayarjasaList = bayarjasaList;
     }
 
@@ -277,7 +279,7 @@ public class Bpkbtitipan implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Bpkbtitipan[ bpkbId=" + bpkbId + " ]";
+        return " [ bpkbId REF=" + bpkbId + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

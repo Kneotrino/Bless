@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @ListUrutan({"tanggal","keterangan","jumlah"})
 public class Bayarjasa extends Laporan implements Serializable {
 
-    @ManyToOne(targetEntity = Bpkbtitipan.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Bpkbtitipan.class, cascade = {CascadeType.MERGE})
     private Bpkbtitipan bpkbtitipid;
 
     public Bpkbtitipan getBpkbtitipid() {

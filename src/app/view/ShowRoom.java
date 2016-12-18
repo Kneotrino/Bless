@@ -72,6 +72,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jPanel4 = new app.view.FixPanel.panelJasa();
         jPanel5 = new app.view.panel.bank.PanelBank();
         inventaris1 = new app.view.FixPanel.Inventaris();
+        panelTransaksi1 = new app.view.FixPanel.PanelTransaksi();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -79,6 +80,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -105,6 +107,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(jPanel4, "Jasa");
         getContentPane().add(jPanel5, "Bank");
         getContentPane().add(inventaris1, "Asset");
+        getContentPane().add(panelTransaksi1, "Transaksi");
 
         jMenu1.setText("Akutansi");
 
@@ -143,6 +146,14 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu4.add(jMenuItem3);
 
         jMenu1.add(jMenu4);
+
+        jMenuItem11.setText("Transaksi");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem11);
 
         jMenuBar1.add(jMenu1);
 
@@ -236,8 +247,9 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+//        this.jPanel4.
+        ((app.view.FixPanel.panelJasa)jPanel4).Restart();
         this.chandePanel("Jasa");
-        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -249,6 +261,13 @@ public class ShowRoom extends javax.swing.JFrame {
         this.chandePanel("Asset");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        chandePanel("Transaksi");
+        
+        this.panelTransaksi1.Reset();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,6 +316,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -310,6 +330,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private app.view.FixPanel.PanelTransaksi panelTransaksi1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

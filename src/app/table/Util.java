@@ -16,20 +16,23 @@ import javax.persistence.Query;
  * @author SEED
  */
 public class Util {
+        public static EntityManagerFactory fact = Persistence.createEntityManagerFactory("blessingPU");
+        public static EntityManager manager = fact.createEntityManager();
     public static long countBank() {
-        EntityManagerFactory fact = Persistence.createEntityManagerFactory("blessingPU");
-        EntityManager manager = fact.createEntityManager();
         Query query = manager.createQuery("SELECT COUNT(b) FROM Bank b");
         Long count = (Long) query.getSingleResult();
         return count;
     }
     
     public static Bank findFirst() {
-        EntityManagerFactory fact = Persistence.createEntityManagerFactory("blessingPU");
-        EntityManager manager = fact.createEntityManager();
         Query query = manager.createQuery("SELECT b From Bank b ORDER BY b");
         List<Bank> result = query.getResultList();
         return result.get(0);
+    }
+    public static List<Bank> findALL() {
+        Query query = manager.createQuery("SELECT b From Bank b ORDER BY b");
+        List<Bank> result = query.getResultList();
+        return result;
     }
 
     public Util() {
