@@ -569,6 +569,7 @@ public class panelMobil extends javax.swing.JPanel {
 
         editMobil.setTitle("DATA MOBIL");
         editMobil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        editMobil.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
         jScrollPane6.setPreferredSize(new java.awt.Dimension(1862, 170));
 
@@ -1075,7 +1076,7 @@ public class panelMobil extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 10;
         jPanel13.add(jLabel50, gridBagConstraints);
 
-        jLabel51.setText("METODE PEMBAYRAN");
+        jLabel51.setText("NOMOR HP KE-2");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -1148,7 +1149,7 @@ public class panelMobil extends javax.swing.JPanel {
         gridBagConstraints.gridy = 2;
         jPanel13.add(jLabel53, gridBagConstraints);
 
-        jLabel68.setText("BANK");
+        jLabel68.setText("NAMA ORANG KE-2");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
@@ -1520,10 +1521,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding.setColumnName("Norek");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bank}"));
-    columnBinding.setColumnName("Bank");
+    columnBinding.setColumnName("Nama Orang ke-2");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pembayaran}"));
-    columnBinding.setColumnName("Pembayaran");
+    columnBinding.setColumnName("No Hp 2");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
     columnBinding.setColumnName("Mobil Ref");

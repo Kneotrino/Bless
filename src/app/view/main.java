@@ -47,11 +47,11 @@ public class main extends javax.swing.JFrame {
         panelMobil1 = new app.view.panel.mobil.panelMobil();
         jPanel1 = new app.view.FixPanel.Inventaris();
         panelHutang1 = new app.view.panel.hutang.panelHutang();
-        jPanel3 = new app.view.panel.laporan.panelMaster(app.table.Pengeluaran.class)
+        jPanel3 = new app.view.FixPanel.panelMaster(app.table.Pengeluaran.class)
         ;
-        jPanel2 = new app.view.panel.laporan.panelMaster(app.table.Pemasukan.class)
+        jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
         ;
-        panelLaporan1 = new app.view.panel.laporan.panelLaporan();
+        panelLaporan1 = new app.view.FixPanel.panelLaporan();
         panelRental1 = new app.view.panel.bank.panelRental();
         panelPegawai1 = new app.view.panel.Pegawai.PanelPegawai();
         panelPiutang1 = new app.view.panel.hutang.panelPiutang();
@@ -480,7 +480,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem openMenuItem;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.panelJasa panelJasa1;
-    private app.view.panel.laporan.panelLaporan panelLaporan1;
+    private app.view.FixPanel.panelLaporan panelLaporan1;
     private app.view.panel.mobil.panelMobil panelMobil1;
     private app.view.panel.Pegawai.PanelPegawai panelPegawai1;
     private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;

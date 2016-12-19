@@ -65,14 +65,16 @@ public class Inventaris extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         jTable1.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        jTable1.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        jTable1.setCellSelectionEnabled(true);
+        jTable1.setColumnSelectionAllowed(false);
         jTable1.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, assetList, jTable1);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${assetId}"));
         columnBinding.setColumnName("Ref asset");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${namaAsset}"));
         columnBinding.setColumnName("Nama Asset");
         columnBinding.setColumnClass(String.class);

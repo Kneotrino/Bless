@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.view.panel.bank;
+package app.view.FixPanel;
 
 import app.table.Bank;
 import app.table.Laporan;
@@ -163,8 +163,6 @@ public class PanelBank extends JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        masterTable.setColumnSelectionAllowed(false);
-
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId}"));
         columnBinding.setColumnName("Ref");
@@ -243,8 +241,8 @@ public class PanelBank extends JPanel {
             if (evt.getSource() == jButton1) {
                 PanelBank.this.jButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteDetailButton) {
-                PanelBank.this.deleteDetailButtonActionPerformed(evt);
+            else if (evt.getSource() == jButton4) {
+                PanelBank.this.jButton4ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 PanelBank.this.deleteButtonActionPerformed(evt);
@@ -255,17 +253,17 @@ public class PanelBank extends JPanel {
             else if (evt.getSource() == saveButton) {
                 PanelBank.this.saveButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == newButton) {
+                PanelBank.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteDetailButton) {
+                PanelBank.this.deleteDetailButtonActionPerformed(evt);
+            }
             else if (evt.getSource() == newDetailButton) {
                 PanelBank.this.newDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton2) {
                 PanelBank.this.jButton2ActionPerformed(evt);
-            }
-            else if (evt.getSource() == newButton) {
-                PanelBank.this.newButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton4) {
-                PanelBank.this.jButton4ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -311,7 +309,10 @@ public class PanelBank extends JPanel {
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
-    
+    public void Reset()
+    {
+            this.refreshButtonActionPerformed(null);
+    }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();

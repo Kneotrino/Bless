@@ -62,7 +62,7 @@ public class Laporan implements Serializable {
     private BigInteger jumlah = BigInteger.ZERO;
     @Lob
     @Column(name = "KETERANGAN")
-    private String keterangan;
+    private String keterangan = new String("input");
     @Column(name = "SALDO")
     private BigInteger saldo;
     @Column(name = "TANGGAL")

@@ -57,15 +57,14 @@ public class TablePopupEditor extends DefaultCellEditor
             public void run()
             {
                 popup.setText( currentText );
-//              popup.setLocationRelativeTo( editorComponent );
+                popup.setLocationRelativeTo( editorComponent );
                 Point p = editorComponent.getLocationOnScreen();
                 popup.setLocation(p.x, p.y + editorComponent.getSize().height);
                 popup.show();
                 fireEditingStopped();
             }
-        });
-
-        currentText = value.toString();
+        });        
+        currentText = value==null?"null":value.toString();
         editorComponent.setText( currentText );
         return editorComponent;
     }
