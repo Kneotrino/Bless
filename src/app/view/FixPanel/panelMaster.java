@@ -5,8 +5,10 @@
  */
 package app.view.FixPanel;
 
+import app.table.Bank;
 import app.table.Laporan;
 import app.table.Pemasukan;
+import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -315,6 +317,8 @@ public class panelMaster extends JPanel {
             Logger.getLogger(panelMaster.class.getName()).log(Level.SEVERE, null, ex);
         }
 //        app.table.Laporan l = new app.table.Laporan();
+        nw.setTransaksi(new Saldo());
+        nw.getTransaksi().setBankId((Bank) this.jComboBox1.getSelectedItem());
         entityManager.persist(nw);
         list.add(nw);
         int row = list.size() - 1;
@@ -326,7 +330,6 @@ public class panelMaster extends JPanel {
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        System.out.println("panelMaster.saveButtonActionPerformed....");
         this.jDialog1.setVisible(false);
         try {
             entityManager.getTransaction().commit();
