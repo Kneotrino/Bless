@@ -57,7 +57,7 @@ public class main extends javax.swing.JFrame {
         panelPiutang1 = new app.view.panel.hutang.panelPiutang();
         panelJasa1 = new app.view.FixPanel.panelJasa();
         panelPerjalanan1 = new app.view.panel.perjalanan.panelPerjalanan();
-        jPanel4 = new app.view.panel.leasing.panelLeasing();
+        jPanel4 = new app.view.FixPanel.panelLeasing();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();

@@ -82,6 +82,8 @@ public class panelHutang extends JPanel {
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
         jLabel17 = new javax.swing.JLabel();
         jTextField14 = new javax.swing.JTextField();
+        bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
+        bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -105,6 +107,7 @@ public class panelHutang extends JPanel {
 
         hutang.setTitle("Data");
         hutang.setAlwaysOnTop(true);
+        hutang.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         hutang.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
 
         newButton.setText("Baru");
@@ -205,10 +208,15 @@ public class panelHutang extends JPanel {
 
         hutang.getContentPane().add(jDateChooser2);
 
-        jLabel18.setText("Pengeluaran");
+        jLabel18.setText("Tujuan Pinjaman");
         hutang.getContentPane().add(jLabel18);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KAS", "BRI", "BCA", " " }));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox1);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         hutang.getContentPane().add(jComboBox1);
 
         jLabel9.setText("Ket");
@@ -222,6 +230,7 @@ public class panelHutang extends JPanel {
         hutang.getContentPane().add(jTextField10);
 
         bayarhutang.setAlwaysOnTop(true);
+        bayarhutang.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         bayarhutang.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
 
         newDetailButton.setText("Baru");
@@ -253,10 +262,15 @@ public class panelHutang extends JPanel {
 
         bayarhutang.getContentPane().add(jTextField7);
 
-        jLabel19.setText("Pemasukan");
+        jLabel19.setText("Pengeluaran");
         bayarhutang.getContentPane().add(jLabel19);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KAS", "BRI", "BCA", " " }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         bayarhutang.getContentPane().add(jComboBox2);
 
         jLabel14.setText("Keterangan");
@@ -289,7 +303,7 @@ public class panelHutang extends JPanel {
 
         bayarhutang.getContentPane().add(jTextField14);
 
-        setLayout(new java.awt.GridLayout());
+        setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -339,10 +353,6 @@ public class panelHutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalpinjam}"));
         columnBinding.setColumnName("Tangga pinjaman");
         columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPembayaran}"));
-        columnBinding.setColumnName("Total Pelunasan");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggallunas}"));
         columnBinding.setColumnName("Tanggal lunas");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -359,9 +369,14 @@ public class panelHutang extends JPanel {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
+        detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setRowHeight(25);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarhutangList}");
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarhutangList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bayarhutangid}"));
         columnBinding.setColumnName("Bayarhutangid");
@@ -403,7 +418,7 @@ public class panelHutang extends JPanel {
         deleteDetailButton.addActionListener(formListener);
         jPanel4.add(deleteDetailButton);
 
-        refreshButton.setText("Undo");
+        refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
         jPanel4.add(refreshButton);
 
@@ -423,32 +438,32 @@ public class panelHutang extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                panelHutang.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == jButton1) {
+                panelHutang.this.jButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelHutang.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == saveButton) {
-                panelHutang.this.saveButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                panelHutang.this.refreshButtonActionPerformed(evt);
+            else if (evt.getSource() == jButton2) {
+                panelHutang.this.jButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteDetailButton) {
                 panelHutang.this.deleteDetailButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelHutang.this.newDetailButtonActionPerformed(evt);
+            else if (evt.getSource() == refreshButton) {
+                panelHutang.this.refreshButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton1) {
-                panelHutang.this.jButton1ActionPerformed(evt);
+            else if (evt.getSource() == saveButton) {
+                panelHutang.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton2) {
-                panelHutang.this.jButton2ActionPerformed(evt);
+            else if (evt.getSource() == newButton) {
+                panelHutang.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton3) {
                 panelHutang.this.jButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton) {
+                panelHutang.this.newDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton4) {
                 panelHutang.this.jButton4ActionPerformed(evt);
@@ -573,6 +588,8 @@ public class panelHutang extends JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.util.List<app.table.Bank> bankList;
+    private javax.persistence.Query bankQuery;
     private javax.swing.JDialog bayarhutang;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton deleteDetailButton;

@@ -64,7 +64,7 @@ public class TablePopupEditor extends DefaultCellEditor
                 fireEditingStopped();
             }
         });        
-        currentText = value==null?"null":value.toString();
+        currentText = value==null?"input":value.toString();
         editorComponent.setText( currentText );
         return editorComponent;
     }

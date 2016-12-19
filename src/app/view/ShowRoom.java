@@ -63,7 +63,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        panelLeasing1 = new app.view.panel.leasing.panelLeasing();
+        panelLeasing1 = new app.view.FixPanel.panelLeasing();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
@@ -75,8 +75,11 @@ public class ShowRoom extends javax.swing.JFrame {
         inventaris1 = new app.view.FixPanel.Inventaris();
         panelTransaksi1 = new app.view.FixPanel.PanelTransaksi();
         jPanel6 = new app.view.panel.mobil.panelMobil();
-        panelLeasing2 = new app.view.panel.leasing.panelLeasing();
+        panelLeasing2 = new app.view.FixPanel.panelLeasing();
         jPanel7 = new javax.swing.JPanel();
+        panelHutang1 = new app.view.panel.hutang.panelHutang();
+        panelPiutang1 = new app.view.panel.hutang.panelPiutang();
+        panelPerjalanan1 = new app.view.panel.perjalanan.panelPerjalanan();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -91,6 +94,12 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -117,6 +126,9 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(jPanel6, "Mobil");
         getContentPane().add(panelLeasing2, "Less");
         getContentPane().add(jPanel7, "Leasing");
+        getContentPane().add(panelHutang1, "Hutang");
+        getContentPane().add(panelPiutang1, "Piutang");
+        getContentPane().add(panelPerjalanan1, "Lap");
 
         jMenu1.setText("Akutansi");
 
@@ -207,6 +219,40 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem13);
+
+        jMenu5.setText("Hutang/Piutang");
+
+        jMenuItem14.setText("Hutang");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem14);
+
+        jMenuItem15.setText("Piutang");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem15);
+
+        jMenu2.add(jMenu5);
+
+        jMenuItem16.setText("Lap Perjalanan");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem16);
+
+        jMenuItem17.setText("Pegawai X");
+        jMenu2.add(jMenuItem17);
+
+        jMenuItem18.setText("Rental X");
+        jMenu2.add(jMenuItem18);
 
         jMenuBar1.add(jMenu2);
 
@@ -304,6 +350,21 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        chandePanel("Hutang");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+        chandePanel("Piutang");
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+        chandePanel("Lap");
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -348,12 +409,18 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -369,8 +436,11 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private app.view.panel.leasing.panelLeasing panelLeasing1;
-    private app.view.panel.leasing.panelLeasing panelLeasing2;
+    private app.view.panel.hutang.panelHutang panelHutang1;
+    private app.view.FixPanel.panelLeasing panelLeasing1;
+    private app.view.FixPanel.panelLeasing panelLeasing2;
+    private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;
+    private app.view.panel.hutang.panelPiutang panelPiutang1;
     private app.view.FixPanel.PanelTransaksi panelTransaksi1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

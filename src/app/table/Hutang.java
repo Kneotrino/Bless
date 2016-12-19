@@ -77,7 +77,7 @@ public class Hutang implements Serializable {
     @OneToMany(mappedBy = "hutangid", cascade = CascadeType.ALL)
     private List<Bayarhutang> bayarhutangList;    
     @Transient
-    private BigInteger TotalPembayaran;
+    private BigInteger TotalPembayaran = new BigInteger("0"); 
 
     public static final String PROP_TOTALPEMBAYARAN = "TotalPembayaran";
 
