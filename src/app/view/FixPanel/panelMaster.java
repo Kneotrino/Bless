@@ -48,6 +48,14 @@ public class panelMaster extends JPanel {
     public Object getTable() {
         return table;
     }
+
+    public List<Bank> getBankList() {
+        return bankList;
+    }
+
+    public void setBankList(List<Bank> bankList) {
+        this.bankList = bankList;
+    }
     
     
     public panelMaster(Object kelas) {
@@ -68,7 +76,6 @@ public class panelMaster extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
@@ -102,51 +109,30 @@ public class panelMaster extends JPanel {
         jDialog1.setAlwaysOnTop(true);
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog1.setType(java.awt.Window.Type.POPUP);
-        java.awt.GridBagLayout jDialog1Layout = new java.awt.GridBagLayout();
-        jDialog1Layout.rowHeights = new int[] {30, 30, 30, 30, 30, 30};
-        jDialog1Layout.columnWeights = new double[] {150.0, 150.0};
-        jDialog1Layout.rowWeights = new double[] {1.0, 1.0, 1.0, 1.0, 1.0};
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
 
         tanggalLabel.setText("Tanggal:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(1, 0, 0, 0);
-        jDialog1.getContentPane().add(tanggalLabel, gridBagConstraints);
+        jDialog1.getContentPane().add(tanggalLabel);
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tanggal}"), jDateChooser1, org.jdesktop.beansbinding.BeanProperty.create("date"));
         bindingGroup.addBinding(binding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jDateChooser1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jDialog1.getContentPane().add(jDateChooser1, gridBagConstraints);
+        jDialog1.getContentPane().add(jDateChooser1);
 
         jumlahLabel.setText("Jumlah:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jDialog1.getContentPane().add(jumlahLabel, gridBagConstraints);
+        jDialog1.getContentPane().add(jumlahLabel);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.jumlah}"), jumlahField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jumlahField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jDialog1.getContentPane().add(jumlahField, gridBagConstraints);
+        jDialog1.getContentPane().add(jumlahField);
 
         keteranganLabel.setText("Keterangan:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jDialog1.getContentPane().add(keteranganLabel, gridBagConstraints);
+        jDialog1.getContentPane().add(keteranganLabel);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keterangan}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         binding.setSourceUnreadableValue("null");
@@ -154,39 +140,24 @@ public class panelMaster extends JPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jDialog1.getContentPane().add(keteranganField, gridBagConstraints);
+        jDialog1.getContentPane().add(keteranganField);
 
         jLabel1.setText("Bank Tujuan");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jDialog1.getContentPane().add(jLabel1, gridBagConstraints);
+        jDialog1.getContentPane().add(jLabel1);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox1);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
         bindingGroup.addBinding(jComboBoxBinding);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jDialog1.getContentPane().add(jComboBox1, gridBagConstraints);
+        jDialog1.getContentPane().add(jComboBox1);
 
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jDialog1.getContentPane().add(saveButton, gridBagConstraints);
+        jDialog1.getContentPane().add(saveButton);
 
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+
+        inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
         jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
         setLayout(new java.awt.BorderLayout());
@@ -270,7 +241,6 @@ public class panelMaster extends JPanel {
         }
     }// </editor-fold>//GEN-END:initComponents
 
-    
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
@@ -282,6 +252,9 @@ public class panelMaster extends JPanel {
         List<? extends Laporan> res = createQuery.getResultList();
         
         java.util.List data = query.getResultList();
+        java.util.List Res = this.bankQuery.getResultList();
+        this.bankList.clear();
+        this.bankList.addAll(Res);
         List<Laporan> laps = data;
         Predicate<Laporan> predPem = lp -> lp instanceof app.table.Pengeluaran;
         
@@ -307,7 +280,10 @@ public class panelMaster extends JPanel {
         list.removeAll(toRemove);
         this.saveButtonActionPerformed(evt);
     }//GEN-LAST:event_deleteButtonActionPerformed
-
+        public  void Refresh()
+        {
+                this.refreshButtonActionPerformed(null);
+        }
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         Laporan nw = null;
         try {
@@ -415,5 +391,4 @@ public class panelMaster extends JPanel {
             }
         });
     }
-    
 }

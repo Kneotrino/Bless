@@ -230,7 +230,9 @@ public class Mobil implements Serializable {
     }
 
     public void setJenis(String jenis) {
+        String oldJenis = this.jenis;
         this.jenis = jenis;
+        changeSupport.firePropertyChange("jenis", oldJenis, jenis);
     }
     public Mobil(Integer mobilId) {
         this.mobilId = mobilId;

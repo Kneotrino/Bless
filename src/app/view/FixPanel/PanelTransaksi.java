@@ -70,25 +70,34 @@ public class PanelTransaksi extends JPanel {
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
+        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        masterTable.setCellSelectionEnabled(true);
+
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldoId}"));
         columnBinding.setColumnName("Transaksi REF");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan}"));
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.id}"));
         columnBinding.setColumnName("Laporan REF");
-        columnBinding.setColumnClass(app.table.Laporan.class);
+        columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId}"));
         columnBinding.setColumnName("Bank Id");
         columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId.namaBank}"));
         columnBinding.setColumnName("Tujuan");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -103,14 +112,14 @@ public class PanelTransaksi extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == deleteButton) {
-                PanelTransaksi.this.deleteButtonActionPerformed(evt);
+            if (evt.getSource() == refreshButton) {
+                PanelTransaksi.this.refreshButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton) {
                 PanelTransaksi.this.newButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == refreshButton) {
-                PanelTransaksi.this.refreshButtonActionPerformed(evt);
+            else if (evt.getSource() == deleteButton) {
+                PanelTransaksi.this.deleteButtonActionPerformed(evt);
             }
             else if (evt.getSource() == saveButton) {
                 PanelTransaksi.this.saveButtonActionPerformed(evt);

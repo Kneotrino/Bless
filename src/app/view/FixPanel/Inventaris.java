@@ -60,14 +60,18 @@ public class Inventaris extends javax.swing.JPanel {
             }
         });
         jDialog1.getContentPane().add(jButton4, java.awt.BorderLayout.PAGE_END);
+
+        inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
         jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
         setLayout(new java.awt.BorderLayout());
 
         jTable1.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         jTable1.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        jTable1.setDefaultEditor(Integer.class, new app.utils.TablePopupEditor());
+        jTable1.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        jTable1.setColumnSelectionAllowed(false);
+        jTable1.setCellSelectionEnabled(true);
         jTable1.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, assetList, jTable1);
@@ -182,10 +186,9 @@ public class Inventaris extends javax.swing.JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
         Asset asset = (Asset) this.inputPanel1.getTarget();
-//        asset.setTanggalStock(new java.util.Date());
         this.persist(asset);
         this.assetList.add(asset);
-
+        this.jDialog1.hide();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 

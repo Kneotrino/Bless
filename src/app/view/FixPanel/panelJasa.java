@@ -198,7 +198,7 @@ public class panelJasa extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarjasaList}");
@@ -359,8 +359,8 @@ public class panelJasa extends JPanel {
     }
     public void Restart()
     {
-        this.bindingGroup.unbind();
-        this.bindingGroup.bind();
+//        this.bindingGroup.unbind();
+//        this.bindingGroup.bind();
         this.refreshButtonActionPerformed(null);
     }
     private void newDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButtonActionPerformed

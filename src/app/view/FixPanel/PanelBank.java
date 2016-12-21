@@ -27,6 +27,14 @@ import javax.swing.JPanel;
  * @author SEED
  */
 public class PanelBank extends JPanel {
+
+    public List<Bank> getList() {
+        return list;
+    }
+
+    public void setList(List<Bank> list) {
+        this.list = list;
+    }
     
     public PanelBank() {
         initComponents();
@@ -89,11 +97,13 @@ public class PanelBank extends JPanel {
         FormListener formListener = new FormListener();
 
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+
+        inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
         jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
         newButton.setText("Simpan Data Bank");
         newButton.addActionListener(formListener);
-        jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
+        jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_END);
 
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog2.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -162,6 +172,8 @@ public class PanelBank extends JPanel {
         jButton3.setText("Tambah Pengeluaran");
 
         setLayout(new java.awt.BorderLayout());
+
+        masterTable.setCellSelectionEnabled(true);
 
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId}"));
@@ -328,7 +340,6 @@ public class PanelBank extends JPanel {
             for (Saldo trans : SL) {
                  java.math.BigInteger pem = new java.math.BigInteger("0");
                  java.math.BigInteger per = new java.math.BigInteger("0");
-                 System.out.println("Trans = null "+ trans == null);
                 pem = trans.getLaporan() ==null?BigInteger.ZERO:trans.getLaporan().getPemasukan() ;
                 per = trans.getLaporan() ==null?BigInteger.ZERO:trans.getLaporan().getPengeluaran();
                 TPem = TPem.add(pem);
@@ -349,6 +360,11 @@ public class PanelBank extends JPanel {
         for (int idx = 0; idx < selected.length; idx++) {
             app.table.Bank b = list.get(masterTable.convertRowIndexToModel(selected[idx]));
             toRemove.add(b);
+            List<Saldo> l = b.getSaldoList();
+            for (Saldo saldo : l) {
+            entityManager.remove(saldo.getLaporan());                
+            entityManager.remove(saldo);                
+            }
             entityManager.remove(b);
         }
         list.removeAll(toRemove);
@@ -377,6 +393,7 @@ public class PanelBank extends JPanel {
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+        this.jDialog1.hide();
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

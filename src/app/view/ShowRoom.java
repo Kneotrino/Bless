@@ -64,6 +64,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         panelLeasing1 = new app.view.FixPanel.panelLeasing();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
         ;
@@ -110,6 +111,8 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel2.setText("jLabel2");
 
         jLabel3.setText("jLabel2");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -325,11 +328,13 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ((app.view.FixPanel.panelMaster)this.jPanel2).Refresh();
         this.chandePanel("Pemasukan");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ((app.view.FixPanel.panelMaster)this.jPanel3).Refresh();
         this.chandePanel("Pengeluaran");      
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -428,6 +433,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private app.view.FixPanel.Inventaris inventaris1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -374,10 +374,7 @@ public class panelRental extends JPanel {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-            System.out.println("Refresh");
-//            System.out.println(this.jComboBox1.getModel());
-//            this.jComboBox1.
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
 
