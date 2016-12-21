@@ -91,6 +91,11 @@ public class Mobilrental implements Serializable {
         this.mobilId = mobilId;
         changeSupport.firePropertyChange("mobilId", oldMobilId, mobilId);
     }
+    public String getMobilString()
+    {
+        
+        return null;
+    }
 
     public String getNoPolisiAktif() {
         return noPolisiAktif;
@@ -184,7 +189,8 @@ public class Mobilrental implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Mobilrental[ mobilId=" + mobilId + " ]";
+        return "<html>Mobil Merk =" + merk
+                + "Mobil Tipe =" + type+"</html>";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

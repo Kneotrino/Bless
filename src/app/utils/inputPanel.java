@@ -174,7 +174,7 @@ public class inputPanel extends javax.swing.JPanel {
 
         jScrollPane1.setViewportView(jTable1);
 
-        setLayout(new java.awt.GridLayout(0, 2));
+        setLayout(new java.awt.GridLayout(0, 1));
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents

@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -42,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Rental.findByJammulai", query = "SELECT r FROM Rental r WHERE r.jammulai = :jammulai"),
     @NamedQuery(name = "Rental.findByJamselesai", query = "SELECT r FROM Rental r WHERE r.jamselesai = :jamselesai"),
     @NamedQuery(name = "Rental.findByDriver", query = "SELECT r FROM Rental r WHERE r.driver = :driver")})
+ @ListUrutan({"tglmulai","tglselesai","pemakai","jammulai","jamselesai","driver" })
 public class Rental implements Serializable {
 
     @Transient

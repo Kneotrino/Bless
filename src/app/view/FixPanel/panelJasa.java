@@ -96,7 +96,7 @@ public class panelJasa extends JPanel {
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
-        newButton.setText("Simpan");
+        newButton.setText("Tambah");
         newButton.addActionListener(formListener);
         jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
@@ -466,7 +466,7 @@ public class panelJasa extends JPanel {
     boolean pemasukan;
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         pemasukan = true;
-        this.jDialog3.setSize(300, 200);
+        this.jDialog3.setSize(300, 400);
         this.jDialog3.setLocationRelativeTo(null);
         this.jDialog3.show();
         // TODO add your handling code here:
@@ -475,7 +475,7 @@ public class panelJasa extends JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         pemasukan = false;
-        this.jDialog4.setSize(300, 200);
+        this.jDialog4.setSize(300, 400);
         this.jDialog4.setLocationRelativeTo(null);
         this.jDialog4.show();
     }//GEN-LAST:event_jButton4ActionPerformed
