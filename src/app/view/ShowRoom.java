@@ -64,7 +64,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         panelLeasing1 = new app.view.FixPanel.panelLeasing();
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
         ;
@@ -80,6 +79,9 @@ public class ShowRoom extends javax.swing.JFrame {
         panelHutang1 = new app.view.panel.hutang.panelHutang();
         panelPiutang1 = new app.view.panel.hutang.panelPiutang();
         panelPerjalanan1 = new app.view.panel.perjalanan.panelPerjalanan();
+        panelRental1 = new app.view.panel.bank.panelRental();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -115,7 +117,6 @@ public class ShowRoom extends javax.swing.JFrame {
         bindingGroup.addBinding(binding);
 
         getContentPane().setLayout(new java.awt.CardLayout());
-        getContentPane().add(jLabel1, "card2");
         getContentPane().add(jPanel1, "Laporan");
         getContentPane().add(jPanel2, "Pemasukan");
         getContentPane().add(jPanel3, "Pengeluaran");
@@ -129,6 +130,12 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(panelHutang1, "Hutang");
         getContentPane().add(panelPiutang1, "Piutang");
         getContentPane().add(panelPerjalanan1, "Lap");
+        getContentPane().add(panelRental1, "Rental");
+
+        jPanel8.setLayout(new java.awt.GridLayout());
+        jPanel8.add(jLabel1);
+
+        getContentPane().add(jPanel8, "card2");
 
         jMenu1.setText("Akutansi");
 
@@ -249,9 +256,19 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu2.add(jMenuItem16);
 
         jMenuItem17.setText("Pegawai X");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem17);
 
-        jMenuItem18.setText("Rental X");
+        jMenuItem18.setText("Rental Mobil");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem18);
 
         jMenuBar1.add(jMenu2);
@@ -365,6 +382,15 @@ public class ShowRoom extends javax.swing.JFrame {
         chandePanel("Lap");
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+            chandePanel("Rental");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -436,11 +462,13 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.panelLeasing panelLeasing1;
     private app.view.FixPanel.panelLeasing panelLeasing2;
     private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;
     private app.view.panel.hutang.panelPiutang panelPiutang1;
+    private app.view.panel.bank.panelRental panelRental1;
     private app.view.FixPanel.PanelTransaksi panelTransaksi1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

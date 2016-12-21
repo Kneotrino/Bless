@@ -15,6 +15,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -70,7 +71,16 @@ public class Rental implements Serializable {
     private String driver;
     @OneToMany(mappedBy = "rentalId")
     private List<Bayarrental> bayarrentalList;
+    @ManyToOne
+    private Mobilrental mobilrental;
 
+    public Mobilrental getMobilrental() {
+        return mobilrental;
+    }
+
+    public void setMobilrental(Mobilrental mobilrental) {
+        this.mobilrental = mobilrental;
+    }
     public Rental() {
     }
 
