@@ -9,6 +9,8 @@ import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -43,7 +45,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Rental.findByJammulai", query = "SELECT r FROM Rental r WHERE r.jammulai = :jammulai"),
     @NamedQuery(name = "Rental.findByJamselesai", query = "SELECT r FROM Rental r WHERE r.jamselesai = :jamselesai"),
     @NamedQuery(name = "Rental.findByDriver", query = "SELECT r FROM Rental r WHERE r.driver = :driver")})
- @ListUrutan({"tglmulai","tglselesai","pemakai","jammulai","jamselesai","driver" })
+ @ListUrutan({"tglmulai","tglselesai","pemakai",
+//     "jammulai",
+//     "jamselesai",
+     "driver" })
 public class Rental implements Serializable {
 
     @Transient
@@ -65,10 +70,10 @@ public class Rental implements Serializable {
     private String pemakai;
     @Column(name = "JAMMULAI")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date jammulai;
+    private Date jammulai = new Date();
     @Column(name = "JAMSELESAI")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date jamselesai;
+    private Date jamselesai = new Date();
     @Column(name = "DRIVER", length = 255)
     private String driver;
     @OneToMany(mappedBy = "rentalId")
@@ -133,6 +138,29 @@ public class Rental implements Serializable {
     public Date getJammulai() {
         return jammulai;
     }
+    
+    public int getJammulai0() {
+        return ((jammulai ==null)?0:jammulai.getHours());
+    }
+    public void setJammulai0(int jam) {
+        int oldJam = this.jammulai.getHours();
+        Date d = this.jammulai;
+        d.setHours(jam);
+        this.jammulai = d;
+        changeSupport.firePropertyChange("jammulai0", oldJam, jammulai);        
+    }
+    
+    public int getjamSelesai0() {
+        return ((jamselesai ==null)?0:jamselesai.getHours());
+    }
+    public void setJamSelesai0(int jam) {
+        int oldJam = this.jamselesai.getHours();
+        Date d = this.jamselesai;
+        d.setHours(jam);
+        this.jamselesai = d;
+        changeSupport.firePropertyChange("jamselesai0", oldJam, jamselesai);        
+    }
+    
 
     public void setJammulai(Date jammulai) {
         Date oldJammulai = this.jammulai;
@@ -143,7 +171,6 @@ public class Rental implements Serializable {
     public Date getJamselesai() {
         return jamselesai;
     }
-
     public void setJamselesai(Date jamselesai) {
         Date oldJamselesai = this.jamselesai;
         this.jamselesai = jamselesai;

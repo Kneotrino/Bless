@@ -189,8 +189,11 @@ public class Mobilrental implements Serializable {
 
     @Override
     public String toString() {
-        return "<html>Mobil Merk =" + merk
-                + "Mobil Tipe =" + type+"</html>";
+        return "<html>"
+                + "Mobil Ref =" + this.mobilId
+//                + ";" + merk
+//                + ":" + type
+                +"</html>";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

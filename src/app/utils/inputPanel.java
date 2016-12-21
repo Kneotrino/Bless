@@ -55,15 +55,6 @@ public class inputPanel extends javax.swing.JPanel {
             
         }
              if (target instanceof app.table.Laporan) {
-                 
-//                 ((app.table.Laporan)target).setTransaksi(new Saldo());
-//                 Saldo transaksi = ((app.table.Laporan)target).getTransaksi();
-//                 Bank find = this.blessingPUEntityManager.find(app.table.Bank.class, 1);
-//                 System.out.println("find = " + find);
-////                 transaksi.setBankId(find);
-//                 Bank bankId = transaksi.getBankId();
-//                 System.out.print("bankId = " + bankId);
-//                 System.out.println(";Bank default KAS, Transaksai =" + transaksi); 
         }
              doFuck.forEach(new Consumer<Tuple4<Class<?>, JLabel, JComponent, String>>() {
                 @Override

@@ -51,6 +51,8 @@ public class panelRental extends JPanel {
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         newButton = new javax.swing.JButton();
+        mobilrentalQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Mobilrental m");
+        mobilrentalList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilrentalQuery.getResultList());
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panelMobilRental1 = new app.view.panel.bank.PanelMobilRental();
         jPanel3 = new javax.swing.JPanel();
@@ -69,21 +71,19 @@ public class panelRental extends JPanel {
         FormListener formListener = new FormListener();
 
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog1.getContentPane().setLayout(new java.awt.GridLayout());
-
-        inputPanel1.setLayout(new java.awt.GridLayout(0, 1));
+        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setText("MOBIL");
         inputPanel1.add(jLabel1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jComboBox1.setMinimumSize(new java.awt.Dimension(56, 30));
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, query1, eLProperty, jComboBox1);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${list}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, panelMobilRental1, eLProperty, jComboBox1);
         bindingGroup.addBinding(jComboBoxBinding);
 
+        jComboBox1.addActionListener(formListener);
         inputPanel1.add(jComboBox1);
 
         newButton.setText("Tambah");
@@ -96,17 +96,18 @@ public class panelRental extends JPanel {
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTabbedPane1.addMouseListener(formListener);
         jTabbedPane1.addTab("MOBIL RENTAL", panelMobilRental1);
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        masterTable.setRowHeight(30);
+        masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${rentalid}"));
-        columnBinding.setColumnName("Ref Rental");
+        columnBinding.setColumnName("Rentalid");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglmulai}"));
         columnBinding.setColumnName("Tglmulai");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -116,27 +117,31 @@ public class panelRental extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemakai}"));
         columnBinding.setColumnName("Pemakai");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jammulai}"));
-        columnBinding.setColumnName("Jammulai");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jamselesai}"));
-        columnBinding.setColumnName("Jamselesai");
-        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jammulai0}"));
+        columnBinding.setColumnName("Jammulai0");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jamSelesai0}"));
+        columnBinding.setColumnName("Jam Selesai0");
+        columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driver}"));
         columnBinding.setColumnName("Driver");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobilrental.mobilId}"));
-        columnBinding.setColumnName("Mobil Rental REF");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobilrental}"));
+        columnBinding.setColumnName("Mobilrental");
+        columnBinding.setColumnClass(app.table.Mobilrental.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            masterTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+        }
 
         jPanel3.add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
+        masterTable.setDefaultEditor(Integer.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
@@ -215,11 +220,11 @@ public class panelRental extends JPanel {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                panelRental.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == newButton1) {
+                panelRental.this.newButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelRental.this.deleteButtonActionPerformed(evt);
@@ -236,9 +241,30 @@ public class panelRental extends JPanel {
             else if (evt.getSource() == saveButton) {
                 panelRental.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton1) {
-                panelRental.this.newButton1ActionPerformed(evt);
+            else if (evt.getSource() == jComboBox1) {
+                panelRental.this.jComboBox1ActionPerformed(evt);
             }
+            else if (evt.getSource() == newButton) {
+                panelRental.this.newButtonActionPerformed(evt);
+            }
+        }
+
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == jTabbedPane1) {
+                panelRental.this.jTabbedPane1MouseClicked(evt);
+            }
+        }
+
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
         }
     }// </editor-fold>//GEN-END:initComponents
 
@@ -343,6 +369,17 @@ public class panelRental extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+            System.out.println("Refresh");
+//            System.out.println(this.jComboBox1.getModel());
+//            this.jComboBox1.
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -360,6 +397,8 @@ public class panelRental extends JPanel {
     private java.util.List<app.table.Rental> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
+    private java.util.List<app.table.Mobilrental> mobilrentalList;
+    private javax.persistence.Query mobilrentalQuery;
     private javax.swing.JButton newButton;
     private javax.swing.JButton newButton1;
     private javax.swing.JButton newDetailButton;

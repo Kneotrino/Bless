@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -74,7 +75,7 @@ public class Foo {
         HashSet<Class<?>> pass = HashSet.of(String.class,  Date.class);
         return List.<Method>ofAll(Arrays.stream(methods))
                 .filter(meth -> pass.contains(meth.getReturnType()))
-                .map(meth -> {
+                .map((Method meth) -> {
                     Class<?> rt = meth.getReturnType();
                     JLabel label = null;
                     JComponent comp = null;
@@ -86,6 +87,11 @@ public class Foo {
                         
                     } 
                     else if (rt.equals(Date.class)) {
+                        comp = new JDateChooser();
+                        label = new JLabel();
+                        label.setText(getName(meth));
+                    }                    
+                    else if (rt.equals(Calendar.class)) {
                         comp = new JDateChooser();
                         label = new JLabel();
                         label.setText(getName(meth));

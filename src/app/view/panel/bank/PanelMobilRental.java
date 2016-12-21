@@ -182,7 +182,7 @@ public class PanelMobilRental extends JPanel {
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobilId}"));
