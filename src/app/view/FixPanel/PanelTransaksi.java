@@ -62,16 +62,13 @@ public class PanelTransaksi extends JPanel {
         saveButton.setText("Save");
         saveButton.addActionListener(formListener);
 
-        setLayout(new java.awt.BorderLayout());
-
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
 
-        add(jPanel1, java.awt.BorderLayout.NORTH);
+        setLayout(new java.awt.BorderLayout());
 
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        masterTable.setCellSelectionEnabled(true);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldoId}"));
@@ -81,7 +78,6 @@ public class PanelTransaksi extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.id}"));
         columnBinding.setColumnName("Laporan REF");
         columnBinding.setColumnClass(Long.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -96,6 +92,10 @@ public class PanelTransaksi extends JPanel {
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId.namaBank}"));
         columnBinding.setColumnName("Tujuan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.dtype}"));
+        columnBinding.setColumnName("Jenis");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);

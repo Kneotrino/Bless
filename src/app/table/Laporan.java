@@ -24,6 +24,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -212,5 +214,14 @@ public class Laporan implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-
+    @PostPersist
+    public void log()
+    {
+        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan\n REF = "+this.id);                
+    }
+    @PostRemove
+    public void log0()
+    {
+        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menghapus\n REF ="+ this.id);                
+    }
 }

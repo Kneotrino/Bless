@@ -75,7 +75,8 @@ public class inputPanel extends javax.swing.JPanel {
                     try {
                         BeanUtils.setProperty(target,a._4,Value);
                     } catch (IllegalAccessException | InvocationTargetException ex) {
-                        Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        System.err.println("Error = "+ a._4);
+//                        Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });            

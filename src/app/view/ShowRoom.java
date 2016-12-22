@@ -351,13 +351,13 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        this.inventaris1.Refresh();
         this.chandePanel("Asset");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        chandePanel("Transaksi");
-        
+        chandePanel("Transaksi");        
         this.panelTransaksi1.Reset();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem11ActionPerformed
