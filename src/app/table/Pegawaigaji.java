@@ -5,10 +5,12 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
+@ListUrutan({"tanggal","keterangan","jumlah"})
 public class Pegawaigaji extends Pengeluaran implements Serializable {
 
     @Transient
@@ -34,7 +37,7 @@ public class Pegawaigaji extends Pengeluaran implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @JoinColumn(name = "PEGAWAIGAJIID", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Pegawai pegawaigajiid;
 
     public Pegawaigaji() {

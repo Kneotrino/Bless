@@ -63,7 +63,6 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        panelLeasing1 = new app.view.FixPanel.panelLeasing();
         jComboBox1 = new javax.swing.JComboBox<>();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
@@ -144,7 +143,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu1.setText("Akutansi");
 
-        jMenuItem1.setText("Beranda");
+        jMenuItem1.setText("Beranda Y");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -152,7 +151,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Laporan");
+        jMenuItem2.setText("Laporan Y");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -160,7 +159,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenu4.setText("Operasional");
+        jMenu4.setText("Operasional Y");
 
         jMenuItem4.setText("Pengeluaran");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +179,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu1.add(jMenu4);
 
-        jMenuItem11.setText("Transaksi");
+        jMenuItem11.setText("Transaksi Y");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
@@ -192,7 +191,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu2.setText("Management");
 
-        jMenuItem12.setText("Mobil");
+        jMenuItem12.setText("Mobil y");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem12ActionPerformed(evt);
@@ -200,7 +199,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem12);
 
-        jMenuItem8.setText("Jasa Cabut Berkas");
+        jMenuItem8.setText("Jasa Cabut Berkas Y");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
@@ -208,7 +207,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem8);
 
-        jMenuItem9.setText("Keuangan");
+        jMenuItem9.setText("Keuangan Y");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem9ActionPerformed(evt);
@@ -216,7 +215,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem9);
 
-        jMenuItem10.setText("Asset");
+        jMenuItem10.setText("Asset Y");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);
@@ -260,7 +259,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem16);
 
-        jMenuItem17.setText("Pegawai");
+        jMenuItem17.setText("Pegawai Y");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem17ActionPerformed(evt);
@@ -268,7 +267,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem17);
 
-        jMenuItem18.setText("Rental Mobil");
+        jMenuItem18.setText("Rental Mobil y");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem18ActionPerformed(evt);
@@ -349,6 +348,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
     this.chandePanel("Bank");
+    ((app.view.FixPanel.PanelBank)this.jPanel5).Reset();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
@@ -371,6 +371,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
             this.chandePanel("Less");
+            this.panelLeasing2.Refresh();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
@@ -391,6 +392,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         chandePanel("Pegawai");
+        this.panelPegawai1.Refrsh();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
@@ -473,7 +475,6 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private app.view.panel.hutang.panelHutang panelHutang1;
-    private app.view.FixPanel.panelLeasing panelLeasing1;
     private app.view.FixPanel.panelLeasing panelLeasing2;
     private app.view.FixPanel.panelPegawai panelPegawai1;
     private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;

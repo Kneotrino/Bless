@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,8 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "PEGAWAI", catalog = "", schema = "BLESSING")
 @XmlRootElement
+ @app.ListUrutan({"nama","alamat","nomorhp","pass","status","tanggalGajian","tanggalMasuk" })
 public class Pegawai implements Serializable {
-
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
@@ -60,7 +61,9 @@ public class Pegawai implements Serializable {
     @Column(name = "TANGGAL_MASUK")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggalMasuk;
-    @OneToMany(mappedBy = "pegawaigajiid", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pegawaigajiid"
+            , fetch = FetchType.LAZY
+            ,cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     private List<Pegawaigaji> pegawaigajiList;
 
     public Pegawai() {

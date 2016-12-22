@@ -43,6 +43,14 @@ public class panelJasa extends JPanel {
         }
     }
 
+    public List<Bank> getBankList() {
+        return bankList;
+    }
+
+    public void setBankList(List<Bank> bankList) {
+        this.bankList = bankList;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,11 +85,11 @@ public class panelJasa extends JPanel {
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -111,8 +119,8 @@ public class panelJasa extends JPanel {
         newButton1.addActionListener(formListener);
         jDialog3.getContentPane().add(newButton1, java.awt.BorderLayout.PAGE_START);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox3);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox3);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jDialog3.getContentPane().add(jComboBox3, java.awt.BorderLayout.PAGE_END);
@@ -128,8 +136,8 @@ public class panelJasa extends JPanel {
         newButton2.addActionListener(formListener);
         jDialog4.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox2);
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jDialog4.getContentPane().add(jComboBox2, java.awt.BorderLayout.PAGE_END);
@@ -198,7 +206,6 @@ public class panelJasa extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarjasaList}");
@@ -247,10 +254,6 @@ public class panelJasa extends JPanel {
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
 
-        saveButton.setText("Simpan");
-        saveButton.addActionListener(formListener);
-        jPanel1.add(saveButton);
-
         deleteDetailButton.setText("Hapus Transaksi");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -278,6 +281,10 @@ public class panelJasa extends JPanel {
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
+
+        saveButton.setText("Simpan");
+        saveButton.addActionListener(formListener);
+        jPanel1.add(saveButton);
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -406,6 +413,9 @@ public class panelJasa extends JPanel {
 //        for (Object entity : data) {
 //            entityManager.refresh(entity);
 //        }
+        java.util.List Res = this.bankQuery.getResultList();
+        this.bankList.clear();
+        this.bankList.addAll(Res);
         list.clear();
         list.addAll(data);
     }//GEN-LAST:event_refreshButtonActionPerformed
@@ -461,6 +471,7 @@ public class panelJasa extends JPanel {
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
         this.newDetailButtonActionPerformed(null);
+        jDialog3.hide();
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
     boolean pemasukan;
@@ -483,6 +494,7 @@ public class panelJasa extends JPanel {
     private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
         // TODO add your handling code here:
         this.newDetailButtonActionPerformed(evt);
+        this.jDialog4.hide();
     }//GEN-LAST:event_newButton2ActionPerformed
 
 

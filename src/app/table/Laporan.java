@@ -221,7 +221,10 @@ public class Laporan implements Serializable {
     String desc = ""
             + "\n REF = "+this.id
             + "\n Jumlah = "+this.jumlah
-            + "\n Keterangan = "+this.keterangan            ;
+            + "\n Tipe = "+this.dtype            
+            + "\n Keterangan = "+this.keterangan            
+            + "\n Sumber = "+this.Transaksi.getBankId().getNama()
+            ;
         javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan"+desc);                
     }
     @PostRemove
@@ -230,6 +233,7 @@ public class Laporan implements Serializable {
             String desc = ""
             + "\n REF = "+this.id
             + "\n Jumlah = "+this.jumlah
+            + "\n Tipe = "+this.dtype            
             + "\n Keterangan = "+this.keterangan
             + "\n Sumber = "+this.Transaksi.getBankId().getNama()
             ;

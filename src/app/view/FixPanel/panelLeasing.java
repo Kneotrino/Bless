@@ -227,7 +227,10 @@ public class panelLeasing extends JPanel {
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
-    
+    public void Refresh()
+    {
+            this.refreshButtonActionPerformed(null);
+    }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();

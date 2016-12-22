@@ -5,7 +5,9 @@
  */
 package app.view.FixPanel;
 
+import app.table.Bank;
 import app.table.Pegawai;
+import app.table.Pegawaigaji;
 import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
@@ -33,6 +35,14 @@ public class panelPegawai extends JPanel {
         }
     }
 
+    public List<Bank> getBankList() {
+        return bankList;
+    }
+
+    public void setBankList(List<Bank> bankList) {
+        this.bankList = bankList;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,19 +57,54 @@ public class panelPegawai extends JPanel {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT P FROM Pegawai P");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
+        jDialog2 = new javax.swing.JDialog();
+        inputPanel1 = new app.utils.inputPanel(app.table.Pegawai.class);
+        newButton = new javax.swing.JButton();
+        jDialog3 = new javax.swing.JDialog();
+        inputPanel2 = new app.utils.inputPanel(app.table.Pegawaigaji.class);
+        newDetailButton = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
+        bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        newButton = new javax.swing.JButton();
+        newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        newDetailButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
+        newButton2 = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
+
+        jDialog2.setTitle("Input BPKB titipan");
+        jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
+
+        newButton.setText("Tambah");
+        newButton.addActionListener(formListener);
+        jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_END);
+
+        jDialog3.setTitle("Input BPKB titipan");
+        jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
+
+        newDetailButton.setText("Tambah");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton.addActionListener(formListener);
+        jDialog3.getContentPane().add(newDetailButton, java.awt.BorderLayout.PAGE_END);
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jDialog3.getContentPane().add(jComboBox1, java.awt.BorderLayout.PAGE_START);
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -110,9 +155,10 @@ public class panelPegawai extends JPanel {
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(25);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.pegawaigajiList}");
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.pegawaigajiList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pegawaigajiid}"));
         columnBinding.setColumnName("Pegawai REF");
@@ -151,27 +197,19 @@ public class panelPegawai extends JPanel {
         gridBagConstraints.weighty = 0.5;
         add(detailScrollPane, gridBagConstraints);
 
-        newButton.setText("New");
-        newButton.addActionListener(formListener);
-        jPanel1.add(newButton);
+        newButton1.setText("Tambah Pegawai");
+        newButton1.addActionListener(formListener);
+        jPanel1.add(newButton1);
 
-        deleteButton.setText("Delete");
+        deleteButton.setText("Hapus Pegawai");
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
 
-        newDetailButton.setText("New");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        newDetailButton.addActionListener(formListener);
-        jPanel1.add(newDetailButton);
-
-        deleteDetailButton.setText("Delete");
+        deleteDetailButton.setText("Hapus Gaji");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -179,11 +217,15 @@ public class panelPegawai extends JPanel {
         deleteDetailButton.addActionListener(formListener);
         jPanel1.add(deleteDetailButton);
 
+        newButton2.setText("Tambah Gaji");
+        newButton2.addActionListener(formListener);
+        jPanel1.add(newButton2);
+
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
 
-        saveButton.setText("Save");
+        saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
@@ -202,23 +244,29 @@ public class panelPegawai extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                panelPegawai.this.newButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == deleteButton) {
+            if (evt.getSource() == deleteButton) {
                 panelPegawai.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == saveButton) {
-                panelPegawai.this.saveButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                panelPegawai.this.refreshButtonActionPerformed(evt);
+            else if (evt.getSource() == newDetailButton) {
+                panelPegawai.this.newDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteDetailButton) {
                 panelPegawai.this.deleteDetailButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelPegawai.this.newDetailButtonActionPerformed(evt);
+            else if (evt.getSource() == refreshButton) {
+                panelPegawai.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelPegawai.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton1) {
+                panelPegawai.this.newButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
+                panelPegawai.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton2) {
+                panelPegawai.this.newButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -254,8 +302,10 @@ public class panelPegawai extends JPanel {
             ps = new LinkedList<app.table.Pegawaigaji>();
             P.setPegawaigajiList((List) ps);
         }
-        app.table.Pegawaigaji p = new app.table.Pegawaigaji();
-        p.setTransaksi(new Saldo());
+        app.table.Pegawaigaji p = (app.table.Pegawaigaji) this.inputPanel2.getTarget();
+        Saldo trans = new Saldo();
+        trans.setBankId((Bank) this.jComboBox1.getSelectedItem());
+        p.setTransaksi(trans);        
         entityManager.persist(p);
         p.setPegawaigajiid(P);
         ps.add(p);
@@ -264,6 +314,7 @@ public class panelPegawai extends JPanel {
         int row = ps.size() - 1;
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+        jDialog3.hide();
     }//GEN-LAST:event_newDetailButtonActionPerformed
     
     @SuppressWarnings("unchecked")
@@ -274,33 +325,32 @@ public class panelPegawai extends JPanel {
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
+        java.util.List Res = this.bankQuery.getResultList();
+        this.bankList.clear();
+        this.bankList.addAll(Res);
+
         list.clear();
         list.addAll(data);
     }//GEN-LAST:event_refreshButtonActionPerformed
-
+    public void Refrsh()
+    {
+        this.refreshButtonActionPerformed(null);
+    }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int[] selected = masterTable.getSelectedRows();
         List<app.table.Pegawai> toRemove = new ArrayList<app.table.Pegawai>(selected.length);
         for (int idx = 0; idx < selected.length; idx++) {
             app.table.Pegawai P = list.get(masterTable.convertRowIndexToModel(selected[idx]));
-            List L = P.getPegawaigajiList();
-            for (Object object : L) {
-            entityManager.remove(L);                
+            List<app.table.Pegawaigaji> L = P.getPegawaigajiList();
+            for (Pegawaigaji pgi : L) {
+                System.out.println("pgi = " + pgi);
+                entityManager.remove(P);                
             }
             toRemove.add(P);
             entityManager.remove(P);
         }
         list.removeAll(toRemove);
     }//GEN-LAST:event_deleteButtonActionPerformed
-
-    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        app.table.Pegawai P = new app.table.Pegawai();
-        entityManager.persist(P);
-        list.add(P);
-        int row = list.size() - 1;
-        masterTable.setRowSelectionInterval(row, row);
-        masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
-    }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         try {
@@ -318,18 +368,51 @@ public class panelPegawai extends JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+        this.jDialog2.setSize(500, 600);
+        this.jDialog2.setLocationRelativeTo(null);
+        this.jDialog2.show();        
+// TODO add your handling code here:
+    }//GEN-LAST:event_newButton1ActionPerformed
+
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        app.table.Pegawai P = (app.table.Pegawai) this.inputPanel1.getTarget();
+        entityManager.persist(P);
+        list.add(P);
+        int row = list.size() - 1;
+        masterTable.setRowSelectionInterval(row, row);
+        masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+        this.jDialog2.hide();
+    }//GEN-LAST:event_newButtonActionPerformed
+
+    private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
+        this.jDialog3.setSize(300, 450);
+        this.jDialog3.setLocationRelativeTo(null);
+        this.jDialog3.show();     
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.util.List<app.table.Bank> bankList;
+    private javax.persistence.Query bankQuery;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton deleteDetailButton;
     private javax.swing.JScrollPane detailScrollPane;
     private javax.swing.JTable detailTable;
     private javax.persistence.EntityManager entityManager;
+    private app.utils.inputPanel inputPanel1;
+    private app.utils.inputPanel inputPanel2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Pegawai> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
+    private javax.swing.JButton newButton1;
+    private javax.swing.JButton newButton2;
     private javax.swing.JButton newDetailButton;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
