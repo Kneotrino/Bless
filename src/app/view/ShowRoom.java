@@ -65,6 +65,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         panelLeasing1 = new app.view.FixPanel.panelLeasing();
         jComboBox1 = new javax.swing.JComboBox<>();
+        panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
         ;
@@ -120,6 +121,7 @@ public class ShowRoom extends javax.swing.JFrame {
         bindingGroup.addBinding(binding);
 
         getContentPane().setLayout(new java.awt.CardLayout());
+        getContentPane().add(panelPegawai1, "Pegawai");
         getContentPane().add(jPanel1, "Laporan");
         getContentPane().add(jPanel2, "Pemasukan");
         getContentPane().add(jPanel3, "Pengeluaran");
@@ -135,7 +137,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(panelPerjalanan1, "Lap");
         getContentPane().add(panelRental1, "Rental");
 
-        jPanel8.setLayout(new java.awt.GridLayout());
+        jPanel8.setLayout(new java.awt.GridLayout(1, 0));
         jPanel8.add(jLabel1);
 
         getContentPane().add(jPanel8, "card2");
@@ -258,7 +260,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem16);
 
-        jMenuItem17.setText("Pegawai X");
+        jMenuItem17.setText("Pegawai");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem17ActionPerformed(evt);
@@ -388,6 +390,7 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        chandePanel("Pegawai");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
@@ -472,6 +475,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.panelLeasing panelLeasing1;
     private app.view.FixPanel.panelLeasing panelLeasing2;
+    private app.view.FixPanel.panelPegawai panelPegawai1;
     private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;
     private app.view.panel.hutang.panelPiutang panelPiutang1;
     private app.view.panel.bank.panelRental panelRental1;

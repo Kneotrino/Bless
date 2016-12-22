@@ -214,14 +214,25 @@ public class Laporan implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
+//    @Transient
     @PostPersist
     public void log()
     {
-        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan\n REF = "+this.id);                
+    String desc = ""
+            + "\n REF = "+this.id
+            + "\n Jumlah = "+this.jumlah
+            + "\n Keterangan = "+this.keterangan            ;
+        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan"+desc);                
     }
     @PostRemove
     public void log0()
     {
-        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menghapus\n REF ="+ this.id);                
+            String desc = ""
+            + "\n REF = "+this.id
+            + "\n Jumlah = "+this.jumlah
+            + "\n Keterangan = "+this.keterangan
+            + "\n Sumber = "+this.Transaksi.getBankId().getNama()
+            ;
+        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menghapus"+ desc);                
     }
 }
