@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -76,7 +77,7 @@ public class Rental implements Serializable {
     private Date jamselesai = new Date();
     @Column(name = "DRIVER", length = 255)
     private String driver;
-    @OneToMany(mappedBy = "rentalId")
+    @OneToMany(mappedBy = "rentalId",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     private List<Bayarrental> bayarrentalList;
     @ManyToOne
     private Mobilrental mobilrental;

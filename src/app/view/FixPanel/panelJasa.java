@@ -10,25 +10,17 @@ import app.table.Bpkbtitipan;
 import app.table.Laporan;
 import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.beans.Beans;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.RollbackException;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import org.apache.commons.beanutils.BeanUtils;
 
 /**
  *
@@ -59,6 +51,7 @@ public class panelJasa extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
@@ -78,18 +71,19 @@ public class panelJasa extends JPanel {
         jComboBox2 = new javax.swing.JComboBox<>();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
-        masterScrollPane = new javax.swing.JScrollPane();
-        masterTable = new javax.swing.JTable();
-        detailScrollPane = new javax.swing.JScrollPane();
-        detailTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        masterScrollPane = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         deleteDetailButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
+        detailScrollPane = new javax.swing.JScrollPane();
+        detailTable = new javax.swing.JTable();
 
         FormListener formListener = new FormListener();
 
@@ -142,10 +136,32 @@ public class panelJasa extends JPanel {
 
         jDialog4.getContentPane().add(jComboBox2, java.awt.BorderLayout.PAGE_END);
 
-        setLayout(new java.awt.BorderLayout());
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jButton2.setText("Baru");
+        jButton2.addActionListener(formListener);
+        jPanel1.add(jButton2);
+
+        deleteButton.setText("Hapus BPKB");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteButton.addActionListener(formListener);
+        jPanel1.add(deleteButton);
+
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(formListener);
+        jPanel1.add(refreshButton);
+
+        saveButton.setText("Simpan");
+        saveButton.addActionListener(formListener);
+        jPanel1.add(saveButton);
+
+        add(jPanel1);
 
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
-        masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
 
@@ -199,13 +215,40 @@ public class panelJasa extends JPanel {
         masterScrollPane.setViewportView(masterTable);
         masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        add(masterScrollPane, java.awt.BorderLayout.CENTER);
+        add(masterScrollPane);
+
+        deleteDetailButton.setText("Hapus Transaksi");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteDetailButton.addActionListener(formListener);
+        jPanel2.add(deleteDetailButton);
+
+        jButton3.setText("Pemasukan");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, newDetailButton, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), jButton3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jButton3.addActionListener(formListener);
+        jPanel2.add(jButton3);
+
+        jButton4.setText("Pengeluaran");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, newDetailButton, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), jButton4, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jButton4.addActionListener(formListener);
+        jPanel2.add(jButton4);
+
+        add(jPanel2);
 
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarjasaList}");
@@ -223,6 +266,9 @@ public class panelJasa extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
         columnBinding.setColumnName("Jumlah");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
+        columnBinding.setColumnName("Tipe");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -240,53 +286,7 @@ public class panelJasa extends JPanel {
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
 
-        add(detailScrollPane, java.awt.BorderLayout.EAST);
-
-        jButton2.setText("Baru");
-        jButton2.addActionListener(formListener);
-        jPanel1.add(jButton2);
-
-        deleteButton.setText("Hapus BPKB");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteButton.addActionListener(formListener);
-        jPanel1.add(deleteButton);
-
-        deleteDetailButton.setText("Hapus Transaksi");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteDetailButton.addActionListener(formListener);
-        jPanel1.add(deleteDetailButton);
-
-        jButton3.setText("Pemasukan");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, newDetailButton, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), jButton3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        jButton3.addActionListener(formListener);
-        jPanel1.add(jButton3);
-
-        jButton4.setText("Pengeluaran");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, newDetailButton, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), jButton4, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        jButton4.addActionListener(formListener);
-        jPanel1.add(jButton4);
-
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel1.add(refreshButton);
-
-        saveButton.setText("Simpan");
-        saveButton.addActionListener(formListener);
-        jPanel1.add(saveButton);
-
-        add(jPanel1, java.awt.BorderLayout.NORTH);
+        add(detailScrollPane);
 
         bindingGroup.bind();
     }
@@ -302,9 +302,6 @@ public class panelJasa extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelJasa.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == saveButton) {
-                panelJasa.this.saveButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == deleteDetailButton) {
                 panelJasa.this.deleteDetailButtonActionPerformed(evt);
             }
@@ -316,6 +313,9 @@ public class panelJasa extends JPanel {
             }
             else if (evt.getSource() == refreshButton) {
                 panelJasa.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelJasa.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton) {
                 panelJasa.this.newDetailButtonActionPerformed(evt);
@@ -380,21 +380,16 @@ public class panelJasa extends JPanel {
         }
         
         app.table.Bayarjasa b;
-        Laporan ran = new Laporan();
         Saldo ts = new app.table.Saldo();
         if (pemasukan) {        
             b = (app.table.Bayarjasa) this.inputPanel2.getTarget();
             ts.setBankId((Bank) this.jComboBox3.getSelectedItem()); 
-            System.out.println("Pemasukan");
         }
         else    {
             b = (app.table.Bayarjasa) this.inputPanel3.getTarget();            
             ts.setBankId((Bank) this.jComboBox2.getSelectedItem());        
-            System.out.println("Pengeluaran");
         }
         b.setTransaksi(ts);
-//        System.out.println(ts);
-//        System.out.println(ts.getBankId().getNamaBank());
         entityManager.persist(b);
         b.setBpkbtitipid(B);
         bs.add(b);
@@ -518,6 +513,7 @@ public class panelJasa extends JPanel {
     private javax.swing.JDialog jDialog3;
     private javax.swing.JDialog jDialog4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Bpkbtitipan> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

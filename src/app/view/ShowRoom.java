@@ -267,7 +267,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem17);
 
-        jMenuItem18.setText("Rental Mobil y");
+        jMenuItem18.setText("Rental Mobil Y");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem18ActionPerformed(evt);
@@ -398,6 +398,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
             chandePanel("Rental");
+            this.panelRental1.Refresh();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 

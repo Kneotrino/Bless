@@ -247,7 +247,7 @@
                 <BindingParameter name="NAME" value="Jumlah"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${dtype}">
+              <Subbinding sourcePath="${jenis}">
                 <BindingParameter name="NAME" value="type"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>

@@ -32,7 +32,6 @@ public class panelLeasing extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
-        System.out.println("this = " + this.list.get(0).getListleasingList().get(0).getMobil());
     }
 
     /**

@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="app.table" v="2.6.5" sm="false" xs="false" id="_14825024498171" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:entity xre="false" compositePrimaryKeyClass="MobilrentalPK" abs="false" class="Mobilrental" visibile="true" gen="false" minimized="false" rootElement="_14825024498171" id="_14825024500122">
+        <jpa:annotation e="true" n="@javax.xml.bind.annotation.XmlRootElement"/>
+        <jpa:inf e="true" n="java.io.Serializable"/>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" visibile="true" name="noPolisiAktif" ft="false" id="_14825024500355">
+                <jpa:bv/>
+                <jpa:column name="NO_POLISI_AKTIF" unique="false" nullable="true" insertable="true" updatable="true" length="16"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="merk" ft="false" id="_14825024500356">
+                <jpa:bv/>
+                <jpa:column name="MERK" unique="false" nullable="true" insertable="true" updatable="true" length="32"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="type" ft="false" id="_14825024500357">
+                <jpa:bv/>
+                <jpa:column name="TYPE" unique="false" nullable="true" insertable="true" updatable="true" length="32"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="warna" ft="false" id="_14825024500358">
+                <jpa:bv/>
+                <jpa:column name="WARNA" unique="false" nullable="true" insertable="true" updatable="true" length="32"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="Integer" visibile="true" name="tahun" ft="false" id="_14825024500359">
+                <jpa:bv/>
+                <jpa:column name="TAHUN" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="keterangan" ft="false" id="_148250245003610">
+                <jpa:bv/>
+                <jpa:column name="KETERANGAN" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="statusMobil" ft="false" id="_148250245003611">
+                <jpa:bv/>
+                <jpa:column name="STATUS_MOBIL" unique="false" nullable="true" insertable="true" updatable="true" length="32"/>
+            </jpa:basic>
+            <jpa:one-to-many own="false" collection-type="java.util.List" connected-entity-id="_148250245041247" connected-attribute-id="_148250245041348" visibile="true" name="rentals" ft="false" id="_14825024500183"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="mobilId" ft="false" id="_14825024500344">
+                <jpa:bv/>
+                <jpa:column name="MOBIL_ID" unique="false" nullable="false" insertable="true" updatable="true"/>
+                <jpa:generated-value/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="true" name="Mobilrental.findAll">
+            <jpa:query>SELECT m FROM Mobilrental m</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Mobilrental.findByMobilId">
+            <jpa:query>SELECT m FROM Mobilrental m WHERE m.mobilId = :mobilId</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Mobilrental.findByNoPolisiAktif">
+            <jpa:query>SELECT m FROM Mobilrental m WHERE m.noPolisiAktif = :noPolisiAktif</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Mobilrental.findByMerk">
+            <jpa:query>SELECT m FROM Mobilrental m WHERE m.merk = :merk</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Mobilrental.findByType">
+            <jpa:query>SELECT m FROM Mobilrental m WHERE m.type = :type</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Mobilrental.findByWarna">
+            <jpa:query>SELECT m FROM Mobilrental m WHERE m.warna = :warna</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Mobilrental.findByTahun">
+            <jpa:query>SELECT m FROM Mobilrental m WHERE m.tahun = :tahun</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Mobilrental.findByKeterangan">
+            <jpa:query>SELECT m FROM Mobilrental m WHERE m.keterangan = :keterangan</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Mobilrental.findByStatusMobil">
+            <jpa:query>SELECT m FROM Mobilrental m WHERE m.statusMobil = :statusMobil</jpa:query>
+        </jpa:nq>
+        <jpa:table name="MOBILRENTAL" catalog="" schema="BLESSING"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="BpkbtitipanPK" abs="false" class="Bpkbtitipan" visibile="true" gen="false" minimized="false" rootElement="_14825024498171" id="_148250245009812">
+        <jpa:annotation e="true" n="@javax.xml.bind.annotation.XmlRootElement"/>
+        <jpa:annotation e="true" n="@app.ListUrutan({&quot;anBpkb&quot;, &quot;ket&quot;, &quot;noBpkb&quot;, &quot;noPolisiAktif&quot;, &quot;posisi&quot;, &quot;status&quot;, &quot;stnk&quot;, &quot;tglTerima&quot;})"/>
+        <jpa:inf e="true" n="java.io.Serializable"/>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" visibile="true" name="anBpkb" ft="false" id="_148250245010014">
+                <jpa:bv/>
+                <jpa:column name="AN_BPKB" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="ket" ft="false" id="_148250245010115">
+                <jpa:bv/>
+                <jpa:column name="KET" unique="false" nullable="true" insertable="true" updatable="true" length="128"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="noBpkb" ft="false" id="_148250245010116">
+                <jpa:bv/>
+                <jpa:column name="NO_BPKB" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="noPolisiAktif" ft="false" id="_148250245010117">
+                <jpa:bv/>
+                <jpa:column name="NO_POLISI_AKTIF" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="posisi" ft="false" id="_148250245010118">
+                <jpa:bv/>
+                <jpa:column name="POSISI" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="status" ft="false" id="_148250245010119">
+                <jpa:bv/>
+                <jpa:column name="STATUS" unique="false" nullable="true" insertable="true" updatable="true" length="32"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="stnk" ft="false" id="_148250245010220">
+                <jpa:bv/>
+                <jpa:column name="STNK" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tglBbn" ft="false" id="_148250245010221">
+                <jpa:bv/>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_BBN" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tglCb" ft="false" id="_148250245010222">
+                <jpa:bv/>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_CB" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tglKembaliBbn" ft="false" id="_148250245010323">
+                <jpa:bv/>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_KEMBALI_BBN" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tglKembaliCb" ft="false" id="_148250245010324">
+                <jpa:bv/>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_KEMBALI_CB" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tglLeasing" ft="false" id="_148250245010425">
+                <jpa:bv/>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_LEASING" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tglTerima" ft="false" id="_148250245010426">
+                <jpa:bv/>
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_TERIMA" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:one-to-many own="true" collection-type="java.util.List" connected-entity-id="_148250245057257" visibile="true" name="bayarjasaList" ft="false" id="_148250245010427">
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-many>
+            <jpa:id attribute-type="Integer" visibile="true" name="bpkbId" ft="false" id="_148250245010013">
+                <jpa:bv/>
+                <jpa:column name="BPKB_ID" unique="false" nullable="false" insertable="true" updatable="true"/>
+                <jpa:generated-value/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="true" name="Bpkbtitipan.findAll">
+            <jpa:query>SELECT b FROM Bpkbtitipan b</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByBpkbId">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.bpkbId = :bpkbId</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByAnBpkb">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.anBpkb = :anBpkb</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByKet">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.ket = :ket</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByNoBpkb">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.noBpkb = :noBpkb</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByNoPolisiAktif">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.noPolisiAktif = :noPolisiAktif</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByPosisi">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.posisi = :posisi</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByStatus">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.status = :status</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByStnk">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.stnk = :stnk</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByTglBbn">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.tglBbn = :tglBbn</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByTglCb">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.tglCb = :tglCb</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByTglKembaliBbn">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.tglKembaliBbn = :tglKembaliBbn</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByTglKembaliCb">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.tglKembaliCb = :tglKembaliCb</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByTglLeasing">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.tglLeasing = :tglLeasing</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bpkbtitipan.findByTglTerima">
+            <jpa:query>SELECT b FROM Bpkbtitipan b WHERE b.tglTerima = :tglTerima</jpa:query>
+        </jpa:nq>
+        <jpa:table name="BPKBTITIPAN" catalog="" schema="BLESSING"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="BayarrentalPK" abs="false" class="Bayarrental" superclassId="_148250245057659" visibile="true" minimized="false" rootElement="_14825024498171" id="_148250245018528">
+        <jpa:ts e="true"/>
+        <jpa:annotation e="true" n="@javax.xml.bind.annotation.XmlRootElement"/>
+        <jpa:inf e="true" n="java.io.Serializable"/>
+        <jpa:attributes>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_148250245041247" connected-attribute-id="_148250245041556" visibile="true" name="rentalId" ft="false" id="_148250245018734">
+                <jpa:join-column name="RENTAL_ID" rc="RENTALID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+        </jpa:attributes>
+        <jpa:nq e="true" name="Bayarrental.findAll">
+            <jpa:query>SELECT b FROM Bayarrental b</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bayarrental.findByBayarhutangid">
+            <jpa:query>SELECT b FROM Bayarrental b WHERE b.bayarhutangid = :bayarhutangid</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bayarrental.findByPembayaran">
+            <jpa:query>SELECT b FROM Bayarrental b WHERE b.pembayaran = :pembayaran</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bayarrental.findByTanggal">
+            <jpa:query>SELECT b FROM Bayarrental b WHERE b.tanggal = :tanggal</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bayarrental.findByBayarrentalid">
+            <jpa:query>SELECT b FROM Bayarrental b WHERE b.bayarrentalid = :bayarrentalid</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="BankPK" abs="false" class="Bank" visibile="true" gen="false" minimized="false" rootElement="_14825024498171" id="_148250245033535">
+        <jpa:annotation e="true" n="@javax.xml.bind.annotation.XmlRootElement"/>
+        <jpa:annotation e="true" n="@app.ListUrutan({&quot;namaBank&quot;, &quot;norek&quot;, &quot;nama&quot;, &quot;alamat&quot;, &quot;nomorHp&quot;, &quot;nomorKtp&quot;, &quot;totalDebit&quot;, &quot;totalKredit&quot;})"/>
+        <jpa:inf e="true" n="java.io.Serializable"/>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" visibile="true" name="norek" ft="false" id="_148250245033637">
+                <jpa:bv/>
+                <jpa:column name="NOREK" unique="false" nullable="true" insertable="true" updatable="true" length="32"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="nama" ft="false" id="_148250245033638">
+                <jpa:bv/>
+                <jpa:column name="NAMA" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="alamat" ft="false" id="_148250245033639">
+                <jpa:bv/>
+                <jpa:column name="ALAMAT" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="nomorHp" ft="false" id="_148250245033640">
+                <jpa:bv/>
+                <jpa:column name="NOMOR_HP" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="nomorKtp" ft="false" id="_148250245033641">
+                <jpa:bv/>
+                <jpa:column name="NOMOR_KTP" unique="false" nullable="true" insertable="true" updatable="true" length="64"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.math.BigInteger" visibile="true" name="totalSaldo" ft="false" id="_148250245033642">
+                <jpa:bv/>
+                <jpa:column name="TOTAL_SALDO" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.math.BigInteger" visibile="true" name="totalDebit" ft="false" id="_148250245033643">
+                <jpa:bv/>
+                <jpa:column name="TOTAL_DEBIT" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.math.BigInteger" visibile="true" name="totalKredit" ft="false" id="_148250245033744">
+                <jpa:bv/>
+                <jpa:column name="TOTAL_KREDIT" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="namaBank" ft="false" id="_148250245033745">
+                <jpa:bv/>
+                <jpa:column name="NAMA_BANK" unique="false" nullable="true" insertable="true" updatable="true" length="32"/>
+            </jpa:basic>
+            <jpa:one-to-many own="false" collection-type="java.util.List" connected-entity-id="_148250245069867" connected-attribute-id="_148250245070074" fetch="EAGER" visibile="true" name="saldoList" ft="false" id="_148250245033746">
+                <jpa:cascade>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-remove/>
+                </jpa:cascade>
+            </jpa:one-to-many>
+            <jpa:id attribute-type="Integer" visibile="true" name="bankId" ft="false" id="_148250245033536">
+                <jpa:bv/>
+                <jpa:column name="BANK_ID" unique="false" nullable="false" insertable="true" updatable="true"/>
+                <jpa:generated-value/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="true" name="Bank.findAll">
+            <jpa:query>SELECT b FROM Bank b</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByBankId">
+            <jpa:query>SELECT b FROM Bank b WHERE b.bankId = :bankId</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByNorek">
+            <jpa:query>SELECT b FROM Bank b WHERE b.norek = :norek</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByNama">
+            <jpa:query>SELECT b FROM Bank b WHERE b.nama = :nama</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByAlamat">
+            <jpa:query>SELECT b FROM Bank b WHERE b.alamat = :alamat</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByNomorHp">
+            <jpa:query>SELECT b FROM Bank b WHERE b.nomorHp = :nomorHp</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByNomorKtp">
+            <jpa:query>SELECT b FROM Bank b WHERE b.nomorKtp = :nomorKtp</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByTotalSaldo">
+            <jpa:query>SELECT b FROM Bank b WHERE b.totalSaldo = :totalSaldo</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByTotalDebit">
+            <jpa:query>SELECT b FROM Bank b WHERE b.totalDebit = :totalDebit</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByTotalKredit">
+            <jpa:query>SELECT b FROM Bank b WHERE b.totalKredit = :totalKredit</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Bank.findByNamaBank">
+            <jpa:query>SELECT b FROM Bank b WHERE b.namaBank = :namaBank</jpa:query>
+        </jpa:nq>
+        <jpa:table name="BANK" catalog="" schema="BLESSING"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="RentalPK" abs="false" class="Rental" visibile="true" gen="false" minimized="false" rootElement="_14825024498171" id="_148250245041247">
+        <jpa:annotation e="true" n="@javax.xml.bind.annotation.XmlRootElement"/>
+        <jpa:annotation e="true" n="@app.ListUrutan({&quot;tglmulai&quot;, &quot;tglselesai&quot;, &quot;pemakai&quot;, &quot;driver&quot;})"/>
+        <jpa:inf e="true" n="java.io.Serializable"/>
+        <jpa:attributes>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tglmulai" ft="false" id="_148250245041350">
+                <jpa:bv/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TGLMULAI" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tglselesai" ft="false" id="_148250245041451">
+                <jpa:bv/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TGLSELESAI" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="pemakai" ft="false" id="_148250245041452">
+                <jpa:bv/>
+                <jpa:column name="PEMAKAI" unique="false" nullable="true" insertable="true" updatable="true" length="255"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="jammulai" ft="false" id="_148250245041453">
+                <jpa:bv/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="JAMMULAI" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="jamselesai" ft="false" id="_148250245041554">
+                <jpa:bv/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="JAMSELESAI" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="driver" ft="false" id="_148250245041555">
+                <jpa:bv/>
+                <jpa:column name="DRIVER" unique="false" nullable="true" insertable="true" updatable="true" length="255"/>
+            </jpa:basic>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_14825024500122" connected-attribute-id="_14825024500183" visibile="true" name="mobilrental" ft="false" id="_148250245041348"/>
+            <jpa:one-to-many own="false" collection-type="java.util.List" connected-entity-id="_148250245018528" connected-attribute-id="_148250245018734" visibile="true" name="bayarrentalList" ft="false" id="_148250245041556"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="rentalid" ft="false" id="_148250245041349">
+                <jpa:bv/>
+                <jpa:column name="RENTALID" unique="false" nullable="false" insertable="true" updatable="true"/>
+                <jpa:generated-value/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="true" name="Rental.findAll">
+            <jpa:query>SELECT r FROM Rental r</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Rental.findByRentalid">
+            <jpa:query>SELECT r FROM Rental r WHERE r.rentalid = :rentalid</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Rental.findByTglmulai">
+            <jpa:query>SELECT r FROM Rental r WHERE r.tglmulai = :tglmulai</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Rental.findByTglselesai">
+            <jpa:query>SELECT r FROM Rental r WHERE r.tglselesai = :tglselesai</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Rental.findByPemakai">
+            <jpa:query>SELECT r FROM Rental r WHERE r.pemakai = :pemakai</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Rental.findByJammulai">
+            <jpa:query>SELECT r FROM Rental r WHERE r.jammulai = :jammulai</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Rental.findByJamselesai">
+            <jpa:query>SELECT r FROM Rental r WHERE r.jamselesai = :jamselesai</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Rental.findByDriver">
+            <jpa:query>SELECT r FROM Rental r WHERE r.driver = :driver</jpa:query>
+        </jpa:nq>
+        <jpa:table name="RENTAL" catalog="" schema="BLESSING"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="LaporanPK" abs="false" class="Laporan" visibile="true" gen="false" minimized="false" rootElement="_14825024498171" id="_148250245057659">
+        <jpa:annotation e="true" n="@javax.xml.bind.annotation.XmlRootElement"/>
+        <jpa:inf e="true" n="java.io.Serializable"/>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" visibile="true" name="dtype" ft="false" id="_148250245057861">
+                <jpa:bv/>
+                <jpa:column name="DTYPE" unique="false" nullable="true" insertable="true" updatable="true" length="31"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.math.BigInteger" visibile="true" name="jumlah" ft="false" id="_148250245057862">
+                <jpa:bv/>
+                <jpa:column name="JUMLAH" unique="false" nullable="false" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="keterangan" ft="false" id="_148250245057863">
+                <jpa:bv/>
+                <jpa:column name="KETERANGAN" unique="false" nullable="true" insertable="true" updatable="true"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.math.BigInteger" visibile="true" name="saldo" ft="false" id="_148250245057864">
+                <jpa:bv/>
+                <jpa:column name="SALDO" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tanggal" ft="false" id="_148250245057865">
+                <jpa:bv/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGAL" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="tipe" ft="false" id="_148250245057866">
+                <jpa:bv/>
+                <jpa:column name="TIPE" unique="false" nullable="true" insertable="true" updatable="true" length="255"/>
+            </jpa:basic>
+            <jpa:id attribute-type="Long" visibile="true" name="id" ft="false" id="_148250245057760">
+                <jpa:bv/>
+                <jpa:column name="ID" unique="false" nullable="false" insertable="true" updatable="true"/>
+                <jpa:generated-value/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="true" name="Laporan.findAll">
+            <jpa:query>SELECT l FROM Laporan l</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Laporan.findById">
+            <jpa:query>SELECT l FROM Laporan l WHERE l.id = :id</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Laporan.findByDtype">
+            <jpa:query>SELECT l FROM Laporan l WHERE l.dtype = :cari</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Laporan.findByJumlah">
+            <jpa:query>SELECT l FROM Laporan l WHERE l.jumlah = :jumlah</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Laporan.findBySaldo">
+            <jpa:query>SELECT l FROM Laporan l WHERE l.saldo = :saldo</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Laporan.findByTanggal">
+            <jpa:query>SELECT l FROM Laporan l WHERE l.tanggal = :tanggal</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Laporan.findByTipe">
+            <jpa:query>SELECT l FROM Laporan l WHERE l.tipe = :tipe</jpa:query>
+        </jpa:nq>
+        <jpa:table name="LAPORAN" catalog="" schema="BLESSING"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="BayarjasaPK" abs="false" class="Bayarjasa" superclassId="_148250245057659" visibile="true" gen="false" minimized="false" rootElement="_14825024498171" id="_148250245057257">
+        <jpa:annotation e="true" n="@javax.xml.bind.annotation.XmlRootElement"/>
+        <jpa:annotation e="true" n="@app.ListUrutan({&quot;tanggal&quot;, &quot;keterangan&quot;, &quot;jumlah&quot;})"/>
+        <jpa:inf e="true" n="java.io.Serializable"/>
+        <jpa:attributes>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_148250245009812" visibile="true" name="bpkbtitipid" ft="false" id="_148250245057258">
+                <jpa:cascade>
+                    <jpa:cascade-merge/>
+                    <jpa:cascade-remove/>
+                </jpa:cascade>
+            </jpa:many-to-one>
+        </jpa:attributes>
+        <jpa:nq e="true" name="Bayarjasa.findAll">
+            <jpa:query>SELECT b FROM Bayarjasa b</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="SaldoPK" abs="false" class="Saldo" visibile="true" gen="false" minimized="false" rootElement="_14825024498171" id="_148250245069867">
+        <jpa:annotation e="true" n="@javax.xml.bind.annotation.XmlRootElement"/>
+        <jpa:annotation e="true" n="@app.ListUrutan({&quot;tanggal&quot;, &quot;keterangan&quot;, &quot;jumlah&quot;})"/>
+        <jpa:inf e="true" n="java.io.Serializable"/>
+        <jpa:attributes>
+            <jpa:basic attribute-type="java.util.Date" visibile="true" name="tanggal" ft="false" id="_148250245069969">
+                <jpa:bv/>
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGAL" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="long" visibile="true" name="kredit" ft="false" id="_148250245070070">
+                <jpa:bv/>
+                <jpa:column name="KREDIT" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="long" visibile="true" name="debit" ft="false" id="_148250245070071">
+                <jpa:bv/>
+                <jpa:column name="DEBIT" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="long" visibile="true" name="saldo" ft="false" id="_148250245070072">
+                <jpa:bv/>
+                <jpa:column name="SALDO" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" visibile="true" name="keterangan" ft="false" id="_148250245070073">
+                <jpa:bv/>
+                <jpa:column name="KETERANGAN" unique="false" nullable="true" insertable="true" updatable="true" length="32700"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_148250245033535" connected-attribute-id="_148250245033746" fetch="LAZY" visibile="true" name="bankId" ft="false" id="_148250245070074">
+                <jpa:cascade>
+                    <jpa:cascade-merge/>
+                </jpa:cascade>
+                <jpa:join-column name="BANK_ID" rc="BANK_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:id attribute-type="Integer" visibile="true" name="saldoId" ft="false" id="_148250245069968">
+                <jpa:bv/>
+                <jpa:column name="SALDO_ID" unique="false" nullable="false" insertable="true" updatable="true"/>
+                <jpa:generated-value/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="true" name="Saldo.findAll">
+            <jpa:query>SELECT s FROM Saldo s</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Saldo.findBySaldoId">
+            <jpa:query>SELECT s FROM Saldo s WHERE s.saldoId = :saldoId</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Saldo.findByTanggal">
+            <jpa:query>SELECT s FROM Saldo s WHERE s.tanggal = :tanggal</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Saldo.findByKredit">
+            <jpa:query>SELECT s FROM Saldo s WHERE s.kredit = :kredit</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Saldo.findByDebit">
+            <jpa:query>SELECT s FROM Saldo s WHERE s.debit = :debit</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="Saldo.findBySaldo">
+            <jpa:query>SELECT s FROM Saldo s WHERE s.saldo = :saldo</jpa:query>
+        </jpa:nq>
+        <jpa:table name="SALDO" catalog="" schema="BLESSING"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="BayarRentalPemasukanPK" abs="false" class="BayarRentalPemasukan" superclassId="_148250245018528" visibile="true" minimized="false" rootElement="_14825024498171" id="_1482502574493">
+        <jpa:ts e="true"/>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="BayarRentalPemasukan.findAll">
+            <jpa:query>Select e from BayarRentalPemasukan e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="BayarRentalPenngeluaranPK" abs="false" class="BayarRentalPenngeluaran" superclassId="_148250245018528" visibile="true" minimized="false" rootElement="_14825024498171" id="_1482502622218">
+        <jpa:ts e="true"/>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="BayarRentalPenngeluaran.findAll">
+            <jpa:query>Select e from BayarRentalPenngeluaran e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:snp e="true" loc="BEFORE_PACKAGE">/**
+ * This file was generated by the JPA Modeler
+ */</jpa:snp>
+    <jpa:inf e="true" n="java.io.Serializable"/>
+    <jpa:diagram>
+        <plane elementRef="_14825024498171">
+            <shape elementRef="_14825024500122">
+                <Bounds x="460.0" y="651.0" width="159.0" height="252.0"/>
+            </shape>
+            <shape elementRef="_148250245009812">
+                <Bounds x="900.0" y="651.0" width="160.0" height="378.0"/>
+            </shape>
+            <shape elementRef="_148250245018528">
+                <Bounds x="34.0" y="198.0" width="162.0" height="58.0"/>
+            </shape>
+            <shape elementRef="_148250245033535">
+                <Bounds x="1124.0" y="293.0" width="128.0" height="294.0"/>
+            </shape>
+            <shape elementRef="_148250245041247">
+                <Bounds x="258.0" y="293.0" width="138.0" height="252.0"/>
+            </shape>
+            <shape elementRef="_148250245057659">
+                <Bounds x="460.0" y="32.0" width="143.0" height="197.0"/>
+            </shape>
+            <shape elementRef="_148250245057257">
+                <Bounds x="683.0" y="293.0" width="153.0" height="58.0"/>
+            </shape>
+            <shape elementRef="_148250245069867">
+                <Bounds x="1316.0" y="651.0" width="128.0" height="210.0"/>
+            </shape>
+            <shape elementRef="_1482502574493">
+                <Bounds x="-59.0" y="307.0" width="233.0" height="24.0"/>
+            </shape>
+            <shape elementRef="_1482502622218">
+                <Bounds x="-29.0" y="411.0" width="244.0" height="24.0"/>
+            </shape>
+        </plane>
+    </jpa:diagram>
+</jpa:entity-mappings>

@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -111,7 +112,10 @@ public class Laporan implements Serializable {
         changeSupport.firePropertyChange("dtype", oldDtype, dtype);
     }
         @Transient
-        boolean name = (this instanceof Pemasukan) || (this instanceof BayarJasaPemasukan) ;
+        boolean name = (this instanceof Pemasukan) 
+                || (this instanceof BayarJasaPemasukan) 
+                || (this instanceof BayarRentalPemasukan) 
+                ;
     public BigInteger getJumlah() {
         return jumlah;
     }
@@ -218,10 +222,11 @@ public class Laporan implements Serializable {
     @PostPersist
     public void log()
     {
+    DecimalFormat nf = new DecimalFormat("IDR #,##0");            
     String desc = ""
             + "\n REF = "+this.id
-            + "\n Jumlah = "+this.jumlah
-            + "\n Tipe = "+this.dtype            
+            + "\n Jumlah = "+nf.format(this.jumlah)
+            + "\n Tipe = "+getJenis()
             + "\n Keterangan = "+this.keterangan            
             + "\n Sumber = "+this.Transaksi.getBankId().getNama()
             ;
@@ -230,13 +235,18 @@ public class Laporan implements Serializable {
     @PostRemove
     public void log0()
     {
+        DecimalFormat nf = new DecimalFormat("IDR #,##0");            
             String desc = ""
             + "\n REF = "+this.id
-            + "\n Jumlah = "+this.jumlah
-            + "\n Tipe = "+this.dtype            
+            + "\n Jumlah = "+nf.format(this.jumlah)
+            + "\n Tipe = "+getJenis()
             + "\n Keterangan = "+this.keterangan
             + "\n Sumber = "+this.Transaksi.getBankId().getNama()
             ;
         javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menghapus"+ desc);                
+    }
+    public String getJenis()
+    {
+        return this.getClass().getSimpleName();
     }
 }
