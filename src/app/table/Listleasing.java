@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Listleasing.findByNominal", query = "SELECT l FROM Listleasing l WHERE l.nominal = :nominal")
     , @NamedQuery(name = "Listleasing.findByTglDp", query = "SELECT l FROM Listleasing l WHERE l.tglDp = :tglDp")
     , @NamedQuery(name = "Listleasing.findByTglOk", query = "SELECT l FROM Listleasing l WHERE l.tglOk = :tglOk")})
+@app.ListUrutan({"nominal","tglDp","tglOk" })
 public class Listleasing implements Serializable {
 
     @Transient
@@ -61,8 +63,12 @@ public class Listleasing implements Serializable {
     @JoinColumn(name = "LEASING_LEASING_ID", referencedColumnName = "LEASING_ID")
     @ManyToOne
     private Leasing leasingLeasingId;
-    @OneToOne(mappedBy = "listleasing")
+    @OneToOne(mappedBy = "listleasing", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Mobil mobil;
+
+    public void setMobil(Mobil mobil) {
+        this.mobil = mobil;
+    }
 
     public Mobil getMobil() {
         return mobil;

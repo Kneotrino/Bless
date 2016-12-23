@@ -146,15 +146,12 @@ public class Mobil implements Serializable {
     private Bpkb bpkb;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "mobils")
     private List<KeuanganMobil> keuanganMobils;
-    
-//org.jdesktop.observablecollections.ObservableCollections.observableList(bpkbQuery1.getResultList());
-
     @Transient 
     private String no_bpkb;
     @Transient 
     private long TotalKredit;
-    @OneToOne
-    private Listleasing listleasing;
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    private Listleasing listleasing = new Listleasing();
 
     public Listleasing getListleasing() {
         return listleasing;

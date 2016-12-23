@@ -65,6 +65,7 @@ public class panelRental extends JPanel {
         deleteButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
         newDetailButton = new javax.swing.JButton();
+        newDetailButton1 = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
 
@@ -147,7 +148,7 @@ public class panelRental extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
 
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setColumnSelectionAllowed(false);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarrentalList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
@@ -175,7 +176,7 @@ public class panelRental extends JPanel {
         newButton1.addActionListener(formListener);
         jPanel4.add(newButton1);
 
-        deleteButton.setText("Delete");
+        deleteButton.setText("Hapus Transaksi");
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -183,7 +184,7 @@ public class panelRental extends JPanel {
         deleteButton.addActionListener(formListener);
         jPanel4.add(deleteButton);
 
-        deleteDetailButton.setText("Delete");
+        deleteDetailButton.setText("Hapus List");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -191,7 +192,7 @@ public class panelRental extends JPanel {
         deleteDetailButton.addActionListener(formListener);
         jPanel4.add(deleteDetailButton);
 
-        newDetailButton.setText("New");
+        newDetailButton.setText("Pemasukan");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -199,11 +200,15 @@ public class panelRental extends JPanel {
         newDetailButton.addActionListener(formListener);
         jPanel4.add(newDetailButton);
 
+        newDetailButton1.setText("Pengeluaran");
+        newDetailButton1.addActionListener(formListener);
+        jPanel4.add(newDetailButton1);
+
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
         jPanel4.add(refreshButton);
 
-        saveButton.setText("Save");
+        saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel4.add(saveButton);
 
@@ -246,6 +251,9 @@ public class panelRental extends JPanel {
             }
             else if (evt.getSource() == newButton) {
                 panelRental.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton1) {
+                panelRental.this.newDetailButton1ActionPerformed(evt);
             }
         }
 
@@ -377,6 +385,10 @@ public class panelRental extends JPanel {
 
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
+    private void newDetailButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newDetailButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -399,6 +411,7 @@ public class panelRental extends JPanel {
     private javax.swing.JButton newButton;
     private javax.swing.JButton newButton1;
     private javax.swing.JButton newDetailButton;
+    private javax.swing.JButton newDetailButton1;
     private app.view.panel.bank.PanelMobilRental panelMobilRental1;
     private javax.persistence.Query query;
     private javax.persistence.Query query1;

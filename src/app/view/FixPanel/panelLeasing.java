@@ -5,6 +5,9 @@
  */
 package app.view.FixPanel;
 
+import app.table.Leasing;
+import app.table.Listleasing;
+import app.table.Mobil;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -29,6 +32,7 @@ public class panelLeasing extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
+        System.out.println("this = " + this.list.get(0).getListleasingList().get(0).getMobil());
     }
 
     /**
@@ -44,22 +48,58 @@ public class panelLeasing extends JPanel {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT L FROM Leasing L");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
+        jDialog2 = new javax.swing.JDialog();
+        inputPanel1 = new app.utils.inputPanel(app.table.Leasing.class);
+        newButton = new javax.swing.JButton();
+        jDialog3 = new javax.swing.JDialog();
+        inputPanel2 = new app.utils.inputPanel(app.table.Listleasing.class);
+        newDetailButton = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        mobilQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Mobil m");
+        mobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilQuery.getResultList());
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        newButton = new javax.swing.JButton();
+        newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
-        newDetailButton = new javax.swing.JButton();
+        newDetailButton1 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
+        jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
+
+        newButton.setText("Tambah");
+        newButton.addActionListener(formListener);
+        jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_END);
+
+        jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
+
+        newDetailButton.setText("Tambah List");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton.addActionListener(formListener);
+        jDialog3.getContentPane().add(newDetailButton, java.awt.BorderLayout.PAGE_END);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mobilList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jDialog3.getContentPane().add(jComboBox1, java.awt.BorderLayout.PAGE_START);
+
         setLayout(new java.awt.BorderLayout());
 
+        masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -76,12 +116,15 @@ public class panelLeasing extends JPanel {
         add(masterScrollPane, java.awt.BorderLayout.WEST);
 
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
-        detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
-        masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        detailTable.setDefaultEditor(Long.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasingList}");
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasingList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${listleasingId}"));
         columnBinding.setColumnName("Listleasing REF");
@@ -90,6 +133,14 @@ public class panelLeasing extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglDp}"));
         columnBinding.setColumnName("Tgl Dp");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
+        columnBinding.setColumnName("REF");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.noPolisiAktif}"));
+        columnBinding.setColumnName("NOPOL");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.merk}"));
         columnBinding.setColumnName("Merk");
         columnBinding.setColumnClass(String.class);
@@ -119,19 +170,19 @@ public class panelLeasing extends JPanel {
 
         add(detailScrollPane, java.awt.BorderLayout.CENTER);
 
-        newButton.setText("New");
-        newButton.addActionListener(formListener);
-        jPanel1.add(newButton);
+        newButton1.setText("Baru Leasing");
+        newButton1.addActionListener(formListener);
+        jPanel1.add(newButton1);
 
-        deleteButton.setText("Delete");
+        deleteButton.setText("Hapus Leasing");
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
 
-        saveButton.setText("Save");
+        saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
@@ -139,7 +190,7 @@ public class panelLeasing extends JPanel {
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
 
-        deleteDetailButton.setText("Delete");
+        deleteDetailButton.setText("Hapus List");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -147,13 +198,9 @@ public class panelLeasing extends JPanel {
         deleteDetailButton.addActionListener(formListener);
         jPanel1.add(deleteDetailButton);
 
-        newDetailButton.setText("New");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        newDetailButton.addActionListener(formListener);
-        jPanel1.add(newDetailButton);
+        newDetailButton1.setText("Tambah List");
+        newDetailButton1.addActionListener(formListener);
+        jPanel1.add(newDetailButton1);
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -182,6 +229,12 @@ public class panelLeasing extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelLeasing.this.newDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton1) {
+                panelLeasing.this.newButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton1) {
+                panelLeasing.this.newDetailButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -217,8 +270,11 @@ public class panelLeasing extends JPanel {
             ls = new LinkedList<app.table.Listleasing>();
             L.setListleasingList((List) ls);
         }
-        app.table.Listleasing l = new app.table.Listleasing();
+        app.table.Listleasing l = (app.table.Listleasing) this.inputPanel2.getTarget();
+        Mobil name = (Mobil) this.jComboBox1.getSelectedItem();
+        l.setMobil(name);
         entityManager.persist(l);
+        System.out.println("l.getMobil() = " + l.getMobil());
         l.setLeasingLeasingId(L);
         ls.add(l);
         masterTable.clearSelection();
@@ -227,9 +283,20 @@ public class panelLeasing extends JPanel {
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
+
+    public List<Mobil> getMobilList() {
+        return mobilList;
+    }
+
+    public void setMobilList(List<Mobil> mobilList) {
+        this.mobilList = mobilList;
+    }
+    
     public void Refresh()
     {
             this.refreshButtonActionPerformed(null);
+            this.mobilList.clear();
+            this.mobilList.addAll(this.mobilQuery.getResultList());
     }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
@@ -248,6 +315,10 @@ public class panelLeasing extends JPanel {
         List<app.table.Leasing> toRemove = new ArrayList<app.table.Leasing>(selected.length);
         for (int idx = 0; idx < selected.length; idx++) {
             app.table.Leasing L = list.get(masterTable.convertRowIndexToModel(selected[idx]));
+            List<Listleasing> listleasingList = L.getListleasingList();
+            for (Listleasing listleasing : listleasingList) {
+                entityManager.remove(listleasing);                
+            }
             toRemove.add(L);
             entityManager.remove(L);
         }
@@ -255,7 +326,7 @@ public class panelLeasing extends JPanel {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        app.table.Leasing L = new app.table.Leasing();
+        app.table.Leasing L = (app.table.Leasing) this.inputPanel1.getTarget();
         entityManager.persist(L);
         list.add(L);
         int row = list.size() - 1;
@@ -279,6 +350,21 @@ public class panelLeasing extends JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+            this.jDialog2.setSize(300, 200);
+            this.jDialog2.setLocationRelativeTo(null);
+            this.jDialog2.show();
+            
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton1ActionPerformed
+
+    private void newDetailButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton1ActionPerformed
+        this.jDialog3.setSize(300, 350);
+        this.jDialog3.setLocationRelativeTo(null);
+        this.jDialog3.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newDetailButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -286,12 +372,21 @@ public class panelLeasing extends JPanel {
     private javax.swing.JScrollPane detailScrollPane;
     private javax.swing.JTable detailTable;
     private javax.persistence.EntityManager entityManager;
+    private app.utils.inputPanel inputPanel1;
+    private app.utils.inputPanel inputPanel2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Leasing> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
+    private java.util.List<app.table.Mobil> mobilList;
+    private javax.persistence.Query mobilQuery;
     private javax.swing.JButton newButton;
+    private javax.swing.JButton newButton1;
     private javax.swing.JButton newDetailButton;
+    private javax.swing.JButton newDetailButton1;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;

@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Leasing.findAll", query = "SELECT l FROM Leasing l")
     , @NamedQuery(name = "Leasing.findByLeasingId", query = "SELECT l FROM Leasing l WHERE l.leasingId = :leasingId")
     , @NamedQuery(name = "Leasing.findByNama", query = "SELECT l FROM Leasing l WHERE l.nama = :nama")})
+ @ListUrutan({"nama"})
 public class Leasing implements Serializable {
 
     @Transient
@@ -106,7 +109,7 @@ public class Leasing implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Leasing[ leasingId=" + leasingId + " ]";
+        return "[ REF=" + leasingId + "; Nama = "+this.nama+" ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
