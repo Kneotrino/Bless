@@ -64,6 +64,9 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jDialog1 = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
@@ -113,6 +116,16 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel3.setText("jLabel2");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Trebuchet MS", 0, 13)); // NOI18N
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("User manual :\n");
+        jTextArea1.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jDialog1.getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -279,7 +292,12 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu3.setText("Control");
 
-        jMenuItem6.setText("Content");
+        jMenuItem6.setText("About");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setText("Help");
@@ -314,6 +332,10 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+//        javax.swing.
+        this.jDialog1.setSize(400, 500);
+        this.jDialog1.setLocationRelativeTo(null);
+        this.jDialog1.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -377,6 +399,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         chandePanel("Hutang");
+        this.panelHutang1.Refresh();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
@@ -401,6 +424,11 @@ public class ShowRoom extends javax.swing.JFrame {
             this.panelRental1.Refresh();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        javax.swing.JOptionPane.showMessageDialog(null, "Email = Kneotrino@yahoo.com \nCopyrigth CLAY 13 @2016");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -440,6 +468,7 @@ public class ShowRoom extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private app.view.FixPanel.Inventaris inventaris1;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -475,6 +504,8 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.panelLeasing panelLeasing2;
     private app.view.FixPanel.panelPegawai panelPegawai1;

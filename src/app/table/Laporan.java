@@ -235,6 +235,7 @@ public class Laporan implements Serializable {
             + "\n Waktu = "+this.tanggal            
             + "\n Jumlah = "+nf.format(this.jumlah)
             + "\n Tipe = "+getJenis()
+            + "\n Sumber = "+Transaksi.getBankId().getNama()
 //            + "\n Sumber = "+this.Transaksi == null? (Transaksi.getBankId().getNama() == null ? "":""):"";
             ;
         javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan"+desc);                

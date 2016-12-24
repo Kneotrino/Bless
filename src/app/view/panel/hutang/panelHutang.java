@@ -7,6 +7,7 @@ package app.view.panel.hutang;
 
 import app.table.Bank;
 import app.table.Bayarhutang;
+import app.table.BayarhutangPengeluaran;
 import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
@@ -47,31 +48,7 @@ public class panelHutang extends JPanel {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT h FROM Hutang h");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
-        hutang = new javax.swing.JDialog();
-        newButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jLabel8 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -84,6 +61,10 @@ public class panelHutang extends JPanel {
         newButton3 = new javax.swing.JButton();
         jComboBox4 = new javax.swing.JComboBox<>();
         newDetailButton = new javax.swing.JButton();
+        jDialog1 = new javax.swing.JDialog();
+        inputPanel1 = new app.utils.inputPanel(app.table.Hutang.class);
+        newButton = new javax.swing.JButton();
+        jComboBox5 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -103,135 +84,13 @@ public class panelHutang extends JPanel {
 
         FormListener formListener = new FormListener();
 
-        hutang.setTitle("Data");
-        hutang.setAlwaysOnTop(true);
-        hutang.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        hutang.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
-
-        newButton.setText("Baru");
-        newButton.addActionListener(formListener);
-        hutang.getContentPane().add(newButton);
-
         jButton3.setText("Simpan");
         jButton3.addActionListener(formListener);
-        hutang.getContentPane().add(jButton3);
-
-        jLabel10.setText("Ref Hutang");
-        hutang.getContentPane().add(jLabel10);
-
-        jTextField11.setEnabled(false);
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.hutangid}"), jTextField11, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jTextField11);
-
-        jLabel1.setText("Nama");
-        hutang.getContentPane().add(jLabel1);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.nama}"), jTextField2, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jTextField2, org.jdesktop.beansbinding.BeanProperty.create("editable"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jTextField2);
-
-        jLabel2.setText("Alamat");
-        hutang.getContentPane().add(jLabel2);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.alamat}"), jTextField3, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jTextField3, org.jdesktop.beansbinding.BeanProperty.create("editable"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jTextField3);
-
-        jLabel3.setText("Nomor HP");
-        hutang.getContentPane().add(jLabel3);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.nomorhp}"), jTextField4, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jTextField4, org.jdesktop.beansbinding.BeanProperty.create("editable"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jTextField4);
-
-        jLabel4.setText("Nomot KTP");
-        hutang.getContentPane().add(jLabel4);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.nomorktp}"), jTextField5, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jTextField5, org.jdesktop.beansbinding.BeanProperty.create("editable"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jTextField5);
-
-        jLabel5.setText("Pinjaman");
-        hutang.getContentPane().add(jLabel5);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.jumlahpinjaman}"), jTextField6, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jTextField6, org.jdesktop.beansbinding.BeanProperty.create("editable"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jTextField6);
-
-        jLabel7.setText("Sisa Pinjaman");
-        hutang.getContentPane().add(jLabel7);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.sisapinjaman}"), jTextField8, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jTextField8, org.jdesktop.beansbinding.BeanProperty.create("editable"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jTextField8);
-
-        jLabel6.setText("Tanggal Pinjaman");
-        hutang.getContentPane().add(jLabel6);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tanggalpinjam}"), jDateChooser1, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jDateChooser1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jDateChooser1);
-
-        jLabel8.setText("Tanggal Lunas");
-        hutang.getContentPane().add(jLabel8);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tanggallunas}"), jDateChooser2, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jDateChooser2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jDateChooser2);
-
-        jLabel9.setText("Keterangan");
-        hutang.getContentPane().add(jLabel9);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keterangan}"), jTextField10, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jTextField10, org.jdesktop.beansbinding.BeanProperty.create("editable"));
-        bindingGroup.addBinding(binding);
-
-        hutang.getContentPane().add(jTextField10);
-
-        jLabel18.setText("Tujuan Pinjaman");
-        hutang.getContentPane().add(jLabel18);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KAS", "BRI", "BCA", " " }));
-
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox1);
-        bindingGroup.addBinding(jComboBoxBinding);
-
-        jComboBox1.addActionListener(formListener);
-        hutang.getContentPane().add(jComboBox1);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KAS", "BRI", "BCA", " " }));
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox2);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${resultList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bankQuery, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jDialog4.setTitle("HUTANG PENGELUARAN");
@@ -264,16 +123,32 @@ public class panelHutang extends JPanel {
 
         newDetailButton.setText("Baru");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         newDetailButton.addActionListener(formListener);
+
+        jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog1.setType(java.awt.Window.Type.POPUP);
+
+        inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
+        jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
+
+        newButton.setText("Baru");
+        newButton.addActionListener(formListener);
+        jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox5);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jDialog1.getContentPane().add(jComboBox5, java.awt.BorderLayout.PAGE_END);
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setText("Edit/Tambah");
+        jButton1.setText("Input Peminjaman");
         jButton1.addActionListener(formListener);
         jPanel3.add(jButton1);
 
@@ -292,13 +167,13 @@ public class panelHutang extends JPanel {
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
         masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        masterTable.setColumnSelectionAllowed(true);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hutangid}"));
         columnBinding.setColumnName("Hutangid");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nama}"));
         columnBinding.setColumnName("Nama");
         columnBinding.setColumnClass(String.class);
@@ -317,6 +192,7 @@ public class panelHutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${sisapinjaman}"));
         columnBinding.setColumnName("Sisapinjaman");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalpinjam}"));
         columnBinding.setColumnName("Tanggalpinjam");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -329,6 +205,7 @@ public class panelHutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lunas}"));
         columnBinding.setColumnName("Lunas");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -348,7 +225,6 @@ public class panelHutang extends JPanel {
         detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarhutangs}");
@@ -434,9 +310,6 @@ public class panelHutang extends JPanel {
             else if (evt.getSource() == jButton4) {
                 panelHutang.this.jButton4ActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelHutang.this.newDetailButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == jButton2) {
                 panelHutang.this.jButton2ActionPerformed(evt);
             }
@@ -464,8 +337,8 @@ public class panelHutang extends JPanel {
             else if (evt.getSource() == newButton3) {
                 panelHutang.this.newButton3ActionPerformed(evt);
             }
-            else if (evt.getSource() == jComboBox1) {
-                panelHutang.this.jComboBox1ActionPerformed(evt);
+            else if (evt.getSource() == newDetailButton) {
+                panelHutang.this.newDetailButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -523,6 +396,10 @@ public class panelHutang extends JPanel {
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
+    public void Refresh()
+    {
+            this.refreshButtonActionPerformed(null);
+    }
     
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
@@ -558,18 +435,36 @@ public class panelHutang extends JPanel {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        app.table.Hutang h = new app.table.Hutang();
+        System.out.println("app.view.panel.hutang.panelHutang.newButtonActionPerformed()");
+        app.table.Hutang h = (app.table.Hutang) this.inputPanel1.getTarget();
+//        app.table.Hutang h = new app.table.Hutang();
+        h.setSisapinjaman(h.getJumlahpinjaman());
+        BayarhutangPengeluaran bp = new app.table.BayarhutangPengeluaran();
+        Saldo ts = new app.table.Saldo();
+        ts.setBankId((Bank) jComboBox5.getSelectedItem());
+        bp.setTransaksi(ts);
+        bp.setJumlah(h.getJumlahpinjaman());
+        bp.setHutangid(h);        
+        List<app.table.Bayarhutang> bh = h.getBayarhutangs();
+        bh = bh == null ? new ArrayList<>() : bh;
+        bh.add((app.table.Bayarhutang)bp);
+        h.setBayarhutangs(bh);        
+        entityManager.persist(bp);
         entityManager.persist(h);
         list.add(h);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+        jDialog1.hide();
+//        this.refreshButtonActionPerformed(evt);
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+//            list.clear();
+//            list.addAll(query.getResultList());
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -584,9 +479,9 @@ public class panelHutang extends JPanel {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.hutang.setSize(400,400);
-        this.hutang.setLocationRelativeTo(null);
-        this.hutang.show();
+        this.jDialog1.setSize(800,600);
+        this.jDialog1.setLocationRelativeTo(null);
+        this.jDialog1.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -599,7 +494,6 @@ public class panelHutang extends JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        this.hutang.hide();
         this.saveButtonActionPerformed(evt);
         this.refreshButtonActionPerformed(evt);
         // TODO add your handling code here:
@@ -629,10 +523,6 @@ public class panelHutang extends JPanel {
         this.jDialog5.hide();
     }//GEN-LAST:event_newButton3ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -642,7 +532,7 @@ public class panelHutang extends JPanel {
     private javax.swing.JScrollPane detailScrollPane;
     private javax.swing.JTable detailTable;
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JDialog hutang;
+    private app.utils.inputPanel inputPanel1;
     private app.utils.inputPanel inputPanel3;
     private app.utils.inputPanel inputPanel4;
     private javax.swing.JButton jButton1;
@@ -650,37 +540,17 @@ public class panelHutang extends JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog4;
     private javax.swing.JDialog jDialog5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField8;
     private java.util.List<app.table.Hutang> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

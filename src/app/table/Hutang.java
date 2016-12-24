@@ -31,6 +31,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "HUTANG", catalog = "", schema = "BLESSING")
 @XmlRootElement
+@app.ListUrutan({
+    "nama"
+        ,"alamat"
+        ,"nomorhp"
+        ,"nomorktp"
+        ,"jumlahpinjaman"
+//        ,"sisapinjaman"
+        ,"keterangan"
+        ,"tanggalpinjam" 
+        ,"tanggallunas"
+})
 @NamedQueries({
     @NamedQuery(name = "Hutang.findAll", query = "SELECT h FROM Hutang h")
     , @NamedQuery(name = "Hutang.findByHutangid", query = "SELECT h FROM Hutang h WHERE h.hutangid = :hutangid")
@@ -70,7 +81,7 @@ public class Hutang implements Serializable {
     @Column(name = "TANGGALPINJAM")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggalpinjam = new Date();
-    @OneToMany(mappedBy = "hutangid",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "hutangid",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<Bayarhutang> bayarhutangs;
 
     public List<Bayarhutang> getBayarhutangs() {
