@@ -225,10 +225,11 @@ public class Laporan implements Serializable {
     DecimalFormat nf = new DecimalFormat("IDR #,##0");            
     String desc = ""
             + "\n REF = "+this.id
+            + "\n Keterangan = "+this.keterangan            
+            + "\n Waktu = "+this.tanggal            
             + "\n Jumlah = "+nf.format(this.jumlah)
             + "\n Tipe = "+getJenis()
-            + "\n Keterangan = "+this.keterangan            
-            + "\n Sumber = "+this.Transaksi.getBankId().getNama()
+//            + "\n Sumber = "+this.Transaksi == null? (Transaksi.getBankId().getNama() == null ? "":""):"";
             ;
         javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan"+desc);                
     }

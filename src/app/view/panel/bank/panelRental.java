@@ -418,17 +418,17 @@ public class panelRental extends JPanel {
             bs = new LinkedList<app.table.Bayarrental>();
             r.setBayarrentalList((List) bs);
         }
+//        Laporan ran = new Laporan();
         app.table.Bayarrental b = new app.table.Bayarrental();
-        Laporan ran = new Laporan();
         Saldo ts = new app.table.Saldo();
         if (pem) {
             b = (Bayarrental) this.inputPanel2.getTarget();
             ts.setBankId((Bank) this.jComboBox2.getSelectedItem()); 
-            System.out.println("Pemasukan");
+//            System.out.println("Pemasukan");
         } else {
             b = (Bayarrental) this.inputPanel3.getTarget();
             ts.setBankId((Bank) this.jComboBox3.getSelectedItem()); 
-            System.out.println("Pengeluaran");
+//            System.out.println("Pengeluaran");
         }
         b.setTransaksi(ts);
         entityManager.persist(b);

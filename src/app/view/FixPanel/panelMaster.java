@@ -385,7 +385,7 @@ public class panelMaster extends JPanel {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new panelMaster(app.table.Pemasukan.class));
+                frame.setContentPane(new panelMaster(app.table.Bayarhutang.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

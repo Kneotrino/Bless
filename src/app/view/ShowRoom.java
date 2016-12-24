@@ -233,7 +233,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu5.setText("Hutang/Piutang");
 
-        jMenuItem14.setText("Hutang");
+        jMenuItem14.setText("Hutang Y");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem14ActionPerformed(evt);
@@ -241,7 +241,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem14);
 
-        jMenuItem15.setText("Piutang");
+        jMenuItem15.setText("Piutang X");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem15ActionPerformed(evt);
