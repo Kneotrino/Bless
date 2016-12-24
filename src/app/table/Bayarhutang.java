@@ -43,6 +43,9 @@ public class Bayarhutang extends Laporan implements Serializable {
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Hutang hutangid;
 
+    public Bayarhutang() {
+    }
+
     public Hutang getHutangid() {
         return hutangid;
     }

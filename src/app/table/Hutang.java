@@ -5,6 +5,8 @@
  */
 package app.table;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -22,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         ,"nomorhp"
         ,"nomorktp"
         ,"jumlahpinjaman"
-//        ,"sisapinjaman"
+        ,"sisapinjaman"
         ,"keterangan"
         ,"tanggalpinjam" 
         ,"tanggallunas"
@@ -54,6 +57,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Hutang.findByTanggallunas", query = "SELECT h FROM Hutang h WHERE h.tanggallunas = :tanggallunas")
     , @NamedQuery(name = "Hutang.findByTanggalpinjam", query = "SELECT h FROM Hutang h WHERE h.tanggalpinjam = :tanggalpinjam")})
 public class Hutang implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -83,6 +89,30 @@ public class Hutang implements Serializable {
     private Date tanggalpinjam = new Date();
     @OneToMany(mappedBy = "hutangid",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<Bayarhutang> bayarhutangs;
+    @Column(name = "BUNGA")
+    private BigInteger bunga;
+
+    public static final String PROP_BUNGA = "bunga";
+
+    /**
+     * Get the value of bunga
+     *
+     * @return the value of bunga
+     */
+    public BigInteger getBunga() {
+        return bunga;
+    }
+
+    /**
+     * Set the value of bunga
+     *
+     * @param bunga new value of bunga
+     */
+    public void setBunga(BigInteger bunga) {
+        BigInteger oldBunga = this.bunga;
+        this.bunga = bunga;
+        changeSupport.firePropertyChange(PROP_BUNGA, oldBunga, bunga);
+    }
 
     public List<Bayarhutang> getBayarhutangs() {
         return bayarhutangs;
@@ -112,7 +142,9 @@ public class Hutang implements Serializable {
     }
 
     public void setAlamat(String alamat) {
+        String oldAlamat = this.alamat;
         this.alamat = alamat;
+        changeSupport.firePropertyChange("alamat", oldAlamat, alamat);
     }
 
     public BigInteger getJumlahpinjaman() {
@@ -120,15 +152,12 @@ public class Hutang implements Serializable {
     }
 
     public void setJumlahpinjaman(BigInteger jumlahpinjaman) {
+        BigInteger oldJumlahpinjaman = this.jumlahpinjaman;
         this.jumlahpinjaman = jumlahpinjaman;
+        changeSupport.firePropertyChange("jumlahpinjaman", oldJumlahpinjaman, jumlahpinjaman);
     }
 
     public String getKeterangan() {
-//        if (sisapinjaman != null) {
-//        int res = this.sisapinjaman.compareTo(BigInteger.ZERO);                
-//        String temp =  (res < 0)?"[Lunas]":"[Belum Lunas]";
-//        System.out.println("temp = " + temp);            
-//        }
         return keterangan;
     }
     public String getLunas()
@@ -141,7 +170,9 @@ public class Hutang implements Serializable {
         return "Null";
     }
     public void setKeterangan(String keterangan) {
+        String oldKeterangan = this.keterangan;
         this.keterangan = keterangan;
+        changeSupport.firePropertyChange("keterangan", oldKeterangan, keterangan);
     }
 
     public String getNama() {
@@ -149,7 +180,9 @@ public class Hutang implements Serializable {
     }
 
     public void setNama(String nama) {
+        String oldNama = this.nama;
         this.nama = nama;
+        changeSupport.firePropertyChange("nama", oldNama, nama);
     }
 
     public String getNomorhp() {
@@ -157,7 +190,9 @@ public class Hutang implements Serializable {
     }
 
     public void setNomorhp(String nomorhp) {
+        String oldNomorhp = this.nomorhp;
         this.nomorhp = nomorhp;
+        changeSupport.firePropertyChange("nomorhp", oldNomorhp, nomorhp);
     }
 
     public String getNomorktp() {
@@ -165,7 +200,9 @@ public class Hutang implements Serializable {
     }
 
     public void setNomorktp(String nomorktp) {
+        String oldNomorktp = this.nomorktp;
         this.nomorktp = nomorktp;
+        changeSupport.firePropertyChange("nomorktp", oldNomorktp, nomorktp);
     }
 
     public BigInteger getSisapinjaman() {
@@ -173,7 +210,22 @@ public class Hutang implements Serializable {
     }
 
     public void setSisapinjaman(BigInteger sisapinjaman) {
+        BigInteger oldSisapinjaman = this.sisapinjaman;
         this.sisapinjaman = sisapinjaman;
+        changeSupport.firePropertyChange("sisapinjaman", oldSisapinjaman, sisapinjaman);
+//        changeSupport.fi
+    }
+    public void Hitung()
+    {
+        BigInteger temp = BigInteger.ZERO;
+//        BigInteger diff = BigInteger.ZERO;
+//        diff = this.jumlahpinjaman.subtract(sisapinjaman);
+        for (Bayarhutang bayars : bayarhutangs) {
+            temp = temp.add(bayars.getPengeluaran());
+            temp = temp.subtract(bayars.getPemasukan());            
+        }
+        temp = temp.add(bunga);
+        setSisapinjaman(temp);
     }
 
     public Date getTanggallunas() {
@@ -217,5 +269,11 @@ public class Hutang implements Serializable {
         return "app.table.Hutang[ hutangid=" + hutangid + " ]";
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
     
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
+}
 }
