@@ -92,7 +92,6 @@ public class Inventaris extends javax.swing.JPanel {
         jTable1.setDefaultEditor(Integer.class, new app.utils.TablePopupEditor());
         jTable1.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        jTable1.setColumnSelectionAllowed(false);
         jTable1.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, assetList, jTable1);
@@ -124,10 +123,6 @@ public class Inventaris extends javax.swing.JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
         columnBinding.setColumnName("Total");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi}"));
-        columnBinding.setColumnName("Transaksi");
-        columnBinding.setColumnClass(app.table.Saldo.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
         columnBinding.setColumnName("Sumber");

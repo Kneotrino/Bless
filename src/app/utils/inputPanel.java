@@ -93,8 +93,8 @@ public class inputPanel extends javax.swing.JPanel {
         try {
             cons = clazz.getConstructor();
             target = cons.newInstance();            
-            System.out.println("Target = " + target.toString());
-            System.out.println("Acces = " + this.getClass().getName());
+            System.out.println("Target = " + target.getClass().getSimpleName());
+//            System.out.println("Acces = " + this.getClass().getName());
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex) {
             Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -80,7 +80,7 @@ public class panelHutang extends JPanel {
         newButton2 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox<>();
         jDialog5 = new javax.swing.JDialog();
-        inputPanel4 = new app.utils.inputPanel(app.table.BayarhutangPengeluaran.class);
+        inputPanel4 = new app.utils.inputPanel(app.table.BayarhutangPemasukan.class);
         newButton3 = new javax.swing.JButton();
         jComboBox4 = new javax.swing.JComboBox<>();
         newDetailButton = new javax.swing.JButton();
@@ -506,12 +506,12 @@ public class panelHutang extends JPanel {
         Saldo ts = new app.table.Saldo();
         if (pem) {
             b = (Bayarhutang) this.inputPanel4.getTarget();
-            ts.setBankId((Bank) this.jComboBox2.getSelectedItem()); 
-            System.out.println("Pemasukan");
+            ts.setBankId((Bank) this.jComboBox4.getSelectedItem()); 
+//            System.out.println("Pemasukan");
         } else {
             b = (Bayarhutang) this.inputPanel3.getTarget();
             ts.setBankId((Bank) this.jComboBox3.getSelectedItem()); 
-            System.out.println("Pengeluaran");
+//            System.out.println("Pengeluaran");
         }
         b.setTransaksi(ts);
         entityManager.persist(b);

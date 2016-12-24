@@ -12,11 +12,18 @@ import java.beans.Beans;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -29,6 +36,7 @@ public class panelLaporan extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
+        this.Refresh();
     }
 
     /**
@@ -47,8 +55,7 @@ public class panelLaporan extends JPanel {
         saveButton = new javax.swing.JButton();
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        masterScrollPane = new javax.swing.JScrollPane();
-        masterTable = new javax.swing.JTable();
+        jDialog1 = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -56,10 +63,23 @@ public class panelLaporan extends JPanel {
         jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         refreshButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        masterScrollPane = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
 
         FormListener formListener = new FormListener();
 
@@ -76,11 +96,103 @@ public class panelLaporan extends JPanel {
 
         deleteButton.addActionListener(formListener);
 
-        setLayout(new java.awt.BorderLayout());
+        jDialog1.setTitle("INFORMASI ");
+        jDialog1.setPreferredSize(new java.awt.Dimension(400, 400));
+        jDialog1.getContentPane().setLayout(new java.awt.GridLayout());
+
+        jPanel1.setLayout(new java.awt.GridLayout(0, 2));
+
+        jLabel1.setText("Total Pemasukan");
+        jPanel1.add(jLabel1);
+
+        jTextField1.setEditable(false);
+        jTextField1.setText("jTextField1");
+        jPanel1.add(jTextField1);
+
+        jLabel2.setText("Total Pengeluaran");
+        jPanel1.add(jLabel2);
+
+        jTextField2.setEditable(false);
+        jTextField2.setText("jTextField1");
+        jPanel1.add(jTextField2);
+
+        jLabel3.setText("Profit");
+        jPanel1.add(jLabel3);
+
+        jTextField3.setEditable(false);
+        jTextField3.setText("jTextField3");
+        jPanel1.add(jTextField3);
+
+        jLabel4.setText("Total Transaksi");
+        jPanel1.add(jLabel4);
+
+        jTextField4.setEditable(false);
+        jPanel1.add(jTextField4);
+
+        jLabel5.setText("Total Transaksi Pemasukan");
+        jPanel1.add(jLabel5);
+
+        jTextField5.setEditable(false);
+        jPanel1.add(jTextField5);
+
+        jLabel6.setText("Total Transaksi Pengeluaran");
+        jPanel1.add(jLabel6);
+
+        jTextField6.setEditable(false);
+        jPanel1.add(jTextField6);
+
+        jDialog1.getContentPane().add(jPanel1);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jDialog1.getContentPane().add(jScrollPane1);
+
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(formListener);
+        jPanel3.add(refreshButton);
+
+        jButton1.setText("Filter");
+        jPanel3.add(jButton1);
+
+        jButton3.setText("Tampilkan Informasi");
+        jButton3.addActionListener(formListener);
+        jPanel3.add(jButton3);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel3.add(jComboBox1);
+
+        jButton2.setText("Print");
+        jPanel3.add(jButton2);
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setCellSelectionEnabled(true);
+        masterTable.setGridColor(new java.awt.Color(0, 0, 0));
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -126,45 +238,9 @@ public class panelLaporan extends JPanel {
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
 
-        add(masterScrollPane, java.awt.BorderLayout.CENTER);
+        jPanel2.add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
-
-        jLabel1.setText("Total Pemasukan");
-        jPanel1.add(jLabel1);
-
-        jTextField1.setEditable(false);
-        jTextField1.setText("jTextField1");
-        jPanel1.add(jTextField1);
-
-        jLabel2.setText("Total Pengeluaran");
-        jPanel1.add(jLabel2);
-
-        jTextField2.setEditable(false);
-        jTextField2.setText("jTextField1");
-        jPanel1.add(jTextField2);
-
-        jLabel3.setText("Profit");
-        jPanel1.add(jLabel3);
-
-        jTextField3.setEditable(false);
-        jTextField3.setText("jTextField3");
-        jPanel1.add(jTextField3);
-
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel1.add(refreshButton);
-
-        jButton1.setText("Filter");
-        jPanel1.add(jButton1);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox1);
-
-        jButton2.setText("Print");
-        jPanel1.add(jButton2);
-
-        add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        add(jPanel2);
 
         bindingGroup.bind();
     }
@@ -185,6 +261,9 @@ public class panelLaporan extends JPanel {
             }
             else if (evt.getSource() == deleteButton) {
                 panelLaporan.this.deleteButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton3) {
+                panelLaporan.this.jButton3ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -211,16 +290,39 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
     public void Refresh(){
         System.out.println("app.view.panel.laporan.panelLaporan.Refresh()");    
         this.refreshButtonActionPerformed(null);
-        BigInteger pemasukan = BigInteger.ZERO,
-                pengeluaran = pemasukan;
+        BigInteger pemasukan = BigInteger.ZERO, pengeluaran = pemasukan;
+        long masuk = 0;
+        long keluar = 0;
+        long asset = 0;
+        
         for (Laporan laporan : list) {
             pemasukan = pemasukan.add(laporan.getPemasukan());
             pengeluaran = pengeluaran.add(laporan.getPengeluaran());
+//            boolean out = laporan.getPemasukan().equals(BigInteger.ZERO);
+            if (laporan.isName()) {
+                masuk++;  
+            }
+            else keluar++;
         }
+        long total = masterTable.getRowCount();
         this.jTextField1.setText(numberFormat.format(pemasukan));
         this.jTextField2.setText(numberFormat.format(pengeluaran));
         this.jTextField3.setText(numberFormat.format(pemasukan.subtract(pengeluaran)));
+        this.jTextField4.setText(masterTable.getRowCount() + " Transaksi");
+        this.jTextField5.setText(masuk + " Transaksi");
+        this.jTextField6.setText(keluar + " Transaksi");        
+        Map<String, Long> collect = 
+                list
+                        .stream()
+                        .collect(Collectors.groupingBy(l  -> l.getJenis(), Collectors.counting()));        
+        collect.put("Total Transaksi", total);
+        Map<String, Long> sort = new TreeMap<>(collect);
+        this.jTable1.setModel(toTableModel(sort));
+//        System.out.println("collect = " + collect);
+//        counting = items.stream().collect(
+//                Collectors.groupingBy(Item::getName, Collectors.counting()));
     }
+
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int[] selected = masterTable.getSelectedRows();
         List<app.table.Laporan> toRemove = new ArrayList<app.table.Laporan>(selected.length);
@@ -257,20 +359,40 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        jDialog1.setSize(800, 400);
+        jDialog1.setLocationRelativeTo(null);
+        jDialog1.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private java.util.List<app.table.Laporan> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
@@ -315,5 +437,14 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
             }
         });
     }
-    
+    public static TableModel toTableModel(Map<?,?> map) {
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[] { "Transaksi", "Jumlah" }, 0
+        );
+        for (Map.Entry<?,?> entry : map.entrySet()) {
+            model.addRow(new Object[] { entry.getKey(), entry.getValue() });
+        }
+        return model;
+    }
+
 }

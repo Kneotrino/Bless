@@ -115,7 +115,13 @@ public class Laporan implements Serializable {
         boolean name = (this instanceof Pemasukan) 
                 || (this instanceof BayarJasaPemasukan) 
                 || (this instanceof BayarRentalPemasukan) 
+                || (this instanceof BayarhutangPemasukan) 
                 ;
+
+    public boolean isName() {
+        return name;
+    }
+        
     public BigInteger getJumlah() {
         return jumlah;
     }

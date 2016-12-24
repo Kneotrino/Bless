@@ -319,7 +319,7 @@
       <SubComponents>
         <Component class="app.utils.inputPanel" name="inputPanel4">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new app.utils.inputPanel(app.table.BayarhutangPengeluaran.class)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new app.utils.inputPanel(app.table.BayarhutangPemasukan.class)"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
