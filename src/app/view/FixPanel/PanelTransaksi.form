@@ -177,6 +177,7 @@
               <Subbinding sourcePath="${laporan.id}">
                 <BindingParameter name="NAME" value="Laporan REF"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Long.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${laporan.pemasukan}">
                 <BindingParameter name="NAME" value="Pemasukan"/>

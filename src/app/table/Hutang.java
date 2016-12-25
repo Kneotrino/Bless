@@ -21,6 +21,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -215,11 +217,10 @@ public class Hutang implements Serializable {
         changeSupport.firePropertyChange("sisapinjaman", oldSisapinjaman, sisapinjaman);
 //        changeSupport.fi
     }
+    @PostPersist    @PostUpdate
     public void Hitung()
     {
         BigInteger temp = BigInteger.ZERO;
-//        BigInteger diff = BigInteger.ZERO;
-//        diff = this.jumlahpinjaman.subtract(sisapinjaman);
         for (Bayarhutang bayars : bayarhutangs) {
             temp = temp.add(bayars.getPengeluaran());
             temp = temp.subtract(bayars.getPemasukan());            

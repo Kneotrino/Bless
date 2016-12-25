@@ -456,11 +456,8 @@ public class panelHutang extends JPanel {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        System.out.println("app.view.panel.hutang.panelHutang.newButtonActionPerformed()");
         app.table.Hutang h = (app.table.Hutang) this.inputPanel1.getTarget();
-//        app.table.Hutang h = new app.table.Hutang();
         h.setBunga(h.getSisapinjaman().subtract(h.getJumlahpinjaman()));
-//        h.setSisapinjaman(h.getJumlahpinjaman());
         BayarhutangPengeluaran bp = new app.table.BayarhutangPengeluaran();
         Saldo ts = new app.table.Saldo();
         ts.setBankId((Bank) jComboBox5.getSelectedItem());

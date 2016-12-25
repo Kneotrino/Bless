@@ -79,6 +79,7 @@ public class PanelTransaksi extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.id}"));
         columnBinding.setColumnName("Laporan REF");
         columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);

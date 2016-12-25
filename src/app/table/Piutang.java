@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +22,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Piutang.findByTglawal", query = "SELECT p FROM Piutang p WHERE p.tglawal = :tglawal")
     , @NamedQuery(name = "Piutang.findByTglakhir", query = "SELECT p FROM Piutang p WHERE p.tglakhir = :tglakhir")
     , @NamedQuery(name = "Piutang.findByNominal", query = "SELECT p FROM Piutang p WHERE p.nominal = :nominal")})
-@app.ListUrutan({"jaminan","nominal","pimjaman","sisa","keterangan","tglbyr","tglawal","tglakhir" })
+@app.ListUrutan({"jaminan","nominal","keterangan","tglbyr","tglawal","tglakhir" })
 public class Piutang implements Serializable {
 
     @Transient
@@ -217,5 +220,18 @@ public class Piutang implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+    @PostPersist    @PostUpdate
+    public void Hitung()
+    {
+        BigInteger masuk = BigInteger.ZERO;
+        BigInteger keluar = BigInteger.ZERO;
+        for (Bayarpihutang p : bayarpihutangList) {
+            masuk = masuk.add(p.getPemasukan());
+            keluar = keluar.add(p.getPengeluaran());
+        }
+        setSisa(keluar);
+        setPimjaman(masuk);
+//        System.out.println("Hitung");
+         
+    }
 }
