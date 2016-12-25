@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" v="2.6.5" status="GENERATED" sm="false" xs="false" id="_1482650036756165" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:entity xre="false" abs="false" class="Mobilrental" visibile="true" minimized="false" rootElement="_1482650036756165" id="_1482650036757166">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="keterangan" id="_1482650036771175">
+                <jpa:column name="KETERANGAN" unique="false" nullable="true" insertable="true" updatable="true" table="MOBILRENTAL" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="merk" id="_1482650036771176">
+                <jpa:column name="MERK" unique="false" nullable="true" insertable="true" updatable="true" table="MOBILRENTAL" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="noPolisiAktif" id="_1482650036771177">
+                <jpa:column name="NO_POLISI_AKTIF" unique="false" nullable="true" insertable="true" updatable="true" table="MOBILRENTAL" length="16"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="statusMobil" id="_1482650036771178">
+                <jpa:column name="STATUS_MOBIL" unique="false" nullable="true" insertable="true" updatable="true" table="MOBILRENTAL" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="Integer" visibile="true" name="tahun" id="_1482650036771179">
+                <jpa:column name="TAHUN" unique="false" nullable="true" insertable="true" updatable="true" table="MOBILRENTAL"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="type" id="_1482650036771180">
+                <jpa:column name="TYPE" unique="false" nullable="true" insertable="true" updatable="true" table="MOBILRENTAL" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="warna" id="_1482650036771181">
+                <jpa:column name="WARNA" unique="false" nullable="true" insertable="true" updatable="true" table="MOBILRENTAL" length="32"/>
+            </jpa:basic>
+            <jpa:one-to-many own="false" connected-entity-id="_1482650036762172" connected-attribute-id="_1482650036776250" visibile="true" name="rentalCollection" id="_1482650036771182"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="mobilId" id="_1482650036770174">
+                <jpa:column name="MOBIL_ID" unique="false" nullable="false" insertable="true" updatable="true" table="MOBILRENTAL"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="MOBILRENTAL"/>
+    </jpa:entity>
+    <jpa:entity xre="false" abs="false" class="Bank" visibile="true" minimized="false" rootElement="_1482650036756165" id="_1482650036760167">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="alamat" id="_1482650036773184">
+                <jpa:column name="ALAMAT" unique="false" nullable="true" insertable="true" updatable="true" table="BANK" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="nama" id="_1482650036773185">
+                <jpa:column name="NAMA" unique="false" nullable="true" insertable="true" updatable="true" table="BANK" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="namaBank" id="_1482650036773186">
+                <jpa:column name="NAMA_BANK" unique="false" nullable="true" insertable="true" updatable="true" table="BANK" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="nomorHp" id="_1482650036773187">
+                <jpa:column name="NOMOR_HP" unique="false" nullable="true" insertable="true" updatable="true" table="BANK" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="nomorKtp" id="_1482650036773188">
+                <jpa:column name="NOMOR_KTP" unique="false" nullable="true" insertable="true" updatable="true" table="BANK" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="norek" id="_1482650036773189">
+                <jpa:column name="NOREK" unique="false" nullable="true" insertable="true" updatable="true" table="BANK" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="totalDebit" id="_1482650036773190">
+                <jpa:column name="TOTAL_DEBIT" unique="false" nullable="true" insertable="true" updatable="true" table="BANK"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="totalKredit" id="_1482650036773191">
+                <jpa:column name="TOTAL_KREDIT" unique="false" nullable="true" insertable="true" updatable="true" table="BANK"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="totalSaldo" id="_1482650036773192">
+                <jpa:column name="TOTAL_SALDO" unique="false" nullable="true" insertable="true" updatable="true" table="BANK"/>
+            </jpa:basic>
+            <jpa:one-to-many own="false" connected-entity-id="_1482650036762170" connected-attribute-id="_1482650036775221" visibile="true" name="saldoCollection" id="_1482650036773193"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="bankId" id="_1482650036772183">
+                <jpa:column name="BANK_ID" unique="false" nullable="false" insertable="true" updatable="true" table="BANK"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="BANK"/>
+    </jpa:entity>
+    <jpa:entity xre="false" abs="false" class="Hutang" visibile="true" minimized="false" rootElement="_1482650036756165" id="_1482650036762168">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="alamat" id="_1482650036773195">
+                <jpa:column name="ALAMAT" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="bunga" id="_1482650036773196">
+                <jpa:column name="BUNGA" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="jumlahpinjaman" id="_1482650036773197">
+                <jpa:column name="JUMLAHPINJAMAN" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="keterangan" id="_1482650036773198">
+                <jpa:column name="KETERANGAN" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="nama" id="_1482650036773199">
+                <jpa:column name="NAMA" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="nomorhp" id="_1482650036774200">
+                <jpa:column name="NOMORHP" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="nomorktp" id="_1482650036774201">
+                <jpa:column name="NOMORKTP" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="sisapinjaman" id="_1482650036774202">
+                <jpa:column name="SISAPINJAMAN" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tanggallunas" id="_1482650036774203">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGALLUNAS" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tanggalpinjam" id="_1482650036774204">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGALPINJAM" unique="false" nullable="true" insertable="true" updatable="true" table="HUTANG"/>
+            </jpa:basic>
+            <jpa:one-to-many own="false" connected-entity-id="_1482650036762171" connected-attribute-id="_1482650036775238" visibile="true" name="laporanCollection" id="_1482650036774205"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="hutangid" id="_1482650036773194">
+                <jpa:column name="HUTANGID" unique="false" nullable="false" insertable="true" updatable="true" table="HUTANG"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="HUTANG"/>
+    </jpa:entity>
+    <jpa:entity xre="false" abs="false" class="Pegawai" visibile="true" minimized="false" rootElement="_1482650036756165" id="_1482650036762169">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="alamat" id="_1482650036774207">
+                <jpa:column name="ALAMAT" unique="false" nullable="true" insertable="true" updatable="true" table="PEGAWAI" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="nama" id="_1482650036774208">
+                <jpa:column name="NAMA" unique="false" nullable="true" insertable="true" updatable="true" table="PEGAWAI" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="nomorhp" id="_1482650036774209">
+                <jpa:column name="NOMORHP" unique="false" nullable="true" insertable="true" updatable="true" table="PEGAWAI" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="pass" id="_1482650036774210">
+                <jpa:column name="PASS" unique="false" nullable="true" insertable="true" updatable="true" table="PEGAWAI" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="status" id="_1482650036774211">
+                <jpa:column name="STATUS" unique="false" nullable="true" insertable="true" updatable="true" table="PEGAWAI" length="25"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tanggalGajian" id="_1482650036774212">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGAL_GAJIAN" unique="false" nullable="true" insertable="true" updatable="true" table="PEGAWAI"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tanggalMasuk" id="_1482650036774213">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGAL_MASUK" unique="false" nullable="true" insertable="true" updatable="true" table="PEGAWAI"/>
+            </jpa:basic>
+            <jpa:one-to-many own="false" connected-entity-id="_1482650036762171" connected-attribute-id="_1482650036775239" visibile="true" name="laporanCollection" id="_1482650036774214"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="id" id="_1482650036774206">
+                <jpa:column name="ID" unique="false" nullable="false" insertable="true" updatable="true" table="PEGAWAI"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="PEGAWAI"/>
+    </jpa:entity>
+    <jpa:entity xre="false" abs="false" class="Saldo" visibile="true" minimized="false" rootElement="_1482650036756165" id="_1482650036762170">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="debit" id="_1482650036774216">
+                <jpa:column name="DEBIT" unique="false" nullable="true" insertable="true" updatable="true" table="SALDO"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="keterangan" id="_1482650036774217">
+                <jpa:column name="KETERANGAN" unique="false" nullable="true" insertable="true" updatable="true" table="SALDO"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="kredit" id="_1482650036774218">
+                <jpa:column name="KREDIT" unique="false" nullable="true" insertable="true" updatable="true" table="SALDO"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="saldo" id="_1482650036774219">
+                <jpa:column name="SALDO" unique="false" nullable="true" insertable="true" updatable="true" table="SALDO"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tanggal" id="_1482650036774220">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGAL" unique="false" nullable="true" insertable="true" updatable="true" table="SALDO"/>
+            </jpa:basic>
+            <jpa:many-to-one connected-entity-id="_1482650036760167" connected-attribute-id="_1482650036773193" visibile="true" name="bankId" id="_1482650036775221">
+                <jpa:join-column name="BANK_ID" rc="BANK_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:one-to-many own="false" connected-entity-id="_1482650036762171" connected-attribute-id="_1482650036775241" visibile="true" name="laporanCollection" id="_1482650036775222"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="saldoId" id="_1482650036774215">
+                <jpa:column name="SALDO_ID" unique="false" nullable="false" insertable="true" updatable="true" table="SALDO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="SALDO"/>
+    </jpa:entity>
+    <jpa:entity xre="false" abs="false" class="Laporan" visibile="true" minimized="false" rootElement="_1482650036756165" id="_1482650036762171">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="dtype" id="_1482650036775224">
+                <jpa:column name="DTYPE" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN" length="31"/>
+            </jpa:basic>
+            <jpa:basic optional="false" attribute-type="long" visibile="true" name="jumlah" id="_1482650036775225">
+                <jpa:column name="JUMLAH" unique="false" nullable="false" insertable="true" updatable="true" table="LAPORAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="keterangan" id="_1482650036775226">
+                <jpa:column name="KETERANGAN" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="saldo" id="_1482650036775227">
+                <jpa:column name="SALDO" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tanggal" id="_1482650036775228">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGAL" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="tipe" id="_1482650036775229">
+                <jpa:column name="TIPE" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.io.Serializable" visibile="true" name="gambar" id="_1482650036775230">
+                <jpa:column name="GAMBAR" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN"/>
+                <jpa:lob/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.math.BigInteger" visibile="true" name="hargabarang" id="_1482650036775231">
+                <jpa:column name="HARGABARANG" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="namaAsset" id="_1482650036775232">
+                <jpa:column name="NAMA_ASSET" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="status" id="_1482650036775233">
+                <jpa:column name="STATUS" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="Integer" visibile="true" name="stock" id="_1482650036775234">
+                <jpa:column name="STOCK" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tanggalStock" id="_1482650036775235">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TANGGAL_STOCK" unique="false" nullable="true" insertable="true" updatable="true" table="LAPORAN"/>
+            </jpa:basic>
+            <jpa:many-to-one connected-entity-id="_1482650036762173" connected-attribute-id="_1482650036777266" visibile="true" name="bpkbtitipidBpkbId" id="_1482650036775237">
+                <jpa:join-column name="BPKBTITIPID_BPKB_ID" rc="BPKB_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:many-to-one connected-entity-id="_1482650036762168" connected-attribute-id="_1482650036774205" visibile="true" name="hutangid" id="_1482650036775238">
+                <jpa:join-column name="HUTANGID" rc="HUTANGID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:many-to-one connected-entity-id="_1482650036762169" connected-attribute-id="_1482650036774214" visibile="true" name="pegawaigajiid" id="_1482650036775239">
+                <jpa:join-column name="PEGAWAIGAJIID" rc="ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:many-to-one connected-entity-id="_1482650036762172" connected-attribute-id="_1482650036776249" visibile="true" name="rentalId" id="_1482650036775240">
+                <jpa:join-column name="RENTAL_ID" rc="RENTALID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:many-to-one connected-entity-id="_1482650036762170" connected-attribute-id="_1482650036775222" visibile="true" name="transaksiSaldoId" id="_1482650036775241">
+                <jpa:join-column name="TRANSAKSI_SALDO_ID" rc="SALDO_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:many-to-many own="true" connected-entity-id="_1482650036762173" connected-attribute-id="_1482650036776265" visibile="true" name="bpkbtitipanCollection" id="_1482650036775236"/>
+            <jpa:id attribute-type="Long" visibile="true" name="id" id="_1482650036775223">
+                <jpa:column name="ID" unique="false" nullable="false" insertable="true" updatable="true" table="LAPORAN"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="LAPORAN"/>
+    </jpa:entity>
+    <jpa:entity xre="false" abs="false" class="Rental" visibile="true" minimized="false" rootElement="_1482650036756165" id="_1482650036762172">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="driver" id="_1482650036776243">
+                <jpa:column name="DRIVER" unique="false" nullable="true" insertable="true" updatable="true" table="RENTAL" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="jammulai" id="_1482650036776244">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="JAMMULAI" unique="false" nullable="true" insertable="true" updatable="true" table="RENTAL"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="jamselesai" id="_1482650036776245">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="JAMSELESAI" unique="false" nullable="true" insertable="true" updatable="true" table="RENTAL"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="pemakai" id="_1482650036776246">
+                <jpa:column name="PEMAKAI" unique="false" nullable="true" insertable="true" updatable="true" table="RENTAL" length="255"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglmulai" id="_1482650036776247">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TGLMULAI" unique="false" nullable="true" insertable="true" updatable="true" table="RENTAL"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglselesai" id="_1482650036776248">
+                <jpa:temporal>TIMESTAMP</jpa:temporal>
+                <jpa:column name="TGLSELESAI" unique="false" nullable="true" insertable="true" updatable="true" table="RENTAL"/>
+            </jpa:basic>
+            <jpa:many-to-one connected-entity-id="_1482650036757166" connected-attribute-id="_1482650036771182" visibile="true" name="mobilrentalMobilId" id="_1482650036776250">
+                <jpa:join-column name="MOBILRENTAL_MOBIL_ID" rc="MOBIL_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:many-to-one>
+            <jpa:one-to-many own="false" connected-entity-id="_1482650036762171" connected-attribute-id="_1482650036775240" visibile="true" name="laporanCollection" id="_1482650036776249"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="rentalid" id="_1482650036776242">
+                <jpa:column name="RENTALID" unique="false" nullable="false" insertable="true" updatable="true" table="RENTAL"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="RENTAL"/>
+    </jpa:entity>
+    <jpa:entity xre="false" abs="false" class="Bpkbtitipan" visibile="true" minimized="false" rootElement="_1482650036756165" id="_1482650036762173">
+        <jpa:attributes>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="anBpkb" id="_1482650036776252">
+                <jpa:column name="AN_BPKB" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="ket" id="_1482650036776253">
+                <jpa:column name="KET" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="128"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="noBpkb" id="_1482650036776254">
+                <jpa:column name="NO_BPKB" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="noPolisiAktif" id="_1482650036776255">
+                <jpa:column name="NO_POLISI_AKTIF" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="posisi" id="_1482650036776256">
+                <jpa:column name="POSISI" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="status" id="_1482650036776257">
+                <jpa:column name="STATUS" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="32"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="String" visibile="true" name="stnk" id="_1482650036776258">
+                <jpa:column name="STNK" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN" length="64"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglBbn" id="_1482650036776259">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_BBN" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglCb" id="_1482650036776260">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_CB" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglKembaliBbn" id="_1482650036776261">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_KEMBALI_BBN" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglKembaliCb" id="_1482650036776262">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_KEMBALI_CB" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglLeasing" id="_1482650036776263">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_LEASING" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:basic optional="true" attribute-type="java.util.Date" visibile="true" name="tglTerima" id="_1482650036776264">
+                <jpa:temporal>DATE</jpa:temporal>
+                <jpa:column name="TGL_TERIMA" unique="false" nullable="true" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:basic>
+            <jpa:one-to-many own="false" connected-entity-id="_1482650036762171" connected-attribute-id="_1482650036775237" visibile="true" name="laporanCollection1" id="_1482650036777266"/>
+            <jpa:many-to-many connected-entity-id="_1482650036762171" connected-attribute-id="_1482650036775236" visibile="true" name="laporanCollection" id="_1482650036776265">
+                <jpa:join-table name="BPKBTITIPAN_LAPORAN">
+                    <jpa:join-column name="BPKBTITIPAN_BPKB_ID" rc="BPKB_ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+                    <jpa:inverse-join-column name="BAYARJASALIST_ID" rc="ID" unique="false" nullable="true" insertable="true" updatable="true"/>
+                </jpa:join-table>
+            </jpa:many-to-many>
+            <jpa:id attribute-type="Integer" visibile="true" name="bpkbId" id="_1482650036776251">
+                <jpa:column name="BPKB_ID" unique="false" nullable="false" insertable="true" updatable="true" table="BPKBTITIPAN"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="BPKBTITIPAN"/>
+    </jpa:entity>
+    <jpa:snp e="true" loc="BEFORE_PACKAGE">/**
+ * This file was generated by the JPA Modeler
+ */</jpa:snp>
+    <jpa:inf e="true" n="java.io.Serializable"/>
+    <jpa:diagram>
+        <plane elementRef="_1482650036756165"/>
+    </jpa:diagram>
+</jpa:entity-mappings>

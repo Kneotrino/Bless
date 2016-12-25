@@ -96,6 +96,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -103,7 +104,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -212,6 +212,14 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem12);
 
+        jMenuItem16.setText("Lap Perjalanan y");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem16);
+
         jMenuItem8.setText("Jasa Cabut Berkas Y");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,7 +262,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem14);
 
-        jMenuItem15.setText("Pinjaman Bank X");
+        jMenuItem15.setText("Pinjaman Bank Y");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem15ActionPerformed(evt);
@@ -263,14 +271,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu5.add(jMenuItem15);
 
         jMenu2.add(jMenu5);
-
-        jMenuItem16.setText("Lap Perjalanan y");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem16);
 
         jMenuItem17.setText("Pegawai Y");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {

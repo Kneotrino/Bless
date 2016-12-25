@@ -116,6 +116,7 @@ public class Laporan implements Serializable {
                 || (this instanceof BayarJasaPemasukan) 
                 || (this instanceof BayarRentalPemasukan) 
                 || (this instanceof BayarhutangPemasukan) 
+                || (this instanceof BayarPihutangPemasukan) 
                 ;
 
     public boolean isName() {

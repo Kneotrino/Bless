@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Piutang.findByTglawal", query = "SELECT p FROM Piutang p WHERE p.tglawal = :tglawal")
     , @NamedQuery(name = "Piutang.findByTglakhir", query = "SELECT p FROM Piutang p WHERE p.tglakhir = :tglakhir")
     , @NamedQuery(name = "Piutang.findByNominal", query = "SELECT p FROM Piutang p WHERE p.nominal = :nominal")})
+@app.ListUrutan({"jaminan","nominal","pimjaman","sisa","keterangan","tglbyr","tglawal","tglakhir" })
 public class Piutang implements Serializable {
 
     @Transient
@@ -74,7 +76,7 @@ public class Piutang implements Serializable {
     private Date tglakhir;
     @Column(name = "NOMINAL")
     private BigInteger nominal;
-    @OneToMany(mappedBy = "pihutangid")
+    @OneToMany(mappedBy = "pihutangid",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     private List<Bayarpihutang> bayarpihutangList;
 
     public Piutang() {

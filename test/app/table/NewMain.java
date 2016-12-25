@@ -18,7 +18,7 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Object b = new app.table.Hutang();
+        Object b = new app.table.Piutang();
         Field[] fields = b.getClass().getDeclaredFields();
             System.out.print(" @app.ListUrutan({");
         for (Field field : fields) {

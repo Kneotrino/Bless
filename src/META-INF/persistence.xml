@@ -38,6 +38,8 @@
     <class>app.table.BayarRentalPenngeluaran</class>
     <class>app.table.BayarhutangPemasukan</class>
     <class>app.table.BayarhutangPengeluaran</class>
+    <class>app.table.BayarPihutangPemasukan</class>
+    <class>app.table.BayarPihutangPengeluaran</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>

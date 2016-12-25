@@ -90,8 +90,8 @@ public class PanelBank extends JPanel {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
@@ -225,6 +225,10 @@ public class PanelBank extends JPanel {
         jButton4.addActionListener(formListener);
         jPanel1.add(jButton4);
 
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(formListener);
+        jPanel1.add(refreshButton);
+
         deleteButton.setText("Hapus Bank");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -232,10 +236,6 @@ public class PanelBank extends JPanel {
 
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
-
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel1.add(refreshButton);
 
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
@@ -411,6 +411,7 @@ public class PanelBank extends JPanel {
             list.clear();
             list.addAll(merged);
         }
+        this.Reset();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
