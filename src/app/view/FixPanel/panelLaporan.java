@@ -6,31 +6,39 @@
 package app.view.FixPanel;
 
 import app.table.Laporan;
+import app.table.Pemasukan;
+import app.table.Pengeluaran;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Filter;
 import java.util.stream.Collectors;
 import javax.persistence.RollbackException;
+import javax.persistence.TemporalType;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author SEED
  */
 public class panelLaporan extends JPanel {
-    
+
     public panelLaporan() {
         initComponents();
         if (!Beans.isDesignTime()) {
@@ -74,10 +82,11 @@ public class panelLaporan extends JPanel {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         refreshButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
+        jYearChooser1 = new com.toedter.calendar.JYearChooser();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
 
@@ -97,8 +106,7 @@ public class panelLaporan extends JPanel {
         deleteButton.addActionListener(formListener);
 
         jDialog1.setTitle("INFORMASI ");
-        jDialog1.setPreferredSize(new java.awt.Dimension(400, 400));
-        jDialog1.getContentPane().setLayout(new java.awt.GridLayout());
+        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setLayout(new java.awt.GridLayout(0, 2));
 
@@ -143,6 +151,7 @@ public class panelLaporan extends JPanel {
 
         jDialog1.getContentPane().add(jPanel1);
 
+        jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -154,9 +163,16 @@ public class panelLaporan extends JPanel {
                 "Title 1", "Title 2"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -174,24 +190,40 @@ public class panelLaporan extends JPanel {
         refreshButton.addActionListener(formListener);
         jPanel3.add(refreshButton);
 
-        jButton1.setText("Filter");
-        jPanel3.add(jButton1);
-
         jButton3.setText("Tampilkan Informasi");
         jButton3.addActionListener(formListener);
         jPanel3.add(jButton3);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel3.add(jComboBox1);
-
         jButton2.setText("Print");
         jPanel3.add(jButton2);
 
+        jButton1.setText("Filter");
+        jButton1.addActionListener(formListener);
+        jPanel3.add(jButton1);
+
+        jMonthChooser1.setDayChooser(null);
+        jMonthChooser1.setMonth(10);
+        jMonthChooser1.setMonth(new java.util.Date().getMonth());
+        jMonthChooser1.setPreferredSize(new java.awt.Dimension(120, 40));
+        jMonthChooser1.setYearChooser(jYearChooser1);
+        jMonthChooser1.addPropertyChangeListener(formListener);
+        jPanel3.add(jMonthChooser1);
+
+        jYearChooser1.setPreferredSize(new java.awt.Dimension(70, 40));
+        jYearChooser1.setYear(2017);
+        jYearChooser1.setYear(Calendar.getInstance().get(Calendar.YEAR));
+        jYearChooser1.addPropertyChangeListener(formListener);
+        jPanel3.add(jYearChooser1);
+
         jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
+        masterScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setAutoCreateRowSorter(true);
+        masterTable.setColumnSelectionAllowed(false);
         masterTable.setGridColor(new java.awt.Color(0, 0, 0));
         masterTable.setRowHeight(25);
 
@@ -207,7 +239,6 @@ public class panelLaporan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
         columnBinding.setColumnName("Jumlah");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -247,11 +278,17 @@ public class panelLaporan extends JPanel {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener {
+    private class FormListener implements java.awt.event.ActionListener, java.beans.PropertyChangeListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == refreshButton) {
                 panelLaporan.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton3) {
+                panelLaporan.this.jButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton1) {
+                panelLaporan.this.jButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == saveButton) {
                 panelLaporan.this.saveButtonActionPerformed(evt);
@@ -262,8 +299,14 @@ public class panelLaporan extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelLaporan.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton3) {
-                panelLaporan.this.jButton3ActionPerformed(evt);
+        }
+
+        public void propertyChange(java.beans.PropertyChangeEvent evt) {
+            if (evt.getSource() == jMonthChooser1) {
+                panelLaporan.this.jMonthChooser1PropertyChange(evt);
+            }
+            else if (evt.getSource() == jYearChooser1) {
+                panelLaporan.this.jYearChooser1PropertyChange(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -289,7 +332,7 @@ public class panelLaporan extends JPanel {
 DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
     public void Refresh(){
         System.out.println("app.view.panel.laporan.panelLaporan.Refresh()");    
-        this.refreshButtonActionPerformed(null);
+//        this.refreshButtonActionPerformed(null);
         BigInteger pemasukan = BigInteger.ZERO, pengeluaran = pemasukan;
         long masuk = 0;
         long keluar = 0;
@@ -361,11 +404,62 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
+        Refresh();
         jDialog1.setSize(800, 400);
         jDialog1.setLocationRelativeTo(null);
         jDialog1.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            
+        
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.MONDAY, bulan);
+            cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+            Date akhirBulan = cal.getTime();
+            Date awalBulan = new Date(tahun-1900, bulan, hari);
+            Laporan Pengeluaran = new Pengeluaran();
+            Laporan Pemasukan = new Pemasukan();
+            BigInteger temp = BigInteger.ZERO;
+            BigInteger temp1 = BigInteger.ZERO;
+    
+            List<Laporan> rangkuman = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
+                .setParameter("startDate", new Date(0, 0, 0), TemporalType.DATE)
+                .setParameter("endDate", awalBulan, TemporalType.DATE)  
+                .getResultList();
+            for (Laporan laporan : rangkuman) {
+                    temp = temp.add(laporan.getPemasukan());
+                    temp1 = temp1.add(laporan.getPengeluaran());
+            }
+            Pengeluaran.setJumlah(temp1);
+            Pemasukan.setJumlah(temp);
+            Pemasukan.setKeterangan("R. Pengeluaran");
+            Pengeluaran.setKeterangan("R. Pengeluaran");
+            this.list.clear();
+            this.list.add(Pemasukan);
+            this.list.add(Pengeluaran);
+            
+            //tambahkan data
+            List resultList = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
+                .setParameter("startDate", awalBulan, TemporalType.DATE)
+                .setParameter("endDate", akhirBulan, TemporalType.DATE)  
+                .getResultList();
+            list.addAll(resultList);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private int tahun,bulan, hari = 1;
+    private void jMonthChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jMonthChooser1PropertyChange
+        // TODO add your handling code here:
+        bulan = this.jMonthChooser1.getMonth();
+    }//GEN-LAST:event_jMonthChooser1PropertyChange
+
+    private void jYearChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jYearChooser1PropertyChange
+        // TODO add your handling code here:
+        tahun = this.jYearChooser1.getYear();
+    }//GEN-LAST:event_jYearChooser1PropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -374,7 +468,6 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -382,6 +475,7 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -393,6 +487,7 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private com.toedter.calendar.JYearChooser jYearChooser1;
     private java.util.List<app.table.Laporan> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

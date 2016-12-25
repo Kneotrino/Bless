@@ -182,6 +182,7 @@ public class PanelMobilRental extends JPanel {
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        masterTable.setAutoCreateRowSorter(true);
         masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         masterTable.setCellSelectionEnabled(true);
 

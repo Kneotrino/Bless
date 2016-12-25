@@ -98,6 +98,7 @@ public class panelLeasing extends JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        masterTable.setAutoCreateRowSorter(true);
         masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
 
@@ -120,7 +121,7 @@ public class panelLeasing extends JPanel {
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
-        detailTable.setColumnSelectionAllowed(false);
+        detailTable.setAutoCreateRowSorter(true);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasingList}");
@@ -211,8 +212,8 @@ public class panelLeasing extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                panelLeasing.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == newButton1) {
+                panelLeasing.this.newButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelLeasing.this.deleteButtonActionPerformed(evt);
@@ -226,14 +227,14 @@ public class panelLeasing extends JPanel {
             else if (evt.getSource() == deleteDetailButton) {
                 panelLeasing.this.deleteDetailButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelLeasing.this.newDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newButton1) {
-                panelLeasing.this.newButton1ActionPerformed(evt);
-            }
             else if (evt.getSource() == newDetailButton1) {
                 panelLeasing.this.newDetailButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
+                panelLeasing.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton) {
+                panelLeasing.this.newDetailButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

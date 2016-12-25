@@ -173,6 +173,7 @@ public class PanelBank extends JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        masterTable.setAutoCreateRowSorter(true);
         masterTable.setCellSelectionEnabled(true);
 
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);

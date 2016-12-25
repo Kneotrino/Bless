@@ -51,7 +51,6 @@ public class panelJasa extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
@@ -161,6 +160,7 @@ public class panelJasa extends JPanel {
         add(jPanel1);
 
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        masterTable.setAutoCreateRowSorter(true);
         masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
@@ -248,6 +248,7 @@ public class panelJasa extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         detailTable.setRowHeight(25);
 
@@ -302,6 +303,12 @@ public class panelJasa extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelJasa.this.deleteButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == refreshButton) {
+                panelJasa.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelJasa.this.saveButtonActionPerformed(evt);
+            }
             else if (evt.getSource() == deleteDetailButton) {
                 panelJasa.this.deleteDetailButtonActionPerformed(evt);
             }
@@ -310,12 +317,6 @@ public class panelJasa extends JPanel {
             }
             else if (evt.getSource() == jButton4) {
                 panelJasa.this.jButton4ActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                panelJasa.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton) {
-                panelJasa.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton) {
                 panelJasa.this.newDetailButtonActionPerformed(evt);

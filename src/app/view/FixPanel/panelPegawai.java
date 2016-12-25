@@ -110,6 +110,7 @@ public class panelPegawai extends JPanel {
 
         masterScrollPane.setPreferredSize(new java.awt.Dimension(400, 402));
 
+        masterTable.setAutoCreateRowSorter(true);
         masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
 
@@ -155,6 +156,7 @@ public class panelPegawai extends JPanel {
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        detailTable.setAutoCreateRowSorter(true);
         detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(25);
 
@@ -244,14 +246,17 @@ public class panelPegawai extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == deleteButton) {
-                panelPegawai.this.deleteButtonActionPerformed(evt);
+            if (evt.getSource() == newButton1) {
+                panelPegawai.this.newButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelPegawai.this.newDetailButtonActionPerformed(evt);
+            else if (evt.getSource() == deleteButton) {
+                panelPegawai.this.deleteButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteDetailButton) {
                 panelPegawai.this.deleteDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton2) {
+                panelPegawai.this.newButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == refreshButton) {
                 panelPegawai.this.refreshButtonActionPerformed(evt);
@@ -259,14 +264,11 @@ public class panelPegawai extends JPanel {
             else if (evt.getSource() == saveButton) {
                 panelPegawai.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton1) {
-                panelPegawai.this.newButton1ActionPerformed(evt);
-            }
             else if (evt.getSource() == newButton) {
                 panelPegawai.this.newButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton2) {
-                panelPegawai.this.newButton2ActionPerformed(evt);
+            else if (evt.getSource() == newDetailButton) {
+                panelPegawai.this.newDetailButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

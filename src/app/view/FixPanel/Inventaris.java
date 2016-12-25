@@ -92,6 +92,7 @@ public class Inventaris extends javax.swing.JPanel {
         jTable1.setDefaultEditor(Integer.class, new app.utils.TablePopupEditor());
         jTable1.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable1.setAutoCreateRowSorter(true);
         jTable1.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, assetList, jTable1);

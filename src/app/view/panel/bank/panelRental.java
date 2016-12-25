@@ -197,6 +197,7 @@ public class panelRental extends JPanel {
 
         jPanel3.add(jPanel4);
 
+        masterTable.setAutoCreateRowSorter(true);
         masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
@@ -272,6 +273,7 @@ public class panelRental extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
 
+        detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         detailTable.setRowHeight(25);
 
@@ -329,23 +331,20 @@ public class panelRental extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelRental.this.deleteButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == refreshButton) {
+                panelRental.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelRental.this.saveButtonActionPerformed(evt);
+            }
             else if (evt.getSource() == deleteDetailButton) {
                 panelRental.this.deleteDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newDetailButton) {
-                panelRental.this.newDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton2) {
                 panelRental.this.newDetailButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton1) {
                 panelRental.this.newDetailButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                panelRental.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton) {
-                panelRental.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jComboBox1) {
                 panelRental.this.jComboBox1ActionPerformed(evt);
@@ -364,6 +363,9 @@ public class panelRental extends JPanel {
             }
             else if (evt.getSource() == newButton3) {
                 panelRental.this.newButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton) {
+                panelRental.this.newDetailButtonActionPerformed(evt);
             }
         }
 
