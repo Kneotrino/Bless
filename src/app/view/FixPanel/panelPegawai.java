@@ -80,7 +80,7 @@ public class panelPegawai extends JPanel {
 
         FormListener formListener = new FormListener();
 
-        jDialog2.setTitle("Input BPKB titipan");
+        jDialog2.setTitle("Input data");
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
@@ -88,7 +88,7 @@ public class panelPegawai extends JPanel {
         newButton.addActionListener(formListener);
         jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_END);
 
-        jDialog3.setTitle("Input BPKB titipan");
+        jDialog3.setTitle("Input Data");
         jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 

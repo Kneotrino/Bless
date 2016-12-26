@@ -174,12 +174,13 @@ public class PanelBank extends JPanel {
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
 
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId}"));
         columnBinding.setColumnName("Ref");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${namaBank}"));
         columnBinding.setColumnName("Nama Bank");
         columnBinding.setColumnClass(String.class);
@@ -201,12 +202,15 @@ public class PanelBank extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalDebit}"));
         columnBinding.setColumnName("Total Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalKredit}"));
         columnBinding.setColumnName("Total Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalSaldo}"));
         columnBinding.setColumnName("Saldo Terakhir");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -257,11 +261,11 @@ public class PanelBank extends JPanel {
             else if (evt.getSource() == jButton4) {
                 PanelBank.this.jButton4ActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteButton) {
-                PanelBank.this.deleteButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == refreshButton) {
                 PanelBank.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteButton) {
+                PanelBank.this.deleteButtonActionPerformed(evt);
             }
             else if (evt.getSource() == saveButton) {
                 PanelBank.this.saveButtonActionPerformed(evt);

@@ -86,6 +86,7 @@ public class ShowRoom extends javax.swing.JFrame {
         panelRental1 = new app.view.panel.bank.panelRental();
         jPanel8 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        panelModal1 = new app.view.FixPanel.panelModal();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -94,6 +95,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
@@ -153,6 +155,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jPanel8.add(jLabel1);
 
         getContentPane().add(jPanel8, "card2");
+        getContentPane().add(panelModal1, "Modal");
 
         jMenu1.setText("Akutansi");
 
@@ -199,6 +202,14 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem11);
+
+        jMenuItem19.setText("Modal Y");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem19);
 
         jMenuBar1.add(jMenu1);
 
@@ -430,6 +441,12 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        this.chandePanel("Modal");
+        this.panelModal1.Refresh();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -488,6 +505,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -508,6 +526,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.panelLeasing panelLeasing2;
+    private app.view.FixPanel.panelModal panelModal1;
     private app.view.FixPanel.panelPegawai panelPegawai1;
     private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;
     private app.view.panel.hutang.panelPiutang panelPiutang1;

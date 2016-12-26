@@ -38,7 +38,7 @@
     </Component>
     <Container class="javax.swing.JDialog" name="jDialog2">
       <Properties>
-        <Property name="title" type="java.lang.String" value="Input BPKB titipan"/>
+        <Property name="title" type="java.lang.String" value="Input data"/>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="APPLICATION_MODAL"/>
         </Property>
@@ -77,7 +77,7 @@
     </Container>
     <Container class="javax.swing.JDialog" name="jDialog3">
       <Properties>
-        <Property name="title" type="java.lang.String" value="Input BPKB titipan"/>
+        <Property name="title" type="java.lang.String" value="Input Data"/>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="APPLICATION_MODAL"/>
         </Property>

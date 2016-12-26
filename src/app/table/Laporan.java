@@ -117,6 +117,7 @@ public class Laporan implements Serializable {
                 || (this instanceof BayarRentalPemasukan) 
                 || (this instanceof BayarhutangPemasukan) 
                 || (this instanceof BayarPihutangPemasukan) 
+                || (this instanceof Modal) 
                 ;
 
     public boolean isName() {
@@ -227,7 +228,8 @@ public class Laporan implements Serializable {
     }
 //    @Transient
     @PostPersist
-    public void log()
+    @PostRemove
+    public void Message()
     {
     DecimalFormat nf = new DecimalFormat("IDR #,##0");            
     String desc = ""
@@ -236,24 +238,11 @@ public class Laporan implements Serializable {
             + "\n Waktu = "+this.tanggal            
             + "\n Jumlah = "+nf.format(this.jumlah)
             + "\n Tipe = "+getJenis()
-            + "\n Sumber = "+Transaksi.getBankId().getNama()
-//            + "\n Sumber = "+this.Transaksi == null? (Transaksi.getBankId().getNama() == null ? "":""):"";
+//            + "\n Sumber = "+Transaksi.getBankId().getNama()
             ;
         javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan"+desc);                
     }
-    @PostRemove
-    public void log0()
-    {
-        DecimalFormat nf = new DecimalFormat("IDR #,##0");            
-            String desc = ""
-            + "\n REF = "+this.id
-            + "\n Jumlah = "+nf.format(this.jumlah)
-            + "\n Tipe = "+getJenis()
-            + "\n Keterangan = "+this.keterangan
-            + "\n Sumber = "+this.Transaksi.getBankId().getNama()
-            ;
-        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menghapus"+ desc);                
-    }
+
     public String getJenis()
     {
         return this.getClass().getSimpleName();
