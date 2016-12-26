@@ -1,0 +1,20 @@
+JFDML JFormDesigner: "5.2.5.0.333" Java: "1.8.0_77" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:109:p, comp jDateChooser1:::p:204:p, space ::87:x}}"
+			"$verticalGroup": "par l {seq l {space :p:102:p, comp jDateChooser1:::p:112:p, space ::86:x}}"
+		} ) {
+			name: "this"
+			"defaultCloseOperation": 3
+			add( new FormComponent( "com.toedter.calendar.JDateChooser" ) {
+				name: "jDateChooser1"
+				"dateFormatString": "hh"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 400, 300 )
+		} )
+	}
+}

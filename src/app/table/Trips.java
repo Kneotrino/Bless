@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,9 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Trips.findByTanggalKembali", query = "SELECT t FROM Trips t WHERE t.tanggalKembali = :tanggalKembali")
     , @NamedQuery(name = "Trips.findByTotalKirim", query = "SELECT t FROM Trips t WHERE t.totalKirim = :totalKirim")
     , @NamedQuery(name = "Trips.findByTotalPakai", query = "SELECT t FROM Trips t WHERE t.totalPakai = :totalPakai")
-    , @NamedQuery(name = "Trips.findByTotalSaldo", query = "SELECT t FROM Trips t WHERE t.totalSaldo = :totalSaldo")})
-@ListUrutan({"tripsId","keterangan", "tanggalBerangkat"})
-
+    , @NamedQuery(name = "Trips.findByTotalSaldo", query = "SELECT t FROM Trips t WHERE t.totalSaldo = :totalSaldo")}
+)
+@app.ListUrutan({"keterangan","perjalananke","tanggalBerangkat","tanggalKembali","totalKirim","totalPakai"})
 public class Trips implements Serializable {
 
     @Transient
@@ -75,8 +76,8 @@ public class Trips implements Serializable {
     private BigInteger totalPakai;
     @Basic(optional = false)
     @Column(name = "TOTAL_SALDO", nullable = false)
-    private long totalSaldo;
-    @OneToMany(mappedBy = "tripsTripsId")
+    private BigInteger totalSaldo = BigInteger.ZERO;
+    @OneToMany(mappedBy = "tripsTripsId",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     private List<Perjalanan> perjalananList;
 
     public Trips() {
@@ -86,7 +87,7 @@ public class Trips implements Serializable {
         this.tripsId = tripsId;
     }
 
-    public Trips(Integer tripsId, long totalSaldo) {
+    public Trips(Integer tripsId, BigInteger totalSaldo) {
         this.tripsId = tripsId;
         this.totalSaldo = totalSaldo;
     }
@@ -161,12 +162,12 @@ public class Trips implements Serializable {
         changeSupport.firePropertyChange("totalPakai", oldTotalPakai, totalPakai);
     }
 
-    public long getTotalSaldo() {
+    public BigInteger getTotalSaldo() {
         return totalSaldo;
     }
 
-    public void setTotalSaldo(long totalSaldo) {
-        long oldTotalSaldo = this.totalSaldo;
+    public void setTotalSaldo(BigInteger totalSaldo) {
+        BigInteger oldTotalSaldo = this.totalSaldo;
         this.totalSaldo = totalSaldo;
         changeSupport.firePropertyChange("totalSaldo", oldTotalSaldo, totalSaldo);
     }
@@ -211,6 +212,59 @@ public class Trips implements Serializable {
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
+    }
+    public BigInteger getPakai()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Perjalanan p : perjalananList) {
+            temp = temp.add(p.getPakai());
+        }
+        return temp;
+    }
+    public BigInteger getKirim()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Perjalanan p : perjalananList) {
+            temp = temp.add(p.getPengeluaran());
+        }
+        return temp;
+    }
+    @Transient
+    private BigInteger kembalikan;
+
+    public static final String PROP_KEMBALIKAN = "kembalikan";
+
+    /**
+     * Get the value of kembalikan
+     *
+     * @return the value of kembalikan
+     */
+    public BigInteger getKembalikan() {
+        return kembalikan;
+    }
+
+    /**
+     * Set the value of kembalikan
+     *
+     * @param kembalikan new value of kembalikan
+     */
+    public void setKembalikan(BigInteger kembalikan) {
+        BigInteger oldKembalikan = this.kembalikan;
+        this.kembalikan = kembalikan;
+        changeSupport.firePropertyChange(PROP_KEMBALIKAN, oldKembalikan, kembalikan);
+    }
+
+//    @Transient
+//    private BigInteger kembalikan = BigInteger.ZERO;
+    
+    
+    public void getKembali()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Perjalanan p : perjalananList) {
+            temp = temp.add(p.getPemasukan());
+        }
+        this.setKembalikan(temp);
     }
     
 }

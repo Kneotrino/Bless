@@ -117,6 +117,7 @@ public class Laporan implements Serializable {
                 || (this instanceof BayarRentalPemasukan) 
                 || (this instanceof BayarhutangPemasukan) 
                 || (this instanceof BayarPihutangPemasukan) 
+                || (this instanceof PerjalananPemasukan) 
                 || (this instanceof Modal) 
                 ;
 
@@ -238,9 +239,9 @@ public class Laporan implements Serializable {
             + "\n Waktu = "+this.tanggal            
             + "\n Jumlah = "+nf.format(this.jumlah)
             + "\n Tipe = "+getJenis()
-//            + "\n Sumber = "+Transaksi.getBankId().getNama()
+            + "\n Sumber/Tujuan = "+Transaksi.getBankId().toString()
             ;
-        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan"+desc);                
+        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan/menghapus"+desc);                
     }
 
     public String getJenis()
