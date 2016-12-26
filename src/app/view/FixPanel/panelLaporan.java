@@ -331,8 +331,7 @@ public class panelLaporan extends JPanel {
     }//GEN-LAST:event_refreshButtonActionPerformed
 DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
     public void Refresh(){
-        System.out.println("app.view.panel.laporan.panelLaporan.Refresh()");    
-//        this.refreshButtonActionPerformed(null);
+        this.refreshButtonActionPerformed(null);
         BigInteger pemasukan = BigInteger.ZERO, pengeluaran = pemasukan;
         long masuk = 0;
         long keluar = 0;

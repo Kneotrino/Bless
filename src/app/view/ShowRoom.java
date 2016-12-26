@@ -87,6 +87,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelModal1 = new app.view.FixPanel.panelModal();
+        panelMaster1 = new app.view.FixPanel.panelMaster(app.table.Penyesuaian.class);
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -96,6 +97,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
@@ -156,6 +158,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
         getContentPane().add(jPanel8, "card2");
         getContentPane().add(panelModal1, "Modal");
+        getContentPane().add(panelMaster1, "Penyesuaian");
 
         jMenu1.setText("Akutansi");
 
@@ -210,6 +213,14 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem19);
+
+        jMenuItem20.setText("Penyesuaian Y");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem20);
 
         jMenuBar1.add(jMenu1);
 
@@ -447,6 +458,12 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        this.chandePanel("Penyesuaian");
+        this.panelMaster1.Refresh();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -507,6 +524,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -526,6 +544,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.panelLeasing panelLeasing2;
+    private app.view.FixPanel.panelMaster panelMaster1;
     private app.view.FixPanel.panelModal panelModal1;
     private app.view.FixPanel.panelPegawai panelPegawai1;
     private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;
