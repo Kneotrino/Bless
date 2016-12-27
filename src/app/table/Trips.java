@@ -203,7 +203,7 @@ public class Trips implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Trips[ tripsId=" + tripsId + " ]";
+        return "[Perjalanan ke = "+ perjalananke+" ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

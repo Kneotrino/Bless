@@ -410,6 +410,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
             this.chandePanel("Mobil");
+            ( (app.view.panel.mobil.panelMobil )(this.jPanel6)).Refresh();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 

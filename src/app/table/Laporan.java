@@ -249,15 +249,15 @@ public class Laporan implements Serializable {
             Message("Gagal Menghapus \n");
         }
     }
-     @PostUpdate
-    public void logUpdate()
-    {
-            try {
-            Message("Berhasil update Data");
-        } catch (Exception e) {
-            Message("Gagal update Data ");
-        }
-    }
+//     @PostUpdate
+//    public void logUpdate()
+//    {
+//            try {
+//            Message("Berhasil update Data");
+//        } catch (Exception e) {
+//            Message("Gagal update Data ");
+//        }
+//    }
     public void Message(String msg)
     {
     DecimalFormat nf = new DecimalFormat("IDR #,##0");            

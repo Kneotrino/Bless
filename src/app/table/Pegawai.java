@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "PEGAWAI", catalog = "", schema = "BLESSING")
 @XmlRootElement
- @app.ListUrutan({"nama","alamat","nomorhp","pass","status","tanggalGajian","tanggalMasuk" })
+ @app.ListUrutan({"nama","alamat","nomorhp","status","tanggalGajian","tanggalMasuk" })
 public class Pegawai implements Serializable {
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);

@@ -445,7 +445,7 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == newButton4) {
                 System.out.println("Pakai");
                 p = (Perjalanan) this.inputPanel4.getTarget();
-                ts.setBankId((Bank) this.jComboBox4.getSelectedItem());
+//                ts.setBankId((Bank) this.jComboBox4.getSelectedItem());
             }
         p.setTransaksi(ts);
         entityManager.persist(p);
