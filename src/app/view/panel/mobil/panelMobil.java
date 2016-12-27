@@ -5,11 +5,13 @@
  */
 package app.view.panel.mobil;
 
+import app.table.Bank;
 import app.table.Bpkb;
 import app.table.Debitur;
 import app.table.KeuanganMobil;
 import app.table.Leasing;
 import app.table.Mobil;
+import app.table.Saldo;
 import app.view.FixPanel.panelLeasing;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
@@ -50,28 +52,22 @@ public class panelMobil extends javax.swing.JPanel {
         System.out.println("app.view.panel.mobil.panelMobil.<init>()");
         gambar6 =gambar5 =gambar4 =gambar3 =gambar2 = gambar1;
         initComponents();
-//        this.mobilList
-//                .stream()
-//                .filter(a-> !a.getStatusMobil().contains("CLOSE"))
-//                .forEach((Mobil a) -> {
-//                    this.jTabbedPane1.add(new app.view.panel.mobil.subPanelMobil(),
-//                            a.getMobilId()+";"+
-//                            a.getMerk()+";"+
-//                            a.getType()+";"+
-//                            a.getTahun()+";"
-//                                    );                
-//                }
-//                
-//                );
         for (int i = 0; i < this.jTable1.getColumnCount(); i++) {
-                this.jTable1.getColumnModel().getColumn(i).setPreferredWidth(250);
+                this.jTable1.getColumnModel().getColumn(i).setPreferredWidth(220);
         }
         for (int i = 0; i < this.jTable2.getColumnCount(); i++) {
-                this.jTable1.getColumnModel().getColumn(i).setPreferredWidth(250);
+                this.jTable1.getColumnModel().getColumn(i).setPreferredWidth(220);
         }
         
     }
-
+public void Refresh()
+{
+    System.out.println("app.view.panel.mobil.panelMobil.Refresh()");
+    this.bankList.clear();
+    this.bankList.addAll(bankQuery.getResultList());
+    this.leasingList.clear();
+    this.leasingList.addAll(leasingQuery.getResultList());
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -156,7 +152,7 @@ public class panelMobil extends javax.swing.JPanel {
         jLabel76 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
-        jButton12 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
@@ -212,6 +208,8 @@ public class panelMobil extends javax.swing.JPanel {
         jFormattedTextField3 = new javax.swing.JFormattedTextField();
         jLabel35 = new javax.swing.JLabel();
         jDateChooser4 = new com.toedter.calendar.JDateChooser();
+        jLabel37 = new javax.swing.JLabel();
+        jTextField25 = new javax.swing.JTextField();
         jLabel38 = new javax.swing.JLabel();
         jTextField33 = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
@@ -228,12 +226,10 @@ public class panelMobil extends javax.swing.JPanel {
         jTextField38 = new javax.swing.JTextField();
         jLabel67 = new javax.swing.JLabel();
         jTextField59 = new javax.swing.JTextField();
-        jLabel37 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        jButton16 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
@@ -269,6 +265,16 @@ public class panelMobil extends javax.swing.JPanel {
         jButton17 = new javax.swing.JButton();
         leasingQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT l FROM Leasing l");
         leasingList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(leasingQuery.getResultList());
+        jDialog1 = new javax.swing.JDialog();
+        jButton19 = new javax.swing.JButton();
+        inputPanel1 = new app.utils.inputPanel(app.table.MobilPemasukan.class);
+        jComboBox5 = new javax.swing.JComboBox<>();
+        jDialog2 = new javax.swing.JDialog();
+        jButton20 = new javax.swing.JButton();
+        inputPanel2 = new app.utils.inputPanel(app.table.MobilPengeluaran.class);
+        jComboBox6 = new javax.swing.JComboBox<>();
+        bankQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT b FROM Bank b");
+        bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -289,10 +295,14 @@ public class panelMobil extends javax.swing.JPanel {
         jPanel9 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jPanel20 = new javax.swing.JPanel();
+        jButton15 = new javax.swing.JButton();
+        jPanel19 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jButton9 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
+        panelLeasing1 = new app.view.FixPanel.panelLeasing();
 
         addMobil.setTitle("Mobil Baru");
         addMobil.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
@@ -641,8 +651,13 @@ public class panelMobil extends javax.swing.JPanel {
 
         jPanel16.setLayout(new java.awt.GridLayout(0, 1, 0, 1));
 
-        jButton12.setText("HAPUS");
-        jPanel16.add(jButton12);
+        jButton21.setText("SET LEASING");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
+        jPanel16.add(jButton21);
 
         jLabel55.setText("NOMOR POLISI AKTIF");
         jPanel16.add(jLabel55);
@@ -898,6 +913,16 @@ public class panelMobil extends javax.swing.JPanel {
 
         jPanel11.add(jDateChooser4);
 
+        jLabel37.setText("LEASING");
+        jPanel11.add(jLabel37);
+
+        jTextField25.setEditable(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.leasingLeasingId.nama}"), jTextField25, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel11.add(jTextField25);
+
         jLabel38.setText("TOTAL DEBIT");
         jPanel11.add(jLabel38);
 
@@ -936,28 +961,43 @@ public class panelMobil extends javax.swing.JPanel {
         jPanel12.setLayout(new java.awt.BorderLayout());
 
         jTable4.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        jTable4.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        jTable4.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable4.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
+        jTable4.setAutoCreateRowSorter(true);
         jTable4.setRowHeight(22);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keuanganMobils}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, eLProperty, jTable4);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keuanganMobilId}"));
-        columnBinding.setColumnName("Ref KM");
-        columnBinding.setColumnClass(Integer.class);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+        columnBinding.setColumnName("Laporan REF");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debit}"));
-        columnBinding.setColumnName("Debit");
-        columnBinding.setColumnClass(Long.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kredit}"));
-        columnBinding.setColumnName("Kredit");
-        columnBinding.setColumnClass(Long.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobils.mobilId}"));
-        columnBinding.setColumnName("Ref Mobil");
-        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
+        columnBinding.setColumnName("Jumlah");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
+        columnBinding.setColumnName("Jenis");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId.namaBank}"));
+        columnBinding.setColumnName("Sumber");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jTable4.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -991,25 +1031,15 @@ public class panelMobil extends javax.swing.JPanel {
         jTextField59.setText("PROFIT");
         jPanel18.add(jTextField59);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.listleasingId}"), jLabel37, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jPanel18.add(jLabel37);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.leasingLeasingId}"), jLabel40, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jPanel18.add(jLabel40);
-
-        jButton16.setText("KREDIT LEASING");
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
+        jButton18.setText("PEMASUKAN");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
+                jButton18ActionPerformed(evt);
             }
         });
-        jPanel18.add(jButton16);
+        jPanel18.add(jButton18);
 
-        jButton10.setText("PEMASUKAN");
+        jButton10.setText("PENGELUARAN");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
@@ -1017,16 +1047,21 @@ public class panelMobil extends javax.swing.JPanel {
         });
         jPanel18.add(jButton10);
 
-        jButton8.setText("HAPUS");
-        jPanel18.add(jButton8);
-
-        jButton18.setText("PENGELUARAN");
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        jButton16.setText("SIMPAN");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButton16ActionPerformed(evt);
             }
         });
-        jPanel18.add(jButton18);
+        jPanel18.add(jButton16);
+
+        jButton8.setText("HAPUS");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel18.add(jButton8);
 
         jPanel12.add(jPanel18, java.awt.BorderLayout.PAGE_START);
 
@@ -1323,6 +1358,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }
     });
 
+    LeasingMobil.setTitle("Leasing Set");
     LeasingMobil.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
     LeasingMobil.setType(java.awt.Window.Type.POPUP);
     LeasingMobil.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
@@ -1344,13 +1380,55 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     LeasingMobil.getContentPane().add(jButton17);
 
+    jDialog1.setTitle("Pemasukan Mobil");
+    jDialog1.setModal(true);
+    jDialog1.setSize(new java.awt.Dimension(400, 400));
+    jDialog1.setType(java.awt.Window.Type.POPUP);
+
+    jButton19.setText("Simpan");
+    jButton19.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton19ActionPerformed(evt);
+        }
+    });
+    jDialog1.getContentPane().add(jButton19, java.awt.BorderLayout.PAGE_START);
+    jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
+
+    jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+    jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox5);
+    bindingGroup.addBinding(jComboBoxBinding);
+
+    jDialog1.getContentPane().add(jComboBox5, java.awt.BorderLayout.PAGE_END);
+
+    jDialog2.setTitle("Pengeluaran Mobil");
+    jDialog2.setModal(true);
+    jDialog2.setSize(new java.awt.Dimension(400, 400));
+    jDialog2.setType(java.awt.Window.Type.POPUP);
+
+    jButton20.setText("Simpan");
+    jButton20.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton20ActionPerformed(evt);
+        }
+    });
+    jDialog2.getContentPane().add(jButton20, java.awt.BorderLayout.PAGE_START);
+    jDialog2.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
+
+    jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+    jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox6);
+    bindingGroup.addBinding(jComboBoxBinding);
+
+    jDialog2.getContentPane().add(jComboBox6, java.awt.BorderLayout.PAGE_END);
+
     setLayout(new java.awt.BorderLayout());
 
     jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
     jPanel5.setLayout(new java.awt.BorderLayout());
-
-    jPanel7.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
 
     jButton3.setText("TAMBAH");
     jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -1377,6 +1455,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jPanel7.add(jButton6);
 
     jButton11.setText("LIHAT MOBIL");
+
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jButton11, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+    bindingGroup.addBinding(binding);
+
     jButton11.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton11ActionPerformed(evt);
@@ -1396,8 +1478,12 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jPanel5.add(jPanel7, java.awt.BorderLayout.NORTH);
 
     jTable1.setDefaultEditor(Date.class, new JDateChooserCellEditor());
-    jTable1.setDefaultEditor(long.class, new app.utils.IntegerEditor(0, 1000000000));
+    //jTable1.setDefaultEditor(long.class, new app.utils.IntegerEditor(0, 1000000000));
+    jTable1.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+    jTable1.setDefaultEditor(long.class, new app.utils.TablePopupEditor());
+    jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+    jTable1.setCellSelectionEnabled(true);
     jTable1.setRowHeight(24);
     jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -1489,8 +1575,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+    jTable2.setAutoCreateRowSorter(true);
     jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
     jTable2.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+    jTable2.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
     jTable2.setRowHeight(24);
 
     eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bpkbList1}");
@@ -1559,6 +1647,8 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jPanel9.setLayout(new java.awt.BorderLayout());
 
+    jTable3.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+    jTable3.setAutoCreateRowSorter(true);
     jTable3.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
     jTable3.setRowHeight(24);
 
@@ -1599,6 +1689,20 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jPanel9.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
+    jButton15.setText("SIMPAN");
+    jButton15.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton15ActionPerformed(evt);
+        }
+    });
+    jPanel20.add(jButton15);
+
+    jPanel9.add(jPanel20, java.awt.BorderLayout.PAGE_START);
+
+    jTabbedPane1.addTab("DEBITUR", jPanel9);
+
+    jPanel19.setLayout(new java.awt.BorderLayout());
+
     jButton9.setText("SIMPAN");
     jButton9.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1607,39 +1711,58 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     jPanel10.add(jButton9);
 
-    jPanel9.add(jPanel10, java.awt.BorderLayout.PAGE_START);
-
-    jTabbedPane1.addTab("DEBITUR", jPanel9);
+    jPanel19.add(jPanel10, java.awt.BorderLayout.PAGE_START);
 
     jTable5.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+    jTable5.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+    jTable5.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
+    jTable5.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+    jTable5.setAutoCreateRowSorter(true);
+    jTable5.setColumnSelectionAllowed(false);
     jTable5.setRowHeight(22);
 
     jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, keuanganMobilList, jTable5);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keuanganMobilId}"));
-    columnBinding.setColumnName("Ref KM");
-    columnBinding.setColumnClass(Integer.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+    columnBinding.setColumnName("REF");
+    columnBinding.setColumnClass(Long.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
     columnBinding.setColumnName("Tanggal");
     columnBinding.setColumnClass(java.util.Date.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debit}"));
-    columnBinding.setColumnName("Debit");
-    columnBinding.setColumnClass(Long.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kredit}"));
-    columnBinding.setColumnName("Kredit");
-    columnBinding.setColumnClass(Long.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
     columnBinding.setColumnName("Keterangan");
     columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
+    columnBinding.setColumnName("Jumlah");
+    columnBinding.setColumnClass(java.math.BigInteger.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+    columnBinding.setColumnName("Pemasukan");
+    columnBinding.setColumnClass(java.math.BigInteger.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+    columnBinding.setColumnName("Pengeluaran");
+    columnBinding.setColumnClass(java.math.BigInteger.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
+    columnBinding.setColumnName("Jenis");
+    columnBinding.setColumnClass(String.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId.namaBank}"));
+    columnBinding.setColumnName("Sumber/Tujuan");
+    columnBinding.setColumnClass(String.class);
+    columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobils.mobilId}"));
-    columnBinding.setColumnName("Ref Mobil");
+    columnBinding.setColumnName("Mobii REF");
     columnBinding.setColumnClass(Integer.class);
     columnBinding.setEditable(false);
     bindingGroup.addBinding(jTableBinding);
     jTableBinding.bind();
     jScrollPane8.setViewportView(jTable5);
 
-    jTabbedPane1.addTab("KEUANGAN MOBIL", jScrollPane8);
+    jPanel19.add(jScrollPane8, java.awt.BorderLayout.CENTER);
+
+    jTabbedPane1.addTab("Keuangan Mobil", jPanel19);
+    jTabbedPane1.addTab("Leasing", panelLeasing1);
 
     add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -1716,15 +1839,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 //            this.pindahGambar(gambar5, baru.getMobilId()+"in1");
 //            this.pindahGambar(gambar6, baru.getMobilId()+"in2");
 
-        javax.swing.JOptionPane.showMessageDialog(this.getRootPane(), 
-                (this.mobilList.add(baru)? "Berhasil":"Gagal" )
-                        +"Menyimpan Mobil = \n"
-                        +"NO = " + baru.getMobilId()
-                        +"\nNO = " + baru.getMerk()
-                        +"\nNO = " + baru.getType()
-        );
         this.debiturList1.add(debitur);
         this.bpkbList1.add(bpkb);
+        this.mobilList.add(baru);        
+        this.addMobil.hide();
 //        this.jTabbedPane1.add(new app.view.panel.mobil.subPanelMobil(),
 //                            baru.getMobilId()+";"+
 //                            baru.getMerk()+";"+
@@ -1791,16 +1909,17 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         if (!this.blessingPUEntityManager.getTransaction().isActive()) 
                 this.blessingPUEntityManager.getTransaction().begin();        
         System.out.println(this.getHapus().getDebitur());
-        System.out.println(this.getHapus().getBpkb());        
+        System.out.println(this.getHapus().getBpkb());     
+        List<KeuanganMobil> KM = this.getHapus().getKeuanganMobils();
+        this.keuanganMobilList.removeAll(KM);
         this.debiturList1.remove(this.getHapus().getDebitur());
         this.bpkbList1.remove(this.getHapus().getBpkb());
         this.blessingPUEntityManager.remove(this.getHapus());
         this.blessingPUEntityManager.getTransaction().commit();
-        boolean remove = this.mobilList.remove(this.getHapus());
-        
-        javax.swing.JOptionPane.showMessageDialog(this.getRootPane(), 
-                (remove ? "Berhasil":"Gagal" )+" Menghapus\nNama Product = "+ this.jTextField1.getText()
-        );        // TODO add your handling code here:
+        this.mobilList.remove(this.getHapus());        
+//        javax.swing.JOptionPane.showMessageDialog(this.getRootPane(), 
+//                (remove ? "Berhasil":"Gagal" )+" Menghapus\nNama Product = "+ this.jTextField1.getText()
+//        );        // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
     int returnVal = this.jFileChooser1.showOpenDialog(this);
@@ -1985,19 +2104,34 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private void jTextField57ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField57ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField57ActionPerformed
+    private void Hitung()
+    {
+        System.out.println("app.view.panel.mobil.panelMobil.Hitung()");
+//        List<KeuanganMobil> Km = this.hapus.getKeuanganMobils();
+//        for (KeuanganMobil k : Km) {
+//            System.out.println(" Pemasukan = " + k.getPemasukan() );
+//            System.out.println(" Pengeluaran = " + k.getPengeluaran() );
+//        }
+        long tk = this.hapus.getKeuanganMobils()
+                .stream()
+                .mapToLong(i -> i.getPemasukan().longValue())
+                .sum();
+        long td = this.hapus.getKeuanganMobils()
+                .stream()
+                .mapToLong(i -> i.getPengeluaran().longValue())
+                .sum();
+        long p = tk -td;
+        this.jTextField38.setText(Rp.format(tk) );
+        this.jTextField39.setText(Rp.format(td) );
+        this.jTextField59.setText(Rp.format(p) );
 
+    }
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        boolean pilihan = (this.jTable1.isCellSelected(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
-        if (pilihan) {
-        this.editMobil.setSize(1000, 700);
+        this.Hitung();
+        this.editMobil.setSize(1000, 750);
         this.editMobil.setLocationRelativeTo(null);        
         this.editMobil.setVisible(true);
-        this.UpdatePDP();
-        }
-        else
-        {
-            javax.swing.JOptionPane.showMessageDialog(null, "Silahkan pilih mobil yang ingin di lihat terlebih dahulu");
-        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -2050,17 +2184,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-//        this.hapus.getKeuanganMobils()]
-        
-        KeuanganMobil dp = new KeuanganMobil();
-        dp.setMobils(hapus);
-        dp.setTanggal(new java.util.Date());
-        this.keuanganMobilList.add(dp);
-        this.persist(dp);
-//        this.hapus.setTotalKredit(SOMEBITS);
-        boolean add = this.hapus.getKeuanganMobils().add(dp);
-//        this.mobilList.
-        // TODO add your handling code here:
+//        this.hapus.getKeuanganMobils()]        
+        this.jDialog2.setLocationRelativeTo(null);
+        this.jDialog2.show();
+
     }//GEN-LAST:event_jButton10ActionPerformed
 //    private String TD,TK;
 //
@@ -2089,20 +2216,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private void UpdatePDP()
     {   
         System.out.println("app.view.panel.mobil.panelMobil.UpdatePDP()");
-        long tk =
-                this.hapus.getKeuanganMobils()
-                .stream()
-                .mapToLong(i -> i.getKredit())
-                .sum();
-        long td =
-                this.hapus.getKeuanganMobils()
-                .stream()
-                .mapToLong(i -> i.getDebit())
-                .sum();
-        long p = tk -td;
-        this.jTextField38.setText(Rp.format(tk) );
-        this.jTextField39.setText(Rp.format(td) );
-        this.jTextField59.setText(Rp.format(p) );
         
     }
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
@@ -2123,24 +2236,74 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-            this.LeasingMobil.setSize(300, 300);
-            this.LeasingMobil.setLocationRelativeTo(null);
-            this.LeasingMobil.show();            
+        this.simpanButtonActionPerformed(evt);
+//            this.LeasingMobil.setSize(300, 300);
+//            this.LeasingMobil.setLocationRelativeTo(null);
+//            this.LeasingMobil.show();            
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-            System.out.println("Set Leasing "+ this.jComboBox4.getSelectedItem());
-            boolean name = this.jComboBox4.getSelectedItem() instanceof app.table.Leasing;
-            System.out.println("name = " + name);
-//            System.out.println("Leasing True = "+
-//            );
-        // TODO add your handling code here:
+            this.getHapus().getListleasing().setLeasingLeasingId((Leasing) this.jComboBox4.getSelectedItem());
+            this.LeasingMobil.hide();
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+//        jDialog1.setSize(400, 400);
+        jDialog1.setLocationRelativeTo(null);
+        jDialog1.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    public List<Bank> getBankList() {
+        return bankList;
+    }
+
+    public void setBankList(List<Bank> bankList) {
+        this.bankList = bankList;
+    }
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        KeuanganMobil dp = (KeuanganMobil) this.inputPanel1.getTarget();
+        Saldo ts = new Saldo();
+        ts.setBankId((Bank) this.jComboBox5.getSelectedItem());
+        dp.setTransaksi(ts);
+        dp.setMobils(hapus);
+        this.keuanganMobilList.add(dp);
+        this.persist(dp);
+        this.hapus.getKeuanganMobils().add(dp);
+        this.jDialog1.hide();
+    }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        KeuanganMobil dp = (KeuanganMobil) this.inputPanel2.getTarget();
+        Saldo ts = new Saldo();
+        ts.setBankId((Bank) this.jComboBox6.getSelectedItem());
+        dp.setTransaksi(ts);
+
+        dp.setMobils(hapus);
+        this.keuanganMobilList.add(dp);
+        this.persist(dp);
+        this.hapus.getKeuanganMobils().add(dp);
+        this.jDialog2.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        this.simpanButtonActionPerformed(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        this.LeasingMobil.setSize(300, 300);
+        this.LeasingMobil.setLocationRelativeTo(null);
+        this.LeasingMobil.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton21ActionPerformed
 
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -2166,22 +2329,29 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JPanel BPKB;
     private javax.swing.JDialog LeasingMobil;
     private javax.swing.JDialog addMobil;
+    private java.util.List<app.table.Bank> bankList;
+    private javax.persistence.Query bankQuery;
     private javax.persistence.EntityManager blessingPUEntityManager;
     private java.util.List<app.table.Bpkb> bpkbList1;
     private javax.persistence.Query bpkbQuery1;
     private java.util.List<app.table.Debitur> debiturList1;
     private javax.persistence.Query debiturQuery1;
     private javax.swing.JDialog editMobil;
+    private app.utils.inputPanel inputPanel1;
+    private app.utils.inputPanel inputPanel2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -2192,10 +2362,14 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JFileChooser jFileChooser3;
@@ -2240,7 +2414,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
@@ -2289,7 +2462,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -2329,6 +2504,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField24;
+    private javax.swing.JTextField jTextField25;
     private javax.swing.JTextField jTextField27;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField31;
@@ -2372,6 +2548,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.persistence.Query leasingQuery;
     private java.util.List<app.table.Mobil> mobilList;
     private javax.persistence.Query mobilQuery;
+    private app.view.FixPanel.panelLeasing panelLeasing1;
     private javax.swing.JButton simpanButton;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

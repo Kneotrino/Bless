@@ -11,6 +11,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,7 +50,7 @@ public class Leasing implements Serializable {
     private Integer leasingId;
     @Column(name = "NAMA", length = 255)
     private String nama;
-    @OneToMany(mappedBy = "leasingLeasingId")
+    @OneToMany(mappedBy = "leasingLeasingId",cascade = {CascadeType.ALL})
     private List<Listleasing> listleasingList;
     public Leasing() {
     }

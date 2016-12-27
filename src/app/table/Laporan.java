@@ -27,6 +27,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -119,6 +120,7 @@ public class Laporan implements Serializable {
                 || (this instanceof BayarPihutangPemasukan) 
                 || (this instanceof PerjalananPemasukan) 
                 || (this instanceof Modal) 
+                || (this instanceof MobilPemasukan)                 
                 ;
 
     public boolean isName() {
@@ -229,8 +231,34 @@ public class Laporan implements Serializable {
     }
 //    @Transient
     @PostPersist
+    public void logPersist()
+    {
+        try {
+            Message("Berhasil Menyimpan");
+        } catch (Exception e) {
+            Message("Gagal Menyimpan \n");
+        }
+            
+    }
     @PostRemove
-    public void Message()
+    public void logRemove()
+    {
+            try {
+            Message("Berhasil Menghapus");
+        } catch (Exception e) {
+            Message("Gagal Menghapus \n");
+        }
+    }
+     @PostUpdate
+    public void logUpdate()
+    {
+            try {
+            Message("Berhasil update Data");
+        } catch (Exception e) {
+            Message("Gagal update Data ");
+        }
+    }
+    public void Message(String msg)
     {
     DecimalFormat nf = new DecimalFormat("IDR #,##0");            
     String desc = ""
@@ -239,9 +267,9 @@ public class Laporan implements Serializable {
             + "\n Waktu = "+this.tanggal            
             + "\n Jumlah = "+nf.format(this.jumlah)
             + "\n Tipe = "+getJenis()
-            + "\n Sumber/Tujuan = "+Transaksi.getBankId().toString()
+//            + "\n Sumber/Tujuan = "+Transaksi.getBankId().toString()
             ;
-        javax.swing.JOptionPane.showMessageDialog(null, "Berhasil menyimpan/menghapus"+desc);                
+        javax.swing.JOptionPane.showMessageDialog(null,  msg+desc);                
     }
 
     public String getJenis()

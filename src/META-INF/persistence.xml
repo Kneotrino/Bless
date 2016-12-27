@@ -44,6 +44,8 @@
     <class>app.table.Penyesuaian</class>
     <class>app.table.PerjalananPemasukan</class>
     <class>app.table.PerjalananPengeluaran</class>
+    <class>app.table.MobilPemasukan</class>
+    <class>app.table.MobilPengeluaran</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>

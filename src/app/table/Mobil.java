@@ -25,6 +25,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -150,7 +153,7 @@ public class Mobil implements Serializable {
     private String no_bpkb;
     @Transient 
     private long TotalKredit;
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.ALL})
     private Listleasing listleasing = new Listleasing();
 
     public Listleasing getListleasing() {
@@ -166,7 +169,18 @@ public class Mobil implements Serializable {
     }
 
     public static final String PROP_TOTALKREDIT = "TotalKredit";
-
+    @PostPersist
+//    @PostUpdate
+    public void LogPersist()
+    {
+        javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menyimpan");
+    }
+    @PostRemove
+    public void LogRemove()
+    {
+        javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menghapus");
+    }
+    
     /**
      * Get the value of TotalKredit
      *
@@ -174,22 +188,12 @@ public class Mobil implements Serializable {
      */
     public long getTotalKredit() {        
         TotalKredit = 0l;
-        for (KeuanganMobil l : keuanganMobils) {
-            TotalKredit += l.getKredit();
-        }
+//        for (KeuanganMobil l : keuanganMobils) {
+//            TotalKredit += l.getKredit();
+//        }
         return TotalKredit;
     }
 
-    /**
-     * Set the value of TotalKredit
-     *
-     * @param TotalKredit new value of TotalKredit
-     */
-//    public void setTotalKredit(long TotalKredit) {
-//        long oldTotalKredit = this.TotalKredit;
-//        this.TotalKredit = TotalKredit;
-//        changeSupport.firePropertyChange(PROP_TOTALKREDIT, oldTotalKredit, TotalKredit);
-//    }
 
     public List<KeuanganMobil> getKeuanganMobils() {
         this.keuanganMobils = org.jdesktop.observablecollections.ObservableCollections.observableList(this.keuanganMobils);

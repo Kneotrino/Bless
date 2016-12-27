@@ -61,7 +61,7 @@ public class Listleasing implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date tglOk;
     @JoinColumn(name = "LEASING_LEASING_ID", referencedColumnName = "LEASING_ID")
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
     private Leasing leasingLeasingId;
     @OneToOne(mappedBy = "listleasing", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Mobil mobil;
