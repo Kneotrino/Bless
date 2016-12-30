@@ -1596,7 +1596,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding.setColumnName("Tgl Leasing");
     columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${posisi}"));
-    columnBinding.setColumnName("Posisi");
+    columnBinding.setColumnName("Posisi BPKB");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiAktif}"));
+    columnBinding.setColumnName("Posisi Faktur");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
     columnBinding.setColumnName("Mobil Ref");

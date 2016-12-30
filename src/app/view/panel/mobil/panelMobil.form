@@ -3219,6 +3219,11 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                       </TableColumnModel>
                     </Property>
                     <Property name="rowHeight" type="int" value="24"/>
@@ -3266,7 +3271,11 @@
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${posisi}">
-                        <BindingParameter name="NAME" value="Posisi"/>
+                        <BindingParameter name="NAME" value="Posisi BPKB"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${noPolisiAktif}">
+                        <BindingParameter name="NAME" value="Posisi Faktur"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${mobil.mobilId}">
