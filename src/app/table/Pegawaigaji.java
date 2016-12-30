@@ -37,7 +37,7 @@ public class Pegawaigaji extends Pengeluaran implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @JoinColumn(name = "PEGAWAIGAJIID", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Pegawai pegawaigajiid;
 
     public Pegawaigaji() {
