@@ -143,10 +143,15 @@ public class Laporan implements Serializable {
 
 
     public void setPemasukan(BigInteger jumlah) {
-        setJumlah(jumlah);
 //        BigInteger oldJumlah = this.jumlah;
-//        this.jumlah = jumlah;
+        if (name) {
+//            System.out.println("Pemasukan  edit");
+            setJumlah(jumlah);            
+        }
+        else 
+            javax.swing.JOptionPane.showMessageDialog(null,  "Pemasukan tidak bisa di edit dari pengeluaran");
 //        changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
+//        this.jumlah = jumlah;
     }
     public void setJumlah(BigInteger jumlah) {
         BigInteger oldJumlah = this.jumlah;
@@ -154,10 +159,16 @@ public class Laporan implements Serializable {
         changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
     }
     public void setPengeluaran(BigInteger jumlah) {
-       setJumlah(jumlah);
+        if (!name) {
+//            System.out.println("Pengeluaran edit");
+            setJumlah(jumlah);            
+        }
+        else 
+            javax.swing.JOptionPane.showMessageDialog(null,  "Pengeluran tidak bisa di edit dari pemasukan");
 
 //        BigInteger oldJumlah = this.jumlah;
 //        this.jumlah = jumlah;
+//       setJumlah(jumlah);
 //        changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
     }
 
@@ -271,7 +282,7 @@ public class Laporan implements Serializable {
             + "\n Waktu = "+this.tanggal            
             + "\n Jumlah = "+nf.format(this.jumlah)
             + "\n Tipe = "+getJenis()
-//            + "\n Sumber/Tujuan = "+Transaksi.getBankId().toString()
+            + "\n Sumber/Tujuan = "+Transaksi.getBankId().toString()
             ;
         javax.swing.JOptionPane.showMessageDialog(null,  msg+desc);                
     }

@@ -149,6 +149,7 @@ public class PanelBank extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId.namaBank}"));
         columnBinding.setColumnName("Tujuan");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -178,7 +179,6 @@ public class PanelBank extends JPanel {
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setColumnSelectionAllowed(false);
 
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bankId}"));
