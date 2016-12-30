@@ -7,7 +7,6 @@ package app.view.FixPanel;
 
 import app.table.Bank;
 import app.table.Laporan;
-import app.table.Pemasukan;
 import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
@@ -22,9 +21,9 @@ import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -182,16 +181,25 @@ public class panelMaster extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
-        columnBinding.setColumnName("Jumlah");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("type");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding.setColumnName("Bank");
+        columnBinding.setColumnClass(app.table.Bank.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox1));
+        }
 
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
@@ -386,7 +394,7 @@ public class panelMaster extends JPanel {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new panelMaster(app.table.KeuanganMobil.class));
+                frame.setContentPane(new panelMaster(app.table.Laporan.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

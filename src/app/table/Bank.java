@@ -221,7 +221,7 @@ public class Bank implements Serializable {
 
     @Override
     public String toString() {
-        return "[ Tujuan ="+namaBank+"; Bank REF=" + bankId + " ]";
+        return "[ Tujuan ="+namaBank+";REF=" + bankId + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

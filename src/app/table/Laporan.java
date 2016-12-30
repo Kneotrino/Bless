@@ -143,9 +143,10 @@ public class Laporan implements Serializable {
 
 
     public void setPemasukan(BigInteger jumlah) {
-        BigInteger oldJumlah = this.jumlah;
-        this.jumlah = jumlah;
-        changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
+        setJumlah(jumlah);
+//        BigInteger oldJumlah = this.jumlah;
+//        this.jumlah = jumlah;
+//        changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
     }
     public void setJumlah(BigInteger jumlah) {
         BigInteger oldJumlah = this.jumlah;
@@ -153,9 +154,11 @@ public class Laporan implements Serializable {
         changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
     }
     public void setPengeluaran(BigInteger jumlah) {
-        BigInteger oldJumlah = this.jumlah;
-        this.jumlah = jumlah;
-        changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
+       setJumlah(jumlah);
+
+//        BigInteger oldJumlah = this.jumlah;
+//        this.jumlah = jumlah;
+//        changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
     }
 
     public String getKeterangan() {
