@@ -187,6 +187,9 @@ public class panelHutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomorktp}"));
         columnBinding.setColumnName("Nomorktp");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahpinjaman}"));
         columnBinding.setColumnName("Jumlahpinjaman");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -204,9 +207,6 @@ public class panelHutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggallunas}"));
         columnBinding.setColumnName("Tanggallunas");
         columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
-        columnBinding.setColumnName("Keterangan");
-        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lunas}"));
         columnBinding.setColumnName("Lunas");
         columnBinding.setColumnClass(String.class);
@@ -231,7 +231,6 @@ public class panelHutang extends JPanel {
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarhutangs}");
@@ -344,11 +343,11 @@ public class panelHutang extends JPanel {
             else if (evt.getSource() == saveButton) {
                 panelHutang.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton) {
-                panelHutang.this.newButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == jButton3) {
                 panelHutang.this.jButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton) {
+                panelHutang.this.newDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton2) {
                 panelHutang.this.newButton2ActionPerformed(evt);
@@ -356,8 +355,8 @@ public class panelHutang extends JPanel {
             else if (evt.getSource() == newButton3) {
                 panelHutang.this.newButton3ActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelHutang.this.newDetailButtonActionPerformed(evt);
+            else if (evt.getSource() == newButton) {
+                panelHutang.this.newButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

@@ -223,7 +223,6 @@ public class panelLaporan extends JPanel {
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setColumnSelectionAllowed(false);
         masterTable.setGridColor(new java.awt.Color(0, 0, 0));
         masterTable.setRowHeight(25);
 
@@ -239,10 +238,6 @@ public class panelLaporan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
-        columnBinding.setColumnName("Jumlah");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -336,10 +331,14 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
         long masuk = 0;
         long keluar = 0;
         long asset = 0;
-        
+         java.math.BigInteger saldo = new java.math.BigInteger("0");
         for (Laporan laporan : list) {
             pemasukan = pemasukan.add(laporan.getPemasukan());
             pengeluaran = pengeluaran.add(laporan.getPengeluaran());
+            saldo = saldo.subtract(laporan.getPengeluaran());
+            saldo = saldo.add(laporan.getPemasukan());
+            laporan.setSaldo(saldo);
+
 //            boolean out = laporan.getPemasukan().equals(BigInteger.ZERO);
             if (laporan.isName()) {
                 masuk++;  

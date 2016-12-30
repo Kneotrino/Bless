@@ -157,14 +157,6 @@ public void Refresh()
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jTextField15 = new javax.swing.JTextField();
         editMobil = new javax.swing.JDialog();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel54 = new javax.swing.JLabel();
-        jLabel72 = new javax.swing.JLabel();
-        jLabel73 = new javax.swing.JLabel();
-        jLabel74 = new javax.swing.JLabel();
-        jLabel75 = new javax.swing.JLabel();
-        jLabel76 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel71 = new javax.swing.JLabel();
@@ -271,6 +263,14 @@ public void Refresh()
         jLabel53 = new javax.swing.JLabel();
         jLabel68 = new javax.swing.JLabel();
         jTextField61 = new javax.swing.JTextField();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        jLabel73 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
+        jLabel75 = new javax.swing.JLabel();
+        jLabel76 = new javax.swing.JLabel();
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
         jFileChooser3 = new javax.swing.JFileChooser();
@@ -636,63 +636,10 @@ public void Refresh()
         editMobil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         editMobil.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
-        jScrollPane6.setPreferredSize(new java.awt.Dimension(1862, 170));
-
-        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 1, true), "GAMBAR MOBIL"));
-        jPanel14.setLayout(new java.awt.GridLayout(1, 0, 10, 10));
-
-        jLabel54.setPreferredSize(new java.awt.Dimension(300, 120));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar1}"), jLabel54, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
-        jPanel14.add(jLabel54);
-
-        jLabel72.setPreferredSize(new java.awt.Dimension(300, 120));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar2}"), jLabel72, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
-        jPanel14.add(jLabel72);
-
-        jLabel73.setPreferredSize(new java.awt.Dimension(300, 120));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar3}"), jLabel73, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
-        jPanel14.add(jLabel73);
-
-        jLabel74.setPreferredSize(new java.awt.Dimension(300, 120));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar4}"), jLabel74, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
-        jPanel14.add(jLabel74);
-
-        jLabel75.setPreferredSize(new java.awt.Dimension(300, 120));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar5}"), jLabel75, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
-        jPanel14.add(jLabel75);
-
-        jLabel76.setPreferredSize(new java.awt.Dimension(300, 120));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar6}"), jLabel76, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
-        jPanel14.add(jLabel76);
-
-        jScrollPane6.setViewportView(jPanel14);
-
-        editMobil.getContentPane().add(jScrollPane6, java.awt.BorderLayout.NORTH);
-
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
         jPanel15.setLayout(new java.awt.GridLayout(0, 2));
 
         jPanel16.setLayout(new java.awt.GridLayout(0, 1, 0, 1));
-
-        jLabel71.setText("jLabel71");
         jPanel16.add(jLabel71);
 
         jLabel55.setText("NOMOR POLISI AKTIF");
@@ -984,7 +931,7 @@ public void Refresh()
 
         jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.hargaPembelian}"), jFormattedTextField4, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.perjalanan.pakai}"), jFormattedTextField4, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         jPanel11.add(jFormattedTextField4);
@@ -1174,7 +1121,6 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel13.add(jTextField40, gridBagConstraints);
 
@@ -1190,7 +1136,6 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jTextField41, gridBagConstraints);
 
@@ -1206,7 +1151,6 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jTextField42, gridBagConstraints);
 
@@ -1231,7 +1175,7 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 10;
         jPanel13.add(jLabel50, gridBagConstraints);
 
@@ -1241,7 +1185,7 @@ public void Refresh()
         gridBagConstraints.gridy = 8;
         jPanel13.add(jLabel51, gridBagConstraints);
 
-        jLabel52.setText("NOREK");
+        jLabel52.setText("POSISI FAKTUR");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -1253,7 +1197,6 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jTextField43, gridBagConstraints);
 
@@ -1263,7 +1206,6 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jTextField44, gridBagConstraints);
 
@@ -1273,7 +1215,6 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jTextField45, gridBagConstraints);
 
@@ -1285,9 +1226,8 @@ public void Refresh()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jButton5, gridBagConstraints);
 
         jTextField46.setMinimumSize(new java.awt.Dimension(400, 20));
@@ -1298,7 +1238,6 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jTextField46, gridBagConstraints);
 
@@ -1320,11 +1259,61 @@ public void Refresh()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jTextField61, gridBagConstraints);
 
         jTabbedPane2.addTab("DEBITUR", jPanel13);
+
+        jScrollPane6.setPreferredSize(new java.awt.Dimension(1862, 170));
+
+        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 1, true), "GAMBAR MOBIL"));
+        jPanel14.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+
+        jLabel54.setPreferredSize(new java.awt.Dimension(300, 120));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar1}"), jLabel54, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        bindingGroup.addBinding(binding);
+
+        jPanel14.add(jLabel54);
+
+        jLabel72.setPreferredSize(new java.awt.Dimension(300, 120));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar2}"), jLabel72, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        bindingGroup.addBinding(binding);
+
+        jPanel14.add(jLabel72);
+
+        jLabel73.setPreferredSize(new java.awt.Dimension(300, 120));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar3}"), jLabel73, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        bindingGroup.addBinding(binding);
+
+        jPanel14.add(jLabel73);
+
+        jLabel74.setPreferredSize(new java.awt.Dimension(300, 120));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar4}"), jLabel74, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        bindingGroup.addBinding(binding);
+
+        jPanel14.add(jLabel74);
+
+        jLabel75.setPreferredSize(new java.awt.Dimension(300, 120));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar5}"), jLabel75, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        bindingGroup.addBinding(binding);
+
+        jPanel14.add(jLabel75);
+
+        jLabel76.setPreferredSize(new java.awt.Dimension(300, 120));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar6}"), jLabel76, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        bindingGroup.addBinding(binding);
+
+        jPanel14.add(jLabel76);
+
+        jScrollPane6.setViewportView(jPanel14);
+
+        jTabbedPane2.addTab("GAMBAR", jScrollPane6);
 
         editMobil.getContentPane().add(jTabbedPane2, java.awt.BorderLayout.CENTER);
 
@@ -1776,7 +1765,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding.setColumnName("No Ktp");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${norek}"));
-    columnBinding.setColumnName("Norek");
+    columnBinding.setColumnName("Posisi Faktur");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bank}"));
     columnBinding.setColumnName("Nama Orang ke-2");
@@ -2027,7 +2016,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_simpanButtonActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        this.addMobil.setSize(800, 700);
+        this.addMobil.setSize(800, 600);
         this.addMobil.setLocationRelativeTo(null);
         this.addMobil.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -2256,7 +2245,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         this.Hitung();
-        this.editMobil.setSize(1000, 750);
+        this.editMobil.setSize(1000, 600);
         this.editMobil.setLocationRelativeTo(null);        
         this.editMobil.setVisible(true);
 

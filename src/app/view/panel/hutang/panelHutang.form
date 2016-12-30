@@ -431,6 +431,10 @@
                     <BindingParameter name="NAME" value="Nomorktp"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                   </Subbinding>
+                  <Subbinding sourcePath="${keterangan}">
+                    <BindingParameter name="NAME" value="Keterangan"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                  </Subbinding>
                   <Subbinding sourcePath="${jumlahpinjaman}">
                     <BindingParameter name="NAME" value="Jumlahpinjaman"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
@@ -452,10 +456,6 @@
                   <Subbinding sourcePath="${tanggallunas}">
                     <BindingParameter name="NAME" value="Tanggallunas"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
-                  </Subbinding>
-                  <Subbinding sourcePath="${keterangan}">
-                    <BindingParameter name="NAME" value="Keterangan"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                   </Subbinding>
                   <Subbinding sourcePath="${lunas}">
                     <BindingParameter name="NAME" value="Lunas"/>

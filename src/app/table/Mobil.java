@@ -452,6 +452,7 @@ public class Mobil implements Serializable {
     public String getTampilanDepan() {
         return tampilanDepan;
     }
+    
     public javax.swing.Icon getGambar1()
     {
         Icon ii = null;
