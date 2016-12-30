@@ -1168,24 +1168,9 @@
                         <Property name="text" type="java.lang.String" value="BAHAN BAKAR"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel32">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="PENJUAL"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel34">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="TANGGAL PEMBELIAN"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel40">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="PERJALANAN KE"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel33">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="HARGA PEMBELIAN DARI PERJALANAN"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel30">
@@ -1261,6 +1246,7 @@
                     </Component>
                     <Component class="javax.swing.JComboBox" name="jComboBox9">
                       <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="app.utils.ColorList.warna" type="code"/>
                         </Property>
@@ -1290,43 +1276,10 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField11ActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField12">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="penjueal"/>
-                      </Properties>
-                    </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
                       <Properties>
                         <Property name="date" type="java.util.Date" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="new java.util.Date()" type="code"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="jComboBox7">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="4">
-                            <StringItem index="0" value="Item 1"/>
-                            <StringItem index="1" value="Item 2"/>
-                            <StringItem index="2" value="Item 3"/>
-                            <StringItem index="3" value="Item 4"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="elements" source="Form" sourcePath="${perjalananList}" target="jComboBox7" targetPath="elements" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                      </AuxValues>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                        <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code=" 0l" type="code"/>
                         </Property>
                       </Properties>
                     </Component>
@@ -1386,7 +1339,13 @@
                 <Property name="verticalGap" type="int" value="1"/>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel71">
+                <Component class="javax.swing.JButton" name="jButton21">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="SET LEASING"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton21ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel55">
                   <Properties>
@@ -1451,6 +1410,11 @@
                 <Component class="javax.swing.JLabel" name="jLabel42">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="STATUS"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel37">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="LEASING"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1576,6 +1540,18 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
+                <Component class="javax.swing.JTextField" name="jTextField25">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
+                  <BindingProperties>
+                    <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.listleasing.leasingLeasingId.nama}" target="jTextField25" targetPath="text" updateStrategy="0" immediately="false">
+                      <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                      <Property name="nullValue" type="java.lang.String" value="&quot;No Leasing&quot;"/>
+                      <Property name="incompletePathValue" type="java.lang.String" value="&quot;No Leasing&quot;"/>
+                    </BindingProperty>
+                  </BindingProperties>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -1696,18 +1672,6 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField23ActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel14">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="PENJUAL"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField24">
-                      <BindingProperties>
-                        <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.penjual}" target="jTextField24" targetPath="text" updateStrategy="0" immediately="false">
-                          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                        </BindingProperty>
-                      </BindingProperties>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel18">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="HARGA BELI"/>
@@ -1818,69 +1782,6 @@
                           <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                         </BindingProperty>
                       </BindingProperties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel69">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="HARGA BELI DARI PERJALANAN"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField4">
-                      <Properties>
-                        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                          <Format subtype="1" type="0"/>
-                        </Property>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="value" source="jTable1" sourcePath="${selectedElement.perjalanan.pakai}" target="jFormattedTextField4" targetPath="value" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel70">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="PERJALANAN KE"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField26">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.perjalanan.tripsTripsId.perjalananke}" target="jTextField26" targetPath="text" updateStrategy="0" immediately="false">
-                          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                        </BindingProperty>
-                      </BindingProperties>
-                      <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextField26MouseClicked"/>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField26ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel37">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="LEASING"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField25">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.listleasing.leasingLeasingId.nama}" target="jTextField25" targetPath="text" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="jButton22">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="SET PERJALAN"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton22ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="jButton21">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="SET LEASING"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton21ActionPerformed"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -2036,7 +1937,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="jLabel44">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="TOTAL DEBIT"/>
+                        <Property name="text" type="java.lang.String" value="TOTAL PENGELUARAN"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField39">
@@ -2047,7 +1948,7 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel43">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="TOTAL KREDIT"/>
+                        <Property name="text" type="java.lang.String" value="TOTAL PEMASUKAN"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField38">
@@ -2852,52 +2753,6 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
       </AuxValues>
     </Component>
-    <Container class="javax.swing.JDialog" name="jDialog3">
-      <Properties>
-        <Property name="modal" type="boolean" value="true"/>
-        <Property name="type" type="java.awt.Window$Type" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="POPUP"/>
-        </Property>
-      </Properties>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-        <Property name="columns" type="int" value="0"/>
-        <Property name="rows" type="int" value="3"/>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton4">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="SET PERJALANAN"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel77">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="PERJALANAN KE"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox8">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
-            </Property>
-          </Properties>
-          <BindingProperties>
-            <BindingProperty name="elements" source="Form" sourcePath="${perjalananList}" target="jComboBox8" targetPath="elements" updateStrategy="0" immediately="false"/>
-          </BindingProperties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-      </SubComponents>
-    </Container>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -3760,15 +3615,6 @@
             </Container>
           </SubComponents>
         </Container>
-        <Component class="app.view.FixPanel.panelLeasing" name="panelLeasing1">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="LEASING">
-                <Property name="tabTitle" type="java.lang.String" value="LEASING"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

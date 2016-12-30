@@ -46,14 +46,18 @@ public class PanelBank extends JPanel {
             System.out.println("find = " + find);
             boolean name = find ==null;
             if (find ==null) {
-            Bank bank = new app.table.Bank(1);
-            bank.setNamaBank("Kas");
-            entityManager.persist(bank);
-            list.add(bank);
-            int row = list.size() - 1;
-            masterTable.setRowSelectionInterval(row, row);
-            masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
-            this.saveButtonActionPerformed(null);                
+                    Bank bank = new app.table.Bank(0);
+                    Bank peter = new app.table.Bank(0);
+                    bank.setNamaBank("Kas");
+                    peter.setNamaBank("K Peter");
+                    entityManager.persist(bank);
+                    entityManager.persist(peter);
+                    list.add(bank);
+                    list.add(peter);
+                    int row = list.size() - 1;
+                    masterTable.setRowSelectionInterval(row, row);
+                    masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+                    this.saveButtonActionPerformed(null);                
             }
 //            this.persist(bank);
         }
