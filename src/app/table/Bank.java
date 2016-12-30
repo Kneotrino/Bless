@@ -21,6 +21,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -218,10 +221,10 @@ public class Bank implements Serializable {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
-        return "[ Tujuan ="+namaBank+";REF=" + bankId + " ]";
+        return "[ Tujuan/Sumber ="+namaBank+";REF=" + bankId + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -230,6 +233,15 @@ public class Bank implements Serializable {
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
+    }   
+    @PostPersist
+    public void PostSimpan()
+    {    
+        javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Menyimpan\nNama Bank ="+ namaBank);
     }
-    
+    @PostRemove
+    public void PostHapus()
+    {    
+        javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Menghapus\nNama Bank ="+ namaBank);
+    }
 }

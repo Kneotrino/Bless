@@ -42,12 +42,13 @@ public class PanelBank extends JPanel {
             entityManager.getTransaction().begin();
         }
         {            
-            Bank find = this.entityManager.find(app.table.Bank.class, 1);
+            Bank find = this.entityManager.find(app.table.Bank.class, -1);
+            Bank find2 = this.entityManager.find(app.table.Bank.class, -2);
             System.out.println("find = " + find);
             boolean name = find ==null;
-            if (find ==null) {
-                    Bank bank = new app.table.Bank(0);
-                    Bank peter = new app.table.Bank(0);
+            if ((find ==null) && (find2 == null)) {
+                    Bank bank = new app.table.Bank(-1);
+                    Bank peter = new app.table.Bank(-2);
                     bank.setNamaBank("Kas");
                     peter.setNamaBank("K Peter");
                     entityManager.persist(bank);
@@ -368,12 +369,15 @@ public class PanelBank extends JPanel {
         List<app.table.Bank> toRemove = new ArrayList<app.table.Bank>(selected.length);
         for (int idx = 0; idx < selected.length; idx++) {
             app.table.Bank b = list.get(masterTable.convertRowIndexToModel(selected[idx]));
-            toRemove.add(b);
-            List<Saldo> l = b.getSaldoList();
-            for (Saldo saldo : l) {
-            entityManager.remove(saldo.getLaporan());                
-            entityManager.remove(saldo);                
+            if (b.getBankId() == -2  ) {
+                 javax.swing.JOptionPane.showMessageDialog(null,  "Gagal menghapus\n");
+                break;                
             }
+            if (b.getBankId() == -1  ) {
+                 javax.swing.JOptionPane.showMessageDialog(null,  "Gagal menghapus\n");
+                break;                
+            }
+            toRemove.add(b);
             entityManager.remove(b);
         }
         list.removeAll(toRemove);

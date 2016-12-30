@@ -29,12 +29,14 @@ import javax.swing.JPanel;
  * @author SEED
  */
 public class panelPerjalanan extends JPanel {
-    
+    Bank Peter;
     public panelPerjalanan() {
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
+        Peter = this.entityManager.find(app.table.Bank.class, -2);
+        bankList.remove(Peter);
         this.Refresh();
     }
 
@@ -187,7 +189,7 @@ public class panelPerjalanan extends JPanel {
         add(jPanel1);
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(30);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -275,7 +277,7 @@ public class panelPerjalanan extends JPanel {
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(30);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.perjalananList}");
@@ -304,9 +306,6 @@ public class panelPerjalanan extends JPanel {
         columnBinding.setColumnName("Kirim");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pakai}"));
-        columnBinding.setColumnName("Pakai");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
         columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -453,6 +452,7 @@ public class panelPerjalanan extends JPanel {
         list.addAll(data);
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
+        bankList.remove(Peter);
         for (Trips trips : list) {
             trips.setTotalPakai(trips.getPakai());
             trips.setTotalKirim(trips.getKirim());
@@ -486,25 +486,7 @@ public class panelPerjalanan extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Trips t = (app.table.Trips) this.inputPanel1.getTarget();
-//        List<Perjalanan> p = new ArrayList<>();
-//        PerjalananPengeluaran p1 = new app.table.PerjalananPengeluaran();
-//        Perjalanan p2 = new app.table.Perjalanan();
-//        p1.setJumlah(t.getTotalKirim());
-//        p2.setPakai(t.getTotalPakai());
-//        p1.setTripsTripsId(t);
-//        p2.setTripsTripsId(t);
-//        Saldo ts1 = new Saldo();
-//        Saldo ts2 = new Saldo();
-//        ts1.setBankId((Bank) this.jComboBox1.getSelectedItem());
-//        ts2.setBankId((Bank) this.jComboBox1.getSelectedItem());
-//        p1.setTransaksi(ts1);
-//        p2.setTransaksi(ts2);
-//        entityManager.persist(p1);
-//        entityManager.persist(p2);
         entityManager.persist(t);
-//        p.add(p2);
-//        p.add(p1);
-//        t.setPerjalananList(p);
         list.add(t);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
