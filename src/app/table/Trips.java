@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Trips.findByTotalPakai", query = "SELECT t FROM Trips t WHERE t.totalPakai = :totalPakai")
     , @NamedQuery(name = "Trips.findByTotalSaldo", query = "SELECT t FROM Trips t WHERE t.totalSaldo = :totalSaldo")}
 )
-@app.ListUrutan({"keterangan","perjalananke","tanggalBerangkat","tanggalKembali","totalKirim","totalPakai"})
+@app.ListUrutan({"keterangan","perjalananke","tanggalBerangkat","tanggalKembali"})
 public class Trips implements Serializable {
 
     @Transient

@@ -66,7 +66,6 @@ public class panelPerjalanan extends JPanel {
         jDialog1 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Trips.class);
         newButton = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
         newDetailButton = new javax.swing.JButton();
@@ -81,7 +80,6 @@ public class panelPerjalanan extends JPanel {
         jDialog4 = new javax.swing.JDialog();
         inputPanel4 = new app.utils.inputPanel(app.table.Perjalanan.class);
         newButton4 = new javax.swing.JButton();
-        jComboBox4 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -111,14 +109,6 @@ public class panelPerjalanan extends JPanel {
         newButton.addActionListener(formListener);
         jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
-        bindingGroup.addBinding(jComboBoxBinding);
-
-        jDialog1.getContentPane().add(jComboBox1, java.awt.BorderLayout.PAGE_END);
-
         newDetailButton.setText("New");
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -138,13 +128,13 @@ public class panelPerjalanan extends JPanel {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jDialog2.getContentPane().add(jComboBox2, java.awt.BorderLayout.PAGE_END);
 
-        jDialog3.setTitle("Input Data Kirim/Pengembalikan");
+        jDialog3.setTitle("Input Data Kirim/Pengeluaran");
         jDialog3.setModal(true);
 
         inputPanel3.setLayout(new java.awt.GridLayout(0, 2));
@@ -171,14 +161,6 @@ public class panelPerjalanan extends JPanel {
         newButton4.setText("Simpan");
         newButton4.addActionListener(formListener);
         jDialog4.getContentPane().add(newButton4, java.awt.BorderLayout.PAGE_START);
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox4);
-        bindingGroup.addBinding(jComboBoxBinding);
-
-        jDialog4.getContentPane().add(jComboBox4, java.awt.BorderLayout.PAGE_END);
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -351,23 +333,17 @@ public class panelPerjalanan extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                panelPerjalanan.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == newButton1) {
+                panelPerjalanan.this.newButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelPerjalanan.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelPerjalanan.this.newDetailButtonActionPerformed(evt);
+            else if (evt.getSource() == refreshButton1) {
+                panelPerjalanan.this.refreshButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteDetailButton) {
-                panelPerjalanan.this.deleteDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                panelPerjalanan.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton) {
-                panelPerjalanan.this.saveButtonActionPerformed(evt);
+            else if (evt.getSource() == saveButton1) {
+                panelPerjalanan.this.saveButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton1) {
                 panelPerjalanan.this.newDetailButton1ActionPerformed(evt);
@@ -378,8 +354,20 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == newDetailButton3) {
                 panelPerjalanan.this.newDetailButton3ActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton1) {
-                panelPerjalanan.this.newButton1ActionPerformed(evt);
+            else if (evt.getSource() == deleteDetailButton) {
+                panelPerjalanan.this.deleteDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton) {
+                panelPerjalanan.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelPerjalanan.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
+                panelPerjalanan.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton) {
+                panelPerjalanan.this.newDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton2) {
                 panelPerjalanan.this.newButton2ActionPerformed(evt);
@@ -389,12 +377,6 @@ public class panelPerjalanan extends JPanel {
             }
             else if (evt.getSource() == newButton4) {
                 panelPerjalanan.this.newButton4ActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton1) {
-                panelPerjalanan.this.refreshButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton1) {
-                panelPerjalanan.this.saveButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -504,25 +486,25 @@ public class panelPerjalanan extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Trips t = (app.table.Trips) this.inputPanel1.getTarget();
-        List<Perjalanan> p = new ArrayList<>();
-        PerjalananPengeluaran p1 = new app.table.PerjalananPengeluaran();
-        Perjalanan p2 = new app.table.Perjalanan();
-        p1.setJumlah(t.getTotalKirim());
-        p2.setPakai(t.getTotalPakai());
-        p1.setTripsTripsId(t);
-        p2.setTripsTripsId(t);
-        Saldo ts1 = new Saldo();
-        Saldo ts2 = new Saldo();
-        ts1.setBankId((Bank) this.jComboBox1.getSelectedItem());
-        ts2.setBankId((Bank) this.jComboBox1.getSelectedItem());
-        p1.setTransaksi(ts1);
-        p2.setTransaksi(ts2);
-        entityManager.persist(p1);
-        entityManager.persist(p2);
+//        List<Perjalanan> p = new ArrayList<>();
+//        PerjalananPengeluaran p1 = new app.table.PerjalananPengeluaran();
+//        Perjalanan p2 = new app.table.Perjalanan();
+//        p1.setJumlah(t.getTotalKirim());
+//        p2.setPakai(t.getTotalPakai());
+//        p1.setTripsTripsId(t);
+//        p2.setTripsTripsId(t);
+//        Saldo ts1 = new Saldo();
+//        Saldo ts2 = new Saldo();
+//        ts1.setBankId((Bank) this.jComboBox1.getSelectedItem());
+//        ts2.setBankId((Bank) this.jComboBox1.getSelectedItem());
+//        p1.setTransaksi(ts1);
+//        p2.setTransaksi(ts2);
+//        entityManager.persist(p1);
+//        entityManager.persist(p2);
         entityManager.persist(t);
-        p.add(p2);
-        p.add(p1);
-        t.setPerjalananList(p);
+//        p.add(p2);
+//        p.add(p1);
+//        t.setPerjalananList(p);
         list.add(t);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
@@ -617,10 +599,8 @@ public class panelPerjalanan extends JPanel {
     private app.utils.inputPanel inputPanel2;
     private app.utils.inputPanel inputPanel3;
     private app.utils.inputPanel inputPanel4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;

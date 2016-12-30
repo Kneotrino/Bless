@@ -238,6 +238,7 @@ public class panelLaporan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -250,16 +251,14 @@ public class panelLaporan extends JPanel {
         columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dtype}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("tipe");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId.namaBank}"));
-        columnBinding.setColumnName("Tujuan");
-        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi}"));
-        columnBinding.setColumnName("Transaksi Ref");
-        columnBinding.setColumnClass(app.table.Saldo.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding.setColumnName("Tujuan");
+        columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -325,8 +324,8 @@ public class panelLaporan extends JPanel {
         list.addAll(data);
     }//GEN-LAST:event_refreshButtonActionPerformed
 DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
-    public void Refresh(){
-        this.refreshButtonActionPerformed(null);
+public void hitung()
+{
         BigInteger pemasukan = BigInteger.ZERO, pengeluaran = pemasukan;
         long masuk = 0;
         long keluar = 0;
@@ -359,6 +358,11 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
         collect.put("Total Transaksi", total);
         Map<String, Long> sort = new TreeMap<>(collect);
         this.jTable1.setModel(toTableModel(sort));
+
+
+}
+public void Refresh(){
+        this.refreshButtonActionPerformed(null);
 //        System.out.println("collect = " + collect);
 //        counting = items.stream().collect(
 //                Collectors.groupingBy(Item::getName, Collectors.counting()));
@@ -402,7 +406,8 @@ DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        Refresh();
+//        Refresh();
+        this.hitung();
         jDialog1.setSize(800, 400);
         jDialog1.setLocationRelativeTo(null);
         jDialog1.show();
