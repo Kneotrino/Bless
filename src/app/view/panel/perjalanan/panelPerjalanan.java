@@ -305,6 +305,9 @@ public class panelPerjalanan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("Jenis");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding.setColumnName("Sumber/Tujuan");
+        columnBinding.setColumnClass(app.table.Bank.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -332,11 +335,11 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == saveButton1) {
                 panelPerjalanan.this.saveButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton1) {
-                panelPerjalanan.this.newDetailButton1ActionPerformed(evt);
-            }
             else if (evt.getSource() == newDetailButton2) {
                 panelPerjalanan.this.newDetailButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton1) {
+                panelPerjalanan.this.newDetailButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton3) {
                 panelPerjalanan.this.newDetailButton3ActionPerformed(evt);
