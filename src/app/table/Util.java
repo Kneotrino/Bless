@@ -34,6 +34,20 @@ public class Util {
         List<Bank> result = query.getResultList();
         return result;
     }
+    public static void RefreshLaporan()
+    {
+            System.out.println("start app.table.Util.RefreshLaporan()");
+            boolean active = manager.getTransaction().isActive();
+            if (!active) {
+                manager.getTransaction().begin();            
+            }
+            Query query = manager.createQuery("SELECT l FROM Laporan l");
+             java.util.List<app.table.Laporan> data = query.getResultList();
+             data.forEach((laporan) -> {
+                 manager.refresh(laporan);
+            });
+            System.out.println("end app.table.Util.RefreshLaporan()");
+    }
 
     public Util() {
     }

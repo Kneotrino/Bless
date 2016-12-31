@@ -73,6 +73,7 @@ public class Saldo implements Serializable {
     @JoinColumn(name = "BANK_ID", referencedColumnName = "BANK_ID")
     @ManyToOne( cascade = {CascadeType.MERGE
             ,CascadeType.DETACH
+//            ,CascadeType.REFRESH
 //            ,CascadeType.PERSIST
             ,CascadeType.REFRESH})
     private Bank bankId;
