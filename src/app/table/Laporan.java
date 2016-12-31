@@ -74,7 +74,7 @@ public class Laporan implements Serializable {
     private Date tanggal = new Date();
     @Column(name = "TIPE", length = 255)
     private String tipe;
-    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     private Saldo Transaksi;
 
     public Saldo getTransaksi() {
@@ -120,7 +120,7 @@ public class Laporan implements Serializable {
                 || (this instanceof BayarhutangPemasukan) 
                 || (this instanceof BayarPihutangPemasukan) 
                 || (this instanceof PerjalananPemasukan) 
-                || (this instanceof Perjalanan) 
+//                || (this instanceof Perjalanan) 
                 || (this instanceof Modal) 
                 || (this instanceof MobilPemasukan)                 
                 ;
