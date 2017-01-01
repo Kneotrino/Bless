@@ -21,6 +21,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 import javax.persistence.Table;
@@ -90,6 +92,7 @@ public class Hutang implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggalpinjam = new Date();
     @OneToMany(mappedBy = "hutangid",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OrderBy("tanggal ASC")
     private List<Bayarhutang> bayarhutangs;
     @Column(name = "BUNGA")
     private BigInteger bunga;
@@ -217,7 +220,7 @@ public class Hutang implements Serializable {
         changeSupport.firePropertyChange("sisapinjaman", oldSisapinjaman, sisapinjaman);
 //        changeSupport.fi
     }
-    @PostPersist    @PostUpdate
+    @PostPersist    @PostUpdate @PostLoad
     public void Hitung()
     {
         BigInteger temp = BigInteger.ZERO;
