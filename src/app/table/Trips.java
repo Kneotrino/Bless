@@ -23,6 +23,7 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -80,6 +81,8 @@ public class Trips implements Serializable {
     private BigInteger totalSaldo = BigInteger.ZERO;
     @OneToMany(mappedBy = "tripsTripsId",cascade = {CascadeType.MERGE
             ,CascadeType.REMOVE})
+//    @Query("SELECT * FROM foo ORDER BY date ASC")
+     @OrderBy("tanggal ASC")
     private List<Perjalanan> perjalananList;
 
     public Trips() {
@@ -176,8 +179,6 @@ public class Trips implements Serializable {
 
     @XmlTransient
     public List<Perjalanan> getPerjalananList() {
-//                    mop.sort(Comparator.comparing(o -> o.getTanggal()));
-//        perjalananList.sort(Comparator.comparing(o-> o.getTanggal()));
         return perjalananList;
     }
 
