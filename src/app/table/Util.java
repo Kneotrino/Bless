@@ -36,7 +36,7 @@ public class Util {
     }
     public static void RefreshLaporan()
     {
-            System.out.println("start app.table.Util.RefreshLaporan()");
+//            System.out.println("start app.table.Util.RefreshLaporan()");
             boolean active = manager.getTransaction().isActive();
             if (!active) {
                 manager.getTransaction().begin();            
@@ -46,7 +46,7 @@ public class Util {
              data.forEach((laporan) -> {
                  manager.refresh(laporan);
             });
-            System.out.println("end app.table.Util.RefreshLaporan()");
+//            System.out.println("end app.table.Util.RefreshLaporan()");
     }
 
     public Util() {

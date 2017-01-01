@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -175,6 +176,8 @@ public class Trips implements Serializable {
 
     @XmlTransient
     public List<Perjalanan> getPerjalananList() {
+//                    mop.sort(Comparator.comparing(o -> o.getTanggal()));
+//        perjalananList.sort(Comparator.comparing(o-> o.getTanggal()));
         return perjalananList;
     }
 

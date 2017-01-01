@@ -50,6 +50,8 @@ public class Pemasukan extends Laporan implements Serializable {
     @GeneratedValue
     @Column(name = "ID", nullable = false)
     private Long id;
+    @OneToOne(mappedBy = "Kembali")
+    private Perjalanan perjalanan;
 
 
     public Pemasukan() {

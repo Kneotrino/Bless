@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.Table;
@@ -55,6 +57,26 @@ public class Perjalanan extends Laporan implements Serializable {
     @JoinColumn(name = "TRIPS_TRIPS_ID", referencedColumnName = "TRIPS_ID")
     @ManyToOne
     private Trips tripsTripsId;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private Pemasukan Kembali;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private Pengeluaran Transfer;
+
+    public Pemasukan getKembali() {
+        return Kembali;
+    }
+
+    public void setKembali(Pemasukan Kembali) {
+        this.Kembali = Kembali;
+    }
+
+    public Pengeluaran getTransfer() {
+        return Transfer;
+    }
+
+    public void setTransfer(Pengeluaran Transfer) {
+        this.Transfer = Transfer;
+    }
 
     public Perjalanan() {
     }
