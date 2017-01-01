@@ -66,6 +66,7 @@ public class panelPegawai extends JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
+        jComboBox2 = new javax.swing.JComboBox<>();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
@@ -80,7 +81,7 @@ public class panelPegawai extends JPanel {
 
         FormListener formListener = new FormListener();
 
-        jDialog2.setTitle("Input data");
+        jDialog2.setTitle("Input Data");
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
@@ -98,13 +99,21 @@ public class panelPegawai extends JPanel {
         bindingGroup.addBinding(binding);
 
         newDetailButton.addActionListener(formListener);
-        jDialog3.getContentPane().add(newDetailButton, java.awt.BorderLayout.PAGE_END);
+        jDialog3.getContentPane().add(newDetailButton, java.awt.BorderLayout.PAGE_START);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
         bindingGroup.addBinding(jComboBoxBinding);
 
-        jDialog3.getContentPane().add(jComboBox1, java.awt.BorderLayout.PAGE_START);
+        jDialog3.getContentPane().add(jComboBox1, java.awt.BorderLayout.PAGE_END);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.transaksi.bankId}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -116,13 +125,14 @@ public class panelPegawai extends JPanel {
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
-        columnBinding.setColumnName("Id");
+        columnBinding.setColumnName("Ref x");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alamat}"));
-        columnBinding.setColumnName("Alamat");
-        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nama}"));
         columnBinding.setColumnName("Nama");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alamat}"));
+        columnBinding.setColumnName("Alamat");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomorhp}"));
         columnBinding.setColumnName("Nomorhp");
@@ -139,6 +149,7 @@ public class panelPegawai extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
+        masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -157,17 +168,13 @@ public class panelPegawai extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.pegawaigajiList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pegawaigajiid}"));
-        columnBinding.setColumnName("Pegawai REF");
-        columnBinding.setColumnClass(app.table.Pegawai.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
-        columnBinding.setColumnName("Gaji REF");
+        columnBinding.setColumnName("Gaji REF x");
         columnBinding.setColumnClass(Long.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
@@ -179,14 +186,19 @@ public class panelPegawai extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
         columnBinding.setColumnName("Jumlah");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId.namaBank}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
         columnBinding.setColumnName("Sumber");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(app.table.Bank.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
+        if (detailTable.getColumnModel().getColumnCount() > 0) {
+            detailTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            detailTable.getColumnModel().getColumn(0).setMaxWidth(100);
+            detailTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+            detailTable.getColumnModel().getColumn(4).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2));
+        }
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -388,7 +400,7 @@ public class panelPegawai extends JPanel {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
-        this.jDialog3.setSize(300, 450);
+        this.jDialog3.setSize(450, 300);
         this.jDialog3.setLocationRelativeTo(null);
         this.jDialog3.show();     
         // TODO add your handling code here:
@@ -406,6 +418,7 @@ public class panelPegawai extends JPanel {
     private app.utils.inputPanel inputPanel1;
     private app.utils.inputPanel inputPanel2;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
     private javax.swing.JPanel jPanel1;
