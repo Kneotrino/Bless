@@ -70,6 +70,7 @@ public class panelRental extends JPanel {
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         newDetailButton = new javax.swing.JButton();
+        jComboBox4 = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panelMobilRental1 = new app.view.panel.bank.PanelMobilRental();
         jPanel3 = new javax.swing.JPanel();
@@ -81,9 +82,11 @@ public class panelRental extends JPanel {
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        deleteDetailButton = new javax.swing.JButton();
         newDetailButton2 = new javax.swing.JButton();
         newDetailButton1 = new javax.swing.JButton();
+        deleteDetailButton = new javax.swing.JButton();
+        refreshButton1 = new javax.swing.JButton();
+        saveButton1 = new javax.swing.JButton();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
 
@@ -162,6 +165,14 @@ public class panelRental extends JPanel {
 
         newDetailButton.addActionListener(formListener);
 
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox4);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.transaksi.bankId}"), jComboBox4, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
         setLayout(new java.awt.GridLayout(1, 0));
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
@@ -204,14 +215,14 @@ public class panelRental extends JPanel {
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${rentalid}"));
-        columnBinding.setColumnName("Rentalid");
+        columnBinding.setColumnName("Rentalid x");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglmulai}"));
-        columnBinding.setColumnName("Tglmulai");
+        columnBinding.setColumnName("Tanggal Mulai");
         columnBinding.setColumnClass(java.util.Date.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglselesai}"));
-        columnBinding.setColumnName("Tglselesai");
+        columnBinding.setColumnName("Tanggal Selesai");
         columnBinding.setColumnClass(java.util.Date.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemakai}"));
         columnBinding.setColumnName("Pemakai");
@@ -220,10 +231,10 @@ public class panelRental extends JPanel {
         columnBinding.setColumnName("Driver");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jammulai0}"));
-        columnBinding.setColumnName("Jammulai0");
+        columnBinding.setColumnName("Jam mulai");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jamSelesai0}"));
-        columnBinding.setColumnName("Jam Selesai0");
+        columnBinding.setColumnName("Jam Selesai");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobilrental}"));
         columnBinding.setColumnName("Mobilrental");
@@ -235,17 +246,12 @@ public class panelRental extends JPanel {
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(1).setPreferredWidth(200);
             masterTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+            masterTable.getColumnModel().getColumn(5).setPreferredWidth(60);
+            masterTable.getColumnModel().getColumn(6).setPreferredWidth(60);
+            masterTable.getColumnModel().getColumn(7).setPreferredWidth(200);
         }
 
         jPanel3.add(masterScrollPane);
-
-        deleteDetailButton.setText("Hapus List");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteDetailButton.addActionListener(formListener);
-        jPanel1.add(deleteDetailButton);
 
         newDetailButton2.setText("Pemasukan");
 
@@ -263,6 +269,22 @@ public class panelRental extends JPanel {
         newDetailButton1.addActionListener(formListener);
         jPanel1.add(newDetailButton1);
 
+        deleteDetailButton.setText("Hapus List");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteDetailButton.addActionListener(formListener);
+        jPanel1.add(deleteDetailButton);
+
+        refreshButton1.setText("Refresh");
+        refreshButton1.addActionListener(formListener);
+        jPanel1.add(refreshButton1);
+
+        saveButton1.setText("Simpan");
+        saveButton1.addActionListener(formListener);
+        jPanel1.add(saveButton1);
+
         jPanel3.add(jPanel1);
 
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
@@ -275,12 +297,13 @@ public class panelRental extends JPanel {
 
         detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        detailTable.setColumnSelectionAllowed(true);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarrentalList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
-        columnBinding.setColumnName("REF");
+        columnBinding.setColumnName("REF x");
         columnBinding.setColumnClass(Long.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
@@ -289,24 +312,30 @@ public class panelRental extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
-        columnBinding.setColumnName("Jumlah");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
-        columnBinding.setColumnName("Jenis");
+        columnBinding.setColumnName("Jenis x");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding.setColumnName("Bank");
+        columnBinding.setColumnClass(app.table.Bank.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
+        detailTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (detailTable.getColumnModel().getColumnCount() > 0) {
+            detailTable.getColumnModel().getColumn(0).setResizable(false);
+            detailTable.getColumnModel().getColumn(5).setCellEditor(null);
+            detailTable.getColumnModel().getColumn(6).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4)
+            );
+        }
 
         jPanel3.add(detailScrollPane);
 
@@ -365,6 +394,12 @@ public class panelRental extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelRental.this.newDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton1) {
+                panelRental.this.refreshButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton1) {
+                panelRental.this.saveButton1ActionPerformed(evt);
             }
         }
 
@@ -510,14 +545,14 @@ public class panelRental extends JPanel {
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void newDetailButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton1ActionPerformed
-        this.jDialog3.setSize(300, 400);
+        this.jDialog3.setSize(400, 300);
         this.jDialog3.setLocationRelativeTo(null);
         this.jDialog3.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_newDetailButton1ActionPerformed
 
     private void newDetailButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton2ActionPerformed
-        this.jDialog2.setSize(300, 400);
+        this.jDialog2.setSize(400, 300);
         this.jDialog2.setLocationRelativeTo(null);
         this.jDialog2.show();
         // TODO add your handling code here:
@@ -543,6 +578,16 @@ public class panelRental extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton3ActionPerformed
 
+    private void refreshButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton1ActionPerformed
+        this.refreshButtonActionPerformed(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refreshButton1ActionPerformed
+
+    private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
+        this.saveButtonActionPerformed(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -558,6 +603,7 @@ public class panelRental extends JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -584,7 +630,9 @@ public class panelRental extends JPanel {
     private javax.persistence.Query query;
     private javax.persistence.Query query1;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JButton refreshButton1;
     private javax.swing.JButton saveButton;
+    private javax.swing.JButton saveButton1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {

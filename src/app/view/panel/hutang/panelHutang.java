@@ -508,7 +508,7 @@ public class panelHutang extends JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.jDialog5.setSize(400,400);
+        this.jDialog5.setSize(400,300);
         this.jDialog5.setLocationRelativeTo(null);
         this.jDialog5.show();
 
@@ -527,7 +527,7 @@ public class panelHutang extends JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        this.jDialog4.setSize(400,400);
+        this.jDialog4.setSize(400,300);
         this.jDialog4.setLocationRelativeTo(null);
         this.jDialog4.show();
         // TODO add your handling code here:

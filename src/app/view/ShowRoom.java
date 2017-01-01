@@ -321,7 +321,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem22.setEnabled(false);
         jMenu2.add(jMenuItem22);
 
-        jMenuItem14.setText("Peminjaman Y");
+        jMenuItem14.setText("Peminjaman");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem14ActionPerformed(evt);
@@ -329,7 +329,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem14);
 
-        jMenuItem15.setText("Pinjaman Bank Y");
+        jMenuItem15.setText("Pinjaman Bank");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem15ActionPerformed(evt);
