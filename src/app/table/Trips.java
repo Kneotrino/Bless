@@ -77,7 +77,8 @@ public class Trips implements Serializable {
     @Basic(optional = false)
     @Column(name = "TOTAL_SALDO", nullable = false)
     private BigInteger totalSaldo = BigInteger.ZERO;
-    @OneToMany(mappedBy = "tripsTripsId",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "tripsTripsId",cascade = {CascadeType.MERGE
+            ,CascadeType.REMOVE})
     private List<Perjalanan> perjalananList;
 
     public Trips() {

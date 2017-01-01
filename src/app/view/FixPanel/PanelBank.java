@@ -10,6 +10,7 @@ import app.table.Laporan;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
 import app.table.Saldo;
+import app.table.Util;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.math.BigInteger;
@@ -329,7 +330,8 @@ public class PanelBank extends JPanel {
     }//GEN-LAST:event_newDetailButtonActionPerformed
     public void Reset()
     {
-            this.refreshButtonActionPerformed(null);
+        Util.RefreshLaporan();    
+        this.refreshButtonActionPerformed(null);
     }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed

@@ -235,7 +235,7 @@ public class Inventaris extends javax.swing.JPanel {
         this.persist(asset);
         this.assetList.add(asset);
         this.jDialog1.hide();
-        Util.RefreshLaporan();
+//        Util.RefreshLaporan();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed

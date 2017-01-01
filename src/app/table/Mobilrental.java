@@ -50,19 +50,19 @@ public class Mobilrental implements Serializable {
     @GeneratedValue
     private Integer mobilId;
     @Column(name = "NO_POLISI_AKTIF", length = 16)
-    private String noPolisiAktif = "input";
+    private String noPolisiAktif = "nopol";
     @Column(name = "MERK", length = 32)
-    private String merk = "input";
+    private String merk = "merk";
     @Column(name = "TYPE", length = 32)
-    private String type = "input";
+    private String type = "tyoe";
     @Column(name = "WARNA", length = 32)
-    private String warna = "input";
+    private String warna = "warna";
     @Column(name = "TAHUN")
     private Integer tahun = 2000;
     @Column(name = "KETERANGAN", length = 64)
     private String keterangan = "input";
-    @Column(name = "STATUS_MOBIL", length = 32)
-    private String statusMobil = "input";
+    @Column(name = "STATUS_MOBIL", length = 232)
+    private String statusMobil = "status";
     @OneToMany(mappedBy = "mobilrental")
     private List<Rental> rentals;
 

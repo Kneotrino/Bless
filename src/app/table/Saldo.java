@@ -71,10 +71,11 @@ public class Saldo implements Serializable {
     @Column(name = "KETERANGAN", length = 32700)
     private String keterangan;
     @JoinColumn(name = "BANK_ID", referencedColumnName = "BANK_ID")
-    @ManyToOne( cascade = {CascadeType.MERGE
+    @ManyToOne( cascade = {
+        CascadeType.MERGE
             ,CascadeType.DETACH
 //            ,CascadeType.REFRESH
-//            ,CascadeType.PERSIST
+//            ,CascadeType.REMOVE
             ,CascadeType.REFRESH})
     private Bank bankId;
     @OneToOne(mappedBy = "Transaksi", cascade = CascadeType.ALL)
