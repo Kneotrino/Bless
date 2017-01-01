@@ -113,7 +113,7 @@
     </Component>
     <Container class="javax.swing.JDialog" name="jDialog2">
       <Properties>
-        <Property name="title" type="java.lang.String" value="Input Data Kembalikan/Pemasukan"/>
+        <Property name="title" type="java.lang.String" value="Input data Transfer Uang"/>
         <Property name="modal" type="boolean" value="true"/>
       </Properties>
 
@@ -178,7 +178,7 @@
     </Container>
     <Container class="javax.swing.JDialog" name="jDialog3">
       <Properties>
-        <Property name="title" type="java.lang.String" value="Input Data Kirim/Pengeluaran"/>
+        <Property name="title" type="java.lang.String" value="Input Data Kembalikan"/>
         <Property name="modal" type="boolean" value="true"/>
       </Properties>
 
@@ -251,7 +251,7 @@
       <SubComponents>
         <Container class="app.utils.inputPanel" name="inputPanel4">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new app.utils.inputPanel(app.table.Perjalanan.class)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new app.utils.inputPanel(app.table.PerjalananPengeluaran.class)"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -368,28 +368,9 @@
         <Component class="javax.swing.JTable" name="masterTable">
           <Properties>
             <Property name="autoCreateRowSorter" type="boolean" value="true"/>
+            <Property name="cellSelectionEnabled" type="boolean" value="true"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -444,22 +425,6 @@
                 <BindingParameter name="NAME" value="Tanggal Kembali"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${kembalikan}">
-                <BindingParameter name="NAME" value="Total Kembali"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${totalKirim}">
-                <BindingParameter name="NAME" value="Total Kirim"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${totalPakai}">
-                <BindingParameter name="NAME" value="Total Pakai"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${totalSaldo}">
-                <BindingParameter name="NAME" value="Saldo Sisa"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-              </Subbinding>
             </BindingProperty>
           </BindingProperties>
           <AuxValues>
@@ -473,24 +438,9 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="newDetailButton2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Kirim"/>
-          </Properties>
-          <BindingProperties>
-            <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="newDetailButton2" targetPath="enabled" updateStrategy="0" immediately="false"/>
-          </BindingProperties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newDetailButton2ActionPerformed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
-          </AuxValues>
-        </Component>
         <Component class="javax.swing.JButton" name="newDetailButton1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Kembalikan"/>
+            <Property name="text" type="java.lang.String" value="Transfer"/>
           </Properties>
           <BindingProperties>
             <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="newDetailButton1" targetPath="enabled" updateStrategy="0" immediately="false"/>
@@ -503,9 +453,24 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
           </AuxValues>
         </Component>
+        <Component class="javax.swing.JButton" name="newDetailButton2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Kembalikan"/>
+          </Properties>
+          <BindingProperties>
+            <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="newDetailButton2" targetPath="enabled" updateStrategy="0" immediately="false"/>
+          </BindingProperties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newDetailButton2ActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
+          </AuxValues>
+        </Component>
         <Component class="javax.swing.JButton" name="newDetailButton3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pakai"/>
+            <Property name="text" type="java.lang.String" value="Pengeluaran Perjalanan"/>
           </Properties>
           <BindingProperties>
             <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="newDetailButton3" targetPath="enabled" updateStrategy="0" immediately="false"/>
@@ -629,8 +594,9 @@
                 <Connection code="java.util.Collections.emptyList()" type="code"/>
               </Property>
               <Subbinding sourcePath="${id}">
-                <BindingParameter name="NAME" value="Id"/>
+                <BindingParameter name="NAME" value="REF"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Long.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${keterangan}">
                 <BindingParameter name="NAME" value="Keterangan"/>
@@ -640,29 +606,31 @@
                 <BindingParameter name="NAME" value="Tanggal"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
               </Subbinding>
+              <Subbinding sourcePath="${transfer.pengeluaran}">
+                <BindingParameter name="NAME" value="Transfer"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${kembali.pemasukan}">
+                <BindingParameter name="NAME" value="Kembalikan"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+              </Subbinding>
               <Subbinding sourcePath="${pemasukan}">
-                <BindingParameter name="NAME" value="Pemasukan"/>
+                <BindingParameter name="NAME" value="Pemasukan Perjalanan"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
               <Subbinding sourcePath="${pengeluaran}">
-                <BindingParameter name="NAME" value="Pengeluaran"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${pakai}">
-                <BindingParameter name="NAME" value="Pakai"/>
+                <BindingParameter name="NAME" value="Pengeluaran Perjalanan"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
               <Subbinding sourcePath="${saldo}">
                 <BindingParameter name="NAME" value="Saldo"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
-              <Subbinding sourcePath="${jenis}">
-                <BindingParameter name="NAME" value="Jenis"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${transaksi.bankId}">
-                <BindingParameter name="NAME" value="Sumber/Tujuan"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
+              <Subbinding sourcePath="${tripsTripsId.perjalananke}">
+                <BindingParameter name="NAME" value="Perjalanan KE"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
             </BindingProperty>
           </BindingProperties>

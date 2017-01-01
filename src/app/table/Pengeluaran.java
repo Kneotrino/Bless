@@ -58,6 +58,8 @@ public class Pengeluaran extends Laporan implements Serializable {
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggal;
+    @OneToOne(mappedBy = "Transfer")
+    private Perjalanan perjalanan;
 
     public Pengeluaran() {
     }

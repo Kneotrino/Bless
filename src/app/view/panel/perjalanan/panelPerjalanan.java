@@ -6,6 +6,8 @@
 package app.view.panel.perjalanan;
 
 import app.table.Bank;
+import app.table.Pemasukan;
+import app.table.Pengeluaran;
 import app.table.Perjalanan;
 import app.table.PerjalananPemasukan;
 import app.table.PerjalananPengeluaran;
@@ -17,6 +19,7 @@ import java.awt.EventQueue;
 import java.beans.Beans;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -81,7 +84,7 @@ public class panelPerjalanan extends JPanel {
         newButton3 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox<>();
         jDialog4 = new javax.swing.JDialog();
-        inputPanel4 = new app.utils.inputPanel(app.table.Perjalanan.class);
+        inputPanel4 = new app.utils.inputPanel(app.table.PerjalananPengeluaran.class);
         newButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
@@ -91,8 +94,8 @@ public class panelPerjalanan extends JPanel {
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        newDetailButton2 = new javax.swing.JButton();
         newDetailButton1 = new javax.swing.JButton();
+        newDetailButton2 = new javax.swing.JButton();
         newDetailButton3 = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
@@ -119,7 +122,7 @@ public class panelPerjalanan extends JPanel {
 
         newDetailButton.addActionListener(formListener);
 
-        jDialog2.setTitle("Input Data Kembalikan/Pemasukan");
+        jDialog2.setTitle("Input data Transfer Uang");
         jDialog2.setModal(true);
 
         inputPanel2.setLayout(new java.awt.GridLayout(0, 2));
@@ -137,7 +140,7 @@ public class panelPerjalanan extends JPanel {
 
         jDialog2.getContentPane().add(jComboBox2, java.awt.BorderLayout.PAGE_END);
 
-        jDialog3.setTitle("Input Data Kirim/Pengeluaran");
+        jDialog3.setTitle("Input Data Kembalikan");
         jDialog3.setModal(true);
 
         inputPanel3.setLayout(new java.awt.GridLayout(0, 2));
@@ -190,6 +193,7 @@ public class panelPerjalanan extends JPanel {
         add(jPanel1);
 
         masterTable.setAutoCreateRowSorter(true);
+        masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(30);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -208,33 +212,13 @@ public class panelPerjalanan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalKembali}"));
         columnBinding.setColumnName("Tanggal Kembali");
         columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kembalikan}"));
-        columnBinding.setColumnName("Total Kembali");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalKirim}"));
-        columnBinding.setColumnName("Total Kirim");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPakai}"));
-        columnBinding.setColumnName("Total Pakai");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalSaldo}"));
-        columnBinding.setColumnName("Saldo Sisa");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
 
         add(masterScrollPane);
 
-        newDetailButton2.setText("Kirim");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        newDetailButton2.addActionListener(formListener);
-        jPanel2.add(newDetailButton2);
-
-        newDetailButton1.setText("Kembalikan");
+        newDetailButton1.setText("Transfer");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -242,7 +226,15 @@ public class panelPerjalanan extends JPanel {
         newDetailButton1.addActionListener(formListener);
         jPanel2.add(newDetailButton1);
 
-        newDetailButton3.setText("Pakai");
+        newDetailButton2.setText("Kembalikan");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton2.addActionListener(formListener);
+        jPanel2.add(newDetailButton2);
+
+        newDetailButton3.setText("Pengeluaran Perjalanan");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -282,32 +274,35 @@ public class panelPerjalanan extends JPanel {
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.perjalananList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
-        columnBinding.setColumnName("Id");
+        columnBinding.setColumnName("REF");
         columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transfer.pengeluaran}"));
+        columnBinding.setColumnName("Transfer");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kembali.pemasukan}"));
+        columnBinding.setColumnName("Kembalikan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnName("Pemasukan Perjalanan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
-        columnBinding.setColumnName("Pengeluaran");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pakai}"));
-        columnBinding.setColumnName("Pakai");
+        columnBinding.setColumnName("Pengeluaran Perjalanan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
         columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
-        columnBinding.setColumnName("Jenis");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
-        columnBinding.setColumnName("Sumber/Tujuan");
-        columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tripsTripsId.perjalananke}"));
+        columnBinding.setColumnName("Perjalanan KE");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -403,41 +398,47 @@ public class panelPerjalanan extends JPanel {
             t.setPerjalananList((List) ps);
         }
         app.table.Perjalanan p = new app.table.Perjalanan();
-        Saldo ts = new app.table.Saldo();
+        Saldo ts  = new Saldo();
+        Saldo ts1 = new Saldo();
+
         if (evt.getSource() == newButton2) {
-                System.out.println("Pemasukan");
                 p = (Perjalanan) this.inputPanel2.getTarget();
                 ts.setBankId((Bank) this.jComboBox2.getSelectedItem());
-                app.table.PerjalananPengeluaran p1 = new PerjalananPengeluaran();
+                Pengeluaran p1 = new app.table.Pengeluaran();
+//                app.table.PerjalananPengeluaran p1 = new PerjalananPengeluaran();
                 p1.setJumlah(p.getJumlah());
                 p1.setKeterangan(p.getKeterangan());
                 p1.setTanggal(p.getTanggal());
-                Saldo ts1 = new Saldo();
                 ts1.setBankId(Peter);
-                p1.setTransaksi(ts1);
-                entityManager.persist(p1);
+                p.setTransaksi(ts1);                
+                p1.setTransaksi(ts);
+                p.setTransfer(p1);
+//                entityManager.persist(p1);
             }
             else if (evt.getSource() == newButton3) {
                 System.out.println("Kirim/Pengeluaran");
                 p = (Perjalanan) this.inputPanel3.getTarget();
                 ts.setBankId((Bank) this.jComboBox3.getSelectedItem());
-                app.table.PerjalananPemasukan p1 = new PerjalananPemasukan();
+                Pemasukan p1 = new Pemasukan();
+//                app.table.PerjalananPemasukan p1 = new PerjalananPemasukan();
                 p1.setJumlah(p.getJumlah());
                 p1.setKeterangan(p.getKeterangan());
                 p1.setTanggal(p.getTanggal());
-                Saldo ts1 = new Saldo();
                 ts1.setBankId(Peter);
-                p1.setTransaksi(ts1);
-                entityManager.persist(p1);
+                p1.setTransaksi(ts);
+                p.setTransaksi(ts1);
+                p.setKembali(p1);
+//                entityManager.persist(p1);
             }
             else if (evt.getSource() == newButton4) {
                 System.out.println("Pakai");
                 p = (Perjalanan) this.inputPanel4.getTarget();
-//                ts.setBankId((Bank) this.jComboBox4.getSelectedItem());
+                ts.setBankId(Peter);
+                p.setTransaksi(ts);
             }
-        p.setTransaksi(ts);
-        entityManager.persist(p);
+//        p.setTransaksi(ts);
         p.setTripsTripsId(t);
+        entityManager.persist(p);
         ps.add(p);
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
@@ -455,29 +456,14 @@ public class panelPerjalanan extends JPanel {
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
+//        Util.RefreshLaporan();
         list.clear();
         list.addAll(data);
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         bankList.remove(Peter);
-        for (Trips trips : list) {
-            trips.setTotalPakai(trips.getPakai());
-            trips.setTotalKirim(trips.getKirim());
-            trips.getKembali();
-            trips.setTotalSaldo(
-                    trips.getTotalKirim()
-                        .subtract(trips.getTotalPakai())
-                        .subtract(trips.getKembalikan())
-            );
-            List<Perjalanan> mop = trips.getPerjalananList();
-            java.math.BigInteger saldo = new java.math.BigInteger("0");            
-            for (Perjalanan a : mop) {
-                saldo = saldo.add(a.getPengeluaran());
-                saldo = saldo.subtract(a.getPakai());
-                saldo = saldo.subtract(a.getPemasukan());
-                a.setSaldo(saldo);
-            }
-        }
+        Hitung();
+
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -651,6 +637,22 @@ public class panelPerjalanan extends JPanel {
                 frame.setVisible(true);
             }
         });
+    }
+    
+    private void Hitung() {
+    for (Trips trips : list) {
+            List<Perjalanan> mop = trips.getPerjalananList();
+//            mop.sort((o1,o2) -> o1.getTanggal().compareTo(o2.getTanggal()));
+            //list.sort((o1,o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+//            mop.sort(Comparator.comparing(o -> o.getTanggal()));
+            java.math.BigInteger saldo = new java.math.BigInteger("0");            
+            for (Perjalanan a : mop) {
+                saldo = saldo.subtract(a.getPengeluaran());
+                saldo = saldo.add(a.getPemasukan());
+                a.setSaldo(saldo);
+            }
+        }
+//    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
