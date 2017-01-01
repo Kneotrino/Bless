@@ -81,7 +81,6 @@ public class Trips implements Serializable {
     private BigInteger totalSaldo = BigInteger.ZERO;
     @OneToMany(mappedBy = "tripsTripsId",cascade = {CascadeType.MERGE
             ,CascadeType.REMOVE})
-//    @Query("SELECT * FROM foo ORDER BY date ASC")
      @OrderBy("tanggal ASC")
     private List<Perjalanan> perjalananList;
 
