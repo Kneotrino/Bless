@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Perjalanan extends Laporan implements Serializable {
 
     @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+    public PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     @Column(name = "KIRIM")
     private BigInteger kirim = BigInteger.ZERO;
     @Column(name = "PAKAI")

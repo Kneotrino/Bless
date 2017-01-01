@@ -62,7 +62,7 @@ public class Pegawai implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggalMasuk;
     @OneToMany(mappedBy = "pegawaigajiid"
-            , fetch = FetchType.LAZY
+            , fetch = FetchType.EAGER
             ,cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     private List<Pegawaigaji> pegawaigajiList;
 
