@@ -92,24 +92,33 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem25 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem23 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -162,7 +171,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu1.setText("Akutansi");
 
-        jMenuItem1.setText("Beranda Y");
+        jMenuItem1.setText("Beranda");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -170,7 +179,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Laporan Y");
+        jMenuItem2.setText("Laporan x");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -178,7 +187,18 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenu4.setText("Operasional Y");
+        jMenuItem11.setText("Transaksi x");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem11);
+        jMenu1.add(jSeparator1);
+
+        jMenuItem21.setText("Operasional");
+        jMenuItem21.setEnabled(false);
+        jMenu1.add(jMenuItem21);
 
         jMenuItem4.setText("Pengeluaran");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +206,7 @@ public class ShowRoom extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem4);
+        jMenu1.add(jMenuItem4);
 
         jMenuItem3.setText("Pemasukan");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -194,19 +214,10 @@ public class ShowRoom extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem3);
+        jMenu1.add(jMenuItem3);
+        jMenu1.add(jSeparator2);
 
-        jMenu1.add(jMenu4);
-
-        jMenuItem11.setText("Transaksi Y");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem11);
-
-        jMenuItem19.setText("Modal Y");
+        jMenuItem19.setText("Modal");
         jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem19ActionPerformed(evt);
@@ -214,7 +225,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem19);
 
-        jMenuItem20.setText("Penyesuaian Y");
+        jMenuItem20.setText("Penyesuaian");
         jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem20ActionPerformed(evt);
@@ -226,6 +237,10 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu2.setText("Management");
 
+        jMenuItem25.setText("Mobil");
+        jMenuItem25.setEnabled(false);
+        jMenu2.add(jMenuItem25);
+
         jMenuItem12.setText("Mobil y");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,14 +248,6 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem12);
-
-        jMenuItem16.setText("Lap Perjalanan y");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem16);
 
         jMenuItem13.setText("Kredit Leasing y");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
@@ -250,13 +257,14 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem13);
 
-        jMenuItem8.setText("Jasa Cabut Berkas Y");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem16.setText("Lap Perjalanan y");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                jMenuItem16ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem8);
+        jMenu2.add(jMenuItem16);
+        jMenu2.add(jSeparator3);
 
         jMenuItem9.setText("Keuangan Y");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
@@ -265,6 +273,11 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem9);
+        jMenu2.add(jSeparator4);
+
+        jMenuItem24.setText("Sumber Daya");
+        jMenuItem24.setEnabled(false);
+        jMenu2.add(jMenuItem24);
 
         jMenuItem10.setText("Asset Y");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
@@ -274,26 +287,6 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem10);
 
-        jMenu5.setText("Hutang/Piutang");
-
-        jMenuItem14.setText("Peminjaman Y");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem14);
-
-        jMenuItem15.setText("Pinjaman Bank Y");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem15);
-
-        jMenu2.add(jMenu5);
-
         jMenuItem17.setText("Pegawai Y");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,6 +294,19 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem17);
+        jMenu2.add(jSeparator6);
+
+        jMenuItem23.setText("Jasa");
+        jMenuItem23.setEnabled(false);
+        jMenu2.add(jMenuItem23);
+
+        jMenuItem8.setText("Jasa Cabut Berkas Y");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem8);
 
         jMenuItem18.setText("Rental Mobil Y");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
@@ -309,6 +315,27 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem18);
+        jMenu2.add(jSeparator5);
+
+        jMenuItem22.setText("Hutang/Piutang");
+        jMenuItem22.setEnabled(false);
+        jMenu2.add(jMenuItem22);
+
+        jMenuItem14.setText("Peminjaman Y");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem14);
+
+        jMenuItem15.setText("Pinjaman Bank Y");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem15);
 
         jMenuBar1.add(jMenu2);
 
@@ -511,8 +538,6 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -527,6 +552,11 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -543,6 +573,12 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JTextArea jTextArea1;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.panelLeasing panelLeasing2;

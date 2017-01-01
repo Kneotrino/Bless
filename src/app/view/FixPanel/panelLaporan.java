@@ -205,12 +205,10 @@ public class panelLaporan extends JPanel {
         jMonthChooser1.setMonth(10);
         jMonthChooser1.setMonth(new java.util.Date().getMonth());
         jMonthChooser1.setPreferredSize(new java.awt.Dimension(120, 40));
-        jMonthChooser1.setYearChooser(jYearChooser1);
         jMonthChooser1.addPropertyChangeListener(formListener);
         jPanel3.add(jMonthChooser1);
 
         jYearChooser1.setPreferredSize(new java.awt.Dimension(70, 40));
-        jYearChooser1.setYear(2017);
         jYearChooser1.setYear(Calendar.getInstance().get(Calendar.YEAR));
         jYearChooser1.addPropertyChangeListener(formListener);
         jPanel3.add(jYearChooser1);

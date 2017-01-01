@@ -7,10 +7,8 @@ package blessing;
 
 //import app.view.main;
 import java.io.File;
-import javax.persistence.EntityManager;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -57,6 +55,8 @@ public class Blessing {
                 System.out.println("info.getName() = " + info.getName());
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                  javax.swing.UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+//                    javax.swing.UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
                     break;
                 }
             }

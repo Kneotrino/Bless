@@ -39,9 +39,7 @@ public class panelPerjalanan extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
-        Peter = this.entityManager.find(app.table.Bank.class, -2);
-        bankList.remove(Peter);
-        this.Refresh();
+//        this.Refresh();
     }
 
     public List<Bank> getBankList() {
@@ -461,6 +459,8 @@ public class panelPerjalanan extends JPanel {
         list.addAll(data);
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
+        Peter = this.entityManager.find(app.table.Bank.class, -2);
+//        bankList.remove(Peter);
         bankList.remove(Peter);
         Hitung();
 
