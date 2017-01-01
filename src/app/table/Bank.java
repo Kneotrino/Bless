@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.PreRemove;
@@ -79,6 +80,7 @@ public class Bank implements Serializable {
     @Column(name = "NAMA_BANK", length = 32)
     private String namaBank;
     @OneToMany(mappedBy = "bankId", fetch = FetchType.EAGER , cascade = {CascadeType.REMOVE,CascadeType.MERGE})
+    @OrderBy("tanggal ASC")
     private List<Saldo> saldoList;
 
     public Bank() {

@@ -5,7 +5,7 @@
  */
 package blessing;
 
-import app.view.main;
+//import app.view.main;
 import java.io.File;
 import javax.persistence.EntityManager;
 import javax.swing.JFrame;
@@ -61,7 +61,7 @@ public class Blessing {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
 
