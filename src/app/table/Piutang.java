@@ -22,6 +22,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 import javax.persistence.Table;
@@ -65,9 +67,9 @@ public class Piutang implements Serializable {
     @Column(name = "JAMINAN")
     private String jaminan;
     @Column(name = "PIMJAMAN")
-    private BigInteger pimjaman;
+    private BigInteger pimjaman = BigInteger.ZERO;
     @Column(name = "SISA")
-    private BigInteger sisa;
+    private BigInteger sisa = BigInteger.ZERO;
     @Column(name = "TGLBYR")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tglbyr;
@@ -80,6 +82,7 @@ public class Piutang implements Serializable {
     @Column(name = "NOMINAL")
     private BigInteger nominal;
     @OneToMany(mappedBy = "pihutangid",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+    @OrderBy("tanggal ASC")
     private List<Bayarpihutang> bayarpihutangList;
 
     public Piutang() {
@@ -119,7 +122,7 @@ public class Piutang implements Serializable {
         changeSupport.firePropertyChange("jaminan", oldJaminan, jaminan);
     }
 
-    public BigInteger getPimjaman() {
+    public BigInteger getPimjaman() {        
         return pimjaman;
     }
 
@@ -220,7 +223,7 @@ public class Piutang implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    @PostPersist    @PostUpdate
+    @PostPersist    @PostUpdate @PostLoad
     public void Hitung()
     {
         BigInteger masuk = BigInteger.ZERO;

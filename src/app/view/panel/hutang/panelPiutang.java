@@ -8,10 +8,12 @@ package app.view.panel.hutang;
 import app.table.Bank;
 import app.table.BayarPihutangPemasukan;
 import app.table.Bayarpihutang;
+import app.table.Piutang;
 import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -317,6 +319,12 @@ public class panelPiutang extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelPiutang.this.deleteButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == refreshButton1) {
+                panelPiutang.this.refreshButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton1) {
+                panelPiutang.this.saveButton1ActionPerformed(evt);
+            }
             else if (evt.getSource() == newDetailButton1) {
                 panelPiutang.this.newDetailButton1ActionPerformed(evt);
             }
@@ -343,12 +351,6 @@ public class panelPiutang extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelPiutang.this.newDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton1) {
-                panelPiutang.this.refreshButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton1) {
-                panelPiutang.this.saveButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
