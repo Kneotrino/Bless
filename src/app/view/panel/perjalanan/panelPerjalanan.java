@@ -267,6 +267,8 @@ public class panelPerjalanan extends JPanel {
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
+        detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(30);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.perjalananList}");
@@ -328,11 +330,11 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == saveButton1) {
                 panelPerjalanan.this.saveButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton2) {
-                panelPerjalanan.this.newDetailButton2ActionPerformed(evt);
-            }
             else if (evt.getSource() == newDetailButton1) {
                 panelPerjalanan.this.newDetailButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton2) {
+                panelPerjalanan.this.newDetailButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton3) {
                 panelPerjalanan.this.newDetailButton3ActionPerformed(evt);
