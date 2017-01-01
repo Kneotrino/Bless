@@ -297,8 +297,8 @@ public class panelLeasing extends JPanel {
     public void Refresh()
     {
             this.refreshButtonActionPerformed(null);
-            this.mobilList.clear();
-            this.mobilList.addAll(this.mobilQuery.getResultList());
+//            this.mobilList.clear();
+//            this.mobilList.addAll(this.mobilQuery.getResultList());
     }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
