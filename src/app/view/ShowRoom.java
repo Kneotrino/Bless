@@ -300,7 +300,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem23.setEnabled(false);
         jMenu2.add(jMenuItem23);
 
-        jMenuItem8.setText("Jasa Cabut Berkas Y");
+        jMenuItem8.setText("Jasa Cabut Berkas");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);

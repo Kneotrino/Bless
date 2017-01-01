@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -97,6 +98,7 @@ public class Bpkbtitipan implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date tglTerima = new Date();
     @OneToMany(targetEntity = Bayarjasa.class,cascade = CascadeType.ALL)
+    @OrderBy("tanggal ASC")
     private List<Bayarjasa> bayarjasaList;
 
     public Bpkbtitipan() {
