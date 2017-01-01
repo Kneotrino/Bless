@@ -39,6 +39,10 @@ public class panelPerjalanan extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
+       for (int i = 0; i < this.detailTable.getColumnCount(); i++) {
+                this.detailTable.getColumnModel().getColumn(i).setPreferredWidth(220);
+        }
+
 //        this.Refresh();
     }
 
@@ -75,15 +79,19 @@ public class panelPerjalanan extends JPanel {
         newDetailButton = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
         inputPanel2 = new app.utils.inputPanel(app.table.PerjalananPemasukan.class);
-        newButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
+        newButton2 = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
         inputPanel3 = new app.utils.inputPanel(app.table.PerjalananPengeluaran.class);
-        newButton3 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
+        newButton3 = new javax.swing.JButton();
         jDialog4 = new javax.swing.JDialog();
         inputPanel4 = new app.utils.inputPanel(app.table.PerjalananPengeluaran.class);
         newButton4 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox4 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -123,12 +131,8 @@ public class panelPerjalanan extends JPanel {
         jDialog2.setTitle("Input data Transfer Uang");
         jDialog2.setModal(true);
 
-        inputPanel2.setLayout(new java.awt.GridLayout(0, 2));
-        jDialog2.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
-
-        newButton2.setText("Simpan");
-        newButton2.addActionListener(formListener);
-        jDialog2.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
+        jLabel1.setText("Bank");
+        inputPanel2.add(jLabel1);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -136,17 +140,19 @@ public class panelPerjalanan extends JPanel {
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
 
-        jDialog2.getContentPane().add(jComboBox2, java.awt.BorderLayout.PAGE_END);
+        inputPanel2.add(jComboBox2);
+
+        newButton2.setText("Simpan");
+        newButton2.addActionListener(formListener);
+        inputPanel2.add(newButton2);
+
+        jDialog2.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
         jDialog3.setTitle("Input Data Kembalikan");
         jDialog3.setModal(true);
 
-        inputPanel3.setLayout(new java.awt.GridLayout(0, 2));
-        jDialog3.getContentPane().add(inputPanel3, java.awt.BorderLayout.CENTER);
-
-        newButton3.setText("Simpan");
-        newButton3.addActionListener(formListener);
-        jDialog3.getContentPane().add(newButton3, java.awt.BorderLayout.PAGE_START);
+        jLabel2.setText("Bank");
+        inputPanel3.add(jLabel2);
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -154,17 +160,38 @@ public class panelPerjalanan extends JPanel {
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox3);
         bindingGroup.addBinding(jComboBoxBinding);
 
-        jDialog3.getContentPane().add(jComboBox3, java.awt.BorderLayout.PAGE_END);
+        inputPanel3.add(jComboBox3);
+
+        newButton3.setText("Simpan");
+        newButton3.addActionListener(formListener);
+        inputPanel3.add(newButton3);
+
+        jDialog3.getContentPane().add(inputPanel3, java.awt.BorderLayout.CENTER);
 
         jDialog4.setTitle("Input Data Pakai");
         jDialog4.setModal(true);
 
-        inputPanel4.setLayout(new java.awt.GridLayout(0, 2));
-        jDialog4.getContentPane().add(inputPanel4, java.awt.BorderLayout.CENTER);
-
         newButton4.setText("Simpan");
         newButton4.addActionListener(formListener);
-        jDialog4.getContentPane().add(newButton4, java.awt.BorderLayout.PAGE_START);
+        inputPanel4.add(newButton4);
+
+        jDialog4.getContentPane().add(inputPanel4, java.awt.BorderLayout.CENTER);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.transfer.transaksi.bankId}"), jComboBox1, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox4);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.kembali.transaksi.bankId}"), jComboBox4, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -267,8 +294,8 @@ public class panelPerjalanan extends JPanel {
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(30);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.perjalananList}");
@@ -313,6 +340,10 @@ public class panelPerjalanan extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
+        if (detailTable.getColumnModel().getColumnCount() > 0) {
+            detailTable.getColumnModel().getColumn(9).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1));
+            detailTable.getColumnModel().getColumn(10).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
+        }
 
         add(detailScrollPane);
 
@@ -585,12 +616,16 @@ public class panelPerjalanan extends JPanel {
     private app.utils.inputPanel inputPanel2;
     private app.utils.inputPanel inputPanel3;
     private app.utils.inputPanel inputPanel4;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
     private javax.swing.JDialog jDialog4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Trips> list;
