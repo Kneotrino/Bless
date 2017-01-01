@@ -295,7 +295,7 @@ public class panelPerjalanan extends JPanel {
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        detailTable.setColumnSelectionAllowed(false);
+        detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(30);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.perjalananList}");
@@ -307,7 +307,7 @@ public class panelPerjalanan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal2}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transfer.pengeluaran}"));

@@ -145,5 +145,19 @@ public class Perjalanan extends Laporan implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
+    public Date getTanggal2() {
+        return getTanggal();
+    }
 
+    public void setTanggal2(Date tanggal) {
+        if ( Transfer == null) {
+            Kembali.setTanggal(tanggal);
+        }
+        else 
+        {
+            Transfer.setTanggal(tanggal);
+        }
+        setTanggal(tanggal);
+        
+    }
 }
