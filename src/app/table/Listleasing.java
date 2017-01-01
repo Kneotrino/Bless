@@ -8,6 +8,7 @@ package app.table;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -53,7 +54,7 @@ public class Listleasing implements Serializable {
     private Integer listleasingId;
     @Basic(optional = false)
     @Column(name = "NOMINAL", nullable = false)
-    private long nominal;
+    private BigInteger nominal = BigInteger.ZERO;
     @Column(name = "TGL_DP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tglDp;
@@ -63,8 +64,32 @@ public class Listleasing implements Serializable {
     @JoinColumn(name = "LEASING_LEASING_ID", referencedColumnName = "LEASING_ID")
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
     private Leasing leasingLeasingId;
-    @OneToOne(mappedBy = "listleasing", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToOne(mappedBy = "listleasing", cascade = {CascadeType.MERGE,CascadeType.REFRESH})
     private Mobil mobil;
+    @Column(name = "TERPENUHI")
+    private BigInteger TERPENUHI = BigInteger.ZERO;
+
+    public static final String PROP_TERPENUHI = "TERPENUHI";
+
+    /**
+     * Get the value of TERPENUHI
+     *
+     * @return the value of TERPENUHI
+     */
+    public BigInteger getTERPENUHI() {
+        return TERPENUHI;
+    }
+
+    /**
+     * Set the value of TERPENUHI
+     *
+     * @param TERPENUHI new value of TERPENUHI
+     */
+    public void setTERPENUHI(BigInteger TERPENUHI) {
+        BigInteger oldTERPENUHI = this.TERPENUHI;
+        this.TERPENUHI = TERPENUHI;
+        changeSupport.firePropertyChange(PROP_TERPENUHI, oldTERPENUHI, TERPENUHI);
+    }
 
     public void setMobil(Mobil mobil) {
         this.mobil = mobil;
@@ -81,7 +106,7 @@ public class Listleasing implements Serializable {
         this.listleasingId = listleasingId;
     }
 
-    public Listleasing(Integer listleasingId, long nominal) {
+    public Listleasing(Integer listleasingId, BigInteger nominal) {
         this.listleasingId = listleasingId;
         this.nominal = nominal;
     }
@@ -96,12 +121,12 @@ public class Listleasing implements Serializable {
         changeSupport.firePropertyChange("listleasingId", oldListleasingId, listleasingId);
     }
 
-    public long getNominal() {
+    public BigInteger getNominal() {
         return nominal;
     }
 
-    public void setNominal(long nominal) {
-        long oldNominal = this.nominal;
+    public void setNominal(BigInteger nominal) {
+        BigInteger oldNominal = this.nominal;
         this.nominal = nominal;
         changeSupport.firePropertyChange("nominal", oldNominal, nominal);
     }

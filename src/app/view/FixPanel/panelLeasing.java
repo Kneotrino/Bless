@@ -57,7 +57,6 @@ public class panelLeasing extends JPanel {
         mobilQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Mobil m");
         mobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilQuery.getResultList());
         newDetailButton1 = new javax.swing.JButton();
-        deleteDetailButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
@@ -67,6 +66,7 @@ public class panelLeasing extends JPanel {
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
+        deleteDetailButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -99,13 +99,6 @@ public class panelLeasing extends JPanel {
         newDetailButton1.setText("Tambah List");
         newDetailButton1.addActionListener(formListener);
 
-        deleteDetailButton.setText("Hapus List");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteDetailButton.addActionListener(formListener);
-
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setAutoCreateRowSorter(true);
@@ -126,29 +119,38 @@ public class panelLeasing extends JPanel {
         add(masterScrollPane, java.awt.BorderLayout.WEST);
 
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
-        detailTable.setDefaultEditor(Long.class, new app.utils.TablePopupEditor());
+        detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setAutoCreateRowSorter(true);
+        detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasingList}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${listleasingId}"));
-        columnBinding.setColumnName("Listleasing REF");
+        columnBinding.setColumnName("Listleasing Id");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglDp}"));
         columnBinding.setColumnName("Tgl Dp");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nominal}"));
+        columnBinding.setColumnName("Nominal");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${TERPENUHI}"));
+        columnBinding.setColumnName("Terpenuhi");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglOk}"));
+        columnBinding.setColumnName("Tgl Ok");
+        columnBinding.setColumnClass(java.util.Date.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
-        columnBinding.setColumnName("REF");
+        columnBinding.setColumnName("REF MOBIL");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.noPolisiAktif}"));
-        columnBinding.setColumnName("NOPOL");
+        columnBinding.setColumnName("Nopol");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.merk}"));
@@ -159,20 +161,14 @@ public class panelLeasing extends JPanel {
         columnBinding.setColumnName("Tipe");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.noPolisiAktif}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.tahun}"));
         columnBinding.setColumnName("Tahun");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.warna}"));
+        columnBinding.setColumnName("Warna");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.debitur.nama}"));
-        columnBinding.setColumnName("Nama Debitur");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nominal}"));
-        columnBinding.setColumnName("Nominal");
-        columnBinding.setColumnClass(Long.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglOk}"));
-        columnBinding.setColumnName("Tgl Ok");
-        columnBinding.setColumnClass(java.util.Date.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -200,6 +196,14 @@ public class panelLeasing extends JPanel {
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
 
+        deleteDetailButton.setText("Hapus List");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteDetailButton.addActionListener(formListener);
+        jPanel1.add(deleteDetailButton);
+
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
         bindingGroup.bind();
@@ -222,17 +226,17 @@ public class panelLeasing extends JPanel {
             else if (evt.getSource() == refreshButton) {
                 panelLeasing.this.refreshButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteDetailButton) {
-                panelLeasing.this.deleteDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newDetailButton1) {
-                panelLeasing.this.newDetailButton1ActionPerformed(evt);
-            }
             else if (evt.getSource() == newButton) {
                 panelLeasing.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton) {
                 panelLeasing.this.newDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton1) {
+                panelLeasing.this.newDetailButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteDetailButton) {
+                panelLeasing.this.deleteDetailButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -330,6 +334,7 @@ public class panelLeasing extends JPanel {
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+        this.jDialog2.hide();
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

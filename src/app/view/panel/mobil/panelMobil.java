@@ -249,6 +249,27 @@ public void Refresh()
         jLabel53 = new javax.swing.JLabel();
         jLabel68 = new javax.swing.JLabel();
         jTextField61 = new javax.swing.JTextField();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel70 = new javax.swing.JLabel();
+        jTextField24 = new javax.swing.JTextField();
+        jLabel71 = new javax.swing.JLabel();
+        jTextField26 = new javax.swing.JTextField();
+        jLabel77 = new javax.swing.JLabel();
+        jTextField28 = new javax.swing.JTextField();
+        jLabel78 = new javax.swing.JLabel();
+        jTextField29 = new javax.swing.JTextField();
+        jLabel69 = new javax.swing.JLabel();
+        jDateChooser10 = new com.toedter.calendar.JDateChooser();
+        jLabel14 = new javax.swing.JLabel();
+        jDateChooser5 = new com.toedter.calendar.JDateChooser();
+        jLabel32 = new javax.swing.JLabel();
+        jDateChooser6 = new com.toedter.calendar.JDateChooser();
+        jLabel33 = new javax.swing.JLabel();
+        jDateChooser7 = new com.toedter.calendar.JDateChooser();
+        jLabel40 = new javax.swing.JLabel();
+        jDateChooser8 = new com.toedter.calendar.JDateChooser();
+        jLabel52 = new javax.swing.JLabel();
+        jDateChooser9 = new com.toedter.calendar.JDateChooser();
         jScrollPane6 = new javax.swing.JScrollPane();
         jPanel14 = new javax.swing.JPanel();
         jLabel54 = new javax.swing.JLabel();
@@ -268,6 +289,12 @@ public void Refresh()
         keuanganMobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(keuanganMobilQuery.getResultList());
         LeasingMobil = new javax.swing.JDialog();
         jLabel16 = new javax.swing.JLabel();
+        jTextField12 = new javax.swing.JTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel79 = new javax.swing.JLabel();
+        jTextField30 = new javax.swing.JTextField();
+        jFormattedTextField4 = new javax.swing.JFormattedTextField();
+        jLabel80 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
         jButton17 = new javax.swing.JButton();
         leasingQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT l FROM Leasing l");
@@ -316,7 +343,6 @@ public void Refresh()
         addMobil.setTitle("Mobil Baru");
         addMobil.setMinimumSize(new java.awt.Dimension(800, 600));
         addMobil.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        addMobil.setPreferredSize(new java.awt.Dimension(1000, 700));
         addMobil.setSize(new java.awt.Dimension(1000, 700));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
@@ -659,7 +685,7 @@ public void Refresh()
         });
         jPanel17.add(jButton13);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.noPolisiAktif}"), jTextField47, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.noPolisiAktif}"), jTextField47, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         jTextField47.addActionListener(new java.awt.event.ActionListener() {
@@ -782,7 +808,7 @@ public void Refresh()
         jLabel10.setText("NO POLISI AKTIF");
         jPanel11.add(jLabel10);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.noPolisiAktif}"), jTextField21, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.noPolisiAktif}"), jTextField21, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         jPanel11.add(jTextField21);
@@ -1184,6 +1210,90 @@ public void Refresh()
 
         jTabbedPane2.addTab("DEBITUR", jPanel13);
 
+        jPanel21.setLayout(new java.awt.GridLayout(0, 2));
+
+        jLabel70.setText("NO BPKB ");
+        jPanel21.add(jLabel70);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.noBpkb}"), jTextField24, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jTextField24);
+
+        jLabel71.setText("ATAS NAMA BPKB ");
+        jPanel21.add(jLabel71);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.anBpkb}"), jTextField26, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jTextField26);
+
+        jLabel77.setText("POSISI BPKB ");
+        jPanel21.add(jLabel77);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.posisi}"), jTextField28, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jTextField28);
+
+        jLabel78.setText("POSISI FAKTUR BPKB ");
+        jPanel21.add(jLabel78);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.noPolisiAktif}"), jTextField29, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jTextField29);
+
+        jLabel69.setText("TANGGAL TERIMA");
+        jPanel21.add(jLabel69);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglTerima}"), jDateChooser10, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser10);
+
+        jLabel14.setText("TANGGAL BBN");
+        jPanel21.add(jLabel14);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglBbn}"), jDateChooser5, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser5);
+
+        jLabel32.setText("TANGGAL KEMBALI BBN");
+        jPanel21.add(jLabel32);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglKembaliBbn}"), jDateChooser6, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser6);
+
+        jLabel33.setText("TANGGAL CB");
+        jPanel21.add(jLabel33);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglCb}"), jDateChooser7, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser7);
+
+        jLabel40.setText("TANGGAL KEMBALI CB");
+        jPanel21.add(jLabel40);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglLeasing}"), jDateChooser8, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser8);
+
+        jLabel52.setText("TANGGAL LEASING");
+        jPanel21.add(jLabel52);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglLeasing}"), jDateChooser9, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser9);
+
+        jTabbedPane2.addTab("BPKB", jPanel21);
+
         jScrollPane6.setPreferredSize(new java.awt.Dimension(1862, 170));
 
         jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 1, true), "GAMBAR MOBIL"));
@@ -1354,8 +1464,40 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     LeasingMobil.setType(java.awt.Window.Type.POPUP);
     LeasingMobil.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
 
-    jLabel16.setText("LEASING");
+    jLabel16.setText("NOMINAL LEASING (IDR)");
     LeasingMobil.getContentPane().add(jLabel16);
+
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.nominal}"), jTextField12, org.jdesktop.beansbinding.BeanProperty.create("text"));
+    bindingGroup.addBinding(binding);
+
+    LeasingMobil.getContentPane().add(jTextField12);
+
+    jFormattedTextField1.setEditable(false);
+    jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.nominal}"), jFormattedTextField1, org.jdesktop.beansbinding.BeanProperty.create("value"));
+    bindingGroup.addBinding(binding);
+
+    LeasingMobil.getContentPane().add(jFormattedTextField1);
+
+    jLabel79.setText("TERPENUHI (IDR)");
+    LeasingMobil.getContentPane().add(jLabel79);
+
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.TERPENUHI}"), jTextField30, org.jdesktop.beansbinding.BeanProperty.create("text"));
+    bindingGroup.addBinding(binding);
+
+    LeasingMobil.getContentPane().add(jTextField30);
+
+    jFormattedTextField4.setEditable(false);
+    jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.TERPENUHI}"), jFormattedTextField4, org.jdesktop.beansbinding.BeanProperty.create("value"));
+    bindingGroup.addBinding(binding);
+
+    LeasingMobil.getContentPane().add(jFormattedTextField4);
+
+    jLabel80.setText("LEASING");
+    LeasingMobil.getContentPane().add(jLabel80);
 
     eLProperty = org.jdesktop.beansbinding.ELProperty.create("${leasingList}");
     jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox4);
@@ -1474,7 +1616,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable1.setDefaultEditor(long.class, new app.utils.TablePopupEditor());
     jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-    jTable1.setCellSelectionEnabled(true);
+    jTable1.setColumnSelectionAllowed(false);
     jTable1.setRowHeight(24);
     jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -1570,6 +1712,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
     jTable2.setDefaultEditor(Date.class, new JDateChooserCellEditor());
     jTable2.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+    jTable2.setCellSelectionEnabled(true);
     jTable2.setRowHeight(24);
 
     eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bpkbList1}");
@@ -2387,9 +2530,15 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JComboBox<String> jComboBox8;
     private javax.swing.JComboBox<String> jComboBox9;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser10;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
+    private com.toedter.calendar.JDateChooser jDateChooser5;
+    private com.toedter.calendar.JDateChooser jDateChooser6;
+    private com.toedter.calendar.JDateChooser jDateChooser7;
+    private com.toedter.calendar.JDateChooser jDateChooser8;
+    private com.toedter.calendar.JDateChooser jDateChooser9;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JFileChooser jFileChooser1;
@@ -2399,13 +2548,16 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JFileChooser jFileChooser5;
     private javax.swing.JFileChooser jFileChooser6;
     private javax.swing.JFileChooser jFileChooser7;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
+    private javax.swing.JFormattedTextField jFormattedTextField4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -2425,6 +2577,8 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -2432,6 +2586,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
@@ -2444,6 +2599,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
@@ -2461,13 +2617,20 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel70;
+    private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel73;
     private javax.swing.JLabel jLabel74;
     private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -2482,6 +2645,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -2507,6 +2671,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
@@ -2519,9 +2684,14 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
+    private javax.swing.JTextField jTextField24;
     private javax.swing.JTextField jTextField25;
+    private javax.swing.JTextField jTextField26;
     private javax.swing.JTextField jTextField27;
+    private javax.swing.JTextField jTextField28;
+    private javax.swing.JTextField jTextField29;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField30;
     private javax.swing.JTextField jTextField31;
     private javax.swing.JTextField jTextField33;
     private javax.swing.JTextField jTextField34;
