@@ -324,10 +324,10 @@ public void Refresh()
         simpanButton = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField60 = new javax.swing.JTextField();
-        jButton22 = new javax.swing.JButton();
+        jButton23 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         BPKB = new javax.swing.JPanel();
@@ -1601,15 +1601,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     jPanel7.add(jButton11);
 
-    jButton14.setText("FILTER");
-    jPanel7.add(jButton14);
-
-    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALL", "READY", "OPEN", "CLOSE" }));
-    jPanel7.add(jComboBox1);
-
-    jTextField60.setText("jTextField60");
-    jPanel7.add(jTextField60);
-
     jButton22.setText("REFRESH");
     jButton22.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1617,6 +1608,26 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         }
     });
     jPanel7.add(jButton22);
+
+    jButton14.setText("FILTER");
+    jButton14.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton14ActionPerformed(evt);
+        }
+    });
+    jPanel7.add(jButton14);
+
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE" }));
+    jComboBox1.setSelectedIndex(-1);
+    jPanel7.add(jComboBox1);
+
+    jButton23.setText("CARI");
+    jButton23.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton23ActionPerformed(evt);
+        }
+    });
+    jPanel7.add(jButton23);
 
     jPanel5.add(jPanel7, java.awt.BorderLayout.NORTH);
 
@@ -2366,6 +2377,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         this.UpdatePDP();
         this.simpanButtonActionPerformed(evt);
+        this.editMobil.hide();
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jTable4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable4PropertyChange
@@ -2492,6 +2504,21 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton22ActionPerformed
 
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        this.jButton22ActionPerformed(evt);
+        String pilihan = (String) this.jComboBox1.getSelectedItem();
+        System.out.println("pilihan = " + pilihan==null?"kosong":pilihan);
+//        a.getStatusMobil().equals(pilihan)
+        mobilList.removeIf(a -> !a.getStatusMobil().equals(pilihan));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        System.out.println("app.view.panel.mobil.panelMobil.jButton23ActionPerformed()");
+        System.out.println("cari");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton23ActionPerformed
+
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
     }
@@ -2540,6 +2567,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -2746,7 +2774,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField58;
     private javax.swing.JTextField jTextField59;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField60;
     private javax.swing.JTextField jTextField61;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
