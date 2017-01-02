@@ -49,11 +49,19 @@ public class panelMobil extends javax.swing.JPanel {
     public panelMobil() {
 //        this.gambar1 = new File(ClassLoader.getSystemResource("/app/view/panel/mobil/1.PNG"));
 //        ClassLoader cl = getClass().getClassLoader();
-        URL systemResource = getClass().getResource("/app/view/panel/mobil/1.PNG");
-        if (systemResource == null) {
-            throw new RuntimeException("null di sini");
+        try {
+            String fullPath = app.utils.TableUtils.ExportResource("/1.PNG");
+            URL systemResource = getClass().getResource("1.PNG");
+                if (systemResource == null) {
+                    throw new RuntimeException("null di sini");
+                }
+            System.out.println("fullPath = " + fullPath);
+//            this.gambar1 = new File(systemResource.getFile());
+            this.gambar1 = new File(fullPath);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        this.gambar1 = new File(systemResource.getFile());
+//        MyClass.class.getResource("/1.PNG");
         System.out.println("app.view.panel.mobil.panelMobil.<init>()");
         gambar6 =gambar5 =gambar4 =gambar3 =gambar2 = gambar1;
         initComponents();
@@ -134,7 +142,7 @@ public void Refresh()
         jLabel34 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        jLabel81 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
@@ -319,6 +327,7 @@ public void Refresh()
         jButton14 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField60 = new javax.swing.JTextField();
+        jButton22 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         BPKB = new javax.swing.JPanel();
@@ -475,7 +484,7 @@ public void Refresh()
 
         jPanel6.add(jScrollPane4, java.awt.BorderLayout.WEST);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 10, 10));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel2.setLayout(new java.awt.GridLayout(0, 1, 10, 10));
 
@@ -535,14 +544,7 @@ public void Refresh()
         jPanel1.add(jPanel2);
 
         jPanel3.setLayout(new java.awt.GridLayout(0, 1, 10, 10));
-
-        jButton2.setText("RESET");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton2);
+        jPanel3.add(jLabel81);
 
         jTextField1.setText("nopol");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -1608,6 +1610,14 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTextField60.setText("jTextField60");
     jPanel7.add(jTextField60);
 
+    jButton22.setText("REFRESH");
+    jButton22.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton22ActionPerformed(evt);
+        }
+    });
+    jPanel7.add(jButton22);
+
     jPanel5.add(jPanel7, java.awt.BorderLayout.NORTH);
 
     jTable1.setDefaultEditor(Date.class, new JDateChooserCellEditor());
@@ -1616,7 +1626,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable1.setDefaultEditor(long.class, new app.utils.TablePopupEditor());
     jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-    jTable1.setColumnSelectionAllowed(false);
     jTable1.setRowHeight(24);
     jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -1926,6 +1935,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        this.addMobil.hide();
         System.out.println("app.view.panel.mobil.panelMobil.jButton1ActionPerformed()");
         //data baru
         Mobil baru = new Mobil();
@@ -1974,40 +1984,44 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 //        dp.setKeterangan("Dp Pertama");
         //relasikan data
         baru.setBpkb(bpkb);
-        baru.setDebitur(debitur);
-//        baru.setKeuanganMobils(dp);
+        baru.setDebitur(debitur);        
         this.persist(baru);
+        this.debiturList1.add(debitur);
+        this.bpkbList1.add(bpkb);
+        this.mobilList.add(baru);        
+        this.addMobil.hide();
+//        baru.setKeuanganMobils(dp);
+        System.out.println("Trying Save image");
         try {
+//        if (!gambar1.exists())                 
+//        FileUtils.copyURLToFile();
         baru.setTampilanDepan(pindahGambar(gambar1, baru.getMobilId()+"depan").getCanonicalPath());
+//        if (!gambar2.exists())                 
         baru.setTampilanSmpKiri(pindahGambar(gambar2, baru.getMobilId()+"kiri").getCanonicalPath());
+//        if (!gambar3.exists())                 
         baru.setTampilanSmpKanan(pindahGambar(gambar3, baru.getMobilId()+"kanan").getCanonicalPath());
+//        if (!gambar4.exists())                 
         baru.setTampilanBlkg(pindahGambar(gambar4, baru.getMobilId()+"belakang").getCanonicalPath());
+//        if (!gambar5.exists())                 
         baru.setInteriorI(pindahGambar(gambar5, baru.getMobilId()+"in1").getCanonicalPath());
+//        if (!gambar6.exists())                 
         baru.setInteriorIi(pindahGambar(gambar6, baru.getMobilId()+"in2").getCanonicalPath());
-        } catch (IOException ex) {
-            Logger.getLogger(panelMobil.class.getName()).log(Level.SEVERE, null, ex);
+        System.out.println("Trying Save image = done");
+        } catch (Exception ex) {
+            this.jButton22ActionPerformed(evt);
+            System.out.println("Trying Save image = failed");
+                    javax.swing.JOptionPane
+                            .showMessageDialog(null,  "Error Gambar atau gambar kosong\nTekan Tombol 'Refresh'");
+            //Logger.getLogger(panelMobil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+
         }
         this.blessingPUEntityManager.merge(baru);
         if (!this.blessingPUEntityManager.getTransaction().isActive()) 
                 this.blessingPUEntityManager.getTransaction().begin();
         this.blessingPUEntityManager.getTransaction().commit();
-//            this.pindahGambar(gambar1, baru.getMobilId()+"depan");
-//            this.pindahGambar(gambar2, baru.getMobilId()+"kiri");
-//            this.pindahGambar(gambar3, baru.getMobilId()+"kanan");
-//            this.pindahGambar(gambar4, baru.getMobilId()+"belakang");
-//            this.pindahGambar(gambar5, baru.getMobilId()+"in1");
-//            this.pindahGambar(gambar6, baru.getMobilId()+"in2");
 
-        this.debiturList1.add(debitur);
-        this.bpkbList1.add(bpkb);
-        this.mobilList.add(baru);        
-        this.addMobil.hide();
-//        this.jTabbedPane1.add(new app.view.panel.mobil.subPanelMobil(),
-//                            baru.getMobilId()+";"+
-//                            baru.getMerk()+";"+
-//                            baru.getType()+";"+
-//                            baru.getTahun()+";"
-//                                    ); 
     }//GEN-LAST:event_jButton1ActionPerformed
     File pindahGambar(File source,String gmb) throws IOException
     {
@@ -2026,13 +2040,16 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
             long count    = sumber.size();
             sumber.transferTo(position, count, target);
            }
-        catch (Exception ex) {
-                
+        catch (IOException ex) {
+                    javax.swing.JOptionPane
+                            .showMessageDialog(null,  "Error Gambar atau gambar kosong\n"+ex.getMessage());
             }
         finally {
-            if(source != null) { sumber.close(); }
-            if(destination != null) {target.close();  }
-            }
+            if(source != null) 
+                { sumber.close(); }
+            if(destination != null) 
+                {target.close();  }
+        }
         return destination;
     }
     public List<Mobil> getMobilList() {
@@ -2332,10 +2349,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField23ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
 //        this.hapus.getKeuanganMobils()]        
         this.jDialog2.setLocationRelativeTo(null);
@@ -2370,7 +2383,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         this.simpanButtonActionPerformed(evt);
         this.Hitung();
-//        List<KeuanganMobil> Km = this.hapus.getKeuanganMobils();
         if (!this.blessingPUEntityManager.getTransaction().isActive()) 
                 this.blessingPUEntityManager.getTransaction().begin(); 
                 java.util.Collection data = query.getResultList();
@@ -2466,6 +2478,20 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton21ActionPerformed
 
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        System.out.println("app.view.panel.mobil.panelMobil.jButton22ActionPerformed()");
+        if (!this.blessingPUEntityManager.getTransaction().isActive()) 
+                this.blessingPUEntityManager.getTransaction().begin(); 
+                java.util.Collection data = query.getResultList();
+        this.mobilList.clear();
+        this.mobilList.addAll(mobilQuery.getResultList());
+        java.util.Collection mob = mobilQuery.getResultList();
+        for (Object object : mob) {
+            blessingPUEntityManager.refresh(object);                        
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton22ActionPerformed
+
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
     }
@@ -2511,9 +2537,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -2631,6 +2657,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
+    private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;

@@ -21,15 +21,9 @@ public class Blessing {
      */
     public static void main(String[] args) {
         System.out.println("blessing.Blessing.main()");
-//        EntityManager blessingPUEntityManager = 
-//                java.beans.Beans.isDesignTime() ? 
-//                    null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         try{      
-           // returns pathnames for files and directory
            File f = null;
            f = new File("C:\\Users\\bleesing");         
-           // create directories
-           // print
            System.out.println("Directory created? "+f.exists() +"\nDatabase Location :\t"+ f.getCanonicalPath());
            f = new File("C:\\Users\\blessing\\sd");         
            System.out.println("Directory created? "+f.exists() +"\nResource Location :\t"+ f.getCanonicalPath());
@@ -42,10 +36,7 @@ public class Blessing {
            // if any error occurs
            e.printStackTrace();
         }
-        feel();
-        
-//        UIManager.setLookAndFeel( new  com.jgoodies.looks.windows.WindowsLookAndFeel() );
-//        app.view.ShowRoom form = new app.view.ShowRoom();
+        feel();        
         JFrame form = new app.view.ShowRoom();
         form.show();
     }
