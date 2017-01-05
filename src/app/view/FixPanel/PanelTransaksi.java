@@ -5,9 +5,12 @@
  */
 package app.view.FixPanel;
 
+import app.table.Saldo;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
@@ -19,13 +22,23 @@ import javax.swing.JPanel;
  */
 public class PanelTransaksi extends JPanel {
     
+        private Date today;
     public PanelTransaksi() {
+        today = getMeYesterday();
+        System.out.println("Today start = " + today);        
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
+        list.removeIf((Saldo a) -> {
+            return a.getLaporan().getTanggal().before(today);
+        });
     }
-
+private Date getMeYesterday(){
+     Date temp = new Date();
+     Date yesterday = new Date(temp.getYear(), temp.getMonth(), temp.getDate());     
+     return yesterday;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,15 +50,17 @@ public class PanelTransaksi extends JPanel {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT s FROM Saldo s");
+        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT s FROM Saldo s order by s.tanggal");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        refreshButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        saveButton1 = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -62,10 +77,6 @@ public class PanelTransaksi extends JPanel {
         saveButton.setText("Save");
         saveButton.addActionListener(formListener);
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel1.add(refreshButton);
-
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
@@ -76,9 +87,9 @@ public class PanelTransaksi extends JPanel {
         columnBinding.setColumnName("Transaksi REF");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.id}"));
-        columnBinding.setColumnName("Laporan REF");
-        columnBinding.setColumnClass(Long.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.tanggal}"));
+        columnBinding.setColumnName("Tanggal");
+        columnBinding.setColumnClass(java.util.Date.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
@@ -106,6 +117,19 @@ public class PanelTransaksi extends JPanel {
 
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
+        jLabel1.setText("Transaksi Harian");
+        jPanel2.add(jLabel1);
+
+        saveButton1.setText("Tampilkan Semua Transaksi");
+        saveButton1.addActionListener(formListener);
+        jPanel2.add(saveButton1);
+
+        refreshButton.setText("Tampilkan Transaksi hari ini");
+        refreshButton.addActionListener(formListener);
+        jPanel2.add(refreshButton);
+
+        add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
         bindingGroup.bind();
     }
 
@@ -125,6 +149,9 @@ public class PanelTransaksi extends JPanel {
             }
             else if (evt.getSource() == refreshButton) {
                 PanelTransaksi.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton1) {
+                PanelTransaksi.this.saveButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -178,14 +205,29 @@ public class PanelTransaksi extends JPanel {
         }
         list.clear();
         list.addAll(data);
+        list.removeIf((Saldo a) -> {
+//            System.out.println(" Today transaksi = "+a.getLaporan().getTanggal().after(today));
+            return a.getLaporan().getTanggal().before(today);
+        });
+//        Date today = getMeYesterday();
+//        System.out.println("today = " + today);        
+//        list.removeIf( a -> a.getLaporan().getTanggal().after(getMeYesterday()));
+
     }//GEN-LAST:event_refreshButtonActionPerformed
+
+    private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
+        list.clear();
+        list.addAll(query.getResultList());
+// TODO add your handling code here:
+    }//GEN-LAST:event_saveButton1ActionPerformed
 
         
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Saldo> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
@@ -193,6 +235,7 @@ public class PanelTransaksi extends JPanel {
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;
+    private javax.swing.JButton saveButton1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {

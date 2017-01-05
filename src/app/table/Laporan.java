@@ -201,6 +201,7 @@ public class Laporan implements Serializable {
         Date oldTanggal = this.tanggal;
         this.tanggal = tanggal;
         changeSupport.firePropertyChange("tanggal", oldTanggal, tanggal);
+        this.Transaksi.setTanggal(tanggal);
     }
 
     public String getTipe() {

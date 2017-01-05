@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -195,13 +196,28 @@ public class Bank implements Serializable {
 //        this.saldoList = org.jdesktop.observablecollections.ObservableCollections.observableList(this.saldoList);
         return saldoList;
     }
+//    public BigInteger getTotalSaldoNow()
+//    {
+//        BigInteger temp = BigInteger.ZERO;
+//        for (Saldo saldo : saldoList) {
+//            temp = temp.add(saldo.getLaporan().getPemasukan());
+//            temp = temp.subtract(saldo.getLaporan().getPengeluaran());
+//        }
+//        return temp;
+//    }
 
     public void setSaldoList(List<Saldo> saldoList) {
 //        this.saldoList = org.jdesktop.observablecollections.ObservableCollections.observableList(this.saldoList);
         List<Saldo> oldSaldo = this.saldoList; 
         this.saldoList = saldoList;
         changeSupport.firePropertyChange("saldo", oldSaldo, saldoList);
-        this.saldoList = saldoList;
+//        this.saldoList = saldoList;
+//        BigInteger temp = BigInteger.ZERO;
+//        for (Saldo saldo : saldoList) {
+//            temp = temp.add(saldo.getLaporan().getPemasukan());
+//            temp = temp.subtract(saldo.getLaporan().getPengeluaran());
+//        }
+//        setTotalSaldo(temp);
     }
 
     @Override
@@ -240,6 +256,11 @@ public class Bank implements Serializable {
     public void PostSimpan()
     {    
         javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Menyimpan\nNama Bank ="+ namaBank);
+    }
+    @PostUpdate
+    public void PostUpdate()
+    {    
+        javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Update\nNama Bank ="+ namaBank);
     }
     @PostRemove
     public void PostHapus()

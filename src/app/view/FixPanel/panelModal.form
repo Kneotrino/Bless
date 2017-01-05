@@ -163,6 +163,11 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="LAPORAN MODAL"/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JButton" name="newButton1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Baru"/>

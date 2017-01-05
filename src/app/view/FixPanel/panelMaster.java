@@ -60,11 +60,13 @@ public class panelMaster extends JPanel {
     public panelMaster(Object kelas) {
         this.table = kelas;
         this.clazz = (Class) kelas;
+        System.out.println("clazz.getName() = " + clazz.getSimpleName());
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
         this.refreshButtonActionPerformed(null);
+        this.jLabel2.setText("Operasional "+clazz.getSimpleName());
     }
 
     /**
@@ -84,7 +86,7 @@ public class panelMaster extends JPanel {
         tanggalLabel = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jumlahLabel = new javax.swing.JLabel();
-        jumlahField = new javax.swing.JTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         keteranganLabel = new javax.swing.JLabel();
         keteranganField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -98,6 +100,7 @@ public class panelMaster extends JPanel {
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         newButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -121,15 +124,17 @@ public class panelMaster extends JPanel {
 
         jDialog1.getContentPane().add(jDateChooser1);
 
-        jumlahLabel.setText("Jumlah:");
+        jumlahLabel.setText("Jumlah (IDR):");
         jDialog1.getContentPane().add(jumlahLabel);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.jumlah}"), jumlahField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        jFormattedTextField1.setText("jFormattedTextField1");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.jumlah}"), jFormattedTextField1, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jumlahField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jFormattedTextField1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        jDialog1.getContentPane().add(jumlahField);
+        jDialog1.getContentPane().add(jFormattedTextField1);
 
         keteranganLabel.setText("Keterangan:");
         jDialog1.getContentPane().add(keteranganLabel);
@@ -175,6 +180,7 @@ public class panelMaster extends JPanel {
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
+        masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -188,11 +194,8 @@ public class panelMaster extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Pemasukan");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
-        columnBinding.setColumnName("Pengeluaran");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
+        columnBinding.setColumnName("Nominal");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("type x");
@@ -205,10 +208,12 @@ public class panelMaster extends JPanel {
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox1));
+            masterTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(jComboBox1));
         }
 
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jLabel2);
 
         newButton.setText("Baru");
         newButton.addActionListener(formListener);
@@ -358,9 +363,10 @@ public class panelMaster extends JPanel {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jumlahField;
     private javax.swing.JLabel jumlahLabel;
     private javax.swing.JTextField keteranganField;
     private javax.swing.JLabel keteranganLabel;

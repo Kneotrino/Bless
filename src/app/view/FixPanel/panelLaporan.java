@@ -81,12 +81,14 @@ public class panelLaporan extends JPanel {
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         refreshButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        jButton4 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
 
@@ -186,6 +188,9 @@ public class panelLaporan extends JPanel {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jLabel7.setText("Laporan Transaksi Bulan ini");
+        jPanel3.add(jLabel7);
+
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
         jPanel3.add(refreshButton);
@@ -212,6 +217,10 @@ public class panelLaporan extends JPanel {
         jYearChooser1.setYear(Calendar.getInstance().get(Calendar.YEAR));
         jYearChooser1.addPropertyChangeListener(formListener);
         jPanel3.add(jYearChooser1);
+
+        jButton4.setText("Tampilkan Semua Laporan");
+        jButton4.addActionListener(formListener);
+        jPanel3.add(jButton4);
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
@@ -291,6 +300,9 @@ public class panelLaporan extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelLaporan.this.deleteButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton4) {
+                panelLaporan.this.jButton4ActionPerformed(evt);
+            }
         }
 
         public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -307,14 +319,29 @@ public class panelLaporan extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        Date today = new Date();
+        System.out.println("today = " + today);
+        Date startMonth = new Date(today.getYear(), today.getMonth(), 0);
+        System.out.println("startMonth = " + startMonth);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.MONDAY, today.getMonth());
+            cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            Date endMonth = cal.getTime();        
+            System.out.println("endMonth = " + endMonth);
+//        java.util.List<app.table.Laporan> data = query.getResultList();
+        query = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
+                .setParameter("startDate", startMonth, TemporalType.DATE)
+                .setParameter("endDate", endMonth, TemporalType.DATE);  
+//                .getResultList();
         java.util.List<app.table.Laporan> data = query.getResultList();
         java.math.BigInteger saldo = new java.math.BigInteger("0");               
         for (Laporan laporan : data) {
             entityManager.refresh(laporan);
             saldo = saldo.subtract(laporan.getPengeluaran());
             saldo = saldo.add(laporan.getPemasukan());
-            laporan.setSaldo(saldo);
-            
+            laporan.setSaldo(saldo);            
         }
         
         list.clear();
@@ -435,8 +462,8 @@ public void Refresh(){
             }
             Pengeluaran.setJumlah(temp1);
             Pemasukan.setJumlah(temp);
-            Pemasukan.setKeterangan("R. Pengeluaran");
-            Pengeluaran.setKeterangan("R. Pengeluaran");
+            Pemasukan.setKeterangan("R. Pengeluaran bulan sebelumnya");
+            Pengeluaran.setKeterangan("R. Pengeluaran bulan sebelumnya");
             this.list.clear();
             this.list.add(Pemasukan);
             this.list.add(Pengeluaran);
@@ -461,6 +488,10 @@ public void Refresh(){
         tahun = this.jYearChooser1.getYear();
     }//GEN-LAST:event_jYearChooser1PropertyChange
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -468,6 +499,7 @@ public void Refresh(){
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -475,6 +507,7 @@ public void Refresh(){
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

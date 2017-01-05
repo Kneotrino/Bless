@@ -66,13 +66,16 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jumlahLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Jumlah:"/>
+            <Property name="text" type="java.lang.String" value="Jumlah (IDR):"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jumlahField">
+        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jFormattedTextField1"/>
+          </Properties>
           <BindingProperties>
-            <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.jumlah}" target="jumlahField" targetPath="text" updateStrategy="0" immediately="false"/>
-            <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jumlahField" targetPath="enabled" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="value" source="masterTable" sourcePath="${selectedElement.jumlah}" target="jFormattedTextField1" targetPath="value" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jFormattedTextField1" targetPath="enabled" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="keteranganLabel">
@@ -209,13 +212,9 @@
         <Component class="javax.swing.JTable" name="masterTable">
           <Properties>
             <Property name="autoCreateRowSorter" type="boolean" value="true"/>
+            <Property name="cellSelectionEnabled" type="boolean" value="true"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -270,12 +269,8 @@
                 <BindingParameter name="NAME" value="Keterangan"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${pemasukan}">
-                <BindingParameter name="NAME" value="Pemasukan"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${pengeluaran}">
-                <BindingParameter name="NAME" value="Pengeluaran"/>
+              <Subbinding sourcePath="${jumlah}">
+                <BindingParameter name="NAME" value="Nominal"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
               <Subbinding sourcePath="${jenis}">
@@ -306,6 +301,8 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+        </Component>
         <Component class="javax.swing.JButton" name="newButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Baru"/>

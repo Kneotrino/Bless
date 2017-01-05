@@ -60,6 +60,7 @@ public class panelModal extends JPanel {
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jComboBox2 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
@@ -98,6 +99,9 @@ public class panelModal extends JPanel {
         bindingGroup.addBinding(binding);
 
         setLayout(new java.awt.BorderLayout());
+
+        jLabel2.setText("LAPORAN MODAL");
+        jPanel1.add(jLabel2);
 
         newButton1.setText("Baru");
         newButton1.addActionListener(formListener);
@@ -290,6 +294,7 @@ public class panelModal extends JPanel {
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Modal> list;
     private javax.swing.JScrollPane masterScrollPane;
