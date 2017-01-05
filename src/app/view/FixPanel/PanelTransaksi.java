@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.RollbackException;
+import javax.persistence.TemporalType;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -22,7 +23,7 @@ import javax.swing.JPanel;
  */
 public class PanelTransaksi extends JPanel {
     
-        private Date today;
+        private Date today, endDay;
     public PanelTransaksi() {
         today = getMeYesterday();
         System.out.println("Today start = " + today);        
@@ -30,9 +31,11 @@ public class PanelTransaksi extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
-        list.removeIf((Saldo a) -> {
-            return a.getLaporan().getTanggal().before(today);
-        });
+        endDay = new Date();
+        endDay.setHours(23);
+        System.out.println("today = " + today);
+        System.out.println("endDay = " + endDay);
+        refreshButtonActionPerformed(null);
     }
 private Date getMeYesterday(){
      Date temp = new Date();
@@ -138,7 +141,13 @@ private Date getMeYesterday(){
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
+            if (evt.getSource() == saveButton1) {
+                PanelTransaksi.this.saveButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton) {
+                PanelTransaksi.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
                 PanelTransaksi.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
@@ -146,12 +155,6 @@ private Date getMeYesterday(){
             }
             else if (evt.getSource() == saveButton) {
                 PanelTransaksi.this.saveButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                PanelTransaksi.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton1) {
-                PanelTransaksi.this.saveButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -199,15 +202,16 @@ private Date getMeYesterday(){
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        java.util.Collection data = query.getResultList();
+        java.util.Collection data = query.getResultList();                
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
         list.clear();
         list.addAll(data);
         list.removeIf((Saldo a) -> {
-//            System.out.println(" Today transaksi = "+a.getLaporan().getTanggal().after(today));
-            return a.getLaporan().getTanggal().before(today);
+            boolean x = a.getLaporan().getTanggal().before(today);
+            boolean y = a.getLaporan().getTanggal().after(endDay);            
+            return (x || y);
         });
 //        Date today = getMeYesterday();
 //        System.out.println("today = " + today);        

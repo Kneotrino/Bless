@@ -16,11 +16,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import static javaslang.API.LinkedMap;
+import static javaslang.API.LinkedMap;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
@@ -68,7 +72,37 @@ public class panelMaster extends JPanel {
         this.refreshButtonActionPerformed(null);
         this.jLabel2.setText("Operasional "+clazz.getSimpleName());
     }
-
+      Map m1 = new HashMap();
+      int temp = -1;
+    public panelMaster(int code)
+    {
+      temp = code;
+      m1.put(1, "Pemasukan");
+      m1.put(0, "Pengeluaran");
+        System.out.println("Laporan = " + m1.get(code));
+        initComponents();
+            if (!Beans.isDesignTime()) {
+            entityManager.getTransaction().begin();
+        }
+            String temp = "Pengeluaran";
+            this.jLabel2.setText("Laporan " + m1.get(code));
+            this.jButton1.hide();
+            this.newButton.hide();
+            this.deleteButton.hide();
+            this.masterTable.setEnabled(false);
+//            Rest();
+    }
+public void Rest()
+{
+    list.clear();
+    list.addAll(query.getResultList());
+    if (m1.get(temp).equals("Pemasukan")) {
+            list.removeIf( a-> !a.isName());        
+    }
+    else    {
+            list.removeIf( a-> a.isName());                
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -213,6 +247,7 @@ public class panelMaster extends JPanel {
 
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
+        jLabel2.setText("Laporan");
         jPanel1.add(jLabel2);
 
         newButton.setText("Baru");
@@ -265,6 +300,12 @@ public class panelMaster extends JPanel {
 
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        if (temp != -1) {            
+            System.out.println("Refrest Rest = "+ temp);
+            Rest();
+        }
+        else {
+            
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         
@@ -289,6 +330,7 @@ public class panelMaster extends JPanel {
         }
         list.clear();
         list.addAll((Collection<? extends Laporan>) res);
+        }
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -408,7 +450,8 @@ public class panelMaster extends JPanel {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new panelMaster(app.table.Laporan.class));
+                frame.setContentPane(new panelMaster(1));
+//                frame.setContentPane(new panelMaster(app.table.Laporan.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

@@ -68,7 +68,7 @@ public class Laporan implements Serializable {
     @Column(name = "KETERANGAN")
     private String keterangan = new String("input");
     @Column(name = "SALDO")
-    private BigInteger saldo;
+    private BigInteger saldo = BigInteger.ZERO;
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggal = new Date();
@@ -201,7 +201,9 @@ public class Laporan implements Serializable {
         Date oldTanggal = this.tanggal;
         this.tanggal = tanggal;
         changeSupport.firePropertyChange("tanggal", oldTanggal, tanggal);
-        this.Transaksi.setTanggal(tanggal);
+        if (Transaksi!= null) {
+        this.Transaksi.setTanggal(tanggal);            
+        }
     }
 
     public String getTipe() {

@@ -67,7 +67,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jDialog1 = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jMenuItem20 = new javax.swing.JMenuItem();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
@@ -88,7 +87,8 @@ public class ShowRoom extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelModal1 = new app.view.FixPanel.panelModal();
-        panelMaster1 = new app.view.FixPanel.panelMaster(app.table.Penyesuaian.class);
+        panelMaster1 = new app.view.FixPanel.panelMaster(1);
+        panelMaster2 = new app.view.FixPanel.panelMaster(0);
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -100,7 +100,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem19 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem21 = new javax.swing.JMenuItem();
-        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -141,13 +141,6 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jDialog1.getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jMenuItem20.setText("Penyesuaian");
-        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem20ActionPerformed(evt);
-            }
-        });
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jLabel2, org.jdesktop.beansbinding.ELProperty.create("${text}"), this, org.jdesktop.beansbinding.BeanProperty.create("title"));
@@ -175,7 +168,8 @@ public class ShowRoom extends javax.swing.JFrame {
 
         getContentPane().add(jPanel8, "card2");
         getContentPane().add(panelModal1, "Modal");
-        getContentPane().add(panelMaster1, "Penyesuaian");
+        getContentPane().add(panelMaster1, "Lap1");
+        getContentPane().add(panelMaster2, "Lap0");
 
         jMenu1.setText("Akutansi");
 
@@ -230,10 +224,20 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu1.add(jSeparator2);
 
         jMenuItem21.setText("Lap. Pengeluaran");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem21);
 
-        jMenuItem26.setText("Lap. Pemasukan");
-        jMenu1.add(jMenuItem26);
+        jMenuItem20.setText("Lap. Pemasukan");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem20);
 
         jMenuBar1.add(jMenu1);
 
@@ -490,10 +494,15 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
-        this.chandePanel("Penyesuaian");
+        this.chandePanel("Lap1");
         this.panelMaster1.Refresh();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        this.chandePanel("Lap0");
+        this.panelMaster2.Refresh();        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -559,7 +568,6 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
-    private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -586,6 +594,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.panelLeasing panelLeasing2;
     private app.view.FixPanel.panelMaster panelMaster1;
+    private app.view.FixPanel.panelMaster panelMaster2;
     private app.view.FixPanel.panelModal panelModal1;
     private app.view.FixPanel.panelPegawai panelPegawai1;
     private app.view.panel.perjalanan.panelPerjalanan panelPerjalanan1;

@@ -230,6 +230,7 @@ public class panelLaporan extends JPanel {
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
+        masterTable.setEnabled(false);
         masterTable.setGridColor(new java.awt.Color(0, 0, 0));
         masterTable.setRowHeight(25);
 
@@ -329,6 +330,7 @@ public class panelLaporan extends JPanel {
             cal.set(Calendar.HOUR_OF_DAY, 23);
             Date endMonth = cal.getTime();        
             System.out.println("endMonth = " + endMonth);
+            
 //        java.util.List<app.table.Laporan> data = query.getResultList();
         query = entityManager.createQuery(
                 "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
@@ -338,10 +340,13 @@ public class panelLaporan extends JPanel {
         java.util.List<app.table.Laporan> data = query.getResultList();
         java.math.BigInteger saldo = new java.math.BigInteger("0");               
         for (Laporan laporan : data) {
-            entityManager.refresh(laporan);
+            entityManager.refresh(laporan);            
             saldo = saldo.subtract(laporan.getPengeluaran());
             saldo = saldo.add(laporan.getPemasukan());
-            laporan.setSaldo(saldo);            
+            laporan.setSaldo(saldo);
+            if (laporan.getSaldo() == null) {
+                System.out.println("null di + "+laporan.toString());
+            }
         }
         
         list.clear();
