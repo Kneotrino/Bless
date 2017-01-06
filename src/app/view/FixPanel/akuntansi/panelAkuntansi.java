@@ -9,6 +9,7 @@ package app.view.FixPanel.akuntansi;
 import app.table.Bank;
 import app.table.Laporan;
 import app.table.Modal;
+import app.view.FixPanel.PanelTransaksi;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.math.BigInteger;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.TypedQuery;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -103,8 +105,9 @@ public class panelAkuntansi extends JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("NERACA SALDO CV. BLESSING CV");
+        jLabel1.setText("<html>NERACA SALDO<br>\nCV. BLESSING CV<html>");
         add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
@@ -175,14 +178,13 @@ public class panelAkuntansi extends JPanel {
         //</editor-fold>
 
         /* Create and display the form */
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JFrame frame = new JFrame();
-                frame.setContentPane(new panelAkuntansi());
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-            }
+        EventQueue.invokeLater(() -> {
+                javax.swing.JDialog jDialog1 = new JDialog();
+                jDialog1.setSize(1000, 700);
+                jDialog1.setLocationRelativeTo(null);
+                jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+                jDialog1.getContentPane().add(new panelAkuntansi());
+                jDialog1.show();
         });
     }
     

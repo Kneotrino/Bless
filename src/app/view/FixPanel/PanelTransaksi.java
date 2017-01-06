@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.RollbackException;
 import javax.persistence.TemporalType;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -25,17 +26,10 @@ public class PanelTransaksi extends JPanel {
     
         private Date today, endDay;
     public PanelTransaksi() {
-        today = getMeYesterday();
-        System.out.println("Today start = " + today);        
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
-        endDay = new Date();
-        endDay.setHours(23);
-        System.out.println("today = " + today);
-        System.out.println("endDay = " + endDay);
-        refreshButtonActionPerformed(null);
     }
 private Date getMeYesterday(){
      Date temp = new Date();
@@ -202,6 +196,13 @@ private Date getMeYesterday(){
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        today = getMeYesterday();
+        System.out.println("Today start = " + today);        
+        endDay = new Date();
+        endDay.setHours(23);
+        System.out.println("today = " + today);
+        System.out.println("endDay = " + endDay);
+
         java.util.Collection data = query.getResultList();                
         for (Object entity : data) {
             entityManager.refresh(entity);
@@ -268,7 +269,7 @@ private Date getMeYesterday(){
 
         /* Create and display the form */
         EventQueue.invokeLater(new Runnable() {
-            public void run() {
+            public void run() {                
                 JFrame frame = new JFrame();
                 frame.setContentPane(new PanelTransaksi());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

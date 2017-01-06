@@ -94,6 +94,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem26 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -196,6 +197,14 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem11);
+
+        jMenuItem26.setText("Neraca");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem26);
         jMenu1.add(jSeparator1);
 
         jMenuItem4.setText("Pengeluaran");
@@ -504,6 +513,11 @@ public class ShowRoom extends javax.swing.JFrame {
         this.panelMaster2.Refresh();        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        app.view.FixPanel.akuntansi.panelAkuntansi.main(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -568,6 +582,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
