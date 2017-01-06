@@ -60,18 +60,21 @@ public class Akun implements Serializable
     }
 
     public Akun addPengeluaran(BigInteger Pengeluaran) {
-        this.Pengeluaran = this.Pemasukan.add(Pengeluaran);
+        this.Pengeluaran = this.Pengeluaran.add(Pengeluaran);
         return this;
     }
     public Akun subPengeluaran(BigInteger Pengeluaran) {
-        this.Pengeluaran = this.Pemasukan.subtract(Pengeluaran);
+        this.Pengeluaran = this.Pengeluaran.subtract(Pengeluaran);
         return this;
     }
     public Akun setPengeluaran(BigInteger Pengeluaran) {
         this.Pengeluaran = Pengeluaran;
         return this;
     }
-    public Akun() {
+    public Akun() {        
+    }
+    public Akun(int x) {
+        nomor = x;
     }
     @Override
     public String toString() {

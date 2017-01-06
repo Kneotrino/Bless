@@ -6,7 +6,9 @@
 package app.view.FixPanel.akuntansi;
 
 //import app.table.Akuntansi;
+import app.table.Bank;
 import app.table.Laporan;
+import app.table.Modal;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.math.BigInteger;
@@ -14,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.persistence.TypedQuery;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -31,17 +34,50 @@ public class panelAkuntansi extends JPanel {
     public void setAkuntansiList(List<Akun> AkuntansiList) {
         this.AkuntansiList = AkuntansiList;
     }
+    public List getList(Class kelas)
+    {
+        String que = "SELECT en FROM " + kelas.getSimpleName() + " en";
+        System.out.println("que = " + que);
+        TypedQuery createQuery = entityManager.createQuery(que, kelas);
+        return createQuery.getResultList();
+    }
+    
     public panelAkuntansi() {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
-        query1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l order by l.tanggal");
-        list1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query1.getResultList());
-//        entityManager.fi
-        Akun Kas;
-        Kas = new Akun().setAkun("KAS");        
-        AkuntansiList.add(Kas);            
-        Akun kosong = new Akun();
         Akun total = new Akun().setAkun("Neraca Total");
-        AkuntansiList.add(kosong);                    
+        int X =1;
+        List<app.table.Bank> list = getList(app.table.Bank.class);       
+        for (Bank bank : list) {
+        Akun Kas = new Akun(X++)
+                .setAkun(bank.getNamaBank())
+                .setPemasukan(bank.getFoo());
+        total.addPemasukan(Kas.getPemasukan());
+        AkuntansiList.add(Kas);            
+        }
+        BigInteger sumModal = new BigInteger("0");
+        List<app.table.Modal> modal = getList(app.table.Modal.class);
+        for (Modal m : modal) {
+            sumModal = sumModal.add(m.getJumlah());
+        }
+         Akun Modal = new Akun(X++)
+                 .setAkun("Modal")
+                 .setPengeluaran(sumModal);
+         System.out.println(" before = "+ total.getPengeluaran());
+         System.out.println("  Modal = "+ total.getPengeluaran());
+         total.addPengeluaran(Modal.getPengeluaran());
+         AkuntansiList.add(Modal);
+         System.out.println(" after = "+ total.getPengeluaran());
+
+//        sum = modal.get(WIDTH)
+        
+
+//List<BigInteger> list = new ArrayList<BigInteger>();
+//list.add(new BigInteger("2"));
+//list.add(new BigInteger("3"));
+//sum=(list.get(0).multiply(list.get(1))).add(sum);
+//System.out.println(sum);
+
+
         AkuntansiList.add(total);                    
         initComponents();
         System.out.println(MessageFormat.format("list1.size() = {0}", list1.size()));
@@ -71,6 +107,7 @@ public class panelAkuntansi extends JPanel {
         jLabel1.setText("NERACA SALDO CV. BLESSING CV");
         add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
+        jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setCellSelectionEnabled(true);
         jTable1.setEnabled(false);

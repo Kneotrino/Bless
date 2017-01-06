@@ -174,6 +174,19 @@ public class Bank implements Serializable {
     public BigInteger getTotalKredit() {
         return totalKredit;
     }
+    public BigInteger getFoo() {
+        BigInteger tPem = BigInteger.ZERO;
+        BigInteger tPer = BigInteger.ZERO;
+        for (Saldo saldo : saldoList) {
+                java.math.BigInteger pem = new java.math.BigInteger("0");
+                java.math.BigInteger per = new java.math.BigInteger("0");
+                pem = saldo.getLaporan() ==null?BigInteger.ZERO:saldo.getLaporan().getPemasukan() ;
+                per = saldo.getLaporan() ==null?BigInteger.ZERO:saldo.getLaporan().getPengeluaran();
+                tPem = tPem.add(pem);
+                tPer =tPer.add(per);
+        }        
+        return tPem.subtract(tPer);
+    }
 
     public void setTotalKredit(BigInteger totalKredit) {
         BigInteger oldTotalKredit = this.totalKredit;
