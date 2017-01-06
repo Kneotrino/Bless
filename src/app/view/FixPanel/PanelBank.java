@@ -50,8 +50,8 @@ public class PanelBank extends JPanel {
             if ((find ==null) && (find2 == null)) {
                     Bank bank = new app.table.Bank(-1);
                     Bank peter = new app.table.Bank(-2);
-                    bank.setNamaBank("Kas");
-                    peter.setNamaBank("K Peter");
+                    bank.setNamaBank("K Peter'");
+                    peter.setNamaBank("Kas");
                     entityManager.persist(bank);
                     entityManager.persist(peter);
                     list.add(bank);

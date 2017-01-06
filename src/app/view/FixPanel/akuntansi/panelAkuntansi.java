@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.view.FixPanel;
+package app.view.FixPanel.akuntansi;
 
-import app.table.Akuntansi;
+//import app.table.Akuntansi;
 import app.table.Laporan;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.math.BigInteger;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import javax.persistence.RollbackException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -20,23 +22,29 @@ import javax.swing.JPanel;
  * @author SEED
  */
 public class panelAkuntansi extends JPanel {
-    
+    private java.util.List<Akun> AkuntansiList = new ArrayList<>();
+
+    public List<Akun> getAkuntansiList() {
+        return AkuntansiList;
+    }
+
+    public void setAkuntansiList(List<Akun> AkuntansiList) {
+        this.AkuntansiList = AkuntansiList;
+    }
     public panelAkuntansi() {
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
+        query1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l order by l.tanggal");
+        list1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query1.getResultList());
+//        entityManager.fi
+        Akun Kas;
+        Kas = new Akun().setAkun("KAS");        
+        AkuntansiList.add(Kas);            
+        Akun kosong = new Akun();
+        Akun total = new Akun().setAkun("Neraca Total");
+        AkuntansiList.add(kosong);                    
+        AkuntansiList.add(total);                    
         initComponents();
-        if (!Beans.isDesignTime()) {
-            entityManager.getTransaction().begin();
-        }
-        int x = 0;
-        for (Laporan la : list1) {
-            Akuntansi a = new Akuntansi(x++);
-            a.setTanggal(la.getTanggal());
-            a.setKet(la.getJenis());
-            a.setKas(la.getJumlah());
-            a.setHutang(la.getJumlah());
-            list.add(a);
-        }
-
-
+        System.out.println(MessageFormat.format("list1.size() = {0}", list1.size()));
     }
 
     /**
@@ -47,88 +55,61 @@ public class panelAkuntansi extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT a FROM Akuntansi a");
-        list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
-        newButton = new javax.swing.JButton();
         query1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l order by l.tanggal");
         list1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query1.getResultList());
-        masterScrollPane = new javax.swing.JScrollPane();
-        masterTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
-        FormListener formListener = new FormListener();
+        setLayout(new java.awt.BorderLayout());
 
-        newButton.setText("New");
-        newButton.addActionListener(formListener);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("NERACA SALDO CV. BLESSING CV");
+        add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+        jTable1.setAutoCreateRowSorter(true);
+        jTable1.setCellSelectionEnabled(true);
+        jTable1.setEnabled(false);
 
-        //masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
-        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        masterTable.setAutoCreateRowSorter(true);
-        masterTable.setEnabled(false);
-
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${akuntansiList}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
         columnBinding.setColumnName("Nomor");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
-        columnBinding.setColumnName("Tanggal");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ket}"));
-        columnBinding.setColumnName("Ket");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
+        columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kas}"));
-        columnBinding.setColumnName("Kas");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${piutang}"));
-        columnBinding.setColumnName("Piutang");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${asset}"));
-        columnBinding.setColumnName("Asset");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hutang}"));
-        columnBinding.setColumnName("Hutang");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${modal}"));
-        columnBinding.setColumnName("Modal");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(75);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(75);
+        }
 
-        masterScrollPane.setViewportView(masterTable);
-
-        add(masterScrollPane);
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         bindingGroup.bind();
-    }
-
-    // Code for dispatching events from components to event handlers.
-
-    private class FormListener implements java.awt.event.ActionListener {
-        FormListener() {}
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                panelAkuntansi.this.newButtonActionPerformed(evt);
-            }
-        }
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-
-    }//GEN-LAST:event_newButtonActionPerformed
-    
+        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager entityManager;
-    private java.util.List<app.table.Akuntansi> list;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private java.util.List<app.table.Laporan> list1;
-    private javax.swing.JScrollPane masterScrollPane;
-    private javax.swing.JTable masterTable;
-    private javax.swing.JButton newButton;
-    private javax.persistence.Query query;
     private javax.persistence.Query query1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
