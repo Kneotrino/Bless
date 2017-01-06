@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @ListUrutan({"tanggal","keterangan","jumlah"})
-public class Pegawaigaji extends Pengeluaran implements Serializable {
+public class Pegawaigaji extends Laporan implements Serializable {
 
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);

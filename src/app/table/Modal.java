@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @ListUrutan({"tanggal","keterangan","jumlah"})
-public class Modal extends Pemasukan implements Serializable {
+public class Modal extends Laporan implements Serializable {
 
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);

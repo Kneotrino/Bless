@@ -15,10 +15,10 @@ import java.math.BigInteger;
 public class Akun implements Serializable
 {    
     private static final long serialVersionUID = 3041287746818525952L;
-    int nomor;
-    String akun;
-    java.math.BigInteger Pemasukan = BigInteger.ZERO;
-    java.math.BigInteger Pengeluaran= BigInteger.ZERO;    
+    private int nomor;
+    private String akun;
+    private java.math.BigInteger Pemasukan = BigInteger.ZERO;
+    private java.math.BigInteger Pengeluaran= BigInteger.ZERO;    
 
     public int getNomor() {
         return nomor;

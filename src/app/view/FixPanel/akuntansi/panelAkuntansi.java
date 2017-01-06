@@ -6,9 +6,13 @@
 package app.view.FixPanel.akuntansi;
 
 //import app.table.Akuntansi;
+import app.table.Asset;
 import app.table.Bank;
 import app.table.Laporan;
 import app.table.Modal;
+import app.table.Pegawaigaji;
+import app.table.Pemasukan;
+import app.table.Pengeluaran;
 import app.view.FixPanel.PanelTransaksi;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
@@ -55,7 +59,6 @@ public class panelAkuntansi extends JPanel {
         Akun Kas = new Akun(X++)
                 .setAkun(bank.getNamaBank())
                 .setPemasukan(bank.getFoo());
-        total.addPemasukan(Kas.getPemasukan());
         AkuntansiList.add(Kas);            
         }
         BigInteger sumModal = new BigInteger("0");
@@ -66,8 +69,39 @@ public class panelAkuntansi extends JPanel {
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
                  .setPengeluaran(sumModal);
-         total.addPengeluaran(Modal.getPengeluaran());
          AkuntansiList.add(Modal);
+         Akun Operasional = new Akun(X++)
+                 .setAkun("Operasional");
+        List<app.table.Pengeluaran> OP = getList(app.table.Pengeluaran.class);
+        for (Pengeluaran p : OP) {
+            Operasional.addPemasukan(p.getJumlah());
+        }         
+         Akun Pegawai = new Akun(X++)
+                 .setAkun("Pegawai");
+        List<app.table.Pegawaigaji> PegawaiList = getList(app.table.Pegawaigaji.class);
+        for (Pegawaigaji g : PegawaiList) {
+            Pegawai.addPemasukan(g.getJumlah());
+        }
+         Akun Asset = new Akun(X++)
+                 .setAkun("Asset");
+        List<app.table.Asset> AssetList = getList(app.table.Asset.class);
+        for (Asset as : AssetList) {
+            Asset.addPemasukan(as.getJumlah());
+        }
+        Akun Pemasukan = new Akun(X++)
+                 .setAkun("Pemasukan Lainnya");
+        List<app.table.Pemasukan> PemasukanList = getList(app.table.Pemasukan.class);
+        for (Pemasukan pem : PemasukanList) {
+            Pemasukan.addPengeluaran(pem.getJumlah());
+        }
+        AkuntansiList.add(Pemasukan);
+        AkuntansiList.add(Operasional);
+        AkuntansiList.add(Pegawai);                    
+        AkuntansiList.add(Asset);                    
+        for (Akun akun : AkuntansiList) {
+            total.addPengeluaran(akun.getPengeluaran());
+            total.addPemasukan(akun.getPemasukan());
+        }
         AkuntansiList.add(total);                    
         initComponents();
     }
@@ -80,7 +114,6 @@ public class panelAkuntansi extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
@@ -97,7 +130,7 @@ public class panelAkuntansi extends JPanel {
 
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable1.setAutoCreateRowSorter(true);
-        jTable1.setCellSelectionEnabled(true);
+        jTable1.setColumnSelectionAllowed(false);
         jTable1.setEnabled(false);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${akuntansiList}");
@@ -109,10 +142,10 @@ public class panelAkuntansi extends JPanel {
         columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnName("Aktiva");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
-        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnName("Pasiva");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();

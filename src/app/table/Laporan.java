@@ -52,7 +52,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Laporan implements Serializable {
 
     @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+     PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id

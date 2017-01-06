@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "ASSET", catalog = "", schema = "BLESSING")
 @ListUrutan({"namaAsset", "stock", "hargaBarang","keterangan", "status", "tanggalStock"})
-public class Asset extends Pengeluaran implements Serializable {
+public class Asset extends Laporan implements Serializable {
 
     @Column(name = "NAMA_ASSET", length = 64)
     @Basic
@@ -66,7 +66,6 @@ public class Asset extends Pengeluaran implements Serializable {
         Object oldValue = this.hargaBarang;
         Object newValue = hargaBarang;
         this.hargaBarang = hargaBarang;
-
         this.hargaBarang = hargaBarang;
         BigInteger item = BigInteger.valueOf(this.stock);
         BigInteger cost = this.hargaBarang;
