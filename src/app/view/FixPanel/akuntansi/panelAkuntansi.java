@@ -195,6 +195,8 @@ public class panelAkuntansi extends JPanel {
 
         /* Create and display the form */
         EventQueue.invokeLater(() -> {
+                app.table.Util.RefreshBank();
+                app.table.Util.RefreshLaporan();
                 javax.swing.JDialog jDialog1 = new JDialog();
                 jDialog1.setSize(1000, 700);
                 jDialog1.setLocationRelativeTo(null);

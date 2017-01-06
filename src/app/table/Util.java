@@ -34,9 +34,21 @@ public class Util {
         List<Bank> result = query.getResultList();
         return result;
     }
+    public static void RefreshBank()
+    {
+            boolean active = manager.getTransaction().isActive();
+            if (!active) {
+                manager.getTransaction().begin();            
+            }
+            Query query = manager.createQuery("SELECT b From Bank b ORDER BY b");
+            List<Bank> result = query.getResultList();
+            for (Bank bank : result) {
+            manager.refresh(bank);
+        }
+
+    }
     public static void RefreshLaporan()
     {
-//            System.out.println("start app.table.Util.RefreshLaporan()");
             boolean active = manager.getTransaction().isActive();
             if (!active) {
                 manager.getTransaction().begin();            
@@ -46,7 +58,6 @@ public class Util {
              data.forEach((laporan) -> {
                  manager.refresh(laporan);
             });
-//            System.out.println("end app.table.Util.RefreshLaporan()");
     }
 
     public Util() {
