@@ -11,6 +11,8 @@ import app.table.Laporan;
 import app.table.Modal;
 import app.view.FixPanel.PanelTransaksi;
 import java.awt.EventQueue;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.Beans;
 import java.math.BigInteger;
 import java.text.MessageFormat;
@@ -64,25 +66,10 @@ public class panelAkuntansi extends JPanel {
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
                  .setPengeluaran(sumModal);
-         System.out.println(" before = "+ total.getPengeluaran());
-         System.out.println("  Modal = "+ total.getPengeluaran());
          total.addPengeluaran(Modal.getPengeluaran());
          AkuntansiList.add(Modal);
-         System.out.println(" after = "+ total.getPengeluaran());
-
-//        sum = modal.get(WIDTH)
-        
-
-//List<BigInteger> list = new ArrayList<BigInteger>();
-//list.add(new BigInteger("2"));
-//list.add(new BigInteger("3"));
-//sum=(list.get(0).multiply(list.get(1))).add(sum);
-//System.out.println(sum);
-
-
         AkuntansiList.add(total);                    
         initComponents();
-        System.out.println(MessageFormat.format("list1.size() = {0}", list1.size()));
     }
 
     /**
@@ -97,8 +84,6 @@ public class panelAkuntansi extends JPanel {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        query1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l order by l.tanggal");
-        list1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query1.getResultList());
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -107,7 +92,7 @@ public class panelAkuntansi extends JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("<html>NERACA SALDO<br>\nCV. BLESSING CV<html>");
+        jLabel1.setText("<html>NERACA SALDO<br> BLESSING CV<html>");
         add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
@@ -149,8 +134,6 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private java.util.List<app.table.Laporan> list1;
-    private javax.persistence.Query query1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
@@ -184,6 +167,7 @@ public class panelAkuntansi extends JPanel {
                 jDialog1.setLocationRelativeTo(null);
                 jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
                 jDialog1.getContentPane().add(new panelAkuntansi());
+                jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 jDialog1.show();
         });
     }
