@@ -230,7 +230,6 @@ public class panelLaporan extends JPanel {
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setEnabled(false);
         masterTable.setGridColor(new java.awt.Color(0, 0, 0));
         masterTable.setRowHeight(25);
 
@@ -292,6 +291,9 @@ public class panelLaporan extends JPanel {
             else if (evt.getSource() == jButton1) {
                 panelLaporan.this.jButton1ActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton4) {
+                panelLaporan.this.jButton4ActionPerformed(evt);
+            }
             else if (evt.getSource() == saveButton) {
                 panelLaporan.this.saveButtonActionPerformed(evt);
             }
@@ -300,9 +302,6 @@ public class panelLaporan extends JPanel {
             }
             else if (evt.getSource() == deleteButton) {
                 panelLaporan.this.deleteButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton4) {
-                panelLaporan.this.jButton4ActionPerformed(evt);
             }
         }
 
