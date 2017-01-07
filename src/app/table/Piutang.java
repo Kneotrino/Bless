@@ -81,7 +81,7 @@ public class Piutang implements Serializable {
     private Date tglakhir;
     @Column(name = "NOMINAL")
     private BigInteger nominal;
-    @OneToMany(mappedBy = "pihutangid",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "pihutangid",cascade = {CascadeType.ALL})
     @OrderBy("tanggal ASC")
     private List<Bayarpihutang> bayarpihutangList;
 

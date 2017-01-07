@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @ListUrutan({"tanggal","keterangan","jumlah"})
-public class Penyesuaian extends Pengeluaran implements Serializable {
+public class Penyesuaian extends Laporan implements Serializable {
 
     @Override
     public int hashCode() {

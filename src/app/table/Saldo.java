@@ -76,9 +76,10 @@ public class Saldo implements Serializable {
             ,CascadeType.DETACH
 //            ,CascadeType.REFRESH
 //            ,CascadeType.REMOVE
-            ,CascadeType.REFRESH})
+//            ,CascadeType.REFRESH
+    })
     private Bank bankId;
-    @OneToOne(mappedBy = "Transaksi", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "Transaksi", cascade = CascadeType.REMOVE)
     private Laporan Laporan;
 
     public Laporan getLaporan() {

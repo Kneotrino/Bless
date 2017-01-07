@@ -49,7 +49,18 @@ public class panelAkuntansi extends JPanel {
         TypedQuery createQuery = entityManager.createQuery(que, kelas);
         return createQuery.getResultList();
     }
-    
+    public BigInteger sumAll(List<? extends Laporan> laporanList)
+    {
+        BigInteger temp = new BigInteger("0");
+        for (Laporan list : laporanList) {
+            temp = temp.add(list.getJumlah());
+        }
+        return temp;
+    }
+    public void addList(Akun akun)
+    {
+    AkuntansiList.add(akun);
+    }
     public panelAkuntansi() {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
         Akun total = new Akun().setAkun("Neraca Total");
@@ -61,44 +72,69 @@ public class panelAkuntansi extends JPanel {
                 .setPemasukan(bank.getFoo());
         AkuntansiList.add(Kas);            
         }
-        BigInteger sumModal = new BigInteger("0");
-        List<app.table.Modal> modal = getList(app.table.Modal.class);
-        for (Modal m : modal) {
-            sumModal = sumModal.add(m.getJumlah());
-        }
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
-                 .setPengeluaran(sumModal);
+                 .setPengeluaran(sumAll(getList(app.table.Modal.class)));
+         Akun Hutang = new Akun(X++)
+                 .setAkun("Hutang")
+                 .setPengeluaran(sumAll(getList(app.table.BayarPihutangPemasukan.class)));
          AkuntansiList.add(Modal);
+         AkuntansiList.add(Hutang);
          Akun Operasional = new Akun(X++)
-                 .setAkun("Operasional");
-        List<app.table.Pengeluaran> OP = getList(app.table.Pengeluaran.class);
-        for (Pengeluaran p : OP) {
-            Operasional.addPemasukan(p.getJumlah());
-        }         
+                 .setAkun("Beban Operasional")
+                 .setPemasukan(sumAll(getList(app.table.Pengeluaran.class)))
+                 ;
          Akun Pegawai = new Akun(X++)
-                 .setAkun("Pegawai");
-        List<app.table.Pegawaigaji> PegawaiList = getList(app.table.Pegawaigaji.class);
-        for (Pegawaigaji g : PegawaiList) {
-            Pegawai.addPemasukan(g.getJumlah());
-        }
+                 .setAkun("Beban Gaji Pegawai")
+                 .setPemasukan(sumAll(getList(app.table.Pegawaigaji.class)));
          Akun Asset = new Akun(X++)
-                 .setAkun("Asset");
-        List<app.table.Asset> AssetList = getList(app.table.Asset.class);
-        for (Asset as : AssetList) {
-            Asset.addPemasukan(as.getJumlah());
-        }
+                 .setAkun("Beban Biaya Asset")
+                 .setPemasukan(sumAll(getList(app.table.Asset.class)));                  
         Akun Pemasukan = new Akun(X++)
-                 .setAkun("Pemasukan Lainnya");
-        List<app.table.Pemasukan> PemasukanList = getList(app.table.Pemasukan.class);
-        for (Pemasukan pem : PemasukanList) {
-            Pemasukan.addPengeluaran(pem.getJumlah());
-        }
-        AkuntansiList.add(Pemasukan);
+                 .setAkun("Pemasukan Lainnya")
+                .setPengeluaran(sumAll(getList(app.table.Pemasukan.class)))
+                ;
+        Akun Perjalanan = new Akun(X++)
+                .setAkun("Beban Perjalanan");
+        Akun Rental = new Akun(X++)
+                .setAkun("Pemasukan Rental")
+                .setPengeluaran(sumAll(getList(app.table.BayarRentalPemasukan.class)))
+                ;
+        Akun pengeluaranRental = new Akun(X++)
+                .setAkun("Beban Rental")
+                .setPemasukan(sumAll(getList(app.table.BayarRentalPenngeluaran.class)));        
+        Akun Jasa = new Akun()
+                .setAkun("Pemasukan Jasa")
+                .setPengeluaran(sumAll(getList(app.table.BayarJasaPemasukan.class)));
+        Akun  bebanJasa = new Akun()
+                .setAkun("Beban Jasa")
+                .setPemasukan(sumAll(getList(app.table.BayarJasaPengeluaran.class)));
+//        AkuntansiList.add(Rental);        
+        Akun  bebanPeminjaman = new Akun()
+                .setAkun("Beban Peminjaman")
+                .setPemasukan(sumAll(getList(app.table.BayarhutangPengeluaran.class)));
+        Akun  Peminjaman = new Akun()
+                .setAkun("Pemasukan Peminjaman")
+                .setPengeluaran(sumAll(getList(app.table.BayarhutangPemasukan.class)));
+        //Akun Pemasukan
+        
+        AkuntansiList.add(Rental);        
+        AkuntansiList.add(Jasa);        
+        AkuntansiList.add(Pemasukan);        
+        AkuntansiList.add(Peminjaman);        
+        //Akun Pengeluaran
+        AkuntansiList.add(bebanPeminjaman);
+        AkuntansiList.add(pengeluaranRental);
+        AkuntansiList.add(bebanJasa);
+        AkuntansiList.add(Perjalanan);
         AkuntansiList.add(Operasional);
         AkuntansiList.add(Pegawai);                    
-        AkuntansiList.add(Asset);                    
+        AkuntansiList.add(Asset);
+        X = 1;
+        total.setPemasukan(BigInteger.ZERO);
+        total.setPengeluaran(BigInteger.ZERO);
         for (Akun akun : AkuntansiList) {
+            akun.setNomor(X++);
             total.addPengeluaran(akun.getPengeluaran());
             total.addPemasukan(akun.getPemasukan());
         }
@@ -117,45 +153,57 @@ public class panelAkuntansi extends JPanel {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
-        setLayout(new java.awt.BorderLayout());
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("<html>NERACA SALDO<br> BLESSING CV<html>");
-        add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable1.setAutoCreateRowSorter(true);
-        jTable1.setColumnSelectionAllowed(false);
-        jTable1.setEnabled(false);
+        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${akuntansiList}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
-        columnBinding.setColumnName("Nomor");
+        columnBinding.setColumnName("No");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
         columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Aktiva");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pasiva");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(75);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(75);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        add(jScrollPane1);
+
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable2.setAutoCreateRowSorter(true);
+        jTable2.setBorder(javax.swing.BorderFactory.createTitledBorder("TABEL LABA/RUGI"));
+        jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        add(jScrollPane2);
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
@@ -164,9 +212,10 @@ public class panelAkuntansi extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {

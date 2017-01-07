@@ -305,29 +305,38 @@ public void Rest()
             Rest();
         }
         else {
-            
+            System.out.println("Kelas name = " + clazz.getSimpleName());    
+            System.out.println("error 1");
         entityManager.getTransaction().rollback();
-        entityManager.getTransaction().begin();
-        
+        entityManager.getTransaction().begin();        
+            System.out.println("error 2");
         String clzName = this.clazz.getSimpleName();
         String que = "SELECT en FROM " + clzName + " en";
+            System.out.println("que = " + que);
         TypedQuery<? extends Laporan> createQuery = entityManager.createQuery(que, clazz);
-        List<? extends Laporan> res = createQuery.getResultList();
-        
-        java.util.List data = query.getResultList();
+            System.out.println("error 3");
+        List<? extends Laporan> res = createQuery.getResultList();           
+            for (Laporan re : res) {
+                entityManager.refresh(re);
+            }
+            System.out.println("res.size() = " + res.size());
+//        java.util.List data = query.getResultList();
+        app.table.Util.RefreshBank();
         java.util.List Res = this.bankQuery.getResultList();
+            System.out.println("Res = " + Res);
+            System.out.println("error 4");
         this.bankList.clear();
         this.bankList.addAll(Res);
-        List<Laporan> laps = data;
-        Predicate<Laporan> predPem = lp -> lp instanceof app.table.Pengeluaran;
-        
-        List<Laporan> collect = laps.stream()
-                .filter(predPem)
-                .collect(Collectors.toList());
-        
-        for (Object entity : res) {
-            entityManager.refresh(entity);
-        }
+//            System.out.println("data.getSize() = " + data.size());
+//        List<Laporan> laps = data;
+//        Predicate<Laporan> predPem = lp -> lp instanceof app.table.Pengeluaran;        
+//        List<Laporan> collect = laps.stream()
+//                .filter(predPem)
+//                .collect(Collectors.toList());                
+        System.out.println("error 5");
+//        for (Object entity : res) {
+//            entityManager.refresh(entity);
+//        }
         list.clear();
         list.addAll((Collection<? extends Laporan>) res);
         }
@@ -450,8 +459,8 @@ public void Rest()
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new panelMaster(1));
-//                frame.setContentPane(new panelMaster(app.table.Laporan.class));
+//                frame.setContentPane(new panelMaster(1));
+                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
