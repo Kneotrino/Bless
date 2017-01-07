@@ -79,7 +79,7 @@ public class Saldo implements Serializable {
 //            ,CascadeType.REFRESH
     })
     private Bank bankId;
-    @OneToOne(mappedBy = "Transaksi", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "Transaksi", cascade = CascadeType.ALL)
     private Laporan Laporan;
 
     public Laporan getLaporan() {

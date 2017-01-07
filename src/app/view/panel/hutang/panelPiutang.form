@@ -451,7 +451,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="newDetailButton1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pemasukan"/>
+            <Property name="text" type="java.lang.String" value="Peminjaman"/>
           </Properties>
           <BindingProperties>
             <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="newDetailButton1" targetPath="enabled" updateStrategy="0" immediately="false"/>
@@ -466,7 +466,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="newDetailButton2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pengeluaran"/>
+            <Property name="text" type="java.lang.String" value="Pelunasan"/>
           </Properties>
           <BindingProperties>
             <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="newDetailButton2" targetPath="enabled" updateStrategy="0" immediately="false"/>

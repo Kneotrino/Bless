@@ -70,7 +70,10 @@ public class panelMaster extends JPanel {
             entityManager.getTransaction().begin();
         }
         this.refreshButtonActionPerformed(null);
-        this.jLabel2.setText("Operasional "+clazz.getSimpleName());
+        String info = clazz.getSimpleName()
+                .equals("Pengeluaran") ? "Operasional":clazz.getSimpleName();
+        this.jLabel2.setText("Laporan "+  info
+        );
     }
       Map m1 = new HashMap();
       int temp = -1;
@@ -306,37 +309,23 @@ public void Rest()
         }
         else {
             System.out.println("Kelas name = " + clazz.getSimpleName());    
-            System.out.println("error 1");
+//            System.out.println("error 1");
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();        
-            System.out.println("error 2");
+//            System.out.println("error 2");
         String clzName = this.clazz.getSimpleName();
         String que = "SELECT en FROM " + clzName + " en";
-            System.out.println("que = " + que);
+        System.out.println("que = " + que);
         TypedQuery<? extends Laporan> createQuery = entityManager.createQuery(que, clazz);
-            System.out.println("error 3");
         List<? extends Laporan> res = createQuery.getResultList();           
             for (Laporan re : res) {
                 entityManager.refresh(re);
             }
-            System.out.println("res.size() = " + res.size());
-//        java.util.List data = query.getResultList();
-        app.table.Util.RefreshBank();
+//        app.table.Util.RefreshLaporan();
+//        app.table.Util.RefreshBank();
         java.util.List Res = this.bankQuery.getResultList();
-            System.out.println("Res = " + Res);
-            System.out.println("error 4");
         this.bankList.clear();
         this.bankList.addAll(Res);
-//            System.out.println("data.getSize() = " + data.size());
-//        List<Laporan> laps = data;
-//        Predicate<Laporan> predPem = lp -> lp instanceof app.table.Pengeluaran;        
-//        List<Laporan> collect = laps.stream()
-//                .filter(predPem)
-//                .collect(Collectors.toList());                
-        System.out.println("error 5");
-//        for (Object entity : res) {
-//            entityManager.refresh(entity);
-//        }
         list.clear();
         list.addAll((Collection<? extends Laporan>) res);
         }

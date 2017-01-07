@@ -223,7 +223,7 @@ public class panelPiutang extends JPanel {
 
         add(masterScrollPane);
 
-        newDetailButton1.setText("Pemasukan");
+        newDetailButton1.setText("Peminjaman");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -231,7 +231,7 @@ public class panelPiutang extends JPanel {
         newDetailButton1.addActionListener(formListener);
         jPanel2.add(newDetailButton1);
 
-        newDetailButton2.setText("Pengeluaran");
+        newDetailButton2.setText("Pelunasan");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);

@@ -80,7 +80,7 @@ public class Bank implements Serializable {
     private BigInteger totalKredit;
     @Column(name = "NAMA_BANK", length = 32)
     private String namaBank;
-    @OneToMany(mappedBy = "bankId", fetch = FetchType.EAGER , cascade = {CascadeType.REMOVE,CascadeType.MERGE})
+    @OneToMany(mappedBy = "bankId", fetch = FetchType.EAGER , cascade = {CascadeType.ALL})
     @OrderBy("tanggal ASC")
     private List<Saldo> saldoList;
 

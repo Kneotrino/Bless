@@ -116,6 +116,9 @@ public class panelAkuntansi extends JPanel {
         Akun  Peminjaman = new Akun()
                 .setAkun("Pemasukan Peminjaman")
                 .setPengeluaran(sumAll(getList(app.table.BayarhutangPemasukan.class)));
+        Akun  bebanHutang = new Akun()
+                .setAkun("Pelunasan Hutang ")
+                .setPemasukan(sumAll(getList(app.table.BayarPihutangPengeluaran.class)));
         //Akun Pemasukan
         
         AkuntansiList.add(Rental);        
@@ -123,6 +126,7 @@ public class panelAkuntansi extends JPanel {
         AkuntansiList.add(Pemasukan);        
         AkuntansiList.add(Peminjaman);        
         //Akun Pengeluaran
+        AkuntansiList.add(bebanHutang);
         AkuntansiList.add(bebanPeminjaman);
         AkuntansiList.add(pengeluaranRental);
         AkuntansiList.add(bebanJasa);
