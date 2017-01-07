@@ -61,7 +61,6 @@ public class PanelBank extends JPanel {
                     masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
                     this.saveButtonActionPerformed(null);                
             }
-//            this.persist(bank);
         }
 
 //        this.list.isEmpty()
@@ -117,6 +116,7 @@ public class PanelBank extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        detailTable.setAutoCreateRowSorter(true);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.saldoList}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);

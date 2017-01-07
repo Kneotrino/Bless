@@ -42,8 +42,6 @@ public class panelPerjalanan extends JPanel {
        for (int i = 0; i < this.detailTable.getColumnCount(); i++) {
                 this.detailTable.getColumnModel().getColumn(i).setPreferredWidth(220);
         }
-
-//        this.Refresh();
     }
 
     public List<Bank> getBankList() {
@@ -295,7 +293,7 @@ public class panelPerjalanan extends JPanel {
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(30);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.perjalananList}");
@@ -331,10 +329,13 @@ public class panelPerjalanan extends JPanel {
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transfer.transaksi.bankId}"));
-        columnBinding.setColumnName("Transfer ke");
+        columnBinding.setColumnName("Transfer Dari");
+        columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding.setColumnName("Diterima/Dikirim");
         columnBinding.setColumnClass(app.table.Bank.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kembali.transaksi.bankId}"));
-        columnBinding.setColumnName("Kembalikan ke");
+        columnBinding.setColumnName("Kembalikan Ke");
         columnBinding.setColumnClass(app.table.Bank.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
@@ -342,7 +343,7 @@ public class panelPerjalanan extends JPanel {
         detailScrollPane.setViewportView(detailTable);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
             detailTable.getColumnModel().getColumn(9).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1));
-            detailTable.getColumnModel().getColumn(10).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
+            detailTable.getColumnModel().getColumn(11).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
         }
 
         add(detailScrollPane);
@@ -493,13 +494,11 @@ public class panelPerjalanan extends JPanel {
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
-//        Util.RefreshLaporan();
         list.clear();
         list.addAll(data);
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
-        Peter = this.entityManager.find(app.table.Bank.class, -2);
-//        bankList.remove(Peter);
+        Peter = this.entityManager.find(app.table.Bank.class, -1);
         bankList.remove(Peter);
         Hitung();
 

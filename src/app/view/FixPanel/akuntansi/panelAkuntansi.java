@@ -45,7 +45,7 @@ public class panelAkuntansi extends JPanel {
     public List getList(Class kelas)
     {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en";
-        System.out.println("que = " + que);
+//        System.out.println("que = " + que);
         TypedQuery createQuery = entityManager.createQuery(que, kelas);
         return createQuery.getResultList();
     }
@@ -111,7 +111,7 @@ public class panelAkuntansi extends JPanel {
                 .setPemasukan(sumAll(getList(app.table.BayarJasaPengeluaran.class)));
 //        AkuntansiList.add(Rental);        
         Akun  bebanPeminjaman = new Akun()
-                .setAkun("Beban Peminjaman")
+                .setAkun("Beban Peminjaman/Piutang")
                 .setPemasukan(sumAll(getList(app.table.BayarhutangPengeluaran.class)));
         Akun  Peminjaman = new Akun()
                 .setAkun("Pemasukan Peminjaman")
@@ -119,13 +119,21 @@ public class panelAkuntansi extends JPanel {
         Akun  bebanHutang = new Akun()
                 .setAkun("Pelunasan Hutang ")
                 .setPemasukan(sumAll(getList(app.table.BayarPihutangPengeluaran.class)));
+        Akun Mobil = new Akun()
+                .setAkun("Pemasukan Mobil")
+                .setPengeluaran(sumAll(getList(app.table.MobilPemasukan.class)));
+        Akun bebanMobil = new Akun()
+                .setAkun("Beban Mobil")
+                .setPemasukan(sumAll(getList(app.table.MobilPengeluaran.class)));
         //Akun Pemasukan
         
+        AkuntansiList.add(Mobil);        
         AkuntansiList.add(Rental);        
         AkuntansiList.add(Jasa);        
         AkuntansiList.add(Pemasukan);        
         AkuntansiList.add(Peminjaman);        
         //Akun Pengeluaran
+        AkuntansiList.add(bebanMobil);
         AkuntansiList.add(bebanHutang);
         AkuntansiList.add(bebanPeminjaman);
         AkuntansiList.add(pengeluaranRental);
