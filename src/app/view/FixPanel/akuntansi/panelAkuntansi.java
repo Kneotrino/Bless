@@ -76,7 +76,7 @@ public class panelAkuntansi extends JPanel {
                  .setAkun("Modal")
                  .setPengeluaran(sumAll(getList(app.table.Modal.class)));
          Akun Prive = new Akun(X++)
-                 .setAkun("Modal")
+                 .setAkun("Penarikan Modal/Prive")
                  .setPemasukan(sumAll(getList(app.table.Prive.class)));
          Akun Hutang = new Akun(X++)
                  .setAkun("Hutang")
@@ -132,7 +132,9 @@ public class panelAkuntansi extends JPanel {
         BigInteger Transfer  = sumAll(getList(app.table.PerjalananPemasukan.class)).negate();
         Akun SaldoPerjalanan = new Akun()
                 .setAkun("Saldo Perjalanan")
-                .setPemasukan(Transfer)
+                .setPemasukan(Transfer);
+        Akun PembagianLaba = new Akun()
+                .setAkun("Pembagian Laba")
 //                .addPengeluaran(Transfer)
                 ;
 //                .setPengeluaran(sumAll(getList(app.table.PerjalananPemasukan.class)));      

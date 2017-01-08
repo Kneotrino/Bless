@@ -77,6 +77,7 @@ public class panelInvestor extends JPanel {
         inputPanel3 = new app.utils.inputPanel(app.table.Investor.class);
         jButton3 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox<>();
+        newDetailButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -85,7 +86,6 @@ public class panelInvestor extends JPanel {
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        newDetailButton = new javax.swing.JButton();
         newDetailButton1 = new javax.swing.JButton();
         newDetailButton2 = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
@@ -154,6 +154,13 @@ public class panelInvestor extends JPanel {
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox3);
         bindingGroup.addBinding(jComboBoxBinding);
 
+        newDetailButton.setText("New");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton.addActionListener(formListener);
+
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         newButton1.setText("Investor Baru");
@@ -162,7 +169,7 @@ public class panelInvestor extends JPanel {
 
         deleteButton.setText("Hapus Investor");
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         deleteButton.addActionListener(formListener);
@@ -178,7 +185,6 @@ public class panelInvestor extends JPanel {
 
         add(jPanel2);
 
-        masterTable.setAutoCreateRowSorter(true);
         masterTable.setCellSelectionEnabled(true);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -206,19 +212,13 @@ public class panelInvestor extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${per}"));
         columnBinding.setColumnName("Persentase Modal");
         bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${select}"), masterTable, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
+
         masterScrollPane.setViewportView(masterTable);
         masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         add(masterScrollPane);
-
-        newDetailButton.setText("New");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        newDetailButton.addActionListener(formListener);
-        jPanel1.add(newDetailButton);
 
         newDetailButton1.setText("Modal/Pemasukan");
 
@@ -376,15 +376,18 @@ public class panelInvestor extends JPanel {
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
     }//GEN-LAST:event_deleteDetailButtonActionPerformed
-
     private void newDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButtonActionPerformed
         int index = masterTable.getSelectedRow();
+        System.out.println("index = " + index);        
         app.table.Investor i = list.get(masterTable.convertRowIndexToModel(index));
+        System.out.println("i = " + i);
         Collection<app.table.Saham> ss = i.getSahamList();
+        System.out.println("ss = " + ss);
         if (ss == null) {
             ss = new LinkedList<app.table.Saham>();
             i.setSahamList((List) ss);
         }
+        System.out.println("ss = " + ss);
         app.table.Saham s = new app.table.Saham();
         if (evt.getSource() == jButton1) {
                 app.table.Modal m = (app.table.Modal) inputPanel1.getTarget();
@@ -401,28 +404,22 @@ public class panelInvestor extends JPanel {
                 s.setPrive(p);
             }
         entityManager.persist(s);
-        s.setInvestorId(i);
         ss.add(s);
+        s.setInvestorId(i);
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = ss.size() - 1;
-        detailTable.setRowSelectionInterval(row, row);
-        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+//        detailTable.setRowSelectionInterval(row, row);
+//        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
-    
-    @SuppressWarnings("unchecked")
-    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        entityManager.getTransaction().rollback();
-        entityManager.getTransaction().begin();
-       
+    public void Hitung()
+    {
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
         app.table.Investor temp = new Investor();
         BigInteger total3 = BigInteger.ZERO;
         BigInteger total4 = BigInteger.ZERO;
-
         java.util.List<app.table.Investor> data = query.getResultList();
-//        data.forEach((Investor entity) -> {
         for (Investor entity : data) {                   
             entityManager.refresh(entity);
             List<Saham> sahamList = entity.getSahamList();
@@ -432,10 +429,10 @@ public class panelInvestor extends JPanel {
                     total1 = total1.add(saham.getModal() == null? BigInteger.ZERO : saham.getModal().getJumlah());
                     total2 = total2.add(saham.getPrive()== null? BigInteger.ZERO : saham.getPrive().getJumlah());                    
             }
-                entity.setModal(total1);
                 entity.setPrive(total2);
-                total3 = total3.add(total1);
-                total4 = total3.add(total2);
+                entity.setModal(total1.subtract(total2));
+                total3 = total3.add(entity.getModal());
+                total4 = total4.add(total2);                
         }
             float t = total3.floatValue();
         for (Investor investor : data) {
@@ -445,9 +442,17 @@ public class panelInvestor extends JPanel {
         temp.setModal(total3);
         temp.setPrive(total4);
         temp.setPer("100%");
+    }
+    @SuppressWarnings("unchecked")
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();
+        java.util.Collection data = query.getResultList();
+        for (Object entity : data) {
+            entityManager.refresh(entity);
+        }
         list.clear();
         list.addAll(data);
-        list.add(temp);        
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -475,6 +480,7 @@ public class panelInvestor extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+//            this.refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
