@@ -75,11 +75,12 @@ public class panelAkuntansi extends JPanel {
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
                  .setPengeluaran(sumAll(getList(app.table.Modal.class)));
+         Akun Prive = new Akun(X++)
+                 .setAkun("Modal")
+                 .setPemasukan(sumAll(getList(app.table.Prive.class)));
          Akun Hutang = new Akun(X++)
                  .setAkun("Hutang")
                  .setPengeluaran(sumAll(getList(app.table.BayarPihutangPemasukan.class)));
-         AkuntansiList.add(Modal);
-         AkuntansiList.add(Hutang);
          Akun Operasional = new Akun(X++)
                  .setAkun("Beban Operasional")
                  .setPemasukan(sumAll(getList(app.table.Pengeluaran.class)))
@@ -134,7 +135,10 @@ public class panelAkuntansi extends JPanel {
                 .setPemasukan(Transfer)
 //                .addPengeluaran(Transfer)
                 ;
-//                .setPengeluaran(sumAll(getList(app.table.PerjalananPemasukan.class)));                 
+//                .setPengeluaran(sumAll(getList(app.table.PerjalananPemasukan.class)));      
+        AkuntansiList.add(Modal);
+        AkuntansiList.add(Prive);
+        AkuntansiList.add(Hutang);
         AkuntansiList.add(SaldoPerjalanan);        
         AkuntansiList.add(Mobil);        
         AkuntansiList.add(Rental);        

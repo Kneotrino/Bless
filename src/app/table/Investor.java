@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -37,6 +38,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Investor.findByModal", query = "SELECT i FROM Investor i WHERE i.modal = :modal"),
     @NamedQuery(name = "Investor.findByNama", query = "SELECT i FROM Investor i WHERE i.nama = :nama"),
     @NamedQuery(name = "Investor.findByPrive", query = "SELECT i FROM Investor i WHERE i.prive = :prive")})
+@app.ListUrutan({
+    "nama"
+    ,"alamat"
+    ,"kontak"
+//        ,"modal"
+})
 public class Investor implements Serializable {
 
     @Transient
@@ -49,20 +56,30 @@ public class Investor implements Serializable {
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Column(name = "ALAMAT", length = 255)
-    private String alamat = "Alamat";
+    private String alamat = "";
     @Column(name = "KONTAK", length = 255)
-    private String kontak = "Kontak";
-    @Column(name = "MODAL")
+    private String kontak = "";
+    @Column(name = "")
     private BigInteger modal = BigInteger.ZERO;
     @Column(name = "NAMA", length = 255)
-    private String nama = "nama";
+    private String nama = "TOTAL";
     @Column(name = "PRIVE")
     private BigInteger prive = BigInteger.ZERO;
-    @OneToMany(mappedBy = "investorId")
+    @OneToMany(mappedBy = "investorId",cascade = {CascadeType.ALL})
     private List<Saham> sahamList;
     @Column(name = "PERSENTASE")
-    private Short persentase = Short.MIN_VALUE;
+    private Short persentase = 100;
+    @Transient
+    private String per = "0%";
 
+    public String getPer() {
+        return per;
+    }
+
+    public void setPer(String per) {
+        this.per = per;
+    }
+    
     public Short getPersentase() {
         return persentase;
     }

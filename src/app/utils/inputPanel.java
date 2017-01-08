@@ -47,7 +47,6 @@ public class inputPanel extends javax.swing.JPanel {
              Class<?> theClass = null;
              
     public Object getTarget() {
-             System.out.println("clazz = " + clazz.getName());
              try    {
              target = clazz.newInstance();
              }
@@ -87,14 +86,14 @@ public class inputPanel extends javax.swing.JPanel {
     
     public inputPanel(Object kelas) 
     {
-        this.initComponents();
+        this.initComponents();        
         this.clazz = (Class) kelas;
        Constructor cons;
         try {
             cons = clazz.getConstructor();
             target = cons.newInstance();            
             System.out.println("Target = " + target.getClass().getSimpleName());
-//            System.out.println("Acces = " + this.getClass().getName());
+            setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Input data->"+ target.getClass().getSimpleName(), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex) {
             Logger.getLogger(inputPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -128,6 +127,7 @@ public class inputPanel extends javax.swing.JPanel {
 
         blessingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
 
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INPUT DATA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         setLayout(new java.awt.GridLayout(0, 1));
     }// </editor-fold>//GEN-END:initComponents
 private Object target;

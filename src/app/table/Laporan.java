@@ -255,7 +255,7 @@ public class Laporan implements Serializable {
         try {
             Message("Berhasil Menyimpan");
         } catch (Exception e) {
-            Message("Gagal Menyimpan \n");
+            javax.swing.JOptionPane.showMessageDialog(null,"Gagal Menyimpan \n");
         }
             
     }
@@ -265,7 +265,7 @@ public class Laporan implements Serializable {
             try {
             Message("Berhasil Menghapus");
         } catch (Exception e) {
-            Message("Gagal Menghapus \n");
+              javax.swing.JOptionPane.showMessageDialog(null,"Gagal Menyimpan \n");
         }
     }
 //     @PostUpdate

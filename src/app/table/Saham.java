@@ -8,7 +8,9 @@ package app.table;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,12 +46,111 @@ public class Saham implements Serializable {
     @Column(name = "ID", nullable = false)
     private Long id;
     @JoinColumn(name = "INVESTOR_ID", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE , CascadeType.REFRESH})
     private Investor investorId;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Modal modal;
-    @OneToOne
-    private Prive prive;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private Prive prive;    
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date Tanggal = new Date();    
+    private String Keterangan = "Keterangan";
+    @Transient
+    private app.table.Bank b;
+
+    public Bank getB() {
+        if (modal != null) {
+            return modal.getTransaksi().getBankId();
+        }
+        else if (prive != null)
+        {
+            return prive.getTransaksi().getBankId();
+        }
+        return b;
+    }
+
+    public void setB(Bank b) {
+         if (modal != null) {
+            modal.getTransaksi().setBankId(b);
+        }
+        else if (prive != null)
+        {
+            prive.getTransaksi().setBankId(b);
+        }
+        this.b = b;
+    }
+    public static final String PROP_KETERANGAN = "Keterangan";
+
+    /**
+     * Get the value of Keterangan
+     *
+     * @return the value of Keterangan
+     */
+    public String getKeterangan() {
+         if (modal != null) {
+            return modal.getKeterangan();
+        }
+        else if (prive != null)
+        {
+            return prive.getKeterangan();
+        }    
+        return Keterangan;
+    }
+
+    /**
+     * Set the value of Keterangan
+     *
+     * @param Keterangan new value of Keterangan
+     */
+    public void setKeterangan(String Keterangan) {
+        String oldKeterangan = this.Keterangan;
+        this.Keterangan = Keterangan;
+        if (modal != null) {
+            modal.setKeterangan(Keterangan);
+        }
+        else if (prive != null)
+        {
+            prive.setKeterangan(Keterangan);
+        }
+    
+        changeSupport.firePropertyChange(PROP_KETERANGAN, oldKeterangan, Keterangan);
+    }
+
+    public static final String PROP_TANGGAL = "Tanggal";
+
+    /**
+     * Get the value of Tanggal
+     *
+     * @return the value of Tanggal
+     */
+    public Date getTanggal() {
+        if (modal != null) {
+            return modal.getTanggal();
+        }
+        else if (prive != null)
+        {
+            return prive.getTanggal();
+        }
+        return Tanggal;
+    }
+
+    /**
+     * Set the value of Tanggal
+     *
+     * @param Tanggal new value of Tanggal
+     */
+    public void setTanggal(Date Tanggal) {
+        Date oldTanggal = this.Tanggal;
+        this.Tanggal = Tanggal;
+        if (modal != null) {
+            modal.setTanggal(Tanggal);
+        }
+        else if (prive != null)
+        {
+            prive.setTanggal(Tanggal);
+        }
+        changeSupport.firePropertyChange(PROP_TANGGAL, oldTanggal, Tanggal);
+    }
 
     public Modal getModal() {
         return modal;

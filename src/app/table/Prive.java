@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import app.ListUrutan;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -14,6 +15,7 @@ import javax.persistence.OneToOne;
  * @author SEED
  */
 @Entity
+@ListUrutan({"tanggal","keterangan","jumlah"})
 public class Prive extends Laporan implements Serializable {    
     @OneToOne(mappedBy = "prive")
     private Saham saham;

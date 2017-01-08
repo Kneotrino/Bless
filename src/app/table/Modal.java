@@ -9,18 +9,9 @@ import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,6 +34,14 @@ public class Modal extends Laporan implements Serializable {
     public static final String PROP_PERSEN = "Persen";
     @OneToOne(mappedBy = "modal")
     private Saham saham;
+
+    public Saham getSaham() {
+        return saham;
+    }
+
+    public void setSaham(Saham saham) {
+        this.saham = saham;
+    }
 
     /**
      * Get the value of Persen

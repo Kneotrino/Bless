@@ -218,7 +218,6 @@ public class panelModal extends JPanel {
         for (Modal modal : list) {
             float t = total.floatValue();
             float p = modal.getJumlah().floatValue();
-//            int t = total.intValue();
             if (p > 0) {
             modal.setPersen(df.format((p/t)*100)+"%");
             }

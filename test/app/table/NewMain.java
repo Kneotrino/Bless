@@ -29,12 +29,12 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-//        Object b = new app.table.Trips();
-//        Field[] fields = b.getClass().getDeclaredFields();
-//            System.out.print(" @app.ListUrutan({");
-//        for (Field field : fields) {
-//            System.out.print(",\"" + field.getName()+"\"");
-//        }
+        Object b = new app.table.Investor();
+        Field[] fields = b.getClass().getDeclaredFields();
+            System.out.print(" @app.ListUrutan({");
+        for (Field field : fields) {
+            System.out.print(",\"" + field.getName()+"\"");
+        }
 //            System.out.print(" })\n");
 //            List<app.table.Debitur> dp = new ArrayList<>();
 //            LinkedHashMap<String,String> nilai;
@@ -45,7 +45,7 @@ public class NewMain {
 //            nilai.put("REF 2", "getDebiturId");
 //            nilai.put("REF 4", "getDebiturId");
 //            System.out.println(nilai);
-        NewMain.createStringQuery(null, "");
+//        NewMain.createStringQuery(null, "");
     }
     
     public static String createStringQuery(Class<?> entClazz, String keyword) {
