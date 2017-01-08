@@ -46,7 +46,7 @@ public class Saham implements Serializable {
     @Column(name = "ID", nullable = false)
     private Long id;
     @JoinColumn(name = "INVESTOR_ID", referencedColumnName = "ID")
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE , CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Investor investorId;
     @OneToOne(cascade = {CascadeType.ALL})
     private Modal modal;

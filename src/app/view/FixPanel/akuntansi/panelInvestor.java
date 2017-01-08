@@ -378,11 +378,8 @@ public class panelInvestor extends JPanel {
     }//GEN-LAST:event_deleteDetailButtonActionPerformed
     private void newDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButtonActionPerformed
         int index = masterTable.getSelectedRow();
-        System.out.println("index = " + index);        
         app.table.Investor i = list.get(masterTable.convertRowIndexToModel(index));
-        System.out.println("i = " + i);
         Collection<app.table.Saham> ss = i.getSahamList();
-        System.out.println("ss = " + ss);
         if (ss == null) {
             ss = new LinkedList<app.table.Saham>();
             i.setSahamList((List) ss);
@@ -409,8 +406,8 @@ public class panelInvestor extends JPanel {
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = ss.size() - 1;
-//        detailTable.setRowSelectionInterval(row, row);
-//        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+        detailTable.setRowSelectionInterval(row, row);
+        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
     public void Hitung()
     {
@@ -442,6 +439,7 @@ public class panelInvestor extends JPanel {
         temp.setModal(total3);
         temp.setPrive(total4);
         temp.setPer("100%");
+        list.add(temp);
     }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
@@ -451,8 +449,12 @@ public class panelInvestor extends JPanel {
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
+        java.util.List Res = this.bankQuery.getResultList();
+        this.bankList.clear();
+        this.bankList.addAll(Res);
         list.clear();
         list.addAll(data);
+        Hitung();
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -480,7 +482,6 @@ public class panelInvestor extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
-//            this.refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();

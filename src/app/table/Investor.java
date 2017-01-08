@@ -65,7 +65,7 @@ public class Investor implements Serializable {
     private String nama = "TOTAL";
     @Column(name = "PRIVE")
     private BigInteger prive = BigInteger.ZERO;
-    @OneToMany(mappedBy = "investorId",cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "investorId",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     private List<Saham> sahamList;
     @Column(name = "PERSENTASE")
     private Short persentase = 100;
