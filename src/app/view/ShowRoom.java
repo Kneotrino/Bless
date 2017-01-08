@@ -89,6 +89,7 @@ public class ShowRoom extends javax.swing.JFrame {
         panelModal1 = new app.view.FixPanel.panelModal();
         panelMaster1 = new app.view.FixPanel.panelMaster(1);
         panelMaster2 = new app.view.FixPanel.panelMaster(0);
+        panelInvestor1 = new app.view.FixPanel.akuntansi.panelInvestor();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -98,6 +99,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem27 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem21 = new javax.swing.JMenuItem();
@@ -171,6 +173,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(panelModal1, "Modal");
         getContentPane().add(panelMaster1, "Lap1");
         getContentPane().add(panelMaster2, "Lap0");
+        getContentPane().add(panelInvestor1, "Investor");
 
         jMenu1.setText("Akutansi");
 
@@ -222,6 +225,14 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem3);
+
+        jMenuItem27.setText("Investor/Pemilik Modal");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem27);
 
         jMenuItem19.setText("Modal");
         jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
@@ -518,6 +529,12 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        this.chandePanel("Investor");
+        panelInvestor1.Refresh();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -583,6 +600,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -607,6 +625,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JTextArea jTextArea1;
     private app.view.panel.hutang.panelHutang panelHutang1;
+    private app.view.FixPanel.akuntansi.panelInvestor panelInvestor1;
     private app.view.FixPanel.panelLeasing panelLeasing2;
     private app.view.FixPanel.panelMaster panelMaster1;
     private app.view.FixPanel.panelMaster panelMaster2;

@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,6 +41,8 @@ public class Modal extends Laporan implements Serializable {
     @Transient    
     private String Persen;
     public static final String PROP_PERSEN = "Persen";
+    @OneToOne(mappedBy = "modal")
+    private Saham saham;
 
     /**
      * Get the value of Persen
