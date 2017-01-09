@@ -60,7 +60,16 @@ public class Perjalanan extends Laporan implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL})
     private Pemasukan Kembali;
     @OneToOne(cascade = {CascadeType.ALL})
-    private Pengeluaran Transfer;
+    private Transfer transfer;
+//    private Pengeluaran Transfer;
+
+    public Transfer getTransfer() {
+        return transfer;
+    }
+
+    public void setTransfer(Transfer transfer) {
+        this.transfer = transfer;
+    }
 
     public Pemasukan getKembali() {
         return Kembali;
@@ -70,13 +79,13 @@ public class Perjalanan extends Laporan implements Serializable {
         this.Kembali = Kembali;
     }
 
-    public Pengeluaran getTransfer() {
-        return Transfer;
-    }
-
-    public void setTransfer(Pengeluaran Transfer) {
-        this.Transfer = Transfer;
-    }
+//    public Pengeluaran getTransfer() {
+//        return Transfer;
+//    }
+//
+//    public void setTransfer(Pengeluaran Transfer) {
+//        this.Transfer = Transfer;
+//    }
 
     public Perjalanan() {
     }
@@ -150,12 +159,12 @@ public class Perjalanan extends Laporan implements Serializable {
     }
 
     public void setTanggal2(Date tanggal) {
-        if ( Transfer == null) {
+        if ( this.transfer == null) {
             Kembali.setTanggal(tanggal);
         }
         else 
         {
-            Transfer.setTanggal(tanggal);
+            this.transfer.setTanggal(tanggal);
         }
         setTanggal(tanggal);
         

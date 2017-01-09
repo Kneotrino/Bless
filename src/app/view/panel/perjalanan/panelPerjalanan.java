@@ -438,11 +438,11 @@ public class panelPerjalanan extends JPanel {
         app.table.Perjalanan p = new app.table.Perjalanan();
         Saldo ts  = new Saldo();
         Saldo ts1 = new Saldo();
-
         if (evt.getSource() == newButton2) {
                 p = (Perjalanan) this.inputPanel2.getTarget();
                 ts.setBankId((Bank) this.jComboBox2.getSelectedItem());
-                Pengeluaran p1 = new app.table.Pengeluaran();
+//                Pengeluaran p1 = new app.table.Pengeluaran();
+                app.table.Transfer p1 = new app.table.Transfer();
                 p1.setJumlah(p.getJumlah());
                 p1.setKeterangan(p.getKeterangan());
                 p1.setTanggal(p.getTanggal());

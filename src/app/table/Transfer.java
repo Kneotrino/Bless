@@ -19,7 +19,8 @@ import javax.persistence.OneToOne;
 @Entity
 @app.ListUrutan({"tanggal","keterangan","jumlah"})
 public class Transfer extends Laporan implements Serializable {
-    @OneToOne(mappedBy = "Transfer")
+
+    @OneToOne(mappedBy = "transfer")
     private Perjalanan perjalanan;
-    
+
 }
