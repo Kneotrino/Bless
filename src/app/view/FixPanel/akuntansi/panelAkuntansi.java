@@ -35,6 +35,7 @@ import javax.swing.JPanel;
 public class panelAkuntansi extends JPanel {
     private java.util.List<Akun> AkuntansiList = new ArrayList<>();
     private java.util.List<Akun> LabaList = new ArrayList<>();
+    private java.util.List<Akun> LaporanPenyesuaian = new ArrayList<>();
 
     public List<Akun> getAkuntansiList() {
         return AkuntansiList;
@@ -191,12 +192,12 @@ public class panelAkuntansi extends JPanel {
         LabaList.add(laba);
         LabaList.add(
                 new Akun()
-                .setAkun("Pemasukan")
+                .setAkun("total Pemasukan")
                 .setPengeluaran(laba.getPengeluaran())
         );
         LabaList.add(
                 new Akun()
-                .setAkun("Pengeluaran")
+                .setAkun("Total Pengeluaran")
                 .setPemasukan(laba.getPemasukan())
         );
         LabaList.add(
@@ -224,8 +225,12 @@ public class panelAkuntansi extends JPanel {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
 
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
+        setLayout(new java.awt.GridLayout(2, 0));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
@@ -289,6 +294,30 @@ public class panelAkuntansi extends JPanel {
 
         add(jScrollPane2);
 
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LAPORAN PERUBAHAN MODAL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable3.setAutoCreateRowSorter(true);
+        jTable3.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        jScrollPane3.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        add(jScrollPane3);
+
+        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable4.setAutoCreateRowSorter(true);
+        jTable4.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        jScrollPane4.setViewportView(jTable4);
+        if (jTable4.getColumnModel().getColumnCount() > 0) {
+            jTable4.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        add(jScrollPane4);
+
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -305,8 +334,12 @@ public class panelAkuntansi extends JPanel {
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
