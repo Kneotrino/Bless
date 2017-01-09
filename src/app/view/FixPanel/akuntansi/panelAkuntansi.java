@@ -92,9 +92,9 @@ public class panelAkuntansi extends JPanel {
         List<app.table.Bank> list = entityManager.createQuery("SELECT en FROM Bank en", app.table.Bank.class).getResultList();       
         Akun Kas = new Akun(X++)
                 .setAkun("Gabungan Kas");                
-        for (Bank bank : list) {
-            Kas.addPemasukan(bank.getFoo());
-        }
+//        for (Bank bank : list) {
+//            Kas.addPemasukan(bank.getFoo());
+//        }
         AkuntansiList.add(Kas);            
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
@@ -205,6 +205,7 @@ public class panelAkuntansi extends JPanel {
             total.addPengeluaran(akun.getPengeluaran());
             total.addPemasukan(akun.getPemasukan());
         }
+        
         Akun laba = new Akun()
                 .setAkun("Total");
         for (Akun akun : LabaList) {
@@ -228,7 +229,9 @@ public class panelAkuntansi extends JPanel {
                 .setPengeluaran(laba.getPengeluaran())
                 .subPengeluaran(laba.getPemasukan())
         );
-        AkuntansiList.add(total);                    
+        BigInteger math = new BigInteger("0").subtract(total.getPemasukan()).add(total.getPengeluaran());
+        Kas.setPemasukan(math);
+        AkuntansiList.add(total.addPemasukan(math));                    
         initComponents();
     }
 
@@ -243,14 +246,34 @@ public class panelAkuntansi extends JPanel {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LAPORAN PERUBAHAN MODAL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable3.setAutoCreateRowSorter(true);
+        jTable3.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        jScrollPane3.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable4.setAutoCreateRowSorter(true);
+        jTable4.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        jScrollPane4.setViewportView(jTable4);
+        if (jTable4.getColumnModel().getColumnCount() > 0) {
+            jTable4.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         setLayout(new java.awt.GridLayout(2, 0));
 
@@ -315,30 +338,6 @@ public class panelAkuntansi extends JPanel {
         }
 
         add(jScrollPane2);
-
-        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LAPORAN PERUBAHAN MODAL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
-
-        jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        jTable3.setAutoCreateRowSorter(true);
-        jTable3.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jScrollPane3.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setMaxWidth(50);
-        }
-
-        add(jScrollPane3);
-
-        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
-
-        jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        jTable4.setAutoCreateRowSorter(true);
-        jTable4.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        jScrollPane4.setViewportView(jTable4);
-        if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(0).setMaxWidth(50);
-        }
-
-        add(jScrollPane4);
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents

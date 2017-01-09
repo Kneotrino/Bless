@@ -481,13 +481,13 @@ public class panelPiutang extends JPanel {
     }//GEN-LAST:event_newButton1ActionPerformed
 
     private void newDetailButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton1ActionPerformed
-        this.jDialog2.setSize(400, 300);
+        this.jDialog2.setSize(500, 500);
         this.jDialog2.setLocationRelativeTo(null);
         this.jDialog2.show();        // TODO add your handling code here:
     }//GEN-LAST:event_newDetailButton1ActionPerformed
 
     private void newDetailButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton2ActionPerformed
-        this.jDialog3.setSize(400, 300);
+        this.jDialog3.setSize(500, 500);
         this.jDialog3.setLocationRelativeTo(null);
         this.jDialog3.show();
         // TODO add your handling code here:
