@@ -10,11 +10,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author SEED
  */
 @Entity
-public class Transfer extends Laporan implements Serializable {    
+@app.ListUrutan({"tanggal","keterangan","jumlah"})
+public class Transfer extends Laporan implements Serializable {
+    @OneToOne(mappedBy = "Transfer")
+    private Perjalanan perjalanan;
+    
 }

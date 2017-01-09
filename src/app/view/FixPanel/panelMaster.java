@@ -313,13 +313,8 @@ public void Rest()
             for (Laporan re : res) {
                 entityManager.refresh(re);
             }
-//        app.table.Util.RefreshLaporan();
-//        app.table.Util.RefreshBank();
-//        java.util.List Res = this.bankQuery.getResultList();
         this.bankList.clear();
-            System.out.println("Error 8");
         this.bankList.addAll(bankQuery.getResultList());
-            System.out.println("Error 9");
         list.clear();
         list.addAll((Collection<? extends Laporan>) res);
         
@@ -443,8 +438,8 @@ public void Rest()
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new panelMaster(0));
-//                frame.setContentPane(new panelMaster(app.table.Transfer.class));
+//                frame.setContentPane(new panelMaster(0));
+                frame.setContentPane(new panelMaster(app.table.Transfer.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

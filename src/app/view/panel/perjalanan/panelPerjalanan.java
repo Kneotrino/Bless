@@ -443,7 +443,6 @@ public class panelPerjalanan extends JPanel {
                 p = (Perjalanan) this.inputPanel2.getTarget();
                 ts.setBankId((Bank) this.jComboBox2.getSelectedItem());
                 Pengeluaran p1 = new app.table.Pengeluaran();
-//                app.table.PerjalananPengeluaran p1 = new PerjalananPengeluaran();
                 p1.setJumlah(p.getJumlah());
                 p1.setKeterangan(p.getKeterangan());
                 p1.setTanggal(p.getTanggal());
@@ -451,14 +450,12 @@ public class panelPerjalanan extends JPanel {
                 p.setTransaksi(ts1);                
                 p1.setTransaksi(ts);
                 p.setTransfer(p1);
-//                entityManager.persist(p1);
             }
             else if (evt.getSource() == newButton3) {
                 System.out.println("Kirim/Pengeluaran");
                 p = (Perjalanan) this.inputPanel3.getTarget();
                 ts.setBankId((Bank) this.jComboBox3.getSelectedItem());
                 Pemasukan p1 = new Pemasukan();
-//                app.table.PerjalananPemasukan p1 = new PerjalananPemasukan();
                 p1.setJumlah(p.getJumlah());
                 p1.setKeterangan(p.getKeterangan());
                 p1.setTanggal(p.getTanggal());

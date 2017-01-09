@@ -47,8 +47,10 @@ public class PanelBank extends JPanel {
             Bank find2 = this.entityManager.find(app.table.Bank.class, -2);
             System.out.println("find = " + find);
             System.out.println("find = " + find2);
-            boolean name = find ==null;
+            System.out.println("foo");
+//            boolean name = find ==null;
             if ((find ==null) && (find2 == null)) {
+                    System.out.println("foo 1");
                     Bank bank = new app.table.Bank(-1);
                     Bank peter = new app.table.Bank(-2);
                     bank.setNamaBank("Kas'");
