@@ -223,7 +223,7 @@ public class Piutang implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    @PostPersist    @PostUpdate @PostLoad
+    @PostPersist
     public void Hitung()
     {
         BigInteger masuk = BigInteger.ZERO;
@@ -234,7 +234,6 @@ public class Piutang implements Serializable {
         }
         setSisa(keluar);
         setPimjaman(masuk);
-//        System.out.println("Hitung");
          
     }
 }

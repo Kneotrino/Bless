@@ -150,6 +150,7 @@ public class panelAkuntansi extends JPanel {
         LabaList.add(Jasa);
         LabaList.add(Pemasukan);
         LabaList.add(Peminjaman);
+        LabaList.add(Hutang);
         //Akun Pengeluaran
         AkuntansiList.add(bebanMobil);
         AkuntansiList.add(bebanHutang);
@@ -181,8 +182,6 @@ public class panelAkuntansi extends JPanel {
             total.addPengeluaran(akun.getPengeluaran());
             total.addPemasukan(akun.getPemasukan());
         }
-        System.out.println("Operasional = " + Operasional);
-
         Akun laba = new Akun()
                 .setAkun("Total");
         for (Akun akun : LabaList) {
