@@ -498,7 +498,7 @@ public class panelPerjalanan extends JPanel {
         list.addAll(data);
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
-        Peter = this.entityManager.find(app.table.Bank.class, -1);
+        Peter = this.entityManager.find(app.table.Bank.class, -2);
         bankList.remove(Peter);
         Hitung();
 
