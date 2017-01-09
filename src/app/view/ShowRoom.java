@@ -105,16 +105,16 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -261,6 +261,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Management");
+        jMenu2.add(jSeparator3);
 
         jMenuItem25.setText("Management Mobil");
         jMenuItem25.setEnabled(false);
@@ -289,15 +290,6 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem16);
-        jMenu2.add(jSeparator3);
-
-        jMenuItem9.setText("Keuangan");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem9);
         jMenu2.add(jSeparator4);
 
         jMenuItem24.setText("Management Sumber Daya");
@@ -319,6 +311,14 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem17);
+
+        jMenuItem9.setText("Keuangan");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem9);
         jMenu2.add(jSeparator6);
 
         jMenuItem23.setText("Management Jasa");

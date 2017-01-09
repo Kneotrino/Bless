@@ -34,6 +34,7 @@ import javax.swing.JPanel;
  */
 public class panelAkuntansi extends JPanel {
     private java.util.List<Akun> AkuntansiList = new ArrayList<>();
+    private java.util.List<Akun> LabaList = new ArrayList<>();
 
     public List<Akun> getAkuntansiList() {
         return AkuntansiList;
@@ -45,7 +46,6 @@ public class panelAkuntansi extends JPanel {
     public List getList(Class kelas)
     {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en";
-//        System.out.println("que = " + que);
         TypedQuery createQuery = entityManager.createQuery(que, kelas);
         return createQuery.getResultList();
     }
@@ -112,7 +112,6 @@ public class panelAkuntansi extends JPanel {
         Akun  bebanJasa = new Akun()
                 .setAkun("Beban Jasa")
                 .setPemasukan(sumAll(getList(app.table.BayarJasaPengeluaran.class)));
-//        AkuntansiList.add(Rental);        
         Akun  bebanPeminjaman = new Akun()
                 .setAkun("Beban Peminjaman/Piutang")
                 .setPemasukan(sumAll(getList(app.table.BayarhutangPengeluaran.class)));
@@ -128,7 +127,6 @@ public class panelAkuntansi extends JPanel {
         Akun bebanMobil = new Akun()
                 .setAkun("Beban Mobil")
                 .setPemasukan(sumAll(getList(app.table.MobilPengeluaran.class)));
-        //Akun Pemasukan
         BigInteger Transfer  = sumAll(getList(app.table.PerjalananPemasukan.class)).negate();
         Akun SaldoPerjalanan = new Akun()
                 .setAkun("Saldo Perjalanan")
@@ -138,15 +136,20 @@ public class panelAkuntansi extends JPanel {
 //                .addPengeluaran(Transfer)
                 ;
 //                .setPengeluaran(sumAll(getList(app.table.PerjalananPemasukan.class)));      
-        AkuntansiList.add(Modal);
-        AkuntansiList.add(Prive);
+        AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
+//        AkuntansiList.add(Prive);
         AkuntansiList.add(Hutang);
-        AkuntansiList.add(SaldoPerjalanan);        
+//        AkuntansiList.add(SaldoPerjalanan);        
         AkuntansiList.add(Mobil);        
         AkuntansiList.add(Rental);        
         AkuntansiList.add(Jasa);        
         AkuntansiList.add(Pemasukan);        
         AkuntansiList.add(Peminjaman);        
+        LabaList.add(Mobil);
+        LabaList.add(Rental);
+        LabaList.add(Jasa);
+        LabaList.add(Pemasukan);
+        LabaList.add(Peminjaman);
         //Akun Pengeluaran
         AkuntansiList.add(bebanMobil);
         AkuntansiList.add(bebanHutang);
@@ -157,14 +160,51 @@ public class panelAkuntansi extends JPanel {
         AkuntansiList.add(Operasional);
         AkuntansiList.add(Pegawai);                    
         AkuntansiList.add(Asset);
+        LabaList.add(bebanMobil);
+        LabaList.add(bebanHutang);
+        LabaList.add(bebanPeminjaman);
+        LabaList.add(pengeluaranRental);
+        LabaList.add(bebanJasa);
+        LabaList.add(Perjalanan);
+        LabaList.add(Operasional);
+        LabaList.add(Pegawai);                    
+        LabaList.add(Asset);
+
         X = 1;
         total.setPemasukan(BigInteger.ZERO);
         total.setPengeluaran(BigInteger.ZERO);
+//        System.out.println("Operasional.getPemasukan() = " + Operasional.getPemasukan());
+        Operasional.subPemasukan(Transfer.negate());
+//        System.out.println("Operasional.getPemasukan() = " + Operasional.getPemasukan());
         for (Akun akun : AkuntansiList) {
             akun.setNomor(X++);
             total.addPengeluaran(akun.getPengeluaran());
             total.addPemasukan(akun.getPemasukan());
+//            LabaList.add(akun);
         }
+        Akun laba = new Akun()
+                .setAkun("Total");
+        for (Akun akun : LabaList) {
+            laba.addPemasukan(akun.getPemasukan());
+            laba.addPengeluaran(akun.getPengeluaran());
+        }
+        LabaList.add(laba);
+        LabaList.add(
+                new Akun()
+                .setAkun("Pemasukan")
+                .setPengeluaran(laba.getPengeluaran())
+        );
+        LabaList.add(
+                new Akun()
+                .setAkun("Pengeluaran")
+                .setPemasukan(laba.getPemasukan())
+        );
+        LabaList.add(
+                new Akun()
+                .setAkun("Profit")
+                .setPengeluaran(laba.getPengeluaran())
+                .subPengeluaran(laba.getPemasukan())
+        );
         AkuntansiList.add(total);                    
         initComponents();
     }
@@ -222,9 +262,26 @@ public class panelAkuntansi extends JPanel {
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
-        jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable2.setAutoCreateRowSorter(true);
-        jTable2.setBorder(javax.swing.BorderFactory.createTitledBorder("TABEL LABA/RUGI"));
+        jTable2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${labaList}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable2);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
+        columnBinding.setColumnName("Nomor");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
+        columnBinding.setColumnName("Akun");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
         jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -235,6 +292,13 @@ public class panelAkuntansi extends JPanel {
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
+    public List<Akun> getLabaList() {
+        return LabaList;
+    }
+
+    public void setLabaList(List<Akun> LabaList) {
+        this.LabaList = LabaList;
+    }
         
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

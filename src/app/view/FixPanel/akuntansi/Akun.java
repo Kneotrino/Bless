@@ -51,7 +51,9 @@ public class Akun implements Serializable
         return this;
     }
     public Akun subPemasukan(BigInteger Pemasukan) {
+//        System.out.println("Pemasukan = " + Pemasukan);
         this.Pemasukan = this.Pemasukan.subtract(Pemasukan);
+//        System.out.println("this.Pemasukan = " + this.Pemasukan);
         return this;
     }
 
