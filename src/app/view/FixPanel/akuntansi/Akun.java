@@ -83,7 +83,7 @@ public class Akun implements Serializable
         return "["
                 + " No = "+ nomor 
                 + " Akun = "+ akun 
-                + " PEmasukan = "+ Pemasukan 
+                + " Pemasukan = "+ Pemasukan 
                 + " Pengeluaran = "+ Pengeluaran + " ]\n";
     }
 }

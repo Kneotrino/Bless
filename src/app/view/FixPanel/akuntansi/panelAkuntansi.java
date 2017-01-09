@@ -136,19 +136,10 @@ public class panelAkuntansi extends JPanel {
         Akun bebanMobil = new Akun()
                 .setAkun("Beban Mobil")
                 .setPemasukan(sumAll(getList(app.table.MobilPengeluaran.class)));
-        BigInteger Transfer  = sumAll(getList(app.table.PerjalananPemasukan.class)).negate();
-        Akun SaldoPerjalanan = new Akun()
-                .setAkun("Saldo Perjalanan")
-                .setPemasukan(Transfer);
         Akun PembagianLaba = new Akun()
-                .setAkun("Pembagian Laba")
-//                .addPengeluaran(Transfer)
-                ;
-//                .setPengeluaran(sumAll(getList(app.table.PerjalananPemasukan.class)));      
+                .setAkun("Pembagian Laba");
         AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
-//        AkuntansiList.add(Prive);
         AkuntansiList.add(Hutang);
-//        AkuntansiList.add(SaldoPerjalanan);        
         AkuntansiList.add(Mobil);        
         AkuntansiList.add(Rental);        
         AkuntansiList.add(Jasa);        
@@ -183,14 +174,15 @@ public class panelAkuntansi extends JPanel {
         total.setPemasukan(BigInteger.ZERO);
         total.setPengeluaran(BigInteger.ZERO);
 //        System.out.println("Operasional.getPemasukan() = " + Operasional.getPemasukan());
-        Operasional.subPemasukan(Transfer.negate());
+//        Operasional.subPemasukan(Transfer.negate());
 //        System.out.println("Operasional.getPemasukan() = " + Operasional.getPemasukan());
         for (Akun akun : AkuntansiList) {
             akun.setNomor(X++);
             total.addPengeluaran(akun.getPengeluaran());
             total.addPemasukan(akun.getPemasukan());
-//            LabaList.add(akun);
         }
+        System.out.println("Operasional = " + Operasional);
+
         Akun laba = new Akun()
                 .setAkun("Total");
         for (Akun akun : LabaList) {
