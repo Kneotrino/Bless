@@ -74,9 +74,6 @@ public class Saldo implements Serializable {
     @ManyToOne( cascade = {
         CascadeType.MERGE
             ,CascadeType.DETACH
-//            ,CascadeType.REFRESH
-//            ,CascadeType.REMOVE
-//            ,CascadeType.REFRESH
     })
     private Bank bankId;
     @OneToOne(mappedBy = "Transaksi", cascade = CascadeType.ALL)

@@ -91,7 +91,7 @@ public class Hutang implements Serializable {
     @Column(name = "TANGGALPINJAM")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggalpinjam = new Date();
-    @OneToMany(mappedBy = "hutangid",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "hutangid",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     @OrderBy("tanggal ASC")
     private List<Bayarhutang> bayarhutangs;
     @Column(name = "BUNGA")

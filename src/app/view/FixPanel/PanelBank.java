@@ -46,12 +46,13 @@ public class PanelBank extends JPanel {
             Bank find = this.entityManager.find(app.table.Bank.class, -1);
             Bank find2 = this.entityManager.find(app.table.Bank.class, -2);
             System.out.println("find = " + find);
+            System.out.println("find = " + find2);
             boolean name = find ==null;
             if ((find ==null) && (find2 == null)) {
                     Bank bank = new app.table.Bank(-1);
                     Bank peter = new app.table.Bank(-2);
-                    bank.setNamaBank("K Peter'");
-                    peter.setNamaBank("Kas");
+                    bank.setNamaBank("Kas'");
+                    peter.setNamaBank("Peter");
                     entityManager.persist(bank);
                     entityManager.persist(peter);
                     list.add(bank);

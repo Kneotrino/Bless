@@ -37,6 +37,14 @@ public class panelAkuntansi extends JPanel {
     private java.util.List<Akun> LabaList = new ArrayList<>();
     private java.util.List<Akun> LaporanPenyesuaian = new ArrayList<>();
 
+    public List<Akun> getLaporanPenyesuaian() {
+        return LaporanPenyesuaian;
+    }
+
+    public void setLaporanPenyesuaian(List<Akun> LaporanPenyesuaian) {
+        this.LaporanPenyesuaian = LaporanPenyesuaian;
+    }
+
     public List<Akun> getAkuntansiList() {
         return AkuntansiList;
     }
@@ -50,7 +58,7 @@ public class panelAkuntansi extends JPanel {
         TypedQuery createQuery = entityManager.createQuery(que, kelas);
         return createQuery.getResultList();
     }
-    public BigInteger sumAll(List<? extends Laporan> laporanList)
+    private BigInteger sumAll(List<? extends Laporan> laporanList)
     {
         BigInteger temp = new BigInteger("0");
         for (Laporan list : laporanList) {
@@ -67,12 +75,12 @@ public class panelAkuntansi extends JPanel {
         Akun total = new Akun().setAkun("Neraca Total");
         int X =1;
         List<app.table.Bank> list = getList(app.table.Bank.class);       
-        for (Bank bank : list) {
         Akun Kas = new Akun(X++)
-                .setAkun(bank.getNamaBank())
-                .setPemasukan(bank.getFoo());
-        AkuntansiList.add(Kas);            
+                .setAkun("Gabungan Kas");                
+        for (Bank bank : list) {
+            Kas.addPemasukan(bank.getFoo());
         }
+        AkuntansiList.add(Kas);            
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
                  .setPengeluaran(sumAll(getList(app.table.Modal.class)));
@@ -371,7 +379,7 @@ public class panelAkuntansi extends JPanel {
                 app.table.Util.RefreshBank();
                 app.table.Util.RefreshLaporan();
                 javax.swing.JDialog jDialog1 = new JDialog();
-                jDialog1.setSize(1000, 700);
+                jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
                 jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
                 jDialog1.getContentPane().add(new panelAkuntansi());

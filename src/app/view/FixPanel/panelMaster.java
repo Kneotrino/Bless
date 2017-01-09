@@ -303,19 +303,11 @@ public void Rest()
 
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        if (temp != -1) {            
-            System.out.println("Refrest Rest = "+ temp);
-            Rest();
-        }
-        else {
-            System.out.println("Kelas name = " + clazz.getSimpleName());    
-//            System.out.println("error 1");
+        System.out.println("Kelas name = " + clazz.getSimpleName());    
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();        
-//            System.out.println("error 2");
         String clzName = this.clazz.getSimpleName();
         String que = "SELECT en FROM " + clzName + " en";
-        System.out.println("que = " + que);
         TypedQuery<? extends Laporan> createQuery = entityManager.createQuery(que, clazz);
         List<? extends Laporan> res = createQuery.getResultList();           
             for (Laporan re : res) {
@@ -323,12 +315,15 @@ public void Rest()
             }
 //        app.table.Util.RefreshLaporan();
 //        app.table.Util.RefreshBank();
-        java.util.List Res = this.bankQuery.getResultList();
+//        java.util.List Res = this.bankQuery.getResultList();
         this.bankList.clear();
-        this.bankList.addAll(Res);
+            System.out.println("Error 8");
+        this.bankList.addAll(bankQuery.getResultList());
+            System.out.println("Error 9");
         list.clear();
         list.addAll((Collection<? extends Laporan>) res);
-        }
+        
+
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -448,8 +443,8 @@ public void Rest()
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-//                frame.setContentPane(new panelMaster(1));
-                frame.setContentPane(new panelMaster(app.table.Transfer.class));
+                frame.setContentPane(new panelMaster(0));
+//                frame.setContentPane(new panelMaster(app.table.Transfer.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
