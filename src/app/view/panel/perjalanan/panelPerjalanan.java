@@ -72,7 +72,7 @@ public class panelPerjalanan extends JPanel {
         jDialog1 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Trips.class);
         newButton = new javax.swing.JButton();
-        bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
+        bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b order by b.namaBank");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
         newDetailButton = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
@@ -133,11 +133,13 @@ public class panelPerjalanan extends JPanel {
         inputPanel2.add(jLabel1);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setSelectedIndex(-1);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
 
+        jComboBox2.addActionListener(formListener);
         inputPanel2.add(jComboBox2);
 
         newButton2.setText("Simpan");
@@ -153,6 +155,7 @@ public class panelPerjalanan extends JPanel {
         inputPanel3.add(jLabel2);
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setSelectedIndex(-1);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox3);
@@ -293,7 +296,6 @@ public class panelPerjalanan extends JPanel {
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(30);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.perjalananList}");
@@ -308,14 +310,11 @@ public class panelPerjalanan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal2}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transfer.pengeluaran}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kirim2}"));
         columnBinding.setColumnName("Transfer");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kembali.pemasukan}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kembali2}"));
         columnBinding.setColumnName("Kembalikan");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Pemasukan Perjalanan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran Perjalanan");
@@ -342,8 +341,8 @@ public class panelPerjalanan extends JPanel {
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
-            detailTable.getColumnModel().getColumn(9).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1));
-            detailTable.getColumnModel().getColumn(11).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
+            detailTable.getColumnModel().getColumn(8).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1));
+            detailTable.getColumnModel().getColumn(10).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
         }
 
         add(detailScrollPane);
@@ -400,6 +399,9 @@ public class panelPerjalanan extends JPanel {
             }
             else if (evt.getSource() == newButton4) {
                 panelPerjalanan.this.newButton4ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jComboBox2) {
+                panelPerjalanan.this.jComboBox2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -526,7 +528,7 @@ public class panelPerjalanan extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
-            Util.RefreshLaporan();
+//            Util.RefreshLaporan();
 
         } catch (RollbackException rex) {
             rex.printStackTrace();
@@ -538,7 +540,8 @@ public class panelPerjalanan extends JPanel {
             list.clear();
             list.addAll(merged);
         }
-        this.Hitung();
+        this.refreshButton1ActionPerformed(evt);
+//        this.Hitung();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void newDetailButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton1ActionPerformed
@@ -598,6 +601,10 @@ public class panelPerjalanan extends JPanel {
         // TODO add your handling code here:
         this.saveButtonActionPerformed(evt);
     }//GEN-LAST:event_saveButton1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

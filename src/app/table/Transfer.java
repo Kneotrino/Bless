@@ -6,6 +6,7 @@
 package app.table;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,5 +23,12 @@ public class Transfer extends Laporan implements Serializable {
 
     @OneToOne(mappedBy = "transfer")
     private Perjalanan perjalanan;
+    public Perjalanan getPerjalanan() {
+        return perjalanan;
+    }
+
+    public void setPerjalanan(Perjalanan perjalanan) {
+        this.perjalanan = perjalanan;
+    }
 
 }

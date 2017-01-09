@@ -90,8 +90,27 @@ public class Perjalanan extends Laporan implements Serializable {
     public Perjalanan() {
     }
 
-
-
+    public BigInteger getKirim2() {
+        BigInteger temp = transfer==null?null:transfer.getJumlah();
+        return temp;
+    }
+    public BigInteger getKembali2() {
+        BigInteger temp = Kembali==null?null:Kembali.getJumlah();
+        return temp;
+    }    
+    public void setKembali2(BigInteger kirim) {
+        setJumlah(kirim);
+        if (Kembali !=null) {
+            Kembali.setJumlah(kirim);
+        }
+    }
+    public void setKirim2(BigInteger kirim) {
+        BigInteger oldKirim = this.kirim;
+        setJumlah(kirim);
+        if (transfer !=null) {
+            transfer.setJumlah(kirim);
+        }
+    }
     public BigInteger getKirim() {
         return kirim;
     }

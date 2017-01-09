@@ -439,7 +439,7 @@ public void Rest()
             public void run() {
                 JFrame frame = new JFrame();
 //                frame.setContentPane(new panelMaster(0));
-                frame.setContentPane(new panelMaster(app.table.Transfer.class));
+                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
