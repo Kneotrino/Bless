@@ -22,7 +22,10 @@ import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -54,8 +57,16 @@ public class panelAkuntansi extends JPanel {
     }
     public List getList(Class kelas)
     {
-        String que = "SELECT en FROM " + kelas.getSimpleName() + " en";
-        TypedQuery createQuery = entityManager.createQuery(que, kelas);
+//            List<Laporan> rangkuman = entityManager.createQuery(
+//                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
+//                .setParameter("startDate", new Date(0, 0, 0), TemporalType.DATE)
+//                .setParameter("endDate", awalBulan, TemporalType.DATE)  
+//                .getResultList();
+        String que = "SELECT en FROM " + kelas.getSimpleName() + " en where en.tanggal BETWEEN :startDate AND :endDate";
+        TypedQuery createQuery = entityManager.createQuery(que, kelas)
+                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+                ;
         return createQuery.getResultList();
     }
     private BigInteger sumAll(List<? extends Laporan> laporanList)
@@ -66,15 +77,19 @@ public class panelAkuntansi extends JPanel {
         }
         return temp;
     }
-    public void addList(Akun akun)
-    {
-    AkuntansiList.add(akun);
-    }
+            Calendar cal = Calendar.getInstance();
+            Date akhirBulan;
+            Date awalBulan;
     public panelAkuntansi() {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
+        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));            
+        akhirBulan = cal.getTime();
+        awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
+        System.out.println("awalBulan = " + awalBulan);
+        System.out.println("akhirBulan = " + akhirBulan);
         Akun total = new Akun().setAkun("Neraca Total");
         int X =1;
-        List<app.table.Bank> list = getList(app.table.Bank.class);       
+        List<app.table.Bank> list = entityManager.createQuery("SELECT en FROM Bank en", app.table.Bank.class).getResultList();       
         Akun Kas = new Akun(X++)
                 .setAkun("Gabungan Kas");                
         for (Bank bank : list) {
@@ -130,6 +145,9 @@ public class panelAkuntansi extends JPanel {
         Akun  bebanHutang = new Akun()
                 .setAkun("Pelunasan Hutang ")
                 .setPemasukan(sumAll(getList(app.table.BayarPihutangPengeluaran.class)));
+        Akun  sisaHutang = new Akun()
+                .setAkun("Sisa Hutang ")                
+                ;
         Akun Mobil = new Akun()
                 .setAkun("Pemasukan Mobil")
                 .setPengeluaran(sumAll(getList(app.table.MobilPemasukan.class)));
@@ -138,8 +156,18 @@ public class panelAkuntansi extends JPanel {
                 .setPemasukan(sumAll(getList(app.table.MobilPengeluaran.class)));
         Akun PembagianLaba = new Akun()
                 .setAkun("Pembagian Laba");
+        BigInteger bayarhutang = bebanHutang.getPemasukan();
+        BigInteger jumlahhutang = Hutang.getPengeluaran();
+        int res = jumlahhutang.compareTo(bayarhutang);
+        if (res == 0) {
+        } else if (res==-1) {
+            bayarhutang = bayarhutang.subtract(jumlahhutang);
+            sisaHutang.setPemasukan(bayarhutang);
+        } else if (res == 1) {
+            jumlahhutang = jumlahhutang.subtract(bayarhutang);
+            sisaHutang.setPengeluaran(jumlahhutang);
+        }
         AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
-        AkuntansiList.add(Hutang);
         AkuntansiList.add(Mobil);        
         AkuntansiList.add(Rental);        
         AkuntansiList.add(Jasa);        
@@ -150,10 +178,9 @@ public class panelAkuntansi extends JPanel {
         LabaList.add(Jasa);
         LabaList.add(Pemasukan);
         LabaList.add(Peminjaman);
-        LabaList.add(Hutang);
-        //Akun Pengeluaran
+        //Akun Pengeluaran        
+        AkuntansiList.add(sisaHutang);
         AkuntansiList.add(bebanMobil);
-        AkuntansiList.add(bebanHutang);
         AkuntansiList.add(bebanPeminjaman);
         AkuntansiList.add(pengeluaranRental);
         AkuntansiList.add(bebanJasa);
@@ -162,7 +189,6 @@ public class panelAkuntansi extends JPanel {
         AkuntansiList.add(Pegawai);                    
         AkuntansiList.add(Asset);
         LabaList.add(bebanMobil);
-        LabaList.add(bebanHutang);
         LabaList.add(bebanPeminjaman);
         LabaList.add(pengeluaranRental);
         LabaList.add(bebanJasa);
@@ -174,9 +200,6 @@ public class panelAkuntansi extends JPanel {
         X = 1;
         total.setPemasukan(BigInteger.ZERO);
         total.setPengeluaran(BigInteger.ZERO);
-//        System.out.println("Operasional.getPemasukan() = " + Operasional.getPemasukan());
-//        Operasional.subPemasukan(Transfer.negate());
-//        System.out.println("Operasional.getPemasukan() = " + Operasional.getPemasukan());
         for (Akun akun : AkuntansiList) {
             akun.setNomor(X++);
             total.addPengeluaran(akun.getPengeluaran());
@@ -231,7 +254,7 @@ public class panelAkuntansi extends JPanel {
 
         setLayout(new java.awt.GridLayout(2, 0));
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable1.setAutoCreateRowSorter(true);
@@ -264,7 +287,7 @@ public class panelAkuntansi extends JPanel {
 
         add(jScrollPane1);
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable2.setAutoCreateRowSorter(true);
