@@ -17,7 +17,7 @@ import javax.persistence.Id;
  * @author SEED
  */
 @Entity
-@ListUrutan({"tanggal","keterangan","jumlah"})
+@app.ListUrutan({"tanggal","keterangan","jumlah"})
 public class PerjalananPemasukan extends Perjalanan  implements Serializable {
     
 }
