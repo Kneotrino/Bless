@@ -7,6 +7,7 @@ package app.table;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ import javax.persistence.OneToOne;
 @app.ListUrutan({"tanggal","keterangan","jumlah"})
 public class Transfer extends Laporan implements Serializable {
 
-    @OneToOne(mappedBy = "transfer")
+    @OneToOne(mappedBy = "transfer",cascade = CascadeType.ALL)
     private Perjalanan perjalanan;
     public Perjalanan getPerjalanan() {
         return perjalanan;

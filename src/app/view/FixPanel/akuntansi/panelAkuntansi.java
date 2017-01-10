@@ -275,7 +275,7 @@ public class panelAkuntansi extends JPanel {
             jTable4.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        setLayout(new java.awt.GridLayout(2, 0));
+        setLayout(new java.awt.GridLayout());
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 

@@ -28,6 +28,7 @@ import static javaslang.API.LinkedMap;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -89,21 +90,22 @@ public class panelMaster extends JPanel {
         }
             String temp = "Pengeluaran";
             this.jLabel2.setText("Laporan " + m1.get(code));
-            this.jButton1.hide();
+//            this.jButton1.hide();
             this.newButton.hide();
-            this.deleteButton.hide();
-            this.masterTable.setEnabled(false);
-//            Rest();
+//            this.deleteButton.hide();
+//            this.masterTable.setEnabled(false);
+            Rest();
     }
 public void Rest()
 {
     list.clear();
-    list.addAll(query.getResultList());
     if (m1.get(temp).equals("Pemasukan")) {
-            list.removeIf( a-> !a.isName());        
+        list.addAll(entityManager.createQuery("SELECT l FROM Laporan l where l.name = true").getResultList());
+//            list.removeIf( a-> !a.isName());        
     }
     else    {
-            list.removeIf( a-> a.isName());                
+        list.addAll(entityManager.createQuery("SELECT l FROM Laporan l where l.name = false").getResultList());
+//            list.removeIf( a-> a.isName());                
     }
 }
     /**
@@ -303,7 +305,11 @@ public void Rest()
 
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        System.out.println("Kelas name = " + clazz.getSimpleName());    
+         if (temp != -1) {            
+            System.out.println("Refrest Rest = "+ temp);
+            Rest();
+        }
+        else {        System.out.println("Kelas name = " + clazz.getSimpleName());    
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();        
         String clzName = this.clazz.getSimpleName();
@@ -317,7 +323,7 @@ public void Rest()
         this.bankList.addAll(bankQuery.getResultList());
         list.clear();
         list.addAll((Collection<? extends Laporan>) res);
-        
+         }
 
     }//GEN-LAST:event_refreshButtonActionPerformed
 
@@ -438,12 +444,40 @@ public void Rest()
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-//                frame.setContentPane(new panelMaster(0));
-                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
+                frame.setContentPane(new panelMaster(1));
+//                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
             }
+        });
+    }
+    public static void LaporanPemasukan()
+    {
+                EventQueue.invokeLater(() -> {
+                app.table.Util.RefreshBank();
+                app.table.Util.RefreshLaporan();
+                javax.swing.JDialog jDialog1 = new JDialog();
+                jDialog1.setSize(1200, 700);
+                jDialog1.setLocationRelativeTo(null);
+                jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+                jDialog1.getContentPane().add(new panelMaster(1));
+                jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                jDialog1.show();
+        });
+    }
+        public static void LaporanPengeluaran()
+    {
+                EventQueue.invokeLater(() -> {
+                app.table.Util.RefreshBank();
+                app.table.Util.RefreshLaporan();
+                javax.swing.JDialog jDialog1 = new JDialog();
+                jDialog1.setSize(1200, 700);
+                jDialog1.setLocationRelativeTo(null);
+                jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+                jDialog1.getContentPane().add(new panelMaster(0));
+                jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                jDialog1.show();
         });
     }
 }

@@ -112,7 +112,7 @@ public class Laporan implements Serializable {
         this.dtype = dtype;
         changeSupport.firePropertyChange("dtype", oldDtype, dtype);
     }
-        @Transient
+//        @Transient
         boolean name =
                 (this instanceof Pemasukan) 
                 || (this instanceof BayarJasaPemasukan) 
