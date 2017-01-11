@@ -178,12 +178,12 @@ public class Perjalanan extends Laporan implements Serializable {
     }
 
     public void setTanggal2(Date tanggal) {
-        if ( this.transfer == null) {
-            Kembali.setTanggal(tanggal);
+        if ( this.transfer != null) {
+            transfer.setTanggal(tanggal);
         }
-        else 
+        else if (this.Kembali != null)
         {
-            this.transfer.setTanggal(tanggal);
+            Kembali.setTanggal(tanggal);
         }
         setTanggal(tanggal);
         

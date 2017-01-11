@@ -65,6 +65,10 @@ public class Akun implements Serializable
         this.Pengeluaran = this.Pengeluaran.add(Pengeluaran);
         return this;
     }
+    public Akun DividePengeluaran() {
+        this.Pengeluaran = this.Pengeluaran.divide(new BigInteger("4"));
+        return this;
+    }
     public Akun subPengeluaran(BigInteger Pengeluaran) {
         this.Pengeluaran = this.Pengeluaran.subtract(Pengeluaran);
         return this;

@@ -58,7 +58,7 @@ public class panelLaporan extends JPanel {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l order by l.tanggal");
+        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l order by l.tanggal asc");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         saveButton = new javax.swing.JButton();
         newButton = new javax.swing.JButton();
@@ -226,8 +226,8 @@ public class panelLaporan extends JPanel {
 
         masterScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
-        masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        //masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        //masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
         masterTable.setGridColor(new java.awt.Color(0, 0, 0));
@@ -332,7 +332,7 @@ public class panelLaporan extends JPanel {
             
 //        java.util.List<app.table.Laporan> data = query.getResultList();
         query = entityManager.createQuery(
-                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
+                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate order by l.tanggal asc")
                 .setParameter("startDate", startMonth, TemporalType.DATE)
                 .setParameter("endDate", endMonth, TemporalType.DATE);  
 //                .getResultList();

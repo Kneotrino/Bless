@@ -540,8 +540,8 @@ public class panelPerjalanan extends JPanel {
             list.clear();
             list.addAll(merged);
         }
-        this.refreshButton1ActionPerformed(evt);
-//        this.Hitung();
+//        this.refreshButton1ActionPerformed(evt);
+        this.Hitung();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void newDetailButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton1ActionPerformed

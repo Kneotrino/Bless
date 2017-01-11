@@ -57,15 +57,12 @@ public class panelAkuntansi extends JPanel {
     }
     public List getList(Class kelas)
     {
-//            List<Laporan> rangkuman = entityManager.createQuery(
-//                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
-//                .setParameter("startDate", new Date(0, 0, 0), TemporalType.DATE)
-//                .setParameter("endDate", awalBulan, TemporalType.DATE)  
-//                .getResultList();
-        String que = "SELECT en FROM " + kelas.getSimpleName() + " en where en.tanggal BETWEEN :startDate AND :endDate";
+        String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
+//                + "where en.tanggal BETWEEN :startDate AND :endDate"
+                ;
         TypedQuery createQuery = entityManager.createQuery(que, kelas)
-                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
-                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+//                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+//                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 ;
         return createQuery.getResultList();
     }
@@ -92,9 +89,9 @@ public class panelAkuntansi extends JPanel {
         List<app.table.Bank> list = entityManager.createQuery("SELECT en FROM Bank en", app.table.Bank.class).getResultList();       
         Akun Kas = new Akun(X++)
                 .setAkun("Gabungan Kas");                
-//        for (Bank bank : list) {
-//            Kas.addPemasukan(bank.getFoo());
-//        }
+        for (Bank bank : list) {
+            Kas.addPemasukan(bank.getFoo());
+        }
         AkuntansiList.add(Kas);            
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
@@ -213,9 +210,14 @@ public class panelAkuntansi extends JPanel {
             laba.addPengeluaran(akun.getPengeluaran());
         }
         LabaList.add(laba);
+        Akun kosong = new Akun()
+                .setAkun("")
+                .setPengeluaran(null)
+                .setPemasukan(null);
+        LabaList.add( kosong );
         LabaList.add(
                 new Akun()
-                .setAkun("total Pemasukan")
+                .setAkun("Total Pemasukan")
                 .setPengeluaran(laba.getPengeluaran())
         );
         LabaList.add(
@@ -223,14 +225,22 @@ public class panelAkuntansi extends JPanel {
                 .setAkun("Total Pengeluaran")
                 .setPemasukan(laba.getPemasukan())
         );
+        LabaList.add( kosong );
         LabaList.add(
                 new Akun()
                 .setAkun("Profit")
                 .setPengeluaran(laba.getPengeluaran())
                 .subPengeluaran(laba.getPemasukan())
         );
+        LabaList.add(
+                new Akun()
+                .setAkun("25% Laba yang di tahan")
+                .setPengeluaran(laba.getPengeluaran())
+                .subPengeluaran(laba.getPemasukan())
+                .DividePengeluaran()                
+        );
         BigInteger math = new BigInteger("0").subtract(total.getPemasukan()).add(total.getPengeluaran());
-        Kas.setPemasukan(math);
+//        Kas.setPemasukan(math);
         AkuntansiList.add(total.addPemasukan(math));                    
         initComponents();
     }
@@ -275,9 +285,9 @@ public class panelAkuntansi extends JPanel {
             jTable4.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        setLayout(new java.awt.GridLayout());
+        setLayout(new java.awt.GridLayout(1, 0));
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable1.setAutoCreateRowSorter(true);
@@ -310,7 +320,7 @@ public class panelAkuntansi extends JPanel {
 
         add(jScrollPane1);
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable2.setAutoCreateRowSorter(true);
