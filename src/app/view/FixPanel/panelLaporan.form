@@ -413,6 +413,9 @@
                   </Subbinding>
                 </BindingProperty>
               </BindingProperties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="masterTableMouseClicked"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="//masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;//masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());"/>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>

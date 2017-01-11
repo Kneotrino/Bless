@@ -268,6 +268,7 @@ public class panelLaporan extends JPanel {
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
+        masterTable.addMouseListener(formListener);
         masterScrollPane.setViewportView(masterTable);
 
         jPanel2.add(masterScrollPane, java.awt.BorderLayout.CENTER);
@@ -279,7 +280,7 @@ public class panelLaporan extends JPanel {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.beans.PropertyChangeListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener, java.beans.PropertyChangeListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == refreshButton) {
@@ -303,6 +304,24 @@ public class panelLaporan extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelLaporan.this.deleteButtonActionPerformed(evt);
             }
+        }
+
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == masterTable) {
+                panelLaporan.this.masterTableMouseClicked(evt);
+            }
+        }
+
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
         }
 
         public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -495,6 +514,10 @@ public void Refresh(){
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_masterTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

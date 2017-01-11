@@ -37,8 +37,17 @@ public class Blessing {
            e.printStackTrace();
         }
         feel();        
+        try {
         JFrame form = new app.view.ShowRoom();
-        form.show();
+        form.show();            
+        } 
+        catch (org.eclipse.persistence.exceptions.DatabaseException ex) {
+            javax.swing.JOptionPane.showMessageDialog(null, ex);
+            System.exit(4000);            
+        }catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, e);
+            System.exit(40);            
+        }
     }
     private static void feel() {
         try {
