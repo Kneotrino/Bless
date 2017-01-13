@@ -14,6 +14,7 @@ import java.beans.Beans;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 import static javaslang.API.LinkedMap;
 import static javaslang.API.LinkedMap;
 import javax.persistence.RollbackException;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JDialog;
@@ -73,7 +75,7 @@ public class panelMaster extends JPanel {
         this.refreshButtonActionPerformed(null);
         String info = clazz.getSimpleName()
                 .equals("Pengeluaran") ? "Operasional":clazz.getSimpleName();
-        this.jLabel2.setText("Laporan "+  info
+        this.jLabel2.setText("Laporan "+  info + " Bulan ini"
         );
     }
       Map m1 = new HashMap();
@@ -81,18 +83,18 @@ public class panelMaster extends JPanel {
     public panelMaster(int code)
     {
       temp = code;
-      m1.put(1, "Pemasukan");
-      m1.put(0, "Pengeluaran");
+      m1.put(0, "Pemasukan");
+      m1.put(1, "Pengeluaran");
         System.out.println("Laporan = " + m1.get(code));
         initComponents();
             if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
             String temp = "Pengeluaran";
-            this.jLabel2.setText("Laporan " + m1.get(code));
-//            this.jButton1.hide();
+            this.jLabel2.setText("Laporan " + m1.get(code) + " bulan ini");
+            this.jButton1.hide();
             this.newButton.hide();
-//            this.deleteButton.hide();
+            this.deleteButton.hide();
 //            this.masterTable.setEnabled(false);
             Rest();
     }
@@ -100,12 +102,42 @@ public void Rest()
 {
     list.clear();
     if (m1.get(temp).equals("Pemasukan")) {
-        list.addAll(entityManager.createQuery("SELECT l FROM Laporan l where l.name = true").getResultList());
-//            list.removeIf( a-> !a.isName());        
+        list.addAll(
+                entityManager.createQuery("SELECT l FROM Laporan l"
+                        + " where l.tanggal BETWEEN :startDate AND :endDate"
+                        + " AND l.name = true "
+                        + "ORDER BY l.tanggal")
+                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+                .getResultList());
     }
     else    {
-        list.addAll(entityManager.createQuery("SELECT l FROM Laporan l where l.name = false").getResultList());
-//            list.removeIf( a-> a.isName());                
+        list.addAll(
+                entityManager.createQuery("SELECT l FROM Laporan l"
+                        + " where l.tanggal BETWEEN :startDate AND :endDate"
+                        + " AND l.name = false "
+                        + "ORDER BY l.tanggal")
+                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+                .getResultList());
+    }
+}
+public void Restall()
+{
+    list.clear();
+    if (m1.get(temp).equals("Pemasukan")) {
+        list.addAll(
+                entityManager.createQuery("SELECT l FROM Laporan l"
+                        + " WHERE l.name = true "
+                        + "ORDER BY l.tanggal")
+                .getResultList());
+    }
+    else    {
+        list.addAll(
+                entityManager.createQuery("SELECT l FROM Laporan l"
+                        + " WHERE l.name = false "
+                        + "ORDER BY l.tanggal")
+                .getResultList());
     }
 }
     /**
@@ -118,6 +150,9 @@ public void Rest()
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+        akhirBulan = cal.getTime();
+        awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
@@ -141,9 +176,10 @@ public void Rest()
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         newButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
+        refreshButton1 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -259,10 +295,6 @@ public void Rest()
         newButton.addActionListener(formListener);
         jPanel1.add(newButton);
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel1.add(refreshButton);
-
         deleteButton.setText("Hapus");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -274,6 +306,14 @@ public void Rest()
         jButton1.setText("Simpan");
         jButton1.addActionListener(formListener);
         jPanel1.add(jButton1);
+
+        refreshButton.setText("Tampilkan bulan ini");
+        refreshButton.addActionListener(formListener);
+        jPanel1.add(refreshButton);
+
+        refreshButton1.setText("Tampilkan semuanya");
+        refreshButton1.addActionListener(formListener);
+        jPanel1.add(refreshButton1);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -300,21 +340,33 @@ public void Rest()
             else if (evt.getSource() == saveButton) {
                 panelMaster.this.saveButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == refreshButton1) {
+                panelMaster.this.refreshButton1ActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
-
+            Calendar cal = Calendar.getInstance();
+            Date akhirBulan;
+            Date awalBulan;
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
          if (temp != -1) {            
-            System.out.println("Refrest Rest = "+ temp);
+            System.out.println("Laporan = " + m1.get(temp));
             Rest();
         }
-        else {        System.out.println("Kelas name = " + clazz.getSimpleName());    
+        else {        
+        System.out.println("Kelas name = " + clazz.getSimpleName());    
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();        
         String clzName = this.clazz.getSimpleName();
-        String que = "SELECT en FROM " + clzName + " en";
-        TypedQuery<? extends Laporan> createQuery = entityManager.createQuery(que, clazz);
+        String que = "SELECT en FROM " + clzName + " en "
+                + "where en.tanggal BETWEEN :startDate AND :endDate"
+                ;
+        TypedQuery<? extends Laporan> createQuery = 
+                entityManager.createQuery(que, clazz)
+                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+                ;
         List<? extends Laporan> res = createQuery.getResultList();           
             for (Laporan re : res) {
                 entityManager.refresh(re);
@@ -350,7 +402,6 @@ public void Rest()
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(panelMaster.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        app.table.Laporan l = new app.table.Laporan();
         nw.setTransaksi(new Saldo());
         nw.getTransaksi().setBankId((Bank) this.jComboBox1.getSelectedItem());
         entityManager.persist(nw);
@@ -386,6 +437,22 @@ public void Rest()
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void refreshButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton1ActionPerformed
+         if (temp != -1) {            
+            System.out.println("Laporan all = " + m1.get(temp));
+            Restall();
+        } else
+         {
+             String que = "SELECT en FROM " + clazz.getSimpleName() + " en ";
+            TypedQuery<? extends Laporan> createQuery = 
+                    entityManager.createQuery(que, clazz)
+                    ;      
+            app.table.Util.RefreshLaporan();
+            list.clear();
+            list.addAll(createQuery.getResultList());
+         }
+    }//GEN-LAST:event_refreshButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -412,6 +479,7 @@ public void Rest()
     private javax.swing.JButton newButton;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JButton refreshButton1;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel tanggalLabel;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
@@ -444,8 +512,8 @@ public void Rest()
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-//                frame.setContentPane(new panelMaster(1));
-                frame.setContentPane(new panelMaster(app.table.pembagianLaba.class));
+                frame.setContentPane(new panelMaster(1));
+//                frame.setContentPane(new panelMaster(app.table.Pemasukan.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

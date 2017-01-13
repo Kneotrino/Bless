@@ -335,11 +335,11 @@ public class panelAkuntansi extends JPanel {
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Aktiva(Harta)");
+        columnBinding.setColumnName("Aktiva(Harta + Pengeluaran)");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
-        columnBinding.setColumnName("Pasiva(Hutang + Modal)");
+        columnBinding.setColumnName("Pasiva(Hutang + Modal + Pemasukan)");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
@@ -430,15 +430,20 @@ public class panelAkuntansi extends JPanel {
 
         /* Create and display the form */
         EventQueue.invokeLater(() -> {
+                try {
+                
                 app.table.Util.RefreshBank();
                 app.table.Util.RefreshLaporan();
                 javax.swing.JDialog jDialog1 = new JDialog();
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
+                jDialog1.show();
                 jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
                 jDialog1.getContentPane().add(new panelAkuntansi());
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                jDialog1.show();
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e);
+            }
         });
     }
     

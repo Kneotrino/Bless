@@ -175,7 +175,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(panelPerjalanan1, "Lap");
         getContentPane().add(panelRental1, "Rental");
 
-        jPanel8.setLayout(new java.awt.GridLayout());
+        jPanel8.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setText("jLabel1");
         jPanel8.add(jLabel1);
@@ -253,7 +253,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu1.add(jMenuItem28);
         jMenu1.add(jSeparator2);
 
-        jMenuItem20.setText("Laporan Pemasukan");
+        jMenuItem20.setText("Laporan Pengeluaran");
         jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem20ActionPerformed(evt);
@@ -261,7 +261,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem20);
 
-        jMenuItem21.setText("Laporan Pengeluaran");
+        jMenuItem21.setText("Laporan Pemasukan");
         jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem21ActionPerformed(evt);

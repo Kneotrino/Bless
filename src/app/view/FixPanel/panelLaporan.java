@@ -224,8 +224,6 @@ public class panelLaporan extends JPanel {
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
-        masterScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
         //masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         //masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
@@ -270,6 +268,9 @@ public class panelLaporan extends JPanel {
         jTableBinding.bind();
         masterTable.addMouseListener(formListener);
         masterScrollPane.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(0).setMaxWidth(75);
+        }
 
         jPanel2.add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
@@ -283,14 +284,14 @@ public class panelLaporan extends JPanel {
     private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener, java.beans.PropertyChangeListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == refreshButton) {
-                panelLaporan.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton3) {
+            if (evt.getSource() == jButton3) {
                 panelLaporan.this.jButton3ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton1) {
                 panelLaporan.this.jButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton) {
+                panelLaporan.this.refreshButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton4) {
                 panelLaporan.this.jButton4ActionPerformed(evt);
