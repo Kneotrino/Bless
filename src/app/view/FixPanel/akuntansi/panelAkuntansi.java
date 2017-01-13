@@ -96,9 +96,18 @@ public class panelAkuntansi extends JPanel {
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
                  .setPengeluaran(sumAll(getList(app.table.Modal.class)));
+         BigInteger mod = BigInteger.ZERO;
+         List<Laporan> rangkuman = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal < :endDate")
+                .setParameter("endDate", awalBulan, TemporalType.DATE)  
+                .getResultList();
+         for (Laporan laporan : rangkuman) {
+             mod = mod.add(laporan.getPemasukan());
+             mod = mod.subtract(laporan.getPengeluaran());
+        }
          Akun ModalSebelumnya = new Akun(X++)
                  .setAkun("Modal Sebelumnya")
-//                 .setPengeluaran(sumAll(getList(app.table.Modal.class)))
+                 .setPengeluaran(mod)
                  ;
          Akun Prive = new Akun(X++)
                  .setAkun("Penarikan Modal/Prive")
