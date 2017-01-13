@@ -430,19 +430,20 @@ public class panelAkuntansi extends JPanel {
 
         /* Create and display the form */
         EventQueue.invokeLater(() -> {
-                try {
-                
-                app.table.Util.RefreshBank();
-                app.table.Util.RefreshLaporan();
                 javax.swing.JDialog jDialog1 = new JDialog();
+                try {                
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
                 jDialog1.show();
+                app.table.Util.RefreshLaporan();
+                app.table.Util.RefreshBank();
                 jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
                 jDialog1.getContentPane().add(new panelAkuntansi());
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {
                 javax.swing.JOptionPane.showMessageDialog(null, e);
+                jDialog1.dispose();
+                System.exit(100);
             }
         });
     }
