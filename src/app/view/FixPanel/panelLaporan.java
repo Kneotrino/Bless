@@ -82,12 +82,12 @@ public class panelLaporan extends JPanel {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        refreshButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        refreshButton = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
@@ -191,10 +191,6 @@ public class panelLaporan extends JPanel {
         jLabel7.setText("Laporan Transaksi Bulan ini");
         jPanel3.add(jLabel7);
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel3.add(refreshButton);
-
         jButton3.setText("Tampilkan Informasi");
         jButton3.addActionListener(formListener);
         jPanel3.add(jButton3);
@@ -218,7 +214,11 @@ public class panelLaporan extends JPanel {
         jYearChooser1.addPropertyChangeListener(formListener);
         jPanel3.add(jYearChooser1);
 
-        jButton4.setText("Tampilkan Semua Laporan");
+        refreshButton.setText("Tampilkan Bulan ini");
+        refreshButton.addActionListener(formListener);
+        jPanel3.add(refreshButton);
+
+        jButton4.setText("Tampilkan Semua laporan");
         jButton4.addActionListener(formListener);
         jPanel3.add(jButton4);
 
@@ -338,10 +338,10 @@ public class panelLaporan extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        Date today = new Date();
-        System.out.println("today = " + today);
-        Date startMonth = new Date(today.getYear(), today.getMonth(), 0);
-        System.out.println("startMonth = " + startMonth);
+            Date today = new Date();
+            System.out.println("today = " + today);
+            Date startMonth = new Date(today.getYear(), today.getMonth(), 0);
+            System.out.println("startMonth = " + startMonth);
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.MONDAY, today.getMonth());
             cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
@@ -349,16 +349,34 @@ public class panelLaporan extends JPanel {
             Date endMonth = cal.getTime();        
             System.out.println("endMonth = " + endMonth);
             
-//        java.util.List<app.table.Laporan> data = query.getResultList();
-        query = entityManager.createQuery(
+            query = entityManager.createQuery(
                 "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate order by l.tanggal asc")
                 .setParameter("startDate", startMonth, TemporalType.DATE)
                 .setParameter("endDate", endMonth, TemporalType.DATE);  
-//                .getResultList();
-        java.util.List<app.table.Laporan> data = query.getResultList();
-        java.math.BigInteger saldo = new java.math.BigInteger("0");               
-        for (Laporan laporan : data) {
-            entityManager.refresh(laporan);            
+            java.util.List<app.table.Laporan> data = query.getResultList();
+            app.table.Util.RefreshLaporan();
+            java.math.BigInteger saldo = new java.math.BigInteger("0");               
+            BigInteger temp = BigInteger.ZERO;
+            BigInteger temp1 = BigInteger.ZERO;  
+            List<Laporan> rangkuman = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal < :endDate")
+                .setParameter("endDate", startMonth, TemporalType.DATE)  
+                .getResultList();
+            for (Laporan laporan : rangkuman) {
+                    temp = temp.add(laporan.getPemasukan());
+                    temp1 = temp1.add(laporan.getPengeluaran());
+            }
+            Laporan Pengeluaran = new Pengeluaran();
+            Laporan Pemasukan = new Pemasukan();
+            Pengeluaran.setJumlah(temp1);
+            Pemasukan.setJumlah(temp);
+            Pemasukan.setKeterangan("R. Pengeluaran bulan sebelumnya");
+            Pengeluaran.setKeterangan("R. Pengeluaran bulan sebelumnya");
+            list.clear();
+            this.list.add(Pemasukan);
+            this.list.add(Pengeluaran);        
+            list.addAll(data);
+            for (Laporan laporan : list) {
             saldo = saldo.subtract(laporan.getPengeluaran());
             saldo = saldo.add(laporan.getPemasukan());
             laporan.setSaldo(saldo);
@@ -366,9 +384,7 @@ public class panelLaporan extends JPanel {
                 System.out.println("null di + "+laporan.toString());
             }
         }
-        
-        list.clear();
-        list.addAll(data);
+
     }//GEN-LAST:event_refreshButtonActionPerformed
 DecimalFormat numberFormat = new DecimalFormat("IDR #,##0");
 public void hitung()
@@ -384,8 +400,6 @@ public void hitung()
             saldo = saldo.subtract(laporan.getPengeluaran());
             saldo = saldo.add(laporan.getPemasukan());
             laporan.setSaldo(saldo);
-
-//            boolean out = laporan.getPemasukan().equals(BigInteger.ZERO);
             if (laporan.isName()) {
                 masuk++;  
             }
@@ -465,7 +479,8 @@ public void Refresh(){
                     
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.MONDAY, bulan);
-            cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+            cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));            
+            cal.set(Calendar.YEAR, tahun);
             Date akhirBulan = cal.getTime();
             Date awalBulan = new Date(tahun-1900, bulan, hari);
             System.out.println("awalBulan laporan = " + awalBulan);
@@ -473,11 +488,10 @@ public void Refresh(){
             Laporan Pengeluaran = new Pengeluaran();
             Laporan Pemasukan = new Pemasukan();
             BigInteger temp = BigInteger.ZERO;
-            BigInteger temp1 = BigInteger.ZERO;
-    
+            BigInteger temp1 = BigInteger.ZERO;    
             List<Laporan> rangkuman = entityManager.createQuery(
-                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
-                .setParameter("startDate", new Date(0, 0, 0), TemporalType.DATE)
+                "SELECT l FROM Laporan l where l.tanggal < :endDate")
+//                .setParameter("startDate", new Date(0, 0, 0), TemporalType.DATE)
                 .setParameter("endDate", awalBulan, TemporalType.DATE)  
                 .getResultList();
             for (Laporan laporan : rangkuman) {
@@ -491,15 +505,21 @@ public void Refresh(){
             this.list.clear();
             this.list.add(Pemasukan);
             this.list.add(Pengeluaran);
-            
-            //tambahkan data
             List resultList = entityManager.createQuery(
-                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate")
+                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate ORDER BY l.tanggal")
                 .setParameter("startDate", awalBulan, TemporalType.DATE)
                 .setParameter("endDate", akhirBulan, TemporalType.DATE)  
                 .getResultList();
             list.addAll(resultList);
-
+            java.math.BigInteger saldo = new java.math.BigInteger("0");               
+            for (Laporan laporan : list) {
+            saldo = saldo.subtract(laporan.getPengeluaran());
+            saldo = saldo.add(laporan.getPemasukan());
+            laporan.setSaldo(saldo);
+            if (laporan.getSaldo() == null) {
+                System.out.println("null di + "+laporan.toString());
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
     private int tahun,bulan, hari = 1;
     private void jMonthChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jMonthChooser1PropertyChange
@@ -513,7 +533,22 @@ public void Refresh(){
     }//GEN-LAST:event_jYearChooser1PropertyChange
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        app.table.Util.RefreshLaporan();
+        List resultList = entityManager.createQuery(
+                "SELECT l FROM Laporan l ORDER BY l.tanggal")
+                .getResultList();
+        list.clear();
+        list.addAll(resultList);
+        java.math.BigInteger saldo = new java.math.BigInteger("0");               
+        for (Laporan laporan : list) {
+            saldo = saldo.subtract(laporan.getPengeluaran());
+            saldo = saldo.add(laporan.getPemasukan());
+            laporan.setSaldo(saldo);
+            if (laporan.getSaldo() == null) {
+                System.out.println("null di + "+laporan.toString());
+            }
+        }
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
