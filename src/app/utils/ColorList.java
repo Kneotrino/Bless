@@ -25,6 +25,18 @@ public class ColorList {
                                                     "Biru" };
     
 //    public static DefaultComboBoxModel<String> warna;
-    public static DefaultComboBoxModel<String> warna = new DefaultComboBoxModel(ColorList.model);
+    public static DefaultComboBoxModel<String> warna = new DefaultComboBoxModel(
+    new String[]{ "Putih", 
+                                                    "Silver", 
+                                                    "Merah", 
+                                                    "Biru", 
+                                                    "Kuning", 
+                                                    "Hitam", 
+                                                    "Hijau", 
+                                                    "Abu-Abu", 
+                                                    "Cokelat", 
+                                                    "Ungu", 
+                                                    "Biru"}
+    );
     
 }

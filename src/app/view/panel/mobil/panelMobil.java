@@ -567,7 +567,7 @@ public void Refresh()
         jPanel3.add(jYearChooser2);
 
         jComboBox9.setEditable(true);
-        jComboBox9.setModel(app.utils.ColorList.warna);
+        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abu-abu", "Biru", "Coklat", "Emas", "Hijau", "Hitam", "Kuning", "Magenta", "Merah", "Nila", "Oranye", "Perak", "Putih", "Ungu", "Violet" }));
         jPanel3.add(jComboBox9);
 
         jTextField9.addActionListener(new java.awt.event.ActionListener() {
@@ -712,6 +712,7 @@ public void Refresh()
 
         jPanel17.add(jTextField53);
 
+        jComboBox3.setEditable(true);
         jComboBox3.setModel(app.utils.ColorList.warna);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.warna}"), jComboBox3, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));

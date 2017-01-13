@@ -575,7 +575,7 @@ public class Mobil implements Serializable {
 
     public void setWarna(String warna) {
         String oldWarna = this.warna;
-        this.warna = warna;
+        this.warna = warna.toLowerCase();
         changeSupport.firePropertyChange("warna", oldWarna, warna);
     }
 
