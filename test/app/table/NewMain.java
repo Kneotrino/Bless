@@ -29,10 +29,10 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Object b = new app.table.Debitur();
+        Object b = new app.table.Mobil();
         Field[] fields = b.getClass().getDeclaredFields();
 //            System.out.print(" @app.ListUrutan({");
-//            System.out.print(" @app.ListUrutan({");
+            System.out.print("SELECT m FROM Mobil m WHERE");
         for (Field field : fields) {
             System.out.println(" OR b." + field.getName()+" LIKE :cari1");
         }

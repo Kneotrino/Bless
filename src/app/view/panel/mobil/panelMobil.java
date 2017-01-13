@@ -311,7 +311,6 @@ public void Refresh()
         jComboBox6 = new javax.swing.JComboBox<>();
         bankQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
-        cariMobil = new javax.swing.JDialog();
         jComboBox10 = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
@@ -324,6 +323,7 @@ public void Refresh()
         jButton14 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton23 = new javax.swing.JButton();
+        jTextField32 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         BPKB = new javax.swing.JPanel();
@@ -1608,6 +1608,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     jPanel7.add(jButton23);
 
+    jTextField32.setPreferredSize(new java.awt.Dimension(150, 30));
+    jPanel7.add(jTextField32);
+
     jPanel5.add(jPanel7, java.awt.BorderLayout.NORTH);
 
     jTable1.setDefaultEditor(Date.class, new JDateChooserCellEditor());
@@ -2510,10 +2513,33 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-
-        this.cariMobil.setSize(300, 300);
-        this.cariMobil.setLocationRelativeTo(null);        
-        this.cariMobil.setVisible(true);
+        mobilList.clear();
+        String cari = "%";
+        cari += this.jTextField32.getText();
+        cari += "%";
+        System.out.println("cari = " + cari);
+        TypedQuery<Mobil> createQuery = 
+                blessingPUEntityManager
+                        .createQuery(
+                                " SELECT b from Mobil b WHERE" +
+                                " b.bahanBakar LIKE :cari1 " +
+                                " OR b.keterangan LIKE :cari1" +
+                                " OR b.merk LIKE :cari1" +
+                                " OR b.jenis LIKE :cari1" +
+                                " OR b.noMesin LIKE :cari1" +
+                                " OR b.noPolisiAktif LIKE :cari1" +
+                                " OR b.noPolisiLama LIKE :cari1" +
+                                " OR b.noRangka LIKE :cari1" +
+                                " OR b.pemilikBaru LIKE :cari1" +
+                                " OR b.pemilikLama LIKE :cari1" +
+                                " OR b.penjual LIKE :cari1" +
+                                " OR b.type LIKE :cari1" +
+                                " OR b.warna LIKE :cari1"
+                                ,app.table.Mobil.class)
+                .setParameter("cari1", cari)
+                ;
+        System.out.println("createQuery = " + createQuery.getResultList().size());
+        mobilList.addAll(createQuery.getResultList());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton23ActionPerformed
 
@@ -2607,7 +2633,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.persistence.EntityManager blessingPUEntityManager;
     private java.util.List<app.table.Bpkb> bpkbList1;
     private javax.persistence.Query bpkbQuery1;
-    private javax.swing.JDialog cariMobil;
     private java.util.List<app.table.Debitur> debiturList1;
     private javax.persistence.Query debiturQuery1;
     private javax.swing.JDialog editMobil;
@@ -2810,6 +2835,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField30;
     private javax.swing.JTextField jTextField31;
+    private javax.swing.JTextField jTextField32;
     private javax.swing.JTextField jTextField33;
     private javax.swing.JTextField jTextField34;
     private javax.swing.JTextField jTextField36;
