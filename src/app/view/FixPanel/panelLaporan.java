@@ -462,13 +462,14 @@ public void Refresh(){
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            
-        
+                    
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.MONDAY, bulan);
             cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
             Date akhirBulan = cal.getTime();
             Date awalBulan = new Date(tahun-1900, bulan, hari);
+            System.out.println("awalBulan laporan = " + awalBulan);
+            System.out.println("akhirBulan laporan = " + akhirBulan);
             Laporan Pengeluaran = new Pengeluaran();
             Laporan Pemasukan = new Pemasukan();
             BigInteger temp = BigInteger.ZERO;

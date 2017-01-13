@@ -58,11 +58,11 @@ public class panelAkuntansi extends JPanel {
     public List getList(Class kelas)
     {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
-//                + "where en.tanggal BETWEEN :startDate AND :endDate"
+                + "where en.tanggal BETWEEN :startDate AND :endDate"
                 ;
         TypedQuery createQuery = entityManager.createQuery(que, kelas)
-//                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
-//                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 ;
         return createQuery.getResultList();
     }
@@ -96,6 +96,10 @@ public class panelAkuntansi extends JPanel {
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
                  .setPengeluaran(sumAll(getList(app.table.Modal.class)));
+         Akun ModalSebelumnya = new Akun(X++)
+                 .setAkun("Modal Sebelumnya")
+//                 .setPengeluaran(sumAll(getList(app.table.Modal.class)))
+                 ;
          Akun Prive = new Akun(X++)
                  .setAkun("Penarikan Modal/Prive")
                  .setPemasukan(sumAll(getList(app.table.Prive.class)));
@@ -152,7 +156,8 @@ public class panelAkuntansi extends JPanel {
                 .setAkun("Beban Mobil")
                 .setPemasukan(sumAll(getList(app.table.MobilPengeluaran.class)));
         Akun PembagianLaba = new Akun()
-                .setAkun("Pembagian Laba");
+                .setAkun("Pembagian Laba")
+                .setPemasukan(sumAll(getList(app.table.pembagianLaba.class)));
         BigInteger bayarhutang = bebanHutang.getPemasukan();
         BigInteger jumlahhutang = Hutang.getPengeluaran();
         int res = jumlahhutang.compareTo(bayarhutang);
@@ -164,7 +169,9 @@ public class panelAkuntansi extends JPanel {
             jumlahhutang = jumlahhutang.subtract(bayarhutang);
             sisaHutang.setPengeluaran(jumlahhutang);
         }
+        AkuntansiList.add(ModalSebelumnya);
         AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
+        AkuntansiList.add(PembagianLaba);
         AkuntansiList.add(Mobil);        
         AkuntansiList.add(Rental);        
         AkuntansiList.add(Jasa);        
@@ -226,22 +233,37 @@ public class panelAkuntansi extends JPanel {
                 .setPemasukan(laba.getPemasukan())
         );
         LabaList.add( kosong );
-        LabaList.add(
-                new Akun()
+        Akun Profit = new Akun()
                 .setAkun("Profit")
                 .setPengeluaran(laba.getPengeluaran())
-                .subPengeluaran(laba.getPemasukan())
-        );
-        LabaList.add(
-                new Akun()
+                .subPengeluaran(laba.getPemasukan());
+        Akun ProfitBersih = new Akun()
+                .setAkun("Profit Bersih")
+                .setPengeluaran(laba.getPengeluaran())
+                .subPengeluaran(laba.getPemasukan());
+        Akun LabaTahan = new Akun()
                 .setAkun("25% Laba yang di tahan")
                 .setPengeluaran(laba.getPengeluaran())
                 .subPengeluaran(laba.getPemasukan())
-                .DividePengeluaran()                
+                .DividePengeluaran();
+        ProfitBersih.subPengeluaran(LabaTahan.getPengeluaran());
+        ProfitBersih.subPengeluaran(PembagianLaba.getPemasukan());
+        LabaList.add(
+                Profit
         );
-        BigInteger math = new BigInteger("0").subtract(total.getPemasukan()).add(total.getPengeluaran());
+        LabaList.add(
+                PembagianLaba
+        );
+        LabaList.add(
+              LabaTahan   
+        );
+        
+        LabaList.add(
+              ProfitBersih   
+        );        
+//        BigInteger math = new BigInteger("0").subtract(total.getPemasukan()).add(total.getPengeluaran());
 //        Kas.setPemasukan(math);
-        AkuntansiList.add(total.addPemasukan(math));                    
+        AkuntansiList.add(total);                    
         initComponents();
     }
 
@@ -287,7 +309,7 @@ public class panelAkuntansi extends JPanel {
 
         setLayout(new java.awt.GridLayout(1, 0));
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable1.setAutoCreateRowSorter(true);
@@ -304,11 +326,11 @@ public class panelAkuntansi extends JPanel {
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Aktiva");
+        columnBinding.setColumnName("Aktiva(Harta)");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
-        columnBinding.setColumnName("Pasiva");
+        columnBinding.setColumnName("Pasiva(Hutang + Modal)");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
@@ -320,7 +342,7 @@ public class panelAkuntansi extends JPanel {
 
         add(jScrollPane1);
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable2.setAutoCreateRowSorter(true);

@@ -150,7 +150,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder justification="2" title="NERACA SALDO">
+            <TitledBorder justification="2" title="NERACA SALDO BULAN INI">
               <Font PropertyName="font" name="Tahoma" size="24" style="0"/>
             </TitledBorder>
           </Border>
@@ -211,12 +211,12 @@
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${pemasukan}">
-                <BindingParameter name="NAME" value="Aktiva"/>
+                <BindingParameter name="NAME" value="Aktiva(Harta)"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${pengeluaran}">
-                <BindingParameter name="NAME" value="Pasiva"/>
+                <BindingParameter name="NAME" value="Pasiva(Hutang + Modal)"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
@@ -232,7 +232,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder justification="2" title="TABEL LABA/RUGI">
+            <TitledBorder justification="2" title="TABEL LABA/RUGI BULAN INI">
               <Font PropertyName="font" name="Tahoma" size="24" style="0"/>
             </TitledBorder>
           </Border>

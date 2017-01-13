@@ -444,8 +444,8 @@ public void Rest()
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new panelMaster(1));
-//                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
+//                frame.setContentPane(new panelMaster(1));
+                frame.setContentPane(new panelMaster(app.table.pembagianLaba.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

@@ -8,6 +8,7 @@ package app.view;
 import app.utils.TimerThread;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
@@ -37,7 +38,7 @@ public class ShowRoom extends javax.swing.JFrame {
     {
         System.out.println("app.view.ShowRoom.initBeranda()");
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+//        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         ImageIcon home = new javax.swing.ImageIcon(getClass().getResource("/app/main.png"));
         Image image = home.getImage(); // transform it 
@@ -89,6 +90,8 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panelModal1 = new app.view.FixPanel.panelModal();
         panelInvestor1 = new app.view.FixPanel.akuntansi.panelInvestor();
+        jPanel9 = new app.view.FixPanel.panelMaster(app.table.pembagianLaba.class)
+        ;
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -99,6 +102,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
@@ -171,12 +175,15 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(panelPerjalanan1, "Lap");
         getContentPane().add(panelRental1, "Rental");
 
-        jPanel8.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel8.setLayout(new java.awt.GridLayout());
+
+        jLabel1.setText("jLabel1");
         jPanel8.add(jLabel1);
 
         getContentPane().add(jPanel8, "card2");
         getContentPane().add(panelModal1, "Modal");
         getContentPane().add(panelInvestor1, "Investor");
+        getContentPane().add(jPanel9, "Laba");
 
         jMenu1.setText("Akutansi");
 
@@ -236,6 +243,14 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem27);
+
+        jMenuItem28.setText("Pembagian Laba");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem28);
         jMenu1.add(jSeparator2);
 
         jMenuItem20.setText("Laporan Pemasukan");
@@ -529,6 +544,12 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        ((app.view.FixPanel.panelMaster)this.jPanel9).Refresh();
+        this.chandePanel("Laba");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -595,6 +616,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -610,6 +632,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
