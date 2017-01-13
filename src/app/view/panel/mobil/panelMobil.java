@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -49,8 +50,6 @@ public class panelMobil extends javax.swing.JPanel {
      * Creates new form Mobil
      */
     public panelMobil() {
-//        this.gambar1 = new File(ClassLoader.getSystemResource("/app/view/panel/mobil/1.PNG"));
-//        ClassLoader cl = getClass().getClassLoader();
         try {
             String fullPath = app.utils.TableUtils.ExportResource("/1.PNG");
             URL systemResource = getClass().getResource("1.PNG");
@@ -58,7 +57,6 @@ public class panelMobil extends javax.swing.JPanel {
                     throw new RuntimeException("null di sini");
                 }
             System.out.println("fullPath = " + fullPath);
-//            this.gambar1 = new File(systemResource.getFile());
             this.gambar1 = new File(fullPath);
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,6 +70,7 @@ public class panelMobil extends javax.swing.JPanel {
         for (int i = 0; i < this.jTable2.getColumnCount(); i++) {
                 this.jTable2.getColumnModel().getColumn(i).setPreferredWidth(220);
         }
+        
     }
 public void Refresh()
 {
@@ -95,11 +94,11 @@ public void Refresh()
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         blessingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        mobilQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT m FROM Mobil m");
+        mobilQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT m FROM Mobil m order by m desc");
         mobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilQuery.getResultList());
-        debiturQuery1 = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT d FROM Debitur d");
+        debiturQuery1 = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT d FROM Debitur d order by d desc");
         debiturList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(debiturQuery1.getResultList());
-        bpkbQuery1 = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT b FROM Bpkb b");
+        bpkbQuery1 = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT b FROM Bpkb b order by b desc");
         bpkbList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bpkbQuery1.getResultList());
         query = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT t FROM Trips t");
         PerjalananList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
@@ -290,7 +289,7 @@ public void Refresh()
         jFileChooser5 = new javax.swing.JFileChooser();
         jFileChooser6 = new javax.swing.JFileChooser();
         jFileChooser7 = new javax.swing.JFileChooser();
-        keuanganMobilQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT k FROM KeuanganMobil k");
+        keuanganMobilQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT k FROM KeuanganMobil k order by k desc");
         keuanganMobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(keuanganMobilQuery.getResultList());
         LeasingMobil = new javax.swing.JDialog();
         jLabel16 = new javax.swing.JLabel();
@@ -313,6 +312,7 @@ public void Refresh()
         bankQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         cariMobil = new javax.swing.JDialog();
+        jComboBox10 = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -331,14 +331,18 @@ public void Refresh()
         jTable2 = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
+        jButton24 = new javax.swing.JButton();
+        jTextField12 = new javax.swing.JTextField();
+        jButton27 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jPanel20 = new javax.swing.JPanel();
         jButton15 = new javax.swing.JButton();
+        jButton25 = new javax.swing.JButton();
+        jTextField30 = new javax.swing.JTextField();
+        jButton26 = new javax.swing.JButton();
         jPanel19 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
 
@@ -1532,6 +1536,8 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jDialog2.getContentPane().add(jComboBox6, java.awt.BorderLayout.PAGE_END);
 
+    jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE" }));
+
     setLayout(new java.awt.BorderLayout());
 
     jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
@@ -1591,7 +1597,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jPanel7.add(jButton14);
 
     jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE" }));
-    jComboBox1.setSelectedIndex(-1);
+    jComboBox1.setSelectedIndex(1);
     jPanel7.add(jComboBox1);
 
     jButton23.setText("CARI");
@@ -1692,6 +1698,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     bindingGroup.addBinding(binding);
 
     jScrollPane1.setViewportView(jTable1);
+    if (jTable1.getColumnModel().getColumnCount() > 0) {
+        jTable1.getColumnModel().getColumn(21).setCellEditor(new DefaultCellEditor(jComboBox10)
+        );
+    }
 
     jPanel5.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -1703,7 +1713,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     jTable2.setDefaultEditor(Date.class, new JDateChooserCellEditor());
     jTable2.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
-    jTable2.setColumnSelectionAllowed(false);
     jTable2.setRowHeight(24);
 
     eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bpkbList1}");
@@ -1773,6 +1782,25 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     jPanel8.add(jButton7);
 
+    jButton24.setText("CARI");
+    jButton24.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton24ActionPerformed(evt);
+        }
+    });
+    jPanel8.add(jButton24);
+
+    jTextField12.setPreferredSize(new java.awt.Dimension(200, 40));
+    jPanel8.add(jTextField12);
+
+    jButton27.setText("TAMPILKAN SEMUA");
+    jButton27.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton27ActionPerformed(evt);
+        }
+    });
+    jPanel8.add(jButton27);
+
     BPKB.add(jPanel8, java.awt.BorderLayout.PAGE_START);
 
     jTabbedPane1.addTab("BPKB", BPKB);
@@ -1829,21 +1857,30 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     jPanel20.add(jButton15);
 
+    jButton25.setText("CARI DEBITUR");
+    jButton25.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton25ActionPerformed(evt);
+        }
+    });
+    jPanel20.add(jButton25);
+
+    jTextField30.setPreferredSize(new java.awt.Dimension(200, 40));
+    jPanel20.add(jTextField30);
+
+    jButton26.setText("TAMPILKAN SEMUA");
+    jButton26.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton26ActionPerformed(evt);
+        }
+    });
+    jPanel20.add(jButton26);
+
     jPanel9.add(jPanel20, java.awt.BorderLayout.PAGE_START);
 
     jTabbedPane1.addTab("DEBITUR", jPanel9);
 
     jPanel19.setLayout(new java.awt.BorderLayout());
-
-    jButton9.setText("SIMPAN");
-    jButton9.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton9ActionPerformed(evt);
-        }
-    });
-    jPanel10.add(jButton9);
-
-    jPanel19.add(jPanel10, java.awt.BorderLayout.PAGE_START);
 
     jTable5.setDefaultEditor(Date.class, new JDateChooserCellEditor());
     jTable5.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
@@ -1860,12 +1897,15 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
     columnBinding.setColumnName("Tanggal");
     columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
     columnBinding.setColumnName("Keterangan");
     columnBinding.setColumnClass(String.class);
+    columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
     columnBinding.setColumnName("Jumlah");
     columnBinding.setColumnClass(java.math.BigInteger.class);
+    columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
     columnBinding.setColumnName("Pemasukan");
     columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -1892,7 +1932,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jPanel19.add(jScrollPane8, java.awt.BorderLayout.CENTER);
 
-    jTabbedPane1.addTab("KEUANGAN MOBIL", jPanel19);
+    jTabbedPane1.addTab("LAP. Transaksi x", jPanel19);
 
     add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -2316,10 +2356,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.simpanButtonActionPerformed(evt);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        this.simpanButtonActionPerformed(evt);
-    }//GEN-LAST:event_jButton9ActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         this.simpanButtonActionPerformed(evt);
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -2467,7 +2503,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-//        this.jButton22ActionPerformed(evt);
         String pilihan = (String) this.jComboBox1.getSelectedItem();
         System.out.println("pilihan = " + pilihan==null?"kosong":pilihan);
         mobilList.removeIf(a -> !a.getStatusMobil().equals(pilihan));
@@ -2481,6 +2516,66 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.cariMobil.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+        bpkbList1.clear();
+        String cari = "%";
+        cari += this.jTextField12.getText();
+        cari += "%";
+        System.out.println("cari = " + cari);
+        TypedQuery<Bpkb> createQuery = 
+                blessingPUEntityManager
+                        .createQuery(
+                                "SELECT b FROM Bpkb b WHERE"
+                                        + " b.anBpkb LIKE :cari1\n" +
+                                        " OR b.ket LIKE :cari1\n" +
+                                        " OR b.noBpkb LIKE :cari1\n" +
+                                        " OR b.noPolisiAktif LIKE :cari1\n" +
+                                        " OR b.posisi LIKE :cari1\n" +
+                                        " OR b.status LIKE :cari1\n" +
+                                        " OR b.stnk LIKE :cari1 "
+                                + " order by b desc"
+                                ,app.table.Bpkb.class)
+                .setParameter("cari1", cari)
+                ;
+        System.out.println("createQuery = " + createQuery.getResultList().size());
+        bpkbList1.addAll(createQuery.getResultList());
+    }//GEN-LAST:event_jButton24ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        debiturList1.clear();        
+        String cari = "%";
+        cari += this.jTextField30.getText();
+        cari += "%";
+        System.out.println("cari = " + cari);
+        TypedQuery<Debitur> createQuery = 
+                blessingPUEntityManager
+                        .createQuery("Select d from Debitur d where"
+                                + " d.nama LIKE :cari1 "
+                                + " OR d.bank LIKE :cari1" 
+                                + " OR d.noHp LIKE :cari1" 
+                                + " OR d.alamat LIKE :cari1"
+                                + " OR d.noKtp LIKE :cari1"                               
+                                + " OR d.pembayaran LIKE :cari1"
+                                ,app.table.Debitur.class)
+                .setParameter("cari1", cari)
+                ;
+        System.out.println("createQuery = " + createQuery.getResultList().size());
+        debiturList1.addAll(createQuery.getResultList());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        debiturList1.clear();
+        debiturList1.addAll(debiturQuery1.getResultList());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+        bpkbList1.clear();
+        bpkbList1.addAll(bpkbQuery1.getResultList());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton27ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -2532,13 +2627,17 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
+    private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
+    private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -2652,7 +2751,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -2690,6 +2788,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
@@ -2709,6 +2808,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField28;
     private javax.swing.JTextField jTextField29;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField30;
     private javax.swing.JTextField jTextField31;
     private javax.swing.JTextField jTextField33;
     private javax.swing.JTextField jTextField34;

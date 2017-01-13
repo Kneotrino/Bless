@@ -29,12 +29,14 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Object b = new app.table.Investor();
+        Object b = new app.table.Debitur();
         Field[] fields = b.getClass().getDeclaredFields();
-            System.out.print(" @app.ListUrutan({");
+//            System.out.print(" @app.ListUrutan({");
+//            System.out.print(" @app.ListUrutan({");
         for (Field field : fields) {
-            System.out.print(",\"" + field.getName()+"\"");
+            System.out.println(" OR b." + field.getName()+" LIKE :cari1");
         }
+        
 //            System.out.print(" })\n");
 //            List<app.table.Debitur> dp = new ArrayList<>();
 //            LinkedHashMap<String,String> nilai;
