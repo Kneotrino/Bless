@@ -183,7 +183,7 @@ public class Mobil implements Serializable {
 //    @PostUpdate
     public void LogPersist()
     {
-        javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menyimpan");
+//        javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menyimpan");
     }
     @PostRemove
     public void LogRemove()
@@ -601,7 +601,7 @@ public class Mobil implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Mobil[ mobilId=" + mobilId + " ]";
+        return "[ id= " + mobilId + ";"+"NoPol ="+noPolisiAktif+" ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
