@@ -8,30 +8,25 @@ package app.view.FixPanel;
 import app.table.Laporan;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
-import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Filter;
 import java.util.stream.Collectors;
 import javax.persistence.RollbackException;
 import javax.persistence.TemporalType;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -79,6 +74,7 @@ public class panelLaporan extends JPanel {
         jTextField6 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jFileChooser1 = new javax.swing.JFileChooser();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -184,6 +180,11 @@ public class panelLaporan extends JPanel {
 
         jDialog1.getContentPane().add(jScrollPane1);
 
+        jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser1.setApproveButtonText("Print Laporan/All data");
+        jFileChooser1.setApproveButtonToolTipText("");
+        jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel2.setLayout(new java.awt.BorderLayout());
@@ -196,6 +197,7 @@ public class panelLaporan extends JPanel {
         jPanel3.add(jButton3);
 
         jButton2.setText("Print");
+        jButton2.addActionListener(formListener);
         jPanel3.add(jButton2);
 
         jButton1.setText("Filter");
@@ -304,6 +306,9 @@ public class panelLaporan extends JPanel {
             }
             else if (evt.getSource() == deleteButton) {
                 panelLaporan.this.deleteButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton2) {
+                panelLaporan.this.jButton2ActionPerformed(evt);
             }
         }
 
@@ -556,6 +561,16 @@ public void Refresh(){
         // TODO add your handling code here:
     }//GEN-LAST:event_masterTableMouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+//        jFileChooser1.showOpenDialog(jPanel1);
+        JFileChooser chooser = jFileChooser1;
+        chooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        chooser.showSaveDialog(jPanel1);
+        File path = chooser.getSelectedFile();
+        javax.swing.JOptionPane.showMessageDialog(null, "" + path);                
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -565,6 +580,7 @@ public void Refresh(){
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
