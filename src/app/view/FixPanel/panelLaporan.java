@@ -376,7 +376,7 @@ public class panelLaporan extends JPanel {
             Laporan Pemasukan = new Pemasukan();
             Pengeluaran.setJumlah(temp1);
             Pemasukan.setJumlah(temp);
-            Pemasukan.setKeterangan("R. Pengeluaran bulan sebelumnya");
+            Pemasukan.setKeterangan("R. Pemasukan bulan sebelumnya");
             Pengeluaran.setKeterangan("R. Pengeluaran bulan sebelumnya");
             list.clear();
             this.list.add(Pemasukan);
@@ -506,7 +506,7 @@ public void Refresh(){
             }
             Pengeluaran.setJumlah(temp1);
             Pemasukan.setJumlah(temp);
-            Pemasukan.setKeterangan("R. Pengeluaran bulan sebelumnya");
+            Pemasukan.setKeterangan("R. Pemasukan bulan sebelumnya");
             Pengeluaran.setKeterangan("R. Pengeluaran bulan sebelumnya");
             this.list.clear();
             this.list.add(Pemasukan);
@@ -539,7 +539,7 @@ public void Refresh(){
     }//GEN-LAST:event_jYearChooser1PropertyChange
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        app.table.Util.RefreshLaporan();
+//        app.table.Util.RefreshLaporan();
         List resultList = entityManager.createQuery(
                 "SELECT l FROM Laporan l ORDER BY l.tanggal")
                 .getResultList();
@@ -567,7 +567,7 @@ public void Refresh(){
         chooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooser.showSaveDialog(jPanel1);
         File path = chooser.getSelectedFile();
-        javax.swing.JOptionPane.showMessageDialog(null, "" + path);                
+        int Pilihan = javax.swing.JOptionPane.showConfirmDialog(null, "" + path);                
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
