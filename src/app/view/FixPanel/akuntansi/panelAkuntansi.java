@@ -423,7 +423,6 @@ public class panelAkuntansi extends JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        System.out.println("app.view.FixPanel.akuntansi.panelAkuntansi.jFileChooser1ActionPerformed()");
         File root = jFileChooser1.getSelectedFile();
         System.out.println("root = " + root);
         Date p = new Date();

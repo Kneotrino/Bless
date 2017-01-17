@@ -203,6 +203,9 @@
         <Property name="approveButtonToolTipText" type="java.lang.String" value=""/>
         <Property name="fileSelectionMode" type="int" value="1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFileChooser1ActionPerformed"/>
+      </Events>
     </Component>
   </NonVisualComponents>
   <AuxValues>
@@ -414,9 +417,9 @@
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
-                  <Subbinding sourcePath="${transaksi.bankId}">
+                  <Subbinding sourcePath="${transaksi.bankId.namaBank}">
                     <BindingParameter name="NAME" value="Tujuan"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                 </BindingProperty>

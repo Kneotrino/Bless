@@ -5,21 +5,32 @@
  */
 package app.view.FixPanel;
 
+import app.table.Bank;
 import app.table.Laporan;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
+import app.table.Saldo;
+import app.utils.Printer;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javaslang.Tuple;
 import javax.persistence.RollbackException;
 import javax.persistence.TemporalType;
 import javax.swing.JFileChooser;
@@ -184,6 +195,7 @@ public class panelLaporan extends JPanel {
         jFileChooser1.setApproveButtonText("Print Laporan/All data");
         jFileChooser1.setApproveButtonToolTipText("");
         jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        jFileChooser1.addActionListener(formListener);
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -262,9 +274,9 @@ public class panelLaporan extends JPanel {
         columnBinding.setColumnName("tipe");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId.namaBank}"));
         columnBinding.setColumnName("Tujuan");
-        columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -289,6 +301,9 @@ public class panelLaporan extends JPanel {
             if (evt.getSource() == jButton3) {
                 panelLaporan.this.jButton3ActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton2) {
+                panelLaporan.this.jButton2ActionPerformed(evt);
+            }
             else if (evt.getSource() == jButton1) {
                 panelLaporan.this.jButton1ActionPerformed(evt);
             }
@@ -307,8 +322,8 @@ public class panelLaporan extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelLaporan.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton2) {
-                panelLaporan.this.jButton2ActionPerformed(evt);
+            else if (evt.getSource() == jFileChooser1) {
+                panelLaporan.this.jFileChooser1ActionPerformed(evt);
             }
         }
 
@@ -378,6 +393,11 @@ public class panelLaporan extends JPanel {
             Pemasukan.setJumlah(temp);
             Pemasukan.setKeterangan("R. Pemasukan bulan sebelumnya");
             Pengeluaran.setKeterangan("R. Pengeluaran bulan sebelumnya");
+            Saldo saldo1 = new Saldo();
+            Bank bank = new Bank();
+            saldo1.setBankId(bank);
+            Pemasukan.setTransaksi(saldo1);
+            Pengeluaran.setTransaksi(saldo1);
             list.clear();
             this.list.add(Pemasukan);
             this.list.add(Pengeluaran);        
@@ -504,6 +524,11 @@ public void Refresh(){
                     temp = temp.add(laporan.getPemasukan());
                     temp1 = temp1.add(laporan.getPengeluaran());
             }
+            Saldo saldo1 = new Saldo();
+            Bank bank = new Bank();
+            saldo1.setBankId(bank);
+            Pemasukan.setTransaksi(saldo1);
+            Pengeluaran.setTransaksi(saldo1);
             Pengeluaran.setJumlah(temp1);
             Pemasukan.setJumlah(temp);
             Pemasukan.setKeterangan("R. Pemasukan bulan sebelumnya");
@@ -562,14 +587,57 @@ public void Refresh(){
     }//GEN-LAST:event_masterTableMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//        jFileChooser1.showOpenDialog(jPanel1);
-        JFileChooser chooser = jFileChooser1;
-        chooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-        chooser.showSaveDialog(jPanel1);
-        File path = chooser.getSelectedFile();
-        int Pilihan = javax.swing.JOptionPane.showConfirmDialog(null, "" + path);                
+        jFileChooser1.showSaveDialog(jPanel1);            
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        File root = jFileChooser1.getSelectedFile();
+        Date p = new Date();
+        final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
+        final DecimalFormat IDR = new DecimalFormat("#,##0");
+        List a = list;
+        File file = new File(root, "Laporan Utama "+formator.format(p)+".CSV");
+        System.out.println("file = " + file);
+        WriteStep dataList = CSVUtil.of(file)
+                .type(app.table.Laporan.class)
+                .properties(
+                        Tuple.of("Ref", "id", null),
+                        Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                        Tuple.of("Keterangan", "keterangan", d -> d),
+                        Tuple.of("Pemasukan", "pemasukan", d -> IDR.format(d) ),
+                        Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
+                        Tuple.of("Saldo", "saldo", d -> IDR.format(d) ),
+                        Tuple.of("Jenis", "jenis", d -> d ),
+                        Tuple.of("Bank", "transaksi.bankId", d -> d==null? "":d)
+                ).dataList(a);
+        try {
+               dataList.write();            
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena tidak bisa di akses\n"+e);
+                }
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(null, 
+                                "Berhasil Print apakah ingin di buka"                             
+                                + "\nPath = "+ file);
+         Desktop desktop = Desktop.getDesktop();
+         if(!Desktop.isDesktopSupported())
+                            javax.swing.JOptionPane.showMessageDialog(null
+                                    , "Gagal Print, system tidak mendukung\n");
+
+        if (confirm ==0) {
+            if (file.exists()) {
+                     try {  desktop.open(file);
+                     } 
+                     catch (Exception ex) {
+                                         javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena tidak bisa di akses\n"+ex);
+                            }    
+
+            }
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

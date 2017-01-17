@@ -48,7 +48,6 @@ public class Printer {
                     folderMan.mkdirs();
                     File folder = new File(dir, "");
                     folder.mkdirs();
-//                    PrintLaporan(dir, Laporan.class);
                     PrintLaporan(dir, Pemasukan.class);
                     PrintLaporan(dir, Pengeluaran.class);
             }});
@@ -92,8 +91,7 @@ public class Printer {
                                     , "Gagal Print, system tidak mendukung\n");
                 if (con == 0) {
                             if(f.exists()) 
-                                try {
-                                    desktop.open(f);
+                                try {  desktop.open(f);
                             } catch (IOException ex) {
                                 Logger.getLogger(Printer.class.getName()).log(Level.SEVERE, null, ex);
                             }    
