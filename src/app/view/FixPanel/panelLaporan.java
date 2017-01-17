@@ -11,6 +11,7 @@ import app.table.Pemasukan;
 import app.table.Pengeluaran;
 import app.table.Saldo;
 import app.utils.Printer;
+import static app.utils.Printer.PrintLaporan;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
 import java.awt.Desktop;
@@ -524,11 +525,6 @@ public void Refresh(){
                     temp = temp.add(laporan.getPemasukan());
                     temp1 = temp1.add(laporan.getPengeluaran());
             }
-            Saldo saldo1 = new Saldo();
-            Bank bank = new Bank();
-            saldo1.setBankId(bank);
-            Pemasukan.setTransaksi(saldo1);
-            Pengeluaran.setTransaksi(saldo1);
             Pengeluaran.setJumlah(temp1);
             Pemasukan.setJumlah(temp);
             Pemasukan.setKeterangan("R. Pemasukan bulan sebelumnya");
@@ -612,7 +608,10 @@ public void Refresh(){
                         Tuple.of("Bank", "transaksi.bankId", d -> d==null? "":d)
                 ).dataList(a);
         try {
-               dataList.write();            
+             EventQueue.invokeLater(() -> {
+                 dataList.write();
+             });
+            
                 } catch (Exception e) {
                     e.printStackTrace();
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena tidak bisa di akses\n"+e);

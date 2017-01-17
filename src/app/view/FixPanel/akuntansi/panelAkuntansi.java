@@ -452,8 +452,11 @@ public class panelAkuntansi extends JPanel {
                 )
                 .dataList(b);        
         try {
-        AkunPrinter.write();            
-        LabaPrinter.write();            
+             EventQueue.invokeLater(() -> {
+                 AkunPrinter.write();
+                 LabaPrinter.write();
+             });
+         
         } catch (Exception e) {
             javax
                     .swing
