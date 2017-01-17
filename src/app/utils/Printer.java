@@ -13,12 +13,16 @@ import java.io.File;
 import javaslang.Tuple;
 import app.table.Util;
 import com.joobar.csvbless.WriteStep;
+import java.awt.Desktop;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.TypedQuery;
 /**
  *
@@ -78,9 +82,22 @@ public class Printer {
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
                 } 
-              javax.swing.JOptionPane.showMessageDialog(null, 
-                      "Berhasil Print "+
-                              kelas.getSimpleName()
-                              + "\nPath = "+ filename);
+                int con = javax.swing.JOptionPane.showConfirmDialog(null, 
+                                "Berhasil Print "+
+                                kelas.getSimpleName()
+                                + "\nPath = "+ filename);
+                Desktop desktop = Desktop.getDesktop();
+                if(!Desktop.isDesktopSupported())
+                            javax.swing.JOptionPane.showMessageDialog(null
+                                    , "Gagal Print, system tidak mendukung\n");
+                if (con == 0) {
+                            if(f.exists()) 
+                                try {
+                                    desktop.open(f);
+                            } catch (IOException ex) {
+                                Logger.getLogger(Printer.class.getName()).log(Level.SEVERE, null, ex);
+                            }    
+                }
+                
     }
 }

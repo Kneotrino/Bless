@@ -463,11 +463,10 @@ public class panelAkuntansi extends JPanel {
         }
         finally {
             int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
-                    "Berhasil Print "
+                    "Berhasil Print apakah anada ingin membuka File?"
                             + "\nPath Neraca File= "+ akun
                             + "\nPath Laba-Rugi File= "+ laba
             );
-            System.out.println("confirm = " + confirm);
             Desktop desktop = Desktop.getDesktop();
             try {
                 if(!Desktop.isDesktopSupported()){
