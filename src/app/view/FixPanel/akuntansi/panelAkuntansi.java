@@ -6,30 +6,31 @@
 package app.view.FixPanel.akuntansi;
 
 //import app.table.Akuntansi;
-import app.table.Asset;
 import app.table.Bank;
 import app.table.Laporan;
-import app.table.Modal;
-import app.table.Pegawaigaji;
-import app.table.Pemasukan;
-import app.table.Pengeluaran;
-import app.view.FixPanel.PanelTransaksi;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
+import java.awt.Desktop;
 import java.awt.EventQueue;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.Beans;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
-import java.text.MessageFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javaslang.Tuple;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import org.jdesktop.observablecollections.ObservableList;
 
 /**
  *
@@ -284,6 +285,7 @@ public class panelAkuntansi extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
@@ -291,10 +293,15 @@ public class panelAkuntansi extends JPanel {
         jTable3 = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+
+        FormListener formListener = new FormListener();
 
         jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LAPORAN PERUBAHAN MODAL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
@@ -316,7 +323,18 @@ public class panelAkuntansi extends JPanel {
             jTable4.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        setLayout(new java.awt.GridLayout(1, 0));
+        jFileChooser1.setApproveButtonText("Print");
+        jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        jFileChooser1.addActionListener(formListener);
+
+        setPreferredSize(new java.awt.Dimension(1500, 1000));
+        setLayout(new java.awt.BorderLayout());
+
+        jButton1.setText("Print");
+        jButton1.addActionListener(formListener);
+        add(jButton1, java.awt.BorderLayout.PAGE_START);
+
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
@@ -349,7 +367,7 @@ public class panelAkuntansi extends JPanel {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        add(jScrollPane1);
+        jPanel1.add(jScrollPane1);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
@@ -378,10 +396,94 @@ public class panelAkuntansi extends JPanel {
             jTable2.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        add(jScrollPane2);
+        jPanel1.add(jScrollPane2);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
 
         bindingGroup.bind();
+    }
+
+    // Code for dispatching events from components to event handlers.
+
+    private class FormListener implements java.awt.event.ActionListener {
+        FormListener() {}
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            if (evt.getSource() == jButton1) {
+                panelAkuntansi.this.jButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jFileChooser1) {
+                panelAkuntansi.this.jFileChooser1ActionPerformed(evt);
+            }
+        }
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jFileChooser1.showSaveDialog(jPanel1);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        System.out.println("app.view.FixPanel.akuntansi.panelAkuntansi.jFileChooser1ActionPerformed()");
+        File root = jFileChooser1.getSelectedFile();
+        System.out.println("root = " + root);
+        Date p = new Date();
+        final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
+        File akun = new File(root, "Neraca "+formator.format(p)+".CSV");
+        File laba = new File(root, "Laba-Rugi "+formator.format(p)+".CSV");
+        List a = AkuntansiList;
+        List b = LabaList;
+        final DecimalFormat IDR = new DecimalFormat("#,##0");              
+        Function f = d -> d==null?"0":IDR.format(d);
+        WriteStep AkunPrinter = CSVUtil.of(akun)
+                .type(app.view.FixPanel.akuntansi.Akun.class)
+                .properties(
+                        Tuple.of("No", "nomor", null),
+                        Tuple.of("Akun", "akun", null),
+                        Tuple.of("Aktiva(Harta + Pengeluaran)", "pemasukan", f),
+                        Tuple.of("Pasiva(Hutang + Modal + Pemasukan)", "pengeluaran", f)
+                )
+                .dataList(a);
+        WriteStep LabaPrinter = CSVUtil.of(laba)
+                .type(app.view.FixPanel.akuntansi.Akun.class)
+                .properties(
+                        Tuple.of("No", "nomor", null),
+                        Tuple.of("Akun", "akun", null),
+                        Tuple.of("Pemasukan", "pengeluaran", f),
+                        Tuple.of("Pengeluaran", "pemasukan", f)
+                )
+                .dataList(b);        
+        try {
+        AkunPrinter.write();            
+        LabaPrinter.write();            
+        } catch (Exception e) {
+            javax
+                    .swing
+                    .JOptionPane.showMessageDialog(null, 
+                    "Gagal Print, Karena file sementara terbuka\n"+e);                
+        }
+        finally {
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "Berhasil Print "
+                            + "\nPath Neraca File= "+ akun
+                            + "\nPath Laba-Rugi File= "+ laba
+            );
+            System.out.println("confirm = " + confirm);
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                if(!Desktop.isDesktopSupported()){
+                        System.out.println("Desktop is not supported");
+                        return;
+                }
+                if (confirm == 0) {
+                    if(akun.exists()) desktop.open(akun);
+                    if(laba.exists()) desktop.open(laba);                    
+                }
+            } catch (IOException ex) {
+                    Logger.getLogger(panelAkuntansi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     public List<Akun> getLabaList() {
         return LabaList;
@@ -394,6 +496,9 @@ public class panelAkuntansi extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager entityManager;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

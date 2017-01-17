@@ -255,7 +255,7 @@ public void Restall()
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -328,20 +328,20 @@ public void Restall()
             if (evt.getSource() == newButton) {
                 panelMaster.this.newButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == refreshButton) {
-                panelMaster.this.refreshButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == deleteButton) {
                 panelMaster.this.deleteButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton1) {
                 panelMaster.this.jButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == saveButton) {
-                panelMaster.this.saveButtonActionPerformed(evt);
+            else if (evt.getSource() == refreshButton) {
+                panelMaster.this.refreshButtonActionPerformed(evt);
             }
             else if (evt.getSource() == refreshButton1) {
                 panelMaster.this.refreshButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelMaster.this.saveButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
