@@ -330,11 +330,11 @@ public class panelPerjalanan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transfer.transaksi.bankId}"));
         columnBinding.setColumnName("Transfer Dari");
         columnBinding.setColumnClass(app.table.Bank.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
-        columnBinding.setColumnName("Diterima/Dikirim");
-        columnBinding.setColumnClass(app.table.Bank.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kembali.transaksi.bankId}"));
         columnBinding.setColumnName("Kembalikan Ke");
+        columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding.setColumnName("Diterima/Dikirim");
         columnBinding.setColumnClass(app.table.Bank.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
@@ -342,7 +342,7 @@ public class panelPerjalanan extends JPanel {
         detailScrollPane.setViewportView(detailTable);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
             detailTable.getColumnModel().getColumn(8).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1));
-            detailTable.getColumnModel().getColumn(10).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
+            detailTable.getColumnModel().getColumn(9).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
         }
 
         add(detailScrollPane);
@@ -391,6 +391,9 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == newDetailButton) {
                 panelPerjalanan.this.newDetailButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == jComboBox2) {
+                panelPerjalanan.this.jComboBox2ActionPerformed(evt);
+            }
             else if (evt.getSource() == newButton2) {
                 panelPerjalanan.this.newButton2ActionPerformed(evt);
             }
@@ -399,9 +402,6 @@ public class panelPerjalanan extends JPanel {
             }
             else if (evt.getSource() == newButton4) {
                 panelPerjalanan.this.newButton4ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jComboBox2) {
-                panelPerjalanan.this.jComboBox2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -689,9 +689,6 @@ public class panelPerjalanan extends JPanel {
     private void Hitung() {
     for (Trips trips : list) {
             List<Perjalanan> mop = trips.getPerjalananList();
-//            mop.sort((o1,o2) -> o1.getTanggal().compareTo(o2.getTanggal()));
-            //list.sort((o1,o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
-//            mop.sort(Comparator.comparing(o -> o.getTanggal()));
             java.math.BigInteger saldo = new java.math.BigInteger("0");            
             for (Perjalanan a : mop) {
                 saldo = saldo.subtract(a.getPengeluaran());

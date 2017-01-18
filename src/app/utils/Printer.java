@@ -12,10 +12,14 @@ import app.table.Mobil;
 import app.table.MobilPemasukan;
 import app.table.MobilPengeluaran;
 import app.table.Modal;
+import app.table.Pegawai;
+import app.table.Pegawaigaji;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
+import app.table.Perjalanan;
 import app.table.Prive;
 import app.table.Saldo;
+import app.table.Trips;
 import com.joobar.csvbless.CSVUtil;
 import java.awt.EventQueue;
 import java.io.File;
@@ -59,14 +63,17 @@ public class Printer {
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();
-                    PrintLaporan(folder, Laporan.class);
+//                    PrintLaporan(folder, Laporan.class);
 //                    PrintLaporan(folder, Pemasukan.class);
 //                    PrintLaporan(folder, Pengeluaran.class);
 //                    PrintLaporan(folder, Asset.class);
 //                    PrintLaporan(folder, Modal.class);
 //                    PrintLaporan(folder, Prive.class);
 //                    PrintLaporan(folder, pembagianLaba.class);    
-                    PrintMobil(folder);
+//                    PrintMobil(folder);
+//                    PrintPerjalanan(folder);
+//                    PrintPegawai(folder);
+                    PrintKas(folder);
                 try {
                     Desktop.getDesktop().open(folder);
                 } catch (IOException ex) {
@@ -74,9 +81,96 @@ public class Printer {
                 }
             }});
     }
+    public static void PrintKas(File place)
+    {
+              File f = new File(place, "Data Kas");
+              f.mkdirs();
+              System.out.println("f = " + f);
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+              List<app.table.Bank> resultList = getDataList(app.table.Bank.class);
+              System.out.println("resultList = " + resultList.size());    
+              for (Bank peg : resultList) {
+                  String pe = peg.getBankId()+"-"
+                          +peg.getNamaBank()+
+                          ".CSV";
+                  File p = new File(f, pe);
+                  List<Saldo> Sal = peg.getSaldoList();
+                  BigInteger temp = BigInteger.ZERO;
+                  for (Saldo saldo : Sal) {
+                           temp = temp.add(saldo.getLaporan().getPemasukan());
+                           temp = temp.subtract(saldo.getLaporan().getPengeluaran());
+                           saldo.getLaporan().setSaldo(temp);
+                  }
+                  List a = Sal;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Perjalanan.class)
+                            .properties(
+                                Tuple.of("Ref", "saldoId", null),
+                                Tuple.of("Tanggal", "laporan.tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "laporan.keterangan", d -> d),
+                                Tuple.of("Pemasukan", "laporan.pemasukan", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pengeluaran", "laporan.pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pengeluaran", "laporan.saldo", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Jenis", "laporan.jenis", d -> d),
+                                Tuple.of("Bank", "bankId", d -> d)
+                    ).dataList(a);
+                try {
+                    dataList.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+        }
+    
+    }
+    public static void PrintPegawai(File place)
+    {
+              File f = new File(place, "Data Pegawai");
+              f.mkdirs();
+              System.out.println("f = " + f);
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+              List<app.table.Pegawai> resultList = getDataList(app.table.Pegawai.class);
+              System.out.println("resultList = " + resultList.size());    
+              for (Pegawai peg : resultList) {
+                  String pe = peg.getId()+"-"
+                          +peg.getNama()+"-"
+                          +peg.getStatus()+
+                          ".CSV";
+                  File p = new File(f, pe);
+                  List<Pegawaigaji> pegawaigajiList = peg.getPegawaigajiList();
+                  List a = pegawaigajiList;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Perjalanan.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Nominal", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                    ).dataList(a);
+                try {
+                    dataList.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+        }
+    }
     public static  List getList(Class kelas)
     {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en order by en.tanggal ";
+        TypedQuery createQuery = Util.manager.createQuery(que, kelas);   
+        return createQuery.getResultList();
+    }
+    public static  List getDataList(Class kelas)
+    {
+        String que = "SELECT en FROM " + kelas.getSimpleName() + " en";
         TypedQuery createQuery = Util.manager.createQuery(que, kelas);   
         return createQuery.getResultList();
     }
@@ -101,15 +195,65 @@ public class Printer {
                     try {
                     dataList.write();            
                 } catch (Exception e) {
+                    e.printStackTrace();
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
+                    return ;
                 } 
                     finally {
-                    javax.swing.JOptionPane.showMessageDialog(null, 
-                                "Berhasil Print "+
-                                kelas.getSimpleName()
-                                + "\nPath = "+ filename.toString());
+                        System.out.println("filename = " + filename);
+//                    javax.swing.JOptionPane.showMessageDialog(null, 
+//                                "Berhasil Print "+
+//                                kelas.getSimpleName()
+//                                + "\nPath = "+ filename.toString());
                     }
                 
+    }
+    public static void  PrintPerjalanan (File place)
+    {
+              File f = new File(place, "Laporan Perjalanan");
+              f.mkdirs();
+              System.out.println("f = " + f);
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+              List<app.table.Trips> resultList = getDataList(app.table.Trips.class);
+              System.out.println("resultList = " + resultList.size());
+              for (Trips t : resultList) {
+                  String tip = 
+                          "Lap.Perjalanan-"+
+                          t.getPerjalananke()+"-"+
+                          t.getKeterangan()+".CSV";
+                      File p = new File(f, tip);            
+                List<Perjalanan> PL = t.getPerjalananList();
+                java.math.BigInteger saldo = new java.math.BigInteger("0");            
+                for (Perjalanan a : PL) {
+                    saldo = saldo.subtract(a.getPengeluaran());
+                    saldo = saldo.add(a.getPemasukan());
+                    a.setSaldo(saldo);
+                }    
+                List a = PL;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Perjalanan.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Kirim", "kirim2", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Kembalikan", "kembali2", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pakai", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Saldo", "saldo", d -> IDR.format(d) )
+                    ).dataList(a);
+                try {
+                    dataList.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                } 
+
+                  
+        }
+    
     }
     public static void PrintMobil(File place)
     {

@@ -620,14 +620,14 @@
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
-                  <Editor/>
+                  <Editor editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                    <Connection code="new javax.swing.DefaultCellEditor(jComboBox4)" type="code"/>
+                  </Editor>
                   <Renderer/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
-                  <Editor editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                    <Connection code="new javax.swing.DefaultCellEditor(jComboBox4)" type="code"/>
-                  </Editor>
+                  <Editor/>
                   <Renderer/>
                 </Column>
               </TableColumnModel>
@@ -681,12 +681,12 @@
                 <BindingParameter name="NAME" value="Transfer Dari"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${transaksi.bankId}">
-                <BindingParameter name="NAME" value="Diterima/Dikirim"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
-              </Subbinding>
               <Subbinding sourcePath="${kembali.transaksi.bankId}">
                 <BindingParameter name="NAME" value="Kembalikan Ke"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${transaksi.bankId}">
+                <BindingParameter name="NAME" value="Diterima/Dikirim"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
               </Subbinding>
             </BindingProperty>
