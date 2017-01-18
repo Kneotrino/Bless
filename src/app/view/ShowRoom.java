@@ -69,6 +69,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jFileChooser1 = new javax.swing.JFileChooser();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
@@ -151,6 +152,15 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem19ActionPerformed(evt);
+            }
+        });
+
+        jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser1.setApproveButtonText("PRINT DATA SEMUA");
+        jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser1ActionPerformed(evt);
             }
         });
 
@@ -378,7 +388,12 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu3.setText("Control");
 
-        jMenuItem29.setText("Print data semua");
+        jMenuItem29.setText("Print Data Semua");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem29);
 
         jMenuItem6.setText("About");
@@ -554,6 +569,16 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        this.jFileChooser1.showSaveDialog(jPanel1);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        app.utils.Printer.Printing(this.jFileChooser1.getSelectedFile());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -593,6 +618,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private app.view.FixPanel.Inventaris inventaris1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

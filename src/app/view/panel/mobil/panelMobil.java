@@ -1620,6 +1620,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable1.setDefaultEditor(long.class, new app.utils.TablePopupEditor());
     jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+    jTable1.setCellSelectionEnabled(true);
     jTable1.setRowHeight(24);
     jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 

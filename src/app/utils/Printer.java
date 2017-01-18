@@ -4,9 +4,12 @@
  * and open the template in the editor.
  */
 package app.utils;
+import app.table.Asset;
 import app.table.Laporan;
+import app.table.Modal;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
+import app.table.Prive;
 import com.joobar.csvbless.CSVUtil;
 import java.awt.EventQueue;
 import java.io.File;
@@ -19,6 +22,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -42,14 +46,23 @@ public class Printer {
         EventQueue.invokeLater(new Runnable() {
             public void run()                        
             {
+                    Date p = new Date();
+                    final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
                     File dir = rootdir;
-                    dir.mkdirs();
-                    File folderMan = new File(dir, "Management");
-                    folderMan.mkdirs();
-                    File folder = new File(dir, "");
+                    File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();
-                    PrintLaporan(dir, Pemasukan.class);
-                    PrintLaporan(dir, Pengeluaran.class);
+                    PrintLaporan(folder, Laporan.class);
+                    PrintLaporan(folder, Pemasukan.class);
+                    PrintLaporan(folder, Pengeluaran.class);
+                    PrintLaporan(folder, Asset.class);
+                    PrintLaporan(folder, Modal.class);
+                    PrintLaporan(folder, Prive.class);
+//                    PrintLaporan(folder, .class);
+                try {
+                    Desktop.getDesktop().open(folder);
+                } catch (IOException ex) {
+                    Logger.getLogger(Printer.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }});
     }
     public static  List getList(Class kelas)
@@ -81,21 +94,10 @@ public class Printer {
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
                 } 
-                int con = javax.swing.JOptionPane.showConfirmDialog(null, 
+                javax.swing.JOptionPane.showMessageDialog(null, 
                                 "Berhasil Print "+
                                 kelas.getSimpleName()
-                                + "\nPath = "+ filename);
-                Desktop desktop = Desktop.getDesktop();
-                if(!Desktop.isDesktopSupported())
-                            javax.swing.JOptionPane.showMessageDialog(null
-                                    , "Gagal Print, system tidak mendukung\n");
-                if (con == 0) {
-                            if(f.exists()) 
-                                try {  desktop.open(f);
-                            } catch (IOException ex) {
-                                Logger.getLogger(Printer.class.getName()).log(Level.SEVERE, null, ex);
-                            }    
-                }
+                                + "\nPath = "+ filename.toString());
                 
     }
 }

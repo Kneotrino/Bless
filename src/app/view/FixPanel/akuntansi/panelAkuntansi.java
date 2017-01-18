@@ -452,10 +452,8 @@ public class panelAkuntansi extends JPanel {
                 )
                 .dataList(b);        
         try {
-             EventQueue.invokeLater(() -> {
                  AkunPrinter.write();
                  LabaPrinter.write();
-             });
          
         } catch (Exception e) {
             javax
@@ -463,7 +461,6 @@ public class panelAkuntansi extends JPanel {
                     .JOptionPane.showMessageDialog(null, 
                     "Gagal Print, Karena file sementara terbuka\n"+e);                
         }
-        finally {
             int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
                     "Berhasil Print apakah anada ingin membuka File?"
                             + "\nPath Neraca File= "+ akun
@@ -479,10 +476,10 @@ public class panelAkuntansi extends JPanel {
                     if(akun.exists()) desktop.open(akun);
                     if(laba.exists()) desktop.open(laba);                    
                 }
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                     Logger.getLogger(panelAkuntansi.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+            System.out.println("end");
         // TODO add your handling code here:
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
@@ -543,7 +540,7 @@ public class panelAkuntansi extends JPanel {
                 jDialog1.show();
                 app.table.Util.RefreshLaporan();
                 app.table.Util.RefreshBank();
-                jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+                jDialog1.setModalityType(java.awt.Dialog.ModalityType.MODELESS);
                 jDialog1.getContentPane().add(new panelAkuntansi());
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {

@@ -608,9 +608,7 @@ public void Refresh(){
                         Tuple.of("Bank", "transaksi.bankId", d -> d==null? "":d)
                 ).dataList(a);
         try {
-             EventQueue.invokeLater(() -> {
                  dataList.write();
-             });
             
                 } catch (Exception e) {
                     e.printStackTrace();
