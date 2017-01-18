@@ -63,6 +63,10 @@ public class Printer {
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();
+                    PrintMobil(folder);
+                    PrintPerjalanan(folder);
+                    PrintKas(folder);
+                    PrintPegawai(folder);
                     PrintLaporan(folder, Laporan.class);
                     PrintLaporan(folder, Pemasukan.class);
                     PrintLaporan(folder, Pengeluaran.class);
@@ -70,10 +74,6 @@ public class Printer {
                     PrintLaporan(folder, Modal.class);
                     PrintLaporan(folder, Prive.class);
                     PrintLaporan(folder, pembagianLaba.class);    
-                    PrintMobil(folder);
-                    PrintPerjalanan(folder);
-                    PrintPegawai(folder);
-                    PrintKas(folder);
                 try {
                     Desktop.getDesktop().open(folder);
                 } catch (IOException ex) {
@@ -249,9 +249,7 @@ public class Printer {
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
                     e.printStackTrace();
                     return ;
-                } 
-
-                  
+                }                   
         }
     
     }
@@ -279,31 +277,31 @@ public class Printer {
                             mobil.getDebitur().getNama()+ ".CSV"
                             ;
                       File p = new File(f, mo);
-                      List<KeuanganMobil> b = mobil.getKeuanganMobil2();
-                      KeuanganMobil total1 = new MobilPemasukan();
-                      total1.setKeterangan("Total Pemasukan");
-                      KeuanganMobil total2 = new MobilPengeluaran();
-                      total2.setKeterangan("Total Pengeluaran");
-                      KeuanganMobil laba = new MobilPemasukan();
-                      laba.setKeterangan("Laba");
-                      BigInteger temp1 = BigInteger.ZERO;
-                      BigInteger temp2 = BigInteger.ZERO;
-                      Saldo saldo1 = new Saldo();
-                      Bank bank = new Bank();
-                      saldo1.setBankId(bank);                      
-                      for (KeuanganMobil m : b) {                          
-                          temp1 = temp1.add(m.getPemasukan());
-                          temp2 = temp2.add(m.getPengeluaran());
-                      }
-                      total1.setTransaksi(saldo1);
-                      total2.setTransaksi(saldo1);
-                      laba.setTransaksi(saldo1);
-                      total1.setJumlah(temp1);
-                      total2.setJumlah(temp2);
-                      laba.setJumlah(temp1.subtract(temp2));
-                      b.add(total1);
-                      b.add(total2);
-                      b.add(laba);
+                      List<KeuanganMobil> b = mobil.getKeuanganMobils();
+//                      KeuanganMobil total1 = new MobilPemasukan();
+//                      total1.setKeterangan("Total Pemasukan");
+//                      KeuanganMobil total2 = new MobilPengeluaran();
+//                      total2.setKeterangan("Total Pengeluaran");
+//                      KeuanganMobil laba = new MobilPemasukan();
+//                      laba.setKeterangan("Laba");
+//                      BigInteger temp1 = BigInteger.ZERO;
+//                      BigInteger temp2 = BigInteger.ZERO;
+//                      Saldo saldo1 = new Saldo();
+//                      Bank bank = new Bank();
+//                      saldo1.setBankId(bank);                      
+//                      for (KeuanganMobil m : b) {                          
+//                          temp1 = temp1.add(m.getPemasukan());
+//                          temp2 = temp2.add(m.getPengeluaran());
+//                      }
+//                      total1.setTransaksi(saldo1);
+//                      total2.setTransaksi(saldo1);
+//                      laba.setTransaksi(saldo1);
+//                      total1.setJumlah(temp1);
+//                      total2.setJumlah(temp2);
+//                      laba.setJumlah(temp1.subtract(temp2));
+//                      b.add(total1);
+//                      b.add(total2);
+//                      b.add(laba);
                       List a = b;
                       WriteStep dataList = CSVUtil.of(p)
                         .type(app.table.KeuanganMobil.class)
