@@ -79,14 +79,6 @@ public class Perjalanan extends Laporan implements Serializable {
         this.Kembali = Kembali;
     }
 
-//    public Pengeluaran getTransfer() {
-//        return Transfer;
-//    }
-//
-//    public void setTransfer(Pengeluaran Transfer) {
-//        this.Transfer = Transfer;
-//    }
-
     public Perjalanan() {
     }
 

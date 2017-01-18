@@ -63,16 +63,16 @@ public class Printer {
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();
-//                    PrintLaporan(folder, Laporan.class);
-//                    PrintLaporan(folder, Pemasukan.class);
-//                    PrintLaporan(folder, Pengeluaran.class);
-//                    PrintLaporan(folder, Asset.class);
-//                    PrintLaporan(folder, Modal.class);
-//                    PrintLaporan(folder, Prive.class);
-//                    PrintLaporan(folder, pembagianLaba.class);    
-//                    PrintMobil(folder);
-//                    PrintPerjalanan(folder);
-//                    PrintPegawai(folder);
+                    PrintLaporan(folder, Laporan.class);
+                    PrintLaporan(folder, Pemasukan.class);
+                    PrintLaporan(folder, Pengeluaran.class);
+                    PrintLaporan(folder, Asset.class);
+                    PrintLaporan(folder, Modal.class);
+                    PrintLaporan(folder, Prive.class);
+                    PrintLaporan(folder, pembagianLaba.class);    
+                    PrintMobil(folder);
+                    PrintPerjalanan(folder);
+                    PrintPegawai(folder);
                     PrintKas(folder);
                 try {
                     Desktop.getDesktop().open(folder);
