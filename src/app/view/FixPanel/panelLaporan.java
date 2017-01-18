@@ -529,6 +529,11 @@ public void Refresh(){
             Pemasukan.setJumlah(temp);
             Pemasukan.setKeterangan("R. Pemasukan bulan sebelumnya");
             Pengeluaran.setKeterangan("R. Pengeluaran bulan sebelumnya");
+            Saldo saldo1 = new Saldo();
+            Bank bank = new Bank();
+            saldo1.setBankId(bank);
+            Pemasukan.setTransaksi(saldo1);
+            Pengeluaran.setTransaksi(saldo1);
             this.list.clear();
             this.list.add(Pemasukan);
             this.list.add(Pengeluaran);

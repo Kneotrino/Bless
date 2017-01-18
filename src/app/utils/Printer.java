@@ -15,6 +15,7 @@ import java.awt.EventQueue;
 import java.io.File;
 import javaslang.Tuple;
 import app.table.Util;
+import app.table.pembagianLaba;
 import com.joobar.csvbless.WriteStep;
 import java.awt.Desktop;
 import java.io.FileNotFoundException;
@@ -57,7 +58,7 @@ public class Printer {
                     PrintLaporan(folder, Asset.class);
                     PrintLaporan(folder, Modal.class);
                     PrintLaporan(folder, Prive.class);
-//                    PrintLaporan(folder, .class);
+                    PrintLaporan(folder, pembagianLaba.class);
                 try {
                     Desktop.getDesktop().open(folder);
                 } catch (IOException ex) {
