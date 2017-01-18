@@ -7,6 +7,7 @@ package app.table;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -29,25 +30,46 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Object b = new app.table.Mobil();
-        Field[] fields = b.getClass().getDeclaredFields();
-//            System.out.print(" @app.ListUrutan({");
-            System.out.print("SELECT m FROM Mobil m WHERE");
-        for (Field field : fields) {
-            System.out.println(" OR b." + field.getName()+" LIKE :cari1");
+    List<String> properties = new ArrayList<String>();
+    Class<?> cl = app.table.Investor.class;
+
+    // check all declared fields
+    for (Field field : cl.getDeclaredFields()) {
+
+    // if field is private then look for setters/getters
+    if (Modifier.isPrivate(field.getModifiers())) {
+
+        // changing 1st letter to upper case
+        String name = field.getName();
+        String upperCaseName = name.substring(0, 1).toUpperCase()
+                + name.substring(1);
+        // and have getter and setter
+        try {
+            String simpleType = field.getType().getSimpleName();
+            //for boolean property methods should be isProperty and setProperty(propertyType)
+            if (simpleType.equals("Boolean") || simpleType.equals("boolean")) {
+                if ((cl.getDeclaredMethod("is" + upperCaseName) != null)
+                        && (cl.getDeclaredMethod("set" + upperCaseName,
+                                field.getType()) != null)) {
+                    properties.add(name);
+                }
+            } 
+            //for not boolean property methods should be getProperty and setProperty(propertyType)
+            else {
+                if ((cl.getDeclaredMethod("get" + upperCaseName) != null)
+                        && (cl.getDeclaredMethod("set" + upperCaseName,
+                                field.getType()) != null)) {
+                    properties.add(name);
+                }
+            }
+        } catch (NoSuchMethodException | SecurityException e) {
+            // if there is no method nothing bad will happen
         }
-        
-//            System.out.print(" })\n");
-//            List<app.table.Debitur> dp = new ArrayList<>();
-//            LinkedHashMap<String,String> nilai;
-//            nilai = new LinkedHashMap<>();            
-//            nilai.put("REF 5", "getDebiturId");
-//            nilai.put("REF 3", "getDebiturId");
-//            nilai.put("REF 1", "getDebiturId");
-//            nilai.put("REF 2", "getDebiturId");
-//            nilai.put("REF 4", "getDebiturId");
-//            System.out.println(nilai);
-//        NewMain.createStringQuery(null, "");
+    }
+}
+//                            Tuple.of("Keterangan", "keterangan", d -> d),
+    for (String property:properties)
+        System.out.println("Tuple.of(\""+property+"\",\""+property+"\""+", d-> d),");    
     }
     
     public static String createStringQuery(Class<?> entClazz, String keyword) {

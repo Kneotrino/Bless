@@ -100,7 +100,6 @@ public class panelInvestor extends JPanel {
         newButton.addActionListener(formListener);
 
         jDialog1.setModal(true);
-        jDialog1.setPreferredSize(new java.awt.Dimension(400, 400));
 
         jLabel1.setText("Bank");
         inputPanel1.add(jLabel1);
@@ -120,7 +119,6 @@ public class panelInvestor extends JPanel {
         jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
         jDialog2.setModal(true);
-        jDialog2.setPreferredSize(new java.awt.Dimension(400, 400));
 
         jLabel2.setText("Bank");
         inputPanel2.add(jLabel2);
@@ -140,7 +138,6 @@ public class panelInvestor extends JPanel {
         jDialog2.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
         jDialog3.setModal(true);
-        jDialog3.setPreferredSize(new java.awt.Dimension(400, 400));
 
         jButton3.setText("Simpan");
         jButton3.addActionListener(formListener);
@@ -304,8 +301,8 @@ public class panelInvestor extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                panelInvestor.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == newButton1) {
+                panelInvestor.this.newButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelInvestor.this.deleteButtonActionPerformed(evt);
@@ -316,8 +313,11 @@ public class panelInvestor extends JPanel {
             else if (evt.getSource() == saveButton1) {
                 panelInvestor.this.saveButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelInvestor.this.newDetailButtonActionPerformed(evt);
+            else if (evt.getSource() == newDetailButton1) {
+                panelInvestor.this.newDetailButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton2) {
+                panelInvestor.this.newDetailButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteDetailButton) {
                 panelInvestor.this.deleteDetailButtonActionPerformed(evt);
@@ -328,11 +328,11 @@ public class panelInvestor extends JPanel {
             else if (evt.getSource() == saveButton) {
                 panelInvestor.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton1) {
-                panelInvestor.this.newDetailButton1ActionPerformed(evt);
+            else if (evt.getSource() == newButton) {
+                panelInvestor.this.newButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton2) {
-                panelInvestor.this.newDetailButton2ActionPerformed(evt);
+            else if (evt.getSource() == jButton1) {
+                panelInvestor.this.jButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton2) {
                 panelInvestor.this.jButton2ActionPerformed(evt);
@@ -340,11 +340,8 @@ public class panelInvestor extends JPanel {
             else if (evt.getSource() == jButton3) {
                 panelInvestor.this.jButton3ActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton1) {
-                panelInvestor.this.newButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton1) {
-                panelInvestor.this.jButton1ActionPerformed(evt);
+            else if (evt.getSource() == newDetailButton) {
+                panelInvestor.this.newDetailButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -431,7 +428,7 @@ public class panelInvestor extends JPanel {
                 total3 = total3.add(entity.getModal());
                 total4 = total4.add(total2);                
         }
-            float t = total3.floatValue();
+        float t = total3.floatValue();
         for (Investor investor : data) {
             float p = investor.getModal().floatValue();
             investor.setPer(df.format((p/t)*100)+"%");
@@ -482,6 +479,7 @@ public class panelInvestor extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            this.refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();

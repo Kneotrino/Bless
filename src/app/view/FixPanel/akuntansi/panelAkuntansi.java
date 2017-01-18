@@ -534,7 +534,7 @@ public class panelAkuntansi extends JPanel {
         /* Create and display the form */
         EventQueue.invokeLater(() -> {
                 System.out.println("app.view.FixPanel.akuntansi.panelAkuntansi.main()");
-                javax.swing.JDialog jDialog1 = new JDialog();
+                javax.swing.JFrame jDialog1 = new JFrame("Akuntasi");
                 try {
                 EntityManagerFactory fact = Persistence.createEntityManagerFactory("blessingPU");
                 EntityManager manager = fact.createEntityManager();
@@ -553,7 +553,6 @@ public class panelAkuntansi extends JPanel {
                 jDialog1.show();
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
-                jDialog1.setModalityType(java.awt.Dialog.ModalityType.MODELESS);
                 jDialog1.getContentPane().add(new panelAkuntansi());
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {
