@@ -53,7 +53,7 @@ public class Util {
             if (!active) {
                 manager.getTransaction().begin();            
             }
-            Query query = manager.createQuery("SELECT l FROM Laporan l");
+             Query query = manager.createQuery("SELECT l FROM Laporan l");
              java.util.List<app.table.Laporan> data = query.getResultList();
              data.forEach((laporan) -> {
                  manager.refresh(laporan);

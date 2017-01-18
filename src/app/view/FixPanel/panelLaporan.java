@@ -613,8 +613,7 @@ public void Refresh(){
                         Tuple.of("Bank", "transaksi.bankId", d -> d==null? "":d)
                 ).dataList(a);
         try {
-                 dataList.write();
-            
+                 dataList.write();            
                 } catch (Exception e) {
                     e.printStackTrace();
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena tidak bisa di akses\n"+e);
@@ -634,7 +633,6 @@ public void Refresh(){
                      catch (Exception ex) {
                                          javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena tidak bisa di akses\n"+ex);
                             }    
-
             }
         }
 

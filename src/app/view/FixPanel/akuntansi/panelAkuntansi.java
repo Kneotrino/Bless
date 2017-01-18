@@ -13,7 +13,6 @@ import com.joobar.csvbless.WriteStep;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -25,12 +24,15 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaslang.Tuple;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import org.jdesktop.observablecollections.ObservableList;
 
 /**
  *
@@ -271,8 +273,6 @@ public class panelAkuntansi extends JPanel {
         LabaList.add(
               ProfitBersih   
         );        
-//        BigInteger math = new BigInteger("0").subtract(total.getPemasukan()).add(total.getPengeluaran());
-//        Kas.setPemasukan(math);
         AkuntansiList.add(total);                    
         initComponents();
     }
@@ -533,13 +533,26 @@ public class panelAkuntansi extends JPanel {
 
         /* Create and display the form */
         EventQueue.invokeLater(() -> {
+                System.out.println("app.view.FixPanel.akuntansi.panelAkuntansi.main()");
                 javax.swing.JDialog jDialog1 = new JDialog();
-                try {                
+                try {
+                EntityManagerFactory fact = Persistence.createEntityManagerFactory("blessingPU");
+                EntityManager manager = fact.createEntityManager();
+                boolean active = manager.getTransaction().isActive();
+                if (!active) {
+                    manager.getTransaction().begin();            
+                }
+                 Query query = manager.createQuery("SELECT l FROM Laporan l");
+                 java.util.List<app.table.Laporan> data = query.getResultList();
+                 data.forEach((laporan) -> {
+                        manager.refresh(laporan);
+                    });
+                 Query bank = manager.createQuery("SELECT b From Bank b ORDER BY b");
+                 List<Bank> result = bank.getResultList();
+                 result.forEach(a -> manager.refresh(a));
+                jDialog1.show();
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
-                jDialog1.show();
-                app.table.Util.RefreshLaporan();
-                app.table.Util.RefreshBank();
                 jDialog1.setModalityType(java.awt.Dialog.ModalityType.MODELESS);
                 jDialog1.getContentPane().add(new panelAkuntansi());
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

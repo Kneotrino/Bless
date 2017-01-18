@@ -39,6 +39,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 /**
  *
@@ -165,13 +168,13 @@ public class Printer {
     public static  List getList(Class kelas)
     {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en order by en.tanggal ";
-        TypedQuery createQuery = Util.manager.createQuery(que, kelas);   
+        TypedQuery createQuery = EM.createQuery(que, kelas);   
         return createQuery.getResultList();
     }
     public static  List getDataList(Class kelas)
     {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en";
-        TypedQuery createQuery = Util.manager.createQuery(que, kelas);   
+        TypedQuery createQuery = EM.createQuery(que, kelas);   
         return createQuery.getResultList();
     }
     public static void PrintLaporan(File place,Class kelas)
@@ -255,13 +258,12 @@ public class Printer {
     }
     public static void PrintMobil(File place)
     {
-//              String filename = kelas.getSimpleName()+ ".CSV";
               File f = new File(place, "Data Mobil");
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
-              TypedQuery createQuery = Util.manager.createQuery(
+              TypedQuery createQuery = EM.createQuery(
                       "SELECT m FROM Mobil m order by m desc", app.table.Mobil.class);   
               List<Mobil> resultList = createQuery.getResultList();
               System.out.println("resultList = " + resultList.size());
@@ -324,5 +326,7 @@ public class Printer {
 
         }
     }
+        public static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blessingPU");
+        public static EntityManager EM = factory.createEntityManager();
 
 }
