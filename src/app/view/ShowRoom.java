@@ -548,7 +548,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
 //        jPanel10 = new app.view.FixPanel.akuntansi.panelAkuntansi();    
 //        this.chandePanel("Akun");
-        ((app.view.FixPanel.panelLaporan) this.jPanel1).Refresh();
+//        ((app.view.FixPanel.panelLaporan) this.jPanel1).Refresh();
         app.view.FixPanel.akuntansi.panelAkuntansi.main(null);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem26ActionPerformed
@@ -577,7 +577,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
             System.out.println("app.view.ShowRoom.jFileChooser1ActionPerformed()");
-            ((app.view.FixPanel.panelLaporan) this.jPanel1).Refresh();
+//            ((app.view.FixPanel.panelLaporan) this.jPanel1).Refresh();
             app.utils.Printer.Printing(this.jFileChooser1.getSelectedFile());            
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 

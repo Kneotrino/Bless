@@ -502,7 +502,8 @@ public void Refresh(){
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                    
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();                    
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.MONDAY, bulan);
             cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));            
@@ -564,6 +565,8 @@ public void Refresh(){
     }//GEN-LAST:event_jYearChooser1PropertyChange
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 //        app.table.Util.RefreshLaporan();
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();
         List resultList = entityManager.createQuery(
                 "SELECT l FROM Laporan l ORDER BY l.tanggal")
                 .getResultList();

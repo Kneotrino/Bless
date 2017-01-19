@@ -350,14 +350,14 @@ public void Restall()
             Date awalBulan;
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();        
          if (temp != -1) {            
             System.out.println("Laporan = " + m1.get(temp));
             Rest();
         }
         else {        
         System.out.println("Kelas name = " + clazz.getSimpleName());    
-        entityManager.getTransaction().rollback();
-        entityManager.getTransaction().begin();        
         String clzName = this.clazz.getSimpleName();
         String que = "SELECT en FROM " + clzName + " en "
                 + "where en.tanggal BETWEEN :startDate AND :endDate"
@@ -438,6 +438,8 @@ public void Restall()
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void refreshButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton1ActionPerformed
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();        
          if (temp != -1) {            
             System.out.println("Laporan all = " + m1.get(temp));
             Restall();

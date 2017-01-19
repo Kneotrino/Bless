@@ -461,7 +461,7 @@ public class Printer {
     }
     public static void PrintAsset(File place)
     {
-              File f = new File(place, "Data Asset.CSV");
+              File f = new File(place, "Daftar Asset.CSV");
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               final DecimalFormat IDR = new DecimalFormat("IDR #,##0");            
@@ -472,7 +472,11 @@ public class Printer {
                         Tuple.of("Ref", "id", null),
                         Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
                         Tuple.of("Keterangan", "keterangan", d -> d),
-                        Tuple.of("Jumlah", "jumlah", d -> IDR.format(d) ),
+                        Tuple.of("namaAsset","namaAsset", d -> d==null?" ":d),
+                        Tuple.of("status","status", d -> d==null?" ":d),
+                        Tuple.of("stock","stock", d -> d==null?" ":d),
+                        Tuple.of("hargaBarang","hargaBarang", d -> d==null?" ":d),
+                        Tuple.of("Jumlah", "pengeluaran", d -> IDR.format(d) ),
                         Tuple.of("Jenis", "jenis", d -> d),
                         Tuple.of("Bank", "transaksi.bankId", d -> d)
                     ).dataList(a);
@@ -605,6 +609,9 @@ public class Printer {
     {
               String filename = kelas.getSimpleName()+ ".CSV";
               File f = new File(place, filename);
+              if (kelas == app.table.Pengeluaran.class) {
+              f = new File(place, "Operasional.CSV");            
+        }
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
