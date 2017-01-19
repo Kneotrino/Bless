@@ -76,10 +76,23 @@ public void Refresh()
 {
     System.out.println("app.view.panel.mobil.panelMobil.Refresh()");
     this.bankList.clear();
-    this.bankList.addAll(bankQuery.getResultList());
     this.leasingList.clear();
-    this.leasingList.addAll(leasingQuery.getResultList());
     this.PerjalananList.clear();
+//    app.table.Util.RefreshBank();
+    List L = leasingQuery.getResultList();
+    for (Object object : L) {
+        blessingPUEntityManager.refresh(object);
+    }
+    List resultList = query.getResultList();
+    for (Object object : resultList) {
+        blessingPUEntityManager.refresh(object);        
+    }
+    List B = bankQuery.getResultList();
+    for (Object object : B) {
+        blessingPUEntityManager.refresh(object);                
+    }
+    this.bankList.addAll(bankQuery.getResultList());
+    this.leasingList.addAll(leasingQuery.getResultList());
     this.PerjalananList.addAll(query.getResultList());
 }
     /**
@@ -1271,7 +1284,7 @@ public void Refresh()
         jLabel40.setText("TANGGAL KEMBALI CB");
         jPanel21.add(jLabel40);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglLeasing}"), jDateChooser8, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglKembaliCb}"), jDateChooser8, org.jdesktop.beansbinding.BeanProperty.create("date"));
         bindingGroup.addBinding(binding);
 
         jPanel21.add(jDateChooser8);

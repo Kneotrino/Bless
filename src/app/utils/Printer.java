@@ -76,7 +76,7 @@ public class Printer {
                     
 //                    PrintHutang(folder);
 //                    PrintPiHutang(folder);
-//                    PrintLeasing(folder);
+                    PrintLeasing(folder);
 //                    PrintRentalMobil(folder);
 //                    PrintInvestor(folder);
 //                    PrintAsset(folder);
@@ -553,8 +553,8 @@ public class Printer {
                                     Tuple.of("ket","ket", d -> d==null?" ":d),
                                     Tuple.of("anBpkb","anBpkb", d -> d==null?" ":d),
                                     Tuple.of("noBpkb","noBpkb", d -> d==null?" ":d),
-                                    Tuple.of("noPolisiAktif","noPolisiAktif", d -> d==null?" ":d),
-                                    Tuple.of("posisi","posisi", d -> d==null?" ":d),
+                                    Tuple.of("Posisi BPKB","posisi", d -> d==null?" ":d),
+                                    Tuple.of("Posisi Faktur","noPolisiAktif", d -> d==null?" ":d),
                                     Tuple.of("status","status", d -> d==null?" ":d),
                                     Tuple.of("stnk","stnk", d -> d==null?" ":d),
                                     Tuple.of("tglBbn","tglBbn", d -> d==null?" ":formator.format(d)),

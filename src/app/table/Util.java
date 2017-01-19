@@ -37,15 +37,10 @@ public class Util {
     public static void RefreshBank()
     {
             boolean active = manager.getTransaction().isActive();
-            if (!active) {
-                manager.getTransaction().begin();            
-            }
+            if (!active) { manager.getTransaction().begin(); }
             Query query = manager.createQuery("SELECT b From Bank b ORDER BY b");
             List<Bank> result = query.getResultList();
-            for (Bank bank : result) {
-            manager.refresh(bank);
-        }
-
+            for (Bank bank : result) { manager.refresh(bank); }
     }
     public static void RefreshLaporan()
     {
