@@ -369,8 +369,7 @@ public class panelLaporan extends JPanel {
             cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
             cal.set(Calendar.HOUR_OF_DAY, 23);
             Date endMonth = cal.getTime();        
-            System.out.println("endMonth = " + endMonth);
-            
+            System.out.println("endMonth = " + endMonth);            
             query = entityManager.createQuery(
                 "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate order by l.tanggal asc")
                 .setParameter("startDate", startMonth, TemporalType.DATE)

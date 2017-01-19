@@ -155,16 +155,6 @@ public class Mobil implements Serializable {
     private long TotalKredit;
     @OneToOne(cascade = {CascadeType.ALL})
     private Listleasing listleasing = new Listleasing();
-//    @OneToOne(cascade = {CascadeType.ALL})
-//    private Perjalanan perjalanan;
-//
-//    public Perjalanan getPerjalanan() {
-//        return perjalanan;
-//    }
-//
-//    public void setPerjalanan(Perjalanan perjalanan) {
-//        this.perjalanan = perjalanan;
-//    }
 
     public Listleasing getListleasing() {
         return listleasing;

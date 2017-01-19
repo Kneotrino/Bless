@@ -76,8 +76,7 @@ public class Printer {
                     final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
-                    folder.mkdirs();
-                    
+                    folder.mkdirs();                    
                     PrintHutang(folder);
                     PrintPiHutang(folder);
                     PrintLeasing(folder);
@@ -596,7 +595,10 @@ public class Printer {
     public static  List getDataList(Class kelas)
     {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en";
-        TypedQuery createQuery = EM.createQuery(que, kelas);   
+        TypedQuery createQuery = EM.createQuery(que, kelas);
+        for (Object object : createQuery.getResultList()) {
+            EM.refresh(object);
+        }
         return createQuery.getResultList();
     }
     public static void PrintLaporan(File place,Class kelas)
@@ -684,6 +686,9 @@ public class Printer {
               TypedQuery createQuery = EM.createQuery(
                       "SELECT m FROM Mobil m order by m desc", app.table.Mobil.class);   
               List<Mobil> resultList = createQuery.getResultList();
+              for (Mobil mobil : resultList) {
+                  EM.refresh(mobil);
+              }
               System.out.println("resultList = " + resultList.size());
               List c = resultList;
               Function fungsi = d -> d==null?" ":d;

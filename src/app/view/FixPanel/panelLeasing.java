@@ -57,13 +57,13 @@ public class panelLeasing extends JPanel {
         mobilQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Mobil m");
         mobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilQuery.getResultList());
         newDetailButton1 = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
@@ -98,6 +98,13 @@ public class panelLeasing extends JPanel {
 
         newDetailButton1.setText("Tambah List");
         newDetailButton1.addActionListener(formListener);
+
+        deleteButton.setText("Hapus Leasing");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteButton.addActionListener(formListener);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -180,14 +187,6 @@ public class panelLeasing extends JPanel {
         newButton1.setText("Baru Leasing");
         newButton1.addActionListener(formListener);
         jPanel1.add(newButton1);
-
-        deleteButton.setText("Hapus Leasing");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteButton.addActionListener(formListener);
-        jPanel1.add(deleteButton);
 
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);

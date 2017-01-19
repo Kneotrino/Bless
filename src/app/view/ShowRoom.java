@@ -576,12 +576,9 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-//        jFileChooser1.get
-//        if (showSaveDialog == 0) {
             System.out.println("app.view.ShowRoom.jFileChooser1ActionPerformed()");
+            ((app.view.FixPanel.panelLaporan) this.jPanel1).Refresh();
             app.utils.Printer.Printing(this.jFileChooser1.getSelectedFile());            
-//        }
-        // TODO add your handling code here:
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
