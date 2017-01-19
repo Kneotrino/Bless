@@ -125,7 +125,7 @@ public class panelLeasing extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasingList}");
@@ -226,6 +226,9 @@ public class panelLeasing extends JPanel {
             else if (evt.getSource() == refreshButton) {
                 panelLeasing.this.refreshButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == deleteDetailButton) {
+                panelLeasing.this.deleteDetailButtonActionPerformed(evt);
+            }
             else if (evt.getSource() == newButton) {
                 panelLeasing.this.newButtonActionPerformed(evt);
             }
@@ -234,9 +237,6 @@ public class panelLeasing extends JPanel {
             }
             else if (evt.getSource() == newDetailButton1) {
                 panelLeasing.this.newDetailButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == deleteDetailButton) {
-                panelLeasing.this.deleteDetailButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

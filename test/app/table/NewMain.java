@@ -31,7 +31,7 @@ public class NewMain {
     public static void main(String[] args) {
         // TODO code application logic here
     List<String> properties = new ArrayList<String>();
-    Class<?> cl = app.table.Bpkb.class;
+    Class<?> cl = app.table.Listleasing.class;
 
     // check all declared fields
     for (Field field : cl.getDeclaredFields()) {

@@ -12,6 +12,7 @@ import app.table.Bpkbtitipan;
 import app.table.Investor;
 import app.table.KeuanganMobil;
 import app.table.Laporan;
+import app.table.Leasing;
 import app.table.Mobil;
 import app.table.MobilPemasukan;
 import app.table.MobilPengeluaran;
@@ -80,7 +81,7 @@ public class Printer {
 //                    PrintRentalMobil(folder);
 //                    PrintInvestor(folder);
 //                    PrintAsset(folder);
-                    PrintMobil(folder);
+//                    PrintMobil(folder);
 //                    PrintJasa(folder);
 //                    PrintPerjalanan(folder);
 //                    PrintKas(folder);
@@ -106,6 +107,40 @@ public class Printer {
     }
     public static void PrintLeasing(File place)
     {    
+        File f = new File(place, "Data Leasing");
+        f.mkdirs();
+        System.out.println("f = " + f);
+        final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+        final DecimalFormat IDR = new DecimalFormat("#,##0"); 
+        List<app.table.Leasing> dataList = getDataList(app.table.Leasing.class);
+        for (Leasing leasing : dataList) {
+                List a = leasing.getListleasingList();
+                WriteStep bpkb = CSVUtil.of(new File(f, leasing.getNama()+".CSV"))
+                        .type(app.table.Listleasing.class)
+                            .properties(
+                                Tuple.of("REF","listleasingId", d -> d==null?" ":d),
+                                Tuple.of("tglDp","tglDp", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("mobil REF","mobil", d -> d==null?" ":d),
+                                Tuple.of("Mobil Merek","mobil.merk", d -> d==null?" ":d),
+                                Tuple.of("Mobil Tipe","mobil.type", d -> d==null?" ":d),
+                                Tuple.of("Mobil Jenis","mobil.jenis", d -> d==null?" ":d),
+                                Tuple.of("Mobil Tahun","mobil.tahun", d -> d==null?" ":d),
+                                Tuple.of("Debitur REF","mobil.debitur.nama", d -> d==null?" ":d),
+                                Tuple.of("nominal","nominal", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Terpenuhi","TERPENUHI", d -> d==null?" ":d),
+                                Tuple.of("tglOk","tglOk", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("Leasing REF","leasingLeasingId", d -> d==null?" ":d)
+                    ).dataList(a);
+                try {
+                    bpkb.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+        }
+
     }
     public static void PrintRentalMobil(File place)
     {
