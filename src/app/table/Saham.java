@@ -8,6 +8,7 @@ package app.table;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -52,9 +53,19 @@ public class Saham implements Serializable {
     private Modal modal;
     @OneToOne(cascade = {CascadeType.ALL})
     private Prive prive;    
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    private pembagianLaba Laba;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date Tanggal = new Date();    
     private String Keterangan = "Keterangan";
+    public pembagianLaba getLaba() {
+        return Laba;
+    }
+
+    public void setLaba(pembagianLaba Laba) {
+        this.Laba = Laba;
+    }
     @Transient
     private app.table.Bank b;
 
@@ -66,6 +77,10 @@ public class Saham implements Serializable {
         {
             return prive.getTransaksi().getBankId();
         }
+        else if (Laba != null)
+        {
+            return Laba.getTransaksi().getBankId();
+        }
         return b;
     }
 
@@ -76,6 +91,10 @@ public class Saham implements Serializable {
         else if (prive != null)
         {
             prive.getTransaksi().setBankId(b);
+        }
+        else if (Laba != null)
+        {
+            Laba.getTransaksi().setBankId(b);
         }
         this.b = b;
     }
@@ -226,5 +245,35 @@ public class Saham implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+    public BigInteger getmod()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        if (modal != null) {
+            temp = modal.getJumlah();
+        }
+        return temp;
+    }
+    public BigInteger getpri()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        if (prive != null) {
+            temp = prive.getJumlah();
+        }
+        return temp;
+    }
+    public BigInteger getlab()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        if (Laba != null) {
+            temp = Laba.getJumlah();
+        }
+        return temp;
+    }
+//        else if (Laba != null)
+//        {
+//            temp = Laba.getJumlah();
+//        }
+//        else if (prive != null){
+//            temp = prive.getJumlah();
+//        }
 }

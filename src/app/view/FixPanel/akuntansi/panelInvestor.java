@@ -76,6 +76,11 @@ public class panelInvestor extends JPanel {
         jDialog3 = new javax.swing.JDialog();
         inputPanel3 = new app.utils.inputPanel(app.table.Investor.class);
         jButton3 = new javax.swing.JButton();
+        jDialog4 = new javax.swing.JDialog();
+        inputPanel4 = new app.utils.inputPanel(app.table.pembagianLaba.class);
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox<>();
         newDetailButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -88,6 +93,7 @@ public class panelInvestor extends JPanel {
         jPanel1 = new javax.swing.JPanel();
         newDetailButton1 = new javax.swing.JButton();
         newDetailButton2 = new javax.swing.JButton();
+        newDetailButton3 = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -144,6 +150,25 @@ public class panelInvestor extends JPanel {
         inputPanel3.add(jButton3);
 
         jDialog3.getContentPane().add(inputPanel3, java.awt.BorderLayout.CENTER);
+
+        jDialog4.setModal(true);
+
+        jLabel3.setText("Bank");
+        inputPanel4.add(jLabel3);
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox4);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        inputPanel4.add(jComboBox4);
+
+        jButton4.setText("Simpan");
+        jButton4.addActionListener(formListener);
+        inputPanel4.add(jButton4);
+
+        jDialog4.getContentPane().add(inputPanel4, java.awt.BorderLayout.CENTER);
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -206,8 +231,13 @@ public class panelInvestor extends JPanel {
         columnBinding.setColumnName("Total Prive");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahPembagaian}"));
+        columnBinding.setColumnName("Total Pembagian Laba");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${per}"));
         columnBinding.setColumnName("Persentase Modal");
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${select}"), masterTable, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
@@ -232,6 +262,14 @@ public class panelInvestor extends JPanel {
 
         newDetailButton2.addActionListener(formListener);
         jPanel1.add(newDetailButton2);
+
+        newDetailButton3.setText("Pembagian Laba");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton3.addActionListener(formListener);
+        jPanel1.add(newDetailButton3);
 
         deleteDetailButton.setText("Hapus");
 
@@ -279,6 +317,9 @@ public class panelInvestor extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${prive.jumlah}"));
         columnBinding.setColumnName("Prive");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laba.jumlah}"));
+        columnBinding.setColumnName("Pembagian Laba");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${b}"));
         columnBinding.setColumnName("Sumber/Tujuan");
         columnBinding.setColumnClass(app.table.Bank.class);
@@ -288,7 +329,7 @@ public class panelInvestor extends JPanel {
         detailScrollPane.setViewportView(detailTable);
         detailTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
-            detailTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(jComboBox3));
+            detailTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox3));
         }
 
         add(detailScrollPane);
@@ -319,6 +360,9 @@ public class panelInvestor extends JPanel {
             else if (evt.getSource() == newDetailButton2) {
                 panelInvestor.this.newDetailButton2ActionPerformed(evt);
             }
+            else if (evt.getSource() == newDetailButton3) {
+                panelInvestor.this.newDetailButton3ActionPerformed(evt);
+            }
             else if (evt.getSource() == deleteDetailButton) {
                 panelInvestor.this.deleteDetailButtonActionPerformed(evt);
             }
@@ -339,6 +383,9 @@ public class panelInvestor extends JPanel {
             }
             else if (evt.getSource() == jButton3) {
                 panelInvestor.this.jButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton4) {
+                panelInvestor.this.jButton4ActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton) {
                 panelInvestor.this.newDetailButtonActionPerformed(evt);
@@ -397,6 +444,13 @@ public class panelInvestor extends JPanel {
                 p.setTransaksi(s1);
                 s.setPrive(p);
             }
+            else if (evt.getSource() == jButton4) {
+                app.table.pembagianLaba p = (app.table.pembagianLaba) inputPanel4.getTarget();
+                app.table.Saldo s1 = new Saldo();
+                s1.setBankId((Bank) jComboBox4.getSelectedItem());
+                p.setTransaksi(s1);
+                s.setLaba(p);
+            }
         entityManager.persist(s);
         ss.add(s);
         s.setInvestorId(i);
@@ -410,12 +464,13 @@ public class panelInvestor extends JPanel {
     {
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
-        app.table.Investor temp = new Investor();
+//        app.table.Investor temp = new Investor();
         BigInteger total3 = BigInteger.ZERO;
         BigInteger total4 = BigInteger.ZERO;
+        BigInteger total5 = BigInteger.ZERO;
         java.util.List<app.table.Investor> data = query.getResultList();
         for (Investor entity : data) {                   
-            entityManager.refresh(entity);
+//           total5 = total5.add(entity.getjumlahPembagaian());
             List<Saham> sahamList = entity.getSahamList();
                 BigInteger total1 = BigInteger.ZERO;
                 BigInteger total2 = BigInteger.ZERO;
@@ -425,18 +480,18 @@ public class panelInvestor extends JPanel {
             }
                 entity.setPrive(total2);
                 entity.setModal(total1.subtract(total2));
-                total3 = total3.add(entity.getModal());
-                total4 = total4.add(total2);                
+                total3 = total3.add(entity.getModal());                
         }
         float t = total3.floatValue();
         for (Investor investor : data) {
             float p = investor.getModal().floatValue();
             investor.setPer(df.format((p/t)*100)+"%");
         }
-        temp.setModal(total3);
-        temp.setPrive(total4);
-        temp.setPer("100%");
-        list.add(temp);
+//        temp.setModal(total3);
+//        temp.setPrive(total4);
+//        temp.setjumlahPembagaian(total5);
+//        temp.setPer("100%");
+//        list.add(temp);
     }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
@@ -541,6 +596,19 @@ public class panelInvestor extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void newDetailButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton3ActionPerformed
+        this.jDialog4.setSize(400, 400);        
+        this.jDialog4.setLocationRelativeTo(null);
+        this.jDialog4.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newDetailButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        newDetailButtonActionPerformed(evt);
+        jDialog4.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -553,17 +621,22 @@ public class panelInvestor extends JPanel {
     private app.utils.inputPanel inputPanel1;
     private app.utils.inputPanel inputPanel2;
     private app.utils.inputPanel inputPanel3;
+    private app.utils.inputPanel inputPanel4;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
+    private javax.swing.JDialog jDialog4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Investor> list;
@@ -574,6 +647,7 @@ public class panelInvestor extends JPanel {
     private javax.swing.JButton newDetailButton;
     private javax.swing.JButton newDetailButton1;
     private javax.swing.JButton newDetailButton2;
+    private javax.swing.JButton newDetailButton3;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton refreshButton1;

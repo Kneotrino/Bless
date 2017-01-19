@@ -379,11 +379,12 @@ public class Printer {
               DecimalFormat df = new DecimalFormat();
               df.setMaximumFractionDigits(2);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+              final DecimalFormat IDR = new DecimalFormat("#,##0");              
               List<app.table.Investor> resultList = getDataList(app.table.Investor.class);
               app.table.Investor temp = new Investor(0);
               BigInteger total3 = BigInteger.ZERO;
               BigInteger total4 = BigInteger.ZERO;
+              BigInteger total5 = BigInteger.ZERO;
               for (Investor investor : resultList) {
                 List<Saham> sahamList = investor.getSahamList();
                 BigInteger total1 = BigInteger.ZERO;
@@ -396,6 +397,7 @@ public class Printer {
                 investor.setModal(total1.subtract(total2));
                 total3 = total3.add(investor.getModal());
                 total4 = total4.add(total2);                
+                total5 = total5.add(investor.getjumlahPembagaian());                
                 }
                 float t = total3.floatValue();
                 for (Investor investor : resultList) {
@@ -404,20 +406,24 @@ public class Printer {
                 }
                 temp.setModal(total3);
                 temp.setPrive(total4);
+                temp.setLaba(total5);
+                System.out.println("total5 = " + total5);
+                System.out.println("temp = " + temp.getLaba());
                 temp.setPer("100%");
                 resultList.add(temp);
               List a = resultList;
               System.out.println("resultList = " + resultList.size());    
               WriteStep dataList = CSVUtil.of(f)
-                        .type(app.table.Bayarjasa.class)
+                        .type(app.table.Investor.class)
                             .properties(
                                     Tuple.of("id","id", d-> d),
                                     Tuple.of("nama","nama", d-> d),
                                     Tuple.of("alamat","alamat", d-> d),
                                     Tuple.of("kontak","kontak", d-> d),
-                                    Tuple.of("modal","modal", d-> IDR.format(d)),
-                                    Tuple.of("prive","prive", d-> IDR.format(d)),
-                                    Tuple.of("per","per", d-> d)
+                                    Tuple.of("Total modal","modal", d-> IDR.format(d)),
+                                    Tuple.of("Total prive","prive", d-> IDR.format(d)),
+                                    Tuple.of("Total pembagian Laba","laba", d-> IDR.format(d)),
+                                    Tuple.of("persentas %","per", d-> d)
                     ).dataList(a);
                 try {
                     dataList.write();            
@@ -429,10 +435,11 @@ public class Printer {
                 }
               List<app.table.Investor> list1 = getDataList(app.table.Investor.class);
               for (Investor peg : list1) {
-                  String pe = peg.getNama()+"-"
+                  String pe = 
+                          peg.getId()+"-"+
+                          peg.getNama()+"-"
                           +peg.getAlamat()+"-"
-                          +peg.getKontak()+"-"
-                          +peg.getId()+
+                          +peg.getKontak()+"-"+
                           ".CSV";
                   File p = new File(T, pe);
                   List<Saham> pegawaigajiList = peg.getSahamList();
@@ -444,6 +451,9 @@ public class Printer {
                                 Tuple.of("Ref", "id", null),
                                 Tuple.of("Keterangan", "keterangan", d -> d),
                                 Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("modal","mod", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("prive","pri", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Pembagian Laba","lab", d -> d==null?" ":IDR.format(d)),
 //                                Tuple.of("Pemasukan/Modal", "modal.jumlah", d -> d==null?"0":IDR.format(d) ),
 //                                Tuple.of("Pengeluaran/Prive", "prive.jumlah", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Bank", "b", d -> d)
@@ -454,7 +464,7 @@ public class Printer {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
                     e.printStackTrace();
-                    return ;
+//                    return ;
                 }
         }        
                 

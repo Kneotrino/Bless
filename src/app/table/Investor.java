@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -59,19 +60,20 @@ public class Investor implements Serializable {
     private String alamat = "";
     @Column(name = "KONTAK", length = 255)
     private String kontak = "";
-    @Column(name = "")
+    @Column(name = "Modal")
     private BigInteger modal = BigInteger.ZERO;
     @Column(name = "NAMA", length = 255)
     private String nama = "TOTAL";
     @Column(name = "PRIVE")
     private BigInteger prive = BigInteger.ZERO;
     @OneToMany(mappedBy = "investorId",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
-    private List<Saham> sahamList;
+    private List<Saham> sahamList = new ArrayList<>();
     @Column(name = "PERSENTASE")
     private Short persentase = 100;
     @Transient
     private String per = "0%";
-
+    @Transient
+    private BigInteger Laba = BigInteger.ZERO;
     public String getPer() {
         return per;
     }
@@ -137,6 +139,27 @@ public class Investor implements Serializable {
 
     public String getNama() {
         return nama;
+    }
+    public BigInteger getjumlahPembagaian()
+    {
+    Laba = BigInteger.ZERO;
+    if (1 <= sahamList.size())
+        for (Saham saham : sahamList) {
+            Laba = Laba.add(saham.getLaba()==null?BigInteger.ZERO:saham.getLaba().getJumlah());
+        }
+    return Laba;
+    }
+
+    public void setLaba(BigInteger Laba) {
+        this.Laba = Laba;
+    }
+
+    public BigInteger getLaba() {
+        return Laba;
+    }
+
+    public void setjumlahPembagaian(BigInteger Laba) {
+        this.Laba = Laba;
     }
 
     public void setNama(String nama) {
