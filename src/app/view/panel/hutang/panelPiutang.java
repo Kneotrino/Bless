@@ -207,7 +207,7 @@ public class panelPiutang extends JPanel {
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahPimjaman}"));
-        columnBinding.setColumnName("Pinjaman x");
+        columnBinding.setColumnName("Pelunasan x");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglawal}"));

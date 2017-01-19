@@ -6,9 +6,11 @@
 package app.utils;
 import app.table.Asset;
 import app.table.Bank;
+import app.table.Bayarhutang;
 import app.table.Bayarjasa;
 import app.table.Bayarrental;
 import app.table.Bpkbtitipan;
+import app.table.Hutang;
 import app.table.Investor;
 import app.table.KeuanganMobil;
 import app.table.Laporan;
@@ -22,6 +24,7 @@ import app.table.Pegawaigaji;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
 import app.table.Perjalanan;
+import app.table.Piutang;
 import app.table.Prive;
 import app.table.Rental;
 import app.table.Saham;
@@ -75,22 +78,21 @@ public class Printer {
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();
                     
-//                    PrintHutang(folder);
-//                    PrintPiHutang(folder);
+                    PrintHutang(folder);
+                    PrintPiHutang(folder);
                     PrintLeasing(folder);
-//                    PrintRentalMobil(folder);
-//                    PrintInvestor(folder);
-//                    PrintAsset(folder);
-//                    PrintMobil(folder);
-//                    PrintJasa(folder);
-//                    PrintPerjalanan(folder);
-//                    PrintKas(folder);
-//                    PrintPegawai(folder);
-//                    PrintLaporan(folder, Laporan.class);
-//                    PrintLaporan(folder, Pemasukan.class);
-//                    PrintLaporan(folder, Pengeluaran.class);
-//                    PrintLaporan(folder, pembagianLaba.class);
-                    
+                    PrintRentalMobil(folder);
+                    PrintInvestor(folder);
+                    PrintAsset(folder);
+                    PrintMobil(folder);
+                    PrintJasa(folder);
+                    PrintPerjalanan(folder);
+                    PrintKas(folder);
+                    PrintPegawai(folder);
+                    PrintLaporan(folder, Laporan.class);
+                    PrintLaporan(folder, Pemasukan.class);
+                    PrintLaporan(folder, Pengeluaran.class);
+                    PrintLaporan(folder, pembagianLaba.class);                    
                 try {
                     Desktop.getDesktop().open(folder);
                 } catch (IOException ex) {
@@ -100,10 +102,122 @@ public class Printer {
     }
     public static void PrintHutang(File place)
     {
-        
+              File f = new File(place, "Data Hutang-Peminjam");
+              f.mkdirs();
+              System.out.println("f = " + f);
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              final DecimalFormat IDR = new DecimalFormat("#,##0");              
+              List<app.table.Hutang> resultList = getDataList(app.table.Hutang.class);
+              File T = new File(f, "Daftar Peminjam.CSV");
+              System.out.println("resultList = " + resultList.size());    
+               WriteStep data = CSVUtil.of(T)
+                        .type(app.table.Hutang.class)
+                            .properties(
+                                Tuple.of("REF","hutangid", d -> d==null?" ":d),
+                                Tuple.of("Nama","nama", d -> d==null?" ":d),
+                                Tuple.of("Alamat","alamat", d -> d==null?" ":d),
+                                Tuple.of("Nomor HP","nomorhp", d -> d==null?" ":d),
+                                Tuple.of("Nomor KTP","nomorktp", d -> d==null?" ":d),
+                                Tuple.of("Total Pinjamnan","jumlahpinjaman", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Sisa Pelunasan","sisapinjaman", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Keterangan","keterangan", d -> d==null?" ":d),
+                                Tuple.of("Tanggal Lunas","tanggallunas", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("Tanggal Pinjam","tanggalpinjam", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("Tanggal Lunas","lunas", d -> d==null?" ":d)
+                            ).dataList(getDataList(app.table.Hutang.class));
+              try {
+                    data.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                } 
+              for (Hutang peg : resultList) {
+                  String pe = peg.getHutangid()+"-"
+                          +peg.getNama()+"-"
+                          +peg.getKeterangan()+
+                          ".CSV";
+                  File p = new File(f, pe);
+                  List<Bayarhutang> pegawaigajiList = peg.getBayarhutangs();
+                  List a = pegawaigajiList;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Bayarhutang.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Pengeluaran/Peminjaman", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pemasukan/Pelunasan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                    ).dataList(a);
+                try {
+                    dataList.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+        }        
     }
     public static void PrintPiHutang(File place)
     {    
+              File f = new File(place, "Data Pihutang-Pinjaman");
+              f.mkdirs();
+              System.out.println("f = " + f);
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              final DecimalFormat IDR = new DecimalFormat("#,##0");              
+              List<app.table.Piutang> resultList = getDataList(app.table.Piutang.class);
+              File T = new File(f, "Daftar Pinjaman.CSV");
+              System.out.println("resultList = " + resultList.size());    
+               WriteStep data = CSVUtil.of(T)
+                        .type(app.table.Piutang.class)
+                            .properties(
+                                    Tuple.of("REF","piutangid", d -> d==null?" ":d),
+                                    Tuple.of("keterangan","keterangan", d -> d==null?" ":d),
+                                    Tuple.of("Tanggal Bayar","tglbyr", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("jaminan","jaminan", d -> d==null?" ":d),
+                                    Tuple.of("Total Peminjaman","jumlahPelunasan", d -> d==null?" ":IDR.format(d)),
+                                    Tuple.of("Total Pelunasan","jumlahPimjaman", d -> d==null?" ":IDR.format(d)),
+                                    Tuple.of("sisa","sisa", d -> d==null?" ":IDR.format(d)),
+                                    Tuple.of("Tanggal Awal","tglawal", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("Tanggal Akhir","tglakhir", d -> d==null?" ":formator.format(d))
+                            ).dataList(getDataList(app.table.Piutang.class));
+              try {
+                    data.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                } 
+              for (Piutang peg : resultList) {
+                  String pe = peg.getPiutangid()+"-"
+                          +peg.getKeterangan()+"-"+
+                          ".CSV";
+                  File p = new File(f, pe);
+                  List<app.table.Bayarpihutang> pegawaigajiList = peg.getBayarpihutangList();
+                  List a = pegawaigajiList;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Bayarpihutang.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Peminjaman/Pemasukan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pelunasan/Pelunasan", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                    ).dataList(a);
+                try {
+                    dataList.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+        }
     }
     public static void PrintLeasing(File place)
     {    
@@ -259,7 +373,9 @@ public class Printer {
     }
     public static void PrintInvestor(File place)
     {
-              File f = new File(place, "Data Investor.CSV");
+              File T = new File(place, "Data Investor");
+              T.mkdirs();
+              File f = new File(T, "Data Investor.CSV");
               System.out.println("f = " + f);
               DecimalFormat df = new DecimalFormat();
               df.setMaximumFractionDigits(2);
@@ -312,8 +428,37 @@ public class Printer {
                     e.printStackTrace();
                     return ;
                 }
-        
-        
+              List<app.table.Investor> list1 = getDataList(app.table.Investor.class);
+              for (Investor peg : list1) {
+                  String pe = peg.getNama()+"-"
+                          +peg.getAlamat()+"-"
+                          +peg.getKontak()+"-"
+                          +peg.getId()+
+                          ".CSV";
+                  File p = new File(T, pe);
+                  List<Saham> pegawaigajiList = peg.getSahamList();
+                  System.out.println("pegawaigajiList = " + pegawaigajiList.size());
+                  List b = pegawaigajiList;
+                  WriteStep data = CSVUtil.of(p)
+                        .type(app.table.Saham.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+//                                Tuple.of("Pemasukan/Modal", "modal.jumlah", d -> d==null?"0":IDR.format(d) ),
+//                                Tuple.of("Pengeluaran/Prive", "prive.jumlah", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "b", d -> d)
+                    ).dataList(b);
+                try {
+                    data.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+        }        
+                
     }
     public static void PrintAsset(File place)
     {
