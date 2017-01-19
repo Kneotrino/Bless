@@ -43,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -72,10 +73,14 @@ public class Printer {
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();
-                    PrintRentalMobil(folder);
+                    
+//                    PrintHutang(folder);
+//                    PrintPiHutang(folder);
+//                    PrintLeasing(folder);
+//                    PrintRentalMobil(folder);
 //                    PrintInvestor(folder);
 //                    PrintAsset(folder);
-//                    PrintMobil(folder);
+                    PrintMobil(folder);
 //                    PrintJasa(folder);
 //                    PrintPerjalanan(folder);
 //                    PrintKas(folder);
@@ -92,11 +97,21 @@ public class Printer {
                 }
             }});
     }
+    public static void PrintHutang(File place)
+    {
+        
+    }
+    public static void PrintPiHutang(File place)
+    {    
+    }
+    public static void PrintLeasing(File place)
+    {    
+    }
     public static void PrintRentalMobil(File place)
     {
               File f = new File(place, "Data Rental");
               f.mkdirs();
-              File f1 = new File(f, "Mobil Rental.CSV");
+              File f1 = new File(f, "[Mobil Rental].CSV");
               System.out.println("f = " + f);
               System.out.println("f = " + f1);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
@@ -343,7 +358,27 @@ public class Printer {
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               List<app.table.Pegawai> resultList = getDataList(app.table.Pegawai.class);
+              File T = new File(f, "Daftar Pegawai.CSV");
               System.out.println("resultList = " + resultList.size());    
+               WriteStep data = CSVUtil.of(T)
+                        .type(app.table.Pegawai.class)
+                            .properties(
+                                    Tuple.of("id","id", d-> d),
+                                    Tuple.of("alamat","alamat", d-> d),
+                                    Tuple.of("nama","nama", d-> d),
+                                    Tuple.of("nomorhp","nomorhp", d-> d),
+                                    Tuple.of("status","status", d-> d),
+                                    Tuple.of("tanggalGajian","tanggalGajian", d-> formator.format(d)),
+                                    Tuple.of("tanggalMasuk","tanggalMasuk", d-> formator.format(d))
+                    ).dataList(getDataList(app.table.Pegawai.class));
+              try {
+                    data.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                } 
               for (Pegawai peg : resultList) {
                   String pe = peg.getId()+"-"
                           +peg.getNama()+"-"
@@ -469,6 +504,77 @@ public class Printer {
                       "SELECT m FROM Mobil m order by m desc", app.table.Mobil.class);   
               List<Mobil> resultList = createQuery.getResultList();
               System.out.println("resultList = " + resultList.size());
+              List c = resultList;
+              Function fungsi = d -> d==null?" ":d;
+              Function tanggal = d -> d==null?" ":formator.format(d);
+              WriteStep data = CSVUtil.of(new File(f, "Daftar Mobil.CSV"))
+                        .type(app.table.Mobil.class)
+                            .properties(
+                                    Tuple.of("mobilId","mobilId", d-> d),
+                                    Tuple.of("noPolisiAktif","noPolisiAktif", fungsi),
+                                    Tuple.of("noPolisiLama","noPolisiLama", fungsi),
+                                    Tuple.of("jenis","jenis", fungsi),
+                                    Tuple.of("type","type", fungsi),
+                                    Tuple.of("merk","merk", fungsi),
+                                    Tuple.of("bahanBakar","bahanBakar", fungsi),
+                                    Tuple.of("noMesin","noMesin", fungsi),
+                                    Tuple.of("noRangka","noRangka", fungsi),
+                                    Tuple.of("pemilikBaru","pemilikBaru", fungsi),
+                                    Tuple.of("pemilikLama","pemilikLama", fungsi),
+                                    Tuple.of("penjual","penjual", fungsi),
+                                    Tuple.of("silinder","silinder", fungsi),
+                                    Tuple.of("statusMobil","statusMobil", fungsi),
+                                    Tuple.of("tahun","tahun", fungsi),
+                                    Tuple.of("warna","warna", fungsi),
+                                    Tuple.of("tanggalBeli","tanggalBeli", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("tanggalJual","tanggalJual", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("keterangan","keterangan", fungsi),
+                                    Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
+                                    Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi)
+                    ).dataList(getDataList(app.table.Mobil.class));
+                WriteStep debitur = CSVUtil.of(new File(f, "Daftar Debitur.CSV"))
+                        .type(app.table.Debitur.class)
+                            .properties(
+                                    Tuple.of("debitur REF","debiturId", d -> d==null?" ":d),
+                                    Tuple.of("Nama","nama", d -> d==null?" ":d),
+                                    Tuple.of("Alamat","alamat", d -> d==null?" ":d),
+                                    Tuple.of("Nomot HP","noHp", d -> d==null?" ":d),
+                                    Tuple.of("Nomor Identitas","noKtp", d -> d==null?" ":d),
+//                                    Tuple.of("norek","norek", d -> d==null?" ":d),
+                                    Tuple.of("Nama ke-2","bank", d -> d==null?" ":d),
+                                    Tuple.of("Nomor HP ke-2","pembayaran", d -> d==null?" ":d),
+                                    Tuple.of("scan","scan", d -> d==null?" ":d),
+                                    Tuple.of("mobil REF","mobil", d -> d==null?" ":d)
+                    ).dataList(getDataList(app.table.Debitur.class));
+                WriteStep bpkb = CSVUtil.of(new File(f, "Daftar BPKB.CSV"))
+                        .type(app.table.Bpkb.class)
+                            .properties(
+                                    Tuple.of("bpkb REF","bpkbId", d -> d==null?" ":d),
+                                    Tuple.of("ket","ket", d -> d==null?" ":d),
+                                    Tuple.of("anBpkb","anBpkb", d -> d==null?" ":d),
+                                    Tuple.of("noBpkb","noBpkb", d -> d==null?" ":d),
+                                    Tuple.of("noPolisiAktif","noPolisiAktif", d -> d==null?" ":d),
+                                    Tuple.of("posisi","posisi", d -> d==null?" ":d),
+                                    Tuple.of("status","status", d -> d==null?" ":d),
+                                    Tuple.of("stnk","stnk", d -> d==null?" ":d),
+                                    Tuple.of("tglBbn","tglBbn", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tglKembaliBbn","tglKembaliBbn", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tglCb","tglCb", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tglKembaliCb","tglKembaliCb", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tglLeasing","tglLeasing", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tglTerima","tglTerima", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("mobil REF","mobil", d -> d==null?" ":d)
+                    ).dataList(getDataList(app.table.Bpkb.class));
+              try {
+                    data.write();            
+                    debitur.write();            
+                    bpkb.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+//                    return ;
+                } 
               for (Mobil mobil : resultList) {
                     String mo = 
                             mobil.getMobilId()+ "-" +

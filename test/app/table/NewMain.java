@@ -31,7 +31,7 @@ public class NewMain {
     public static void main(String[] args) {
         // TODO code application logic here
     List<String> properties = new ArrayList<String>();
-    Class<?> cl = app.table.Rental.class;
+    Class<?> cl = app.table.Bpkb.class;
 
     // check all declared fields
     for (Field field : cl.getDeclaredFields()) {
@@ -69,7 +69,8 @@ public class NewMain {
 }
 //                            Tuple.of("Keterangan", "keterangan", d -> d),
     for (String property:properties)
-        System.out.println("Tuple.of(\""+property+"\",\""+property+"\""+", d-> d),");    
+        System.out.println("Tuple.of(\""+property+"\",\""+property+"\""+", d -> d==null?\" \":d),");    
+//        System.out.println("Tuple.of(\""+property+"\",\""+property+"\""+", d-> d),");    
     }
     
     public static String createStringQuery(Class<?> entClazz, String keyword) {

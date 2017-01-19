@@ -193,23 +193,23 @@ public class panelPiutang extends JPanel {
         columnBinding.setColumnName("REF x");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jaminan}"));
-        columnBinding.setColumnName("Jaminan");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pimjaman}"));
-        columnBinding.setColumnName("Pinjaman x");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${sisa}"));
-        columnBinding.setColumnName("Pengembalian x");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
-        columnBinding.setColumnName("Keterangan");
-        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglbyr}"));
         columnBinding.setColumnName("Tanggal Bayar");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jaminan}"));
+        columnBinding.setColumnName("Jaminan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahPelunasan}"));
+        columnBinding.setColumnName("Peminjaman x");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahPimjaman}"));
+        columnBinding.setColumnName("Pinjaman x");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglawal}"));
         columnBinding.setColumnName("Tanggal Awal");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -223,7 +223,7 @@ public class panelPiutang extends JPanel {
 
         add(masterScrollPane);
 
-        newDetailButton1.setText("Peminjaman");
+        newDetailButton1.setText("Peminjaman/Pemasukan");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -231,7 +231,7 @@ public class panelPiutang extends JPanel {
         newDetailButton1.addActionListener(formListener);
         jPanel2.add(newDetailButton1);
 
-        newDetailButton2.setText("Pelunasan");
+        newDetailButton2.setText("Pelunasan/Pengeluaran");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -282,10 +282,10 @@ public class panelPiutang extends JPanel {
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnName("Peminjaman/Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
-        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnName("Pelunasan/Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("Jenis x");
@@ -415,9 +415,9 @@ public class panelPiutang extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        java.util.Collection data = query.getResultList();
-        for (Object entity : data) {
-            entityManager.refresh(entity);
+        java.util.List<app.table.Piutang> data = query.getResultList();
+        for (Piutang piutang : data) {
+            entityManager.refresh(piutang);
         }
         list.clear();
         list.addAll(data);
@@ -438,7 +438,7 @@ public class panelPiutang extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Piutang p = (app.table.Piutang) this.inputPanel1.getTarget();
-        BayarPihutangPemasukan bP = new app.table.BayarPihutangPemasukan();
+        app.table.Bayarpihutang bP = new app.table.BayarPihutangPemasukan();
         Saldo ts = new Saldo();
         ts.setBankId((Bank) this.jComboBox5.getSelectedItem());
         bP.setTransaksi(ts);
@@ -461,6 +461,7 @@ public class panelPiutang extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();

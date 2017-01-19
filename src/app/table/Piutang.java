@@ -125,6 +125,22 @@ public class Piutang implements Serializable {
     public BigInteger getPimjaman() {        
         return pimjaman;
     }
+    public BigInteger getJumlahPimjaman() {        
+        BigInteger temp = BigInteger.ZERO;
+        List<Bayarpihutang> BP = getBayarpihutangList();
+        for (Bayarpihutang bayarpihutang : BP) {
+            temp = temp.add(bayarpihutang.getPengeluaran());
+        }
+        return temp;
+    }
+    public BigInteger getJumlahPelunasan() {        
+        BigInteger temp = BigInteger.ZERO;
+        List<Bayarpihutang> BP = getBayarpihutangList();
+        for (Bayarpihutang bayarpihutang : BP) {
+            temp = temp.add(bayarpihutang.getPemasukan());
+        }
+        return temp;
+    }
 
     public void setPimjaman(BigInteger pimjaman) {
         BigInteger oldPimjaman = this.pimjaman;
