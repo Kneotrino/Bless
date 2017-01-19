@@ -31,7 +31,7 @@ public class NewMain {
     public static void main(String[] args) {
         // TODO code application logic here
     List<String> properties = new ArrayList<String>();
-    Class<?> cl = app.table.Investor.class;
+    Class<?> cl = app.table.Rental.class;
 
     // check all declared fields
     for (Field field : cl.getDeclaredFields()) {

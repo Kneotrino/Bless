@@ -562,22 +562,27 @@ public class ShowRoom extends javax.swing.JFrame {
         app.view.FixPanel.panelMaster.LaporanPemasukan();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem20ActionPerformed
-
-    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
-        ((app.view.FixPanel.panelMaster)this.jPanel9).Refresh();
-        this.chandePanel("Laba");
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem28ActionPerformed
-
+    int showSaveDialog=-1;
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
-        this.jFileChooser1.showSaveDialog(jPanel1);
+        showSaveDialog = this.jFileChooser1.showSaveDialog(jPanel1);        
+        System.out.println("showSaveDialog = " + showSaveDialog);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        app.utils.Printer.Printing(this.jFileChooser1.getSelectedFile());
+//        jFileChooser1.get
+//        if (showSaveDialog == 0) {
+            System.out.println("app.view.ShowRoom.jFileChooser1ActionPerformed()");
+            app.utils.Printer.Printing(this.jFileChooser1.getSelectedFile());            
+//        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jFileChooser1ActionPerformed
+
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        //        ((app.view.FixPanel.panelMaster)this.jPanel9).Refresh();
+        //        this.chandePanel("Laba");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     /**
      * @param args the command line arguments

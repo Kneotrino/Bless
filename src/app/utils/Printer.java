@@ -7,6 +7,7 @@ package app.utils;
 import app.table.Asset;
 import app.table.Bank;
 import app.table.Bayarjasa;
+import app.table.Bayarrental;
 import app.table.Bpkbtitipan;
 import app.table.Investor;
 import app.table.KeuanganMobil;
@@ -21,6 +22,7 @@ import app.table.Pemasukan;
 import app.table.Pengeluaran;
 import app.table.Perjalanan;
 import app.table.Prive;
+import app.table.Rental;
 import app.table.Saham;
 import app.table.Saldo;
 import app.table.Trips;
@@ -70,7 +72,8 @@ public class Printer {
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();
-                    PrintInvestor(folder);
+                    PrintRentalMobil(folder);
+//                    PrintInvestor(folder);
 //                    PrintAsset(folder);
 //                    PrintMobil(folder);
 //                    PrintJasa(folder);
@@ -80,7 +83,8 @@ public class Printer {
 //                    PrintLaporan(folder, Laporan.class);
 //                    PrintLaporan(folder, Pemasukan.class);
 //                    PrintLaporan(folder, Pengeluaran.class);
-//                    PrintLaporan(folder, pembagianLaba.class);    
+//                    PrintLaporan(folder, pembagianLaba.class);
+                    
                 try {
                     Desktop.getDesktop().open(folder);
                 } catch (IOException ex) {
@@ -88,13 +92,84 @@ public class Printer {
                 }
             }});
     }
+    public static void PrintRentalMobil(File place)
+    {
+              File f = new File(place, "Data Rental");
+              f.mkdirs();
+              File f1 = new File(f, "Mobil Rental.CSV");
+              System.out.println("f = " + f);
+              System.out.println("f = " + f1);
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              final SimpleDateFormat ff = new SimpleDateFormat("dd-MM-yyyy");
+              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+              List resultList = getDataList(app.table.Mobilrental.class);
+              System.out.println("resultList = " + resultList.size());    
+              List<app.table.Rental> b = getDataList(app.table.Rental.class);
+              for (Rental rental : b) {
+                  String foo = 
+                          rental.getRentalid()+ "-"+
+                          rental.getPemakai()+"-"+
+                          rental.getDriver()+"-"+
+                          ff.format(rental.getTglmulai())+"-"
+                          +".CSV";
+                  File t = new File(f, foo);
+                  System.out.println("foo = " + foo);
+                  List as = rental.getBayarrentalList();
+                  WriteStep data = CSVUtil.of(t)
+                        .type(app.table.Bayarrental.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Pemasukan", "pemasukan", d -> IDR.format(d) ),
+                                Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
+                                Tuple.of("Jenis", "jenis", d -> d),
+                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                                )
+                        .dataList(as);
+                    try {
+                        data.write();      
+                        System.out.println("t = " + t);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
+                    return ;
+                } 
+                  
+        }
+              List a = b;
+              System.out.println("a = " + a);
+              WriteStep dataList = CSVUtil.of(f1)
+                .type(app.table.Mobilrental.class)
+                .properties(
+                    Tuple.of("mobilId","mobilId", d-> d),
+                    Tuple.of("noPolisiAktif","noPolisiAktif", d-> d),
+                    Tuple.of("merk","merk", d-> d),
+                    Tuple.of("type","type", d-> d),
+                    Tuple.of("warna","warna", d-> d),
+                    Tuple.of("tahun","tahun", d-> d),
+                    Tuple.of("keterangan","keterangan", d-> d),
+                    Tuple.of("statusMobil","statusMobil", d-> d)
+                )
+                .dataList(resultList);
+                    try {
+                    dataList.write();            
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
+                    return ;
+                } 
+                    finally {
+                    }
+    
+    }
     public static void PrintJasa(File place)
     {
               File f = new File(place, "Data Jasa Cabut Berkasa");
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+              final DecimalFormat IDR = new DecimalFormat("#,##0");              
               List<app.table.Bpkbtitipan> resultList = getDataList(app.table.Bpkbtitipan.class);
               System.out.println("resultList = " + resultList.size());    
               for (Bpkbtitipan peg : resultList) {
@@ -335,10 +410,6 @@ public class Printer {
                 } 
                     finally {
                         System.out.println("filename = " + filename);
-//                    javax.swing.JOptionPane.showMessageDialog(null, 
-//                                "Berhasil Print "+
-//                                kelas.getSimpleName()
-//                                + "\nPath = "+ filename.toString());
                     }
                 
     }
