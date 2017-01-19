@@ -11,6 +11,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -543,6 +546,9 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+//        jPanel10 = new app.view.FixPanel.akuntansi.panelAkuntansi();    
+//        this.chandePanel("Akun");
+        ((app.view.FixPanel.panelLaporan) this.jPanel1).Refresh();
         app.view.FixPanel.akuntansi.panelAkuntansi.main(null);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem26ActionPerformed

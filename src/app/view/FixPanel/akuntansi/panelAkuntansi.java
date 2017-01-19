@@ -82,6 +82,12 @@ public class panelAkuntansi extends JPanel {
             Date awalBulan;
     public panelAkuntansi() {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
+                 Query query = entityManager.createQuery("SELECT l FROM Laporan l");
+                 java.util.List<app.table.Laporan> data = query.getResultList();
+                 data.forEach((laporan) -> { entityManager.refresh(laporan);});
+                 Query bankQ = entityManager.createQuery("SELECT b From Bank b ORDER BY b");
+                 List<Bank> result = bankQ.getResultList();
+                 result.forEach(a -> entityManager.refresh(a));
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));            
         akhirBulan = cal.getTime();
         awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
@@ -92,9 +98,9 @@ public class panelAkuntansi extends JPanel {
         List<app.table.Bank> list = entityManager.createQuery("SELECT en FROM Bank en", app.table.Bank.class).getResultList();       
         Akun Kas = new Akun(X++)
                 .setAkun("Gabungan Kas");                
-        for (Bank bank : list) {
+        list.forEach((bank) -> {
             Kas.addPemasukan(bank.getFoo());
-        }
+        });
         AkuntansiList.add(Kas);            
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
@@ -536,29 +542,15 @@ public class panelAkuntansi extends JPanel {
                 System.out.println("app.view.FixPanel.akuntansi.panelAkuntansi.main()");
                 javax.swing.JFrame jDialog1 = new JFrame("Akuntasi");
                 try {
-                EntityManagerFactory fact = Persistence.createEntityManagerFactory("blessingPU");
-                EntityManager manager = fact.createEntityManager();
-                boolean active = manager.getTransaction().isActive();
-                if (!active) {
-                    manager.getTransaction().begin();            
-                }
-                 Query query = manager.createQuery("SELECT l FROM Laporan l");
-                 java.util.List<app.table.Laporan> data = query.getResultList();
-                 data.forEach((laporan) -> {
-                        manager.refresh(laporan);
-                    });
-                 Query bank = manager.createQuery("SELECT b From Bank b ORDER BY b");
-                 List<Bank> result = bank.getResultList();
-                 result.forEach(a -> manager.refresh(a));
-                jDialog1.show();
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
                 jDialog1.getContentPane().add(new panelAkuntansi());
+                jDialog1.show();
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {
                 javax.swing.JOptionPane.showMessageDialog(null, e);
-                jDialog1.dispose();
-                System.exit(100);
+                jDialog1 = null;
+//                System.exit(100);
             }
         });
     }

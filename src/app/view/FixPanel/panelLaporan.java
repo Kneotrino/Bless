@@ -563,7 +563,6 @@ public void Refresh(){
         // TODO add your handling code here:
         tahun = this.jYearChooser1.getYear();
     }//GEN-LAST:event_jYearChooser1PropertyChange
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 //        app.table.Util.RefreshLaporan();
         List resultList = entityManager.createQuery(
