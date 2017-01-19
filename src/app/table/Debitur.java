@@ -223,7 +223,7 @@ public class Debitur implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Debitur[ debiturId=" + debiturId + " ]";
+        return "[ ID=" + debiturId +";Nama= "+ nama+ " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

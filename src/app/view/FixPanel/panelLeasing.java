@@ -125,7 +125,6 @@ public class panelLeasing extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasingList}");
@@ -149,6 +148,7 @@ public class panelLeasing extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
         columnBinding.setColumnName("REF MOBIL");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.noPolisiAktif}"));
         columnBinding.setColumnName("Nopol");
         columnBinding.setColumnClass(String.class);
@@ -173,6 +173,7 @@ public class panelLeasing extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
+        detailTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         add(detailScrollPane, java.awt.BorderLayout.CENTER);
 
