@@ -464,13 +464,13 @@ public class panelInvestor extends JPanel {
     {
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
-//        app.table.Investor temp = new Investor();
+        app.table.Investor temp = new Investor();
         BigInteger total3 = BigInteger.ZERO;
         BigInteger total4 = BigInteger.ZERO;
         BigInteger total5 = BigInteger.ZERO;
         java.util.List<app.table.Investor> data = query.getResultList();
         for (Investor entity : data) {                   
-//           total5 = total5.add(entity.getjumlahPembagaian());
+           total5 = total5.add(entity.getjumlahPembagaian());
             List<Saham> sahamList = entity.getSahamList();
                 BigInteger total1 = BigInteger.ZERO;
                 BigInteger total2 = BigInteger.ZERO;
@@ -487,11 +487,10 @@ public class panelInvestor extends JPanel {
             float p = investor.getModal().floatValue();
             investor.setPer(df.format((p/t)*100)+"%");
         }
-//        temp.setModal(total3);
-//        temp.setPrive(total4);
-//        temp.setjumlahPembagaian(total5);
-//        temp.setPer("100%");
-//        list.add(temp);
+        temp.setModal(total3);
+        temp.setPrive(total4);
+        temp.setPer("100%");
+        list.add(temp);
     }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed

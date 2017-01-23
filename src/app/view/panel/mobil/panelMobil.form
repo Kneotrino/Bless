@@ -1640,6 +1640,18 @@
                     <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.bpkb.tglLeasing}" target="jDateChooser9" targetPath="date" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel82">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="KETRANGAN"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextField35">
+                  <BindingProperties>
+                    <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.bpkb.ket}" target="jTextField35" targetPath="text" updateStrategy="0" immediately="false">
+                      <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                    </BindingProperty>
+                  </BindingProperties>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JScrollPane" name="jScrollPane6">
@@ -1928,14 +1940,11 @@
             <Property name="text" type="java.lang.String" value="NOMINAL LEASING (IDR)"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="1" type="0"/>
-            </Property>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="jTextField37">
           <BindingProperties>
-            <BindingProperty name="value" source="jTable1" sourcePath="${selectedElement.listleasing.nominal}" target="jFormattedTextField1" targetPath="value" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.listleasing.nominal}" target="jTextField37" targetPath="text" updateStrategy="0" immediately="false">
+              <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+            </BindingProperty>
           </BindingProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel79">

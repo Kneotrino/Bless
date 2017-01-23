@@ -287,6 +287,8 @@ public void Refresh()
         jDateChooser8 = new com.toedter.calendar.JDateChooser();
         jLabel52 = new javax.swing.JLabel();
         jDateChooser9 = new com.toedter.calendar.JDateChooser();
+        jLabel82 = new javax.swing.JLabel();
+        jTextField35 = new javax.swing.JTextField();
         jScrollPane6 = new javax.swing.JScrollPane();
         jPanel14 = new javax.swing.JPanel();
         jLabel54 = new javax.swing.JLabel();
@@ -306,7 +308,7 @@ public void Refresh()
         keuanganMobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(keuanganMobilQuery.getResultList());
         LeasingMobil = new javax.swing.JDialog();
         jLabel16 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jTextField37 = new javax.swing.JTextField();
         jLabel79 = new javax.swing.JLabel();
         jFormattedTextField4 = new javax.swing.JFormattedTextField();
         jLabel80 = new javax.swing.JLabel();
@@ -1297,6 +1299,14 @@ public void Refresh()
 
         jPanel21.add(jDateChooser9);
 
+        jLabel82.setText("KETRANGAN");
+        jPanel21.add(jLabel82);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.ket}"), jTextField35, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jTextField35);
+
         jTabbedPane2.addTab("BPKB", jPanel21);
 
         jScrollPane6.setPreferredSize(new java.awt.Dimension(1862, 170));
@@ -1472,12 +1482,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jLabel16.setText("NOMINAL LEASING (IDR)");
     LeasingMobil.getContentPane().add(jLabel16);
 
-    jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-
-    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.nominal}"), jFormattedTextField1, org.jdesktop.beansbinding.BeanProperty.create("value"));
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.nominal}"), jTextField37, org.jdesktop.beansbinding.BeanProperty.create("text"));
     bindingGroup.addBinding(binding);
 
-    LeasingMobil.getContentPane().add(jFormattedTextField1);
+    LeasingMobil.getContentPane().add(jTextField37);
 
     jLabel79.setText("TERPENUHI (IDR)");
     LeasingMobil.getContentPane().add(jLabel79);
@@ -2433,7 +2441,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                         this.getHapus().setListleasing(l);
             }
             else {
-                        this.getHapus().getListleasing().setLeasingLeasingId((Leasing) this.jComboBox4.getSelectedItem());            
+                        this.getHapus()
+                                .getListleasing()
+                                .setLeasingLeasingId((Leasing) this.jComboBox4.getSelectedItem());            
             }            
             this.LeasingMobil.hide();
     }//GEN-LAST:event_jButton17ActionPerformed
@@ -2705,7 +2715,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JFileChooser jFileChooser5;
     private javax.swing.JFileChooser jFileChooser6;
     private javax.swing.JFileChooser jFileChooser7;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
@@ -2789,6 +2798,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
+    private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
@@ -2853,7 +2863,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField32;
     private javax.swing.JTextField jTextField33;
     private javax.swing.JTextField jTextField34;
+    private javax.swing.JTextField jTextField35;
     private javax.swing.JTextField jTextField36;
+    private javax.swing.JTextField jTextField37;
     private javax.swing.JTextField jTextField38;
     private javax.swing.JTextField jTextField39;
     private javax.swing.JTextField jTextField4;
