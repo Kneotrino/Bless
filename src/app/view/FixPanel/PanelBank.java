@@ -359,6 +359,20 @@ public class PanelBank extends JPanel {
         });
         list.clear();
         list.addAll(data);
+        BigInteger t1 = BigInteger.ZERO;
+        BigInteger t2 = BigInteger.ZERO;
+        BigInteger t3 = BigInteger.ZERO;
+        Bank temp = new Bank();
+        for (Bank bank : data) {
+            t1 = t1.add(bank.getTotalSaldo());
+            t2 = t2.add(bank.getTotalDebit());
+            t3= t3.add(bank.getTotalKredit());
+        }
+        temp.setNamaBank("Total KAS");
+        temp.setTotalSaldo(t1);
+        temp.setTotalDebit(t2);
+        temp.setTotalKredit(t3);
+        list.add(temp);
 
     }//GEN-LAST:event_refreshButtonActionPerformed
 

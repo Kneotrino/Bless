@@ -293,8 +293,6 @@ public class panelAkuntansi extends JPanel {
 //                    .setPengeluaran(sumAll(getList(app.table.pembagianLaba.class)));
             LaporanPenyesuaian.add( profit);
             LaporanPenyesuaian.add( kosong);
-            System.out.println("profit = " + profit);
-            System.out.println("profit = " + profit.getPemasukan());
             totalProfit = totalProfit.add(temp.getPemasukan())
                     .subtract(temp.getPengeluaran());
             System.out.println("totalProfit = " + totalProfit);

@@ -310,7 +310,7 @@ public void Refresh()
         jLabel16 = new javax.swing.JLabel();
         jTextField37 = new javax.swing.JTextField();
         jLabel79 = new javax.swing.JLabel();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
+        jTextField43 = new javax.swing.JTextField();
         jLabel80 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
         jButton17 = new javax.swing.JButton();
@@ -1484,18 +1484,20 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.nominal}"), jTextField37, org.jdesktop.beansbinding.BeanProperty.create("text"));
     bindingGroup.addBinding(binding);
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing != nulll}"), jTextField37, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+    bindingGroup.addBinding(binding);
 
     LeasingMobil.getContentPane().add(jTextField37);
 
     jLabel79.setText("TERPENUHI (IDR)");
     LeasingMobil.getContentPane().add(jLabel79);
 
-    jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-
-    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.TERPENUHI}"), jFormattedTextField4, org.jdesktop.beansbinding.BeanProperty.create("value"));
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.TERPENUHI}"), jTextField43, org.jdesktop.beansbinding.BeanProperty.create("text"));
+    bindingGroup.addBinding(binding);
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing != nulll}"), jTextField43, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
 
-    LeasingMobil.getContentPane().add(jFormattedTextField4);
+    LeasingMobil.getContentPane().add(jTextField43);
 
     jLabel80.setText("LEASING");
     LeasingMobil.getContentPane().add(jLabel80);
@@ -1562,7 +1564,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     setLayout(new java.awt.BorderLayout());
 
-    jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+    jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
 
     jPanel5.setLayout(new java.awt.BorderLayout());
 
@@ -1958,7 +1960,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jPanel19.add(jScrollPane8, java.awt.BorderLayout.CENTER);
 
-    jTabbedPane1.addTab("LAP. Transaksi x", jPanel19);
+    jTabbedPane1.addTab("LAPORAN TRANSAKSI", jPanel19);
 
     add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -2015,7 +2017,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 //        baru.setDpPertama((Integer) (int) (long) this.jFormattedTextField1.getValue());
         baru.setTanggalBeli(this.jDateChooser2.getDate());     
         baru.setKeterangan(this.jTextField15.getText());
-        baru.setStatusMobil("OPEN");
+        baru.setStatusMobil("READY");
 //        Trips t = (Trips )this.jComboBox7.getSelectedItem();
 //        if (t.getPerjalananke() == -1) {
 //               javax.swing.JOptionPane.showMessageDialog(null, "Perjalanan tidak di set");                            
@@ -2059,7 +2061,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 //        if (!gambar6.exists())                 
         baru.setInteriorIi(pindahGambar(gambar6, baru.getMobilId()+"in2").getCanonicalPath());
         System.out.println("Trying Save image = done");
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             this.jButton22ActionPerformed(evt);
             System.out.println("Trying Save image = failed");
                     javax.swing.JOptionPane
@@ -2717,7 +2719,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JFileChooser jFileChooser7;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2872,6 +2873,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField40;
     private javax.swing.JTextField jTextField41;
     private javax.swing.JTextField jTextField42;
+    private javax.swing.JTextField jTextField43;
     private javax.swing.JTextField jTextField44;
     private javax.swing.JTextField jTextField45;
     private javax.swing.JTextField jTextField46;

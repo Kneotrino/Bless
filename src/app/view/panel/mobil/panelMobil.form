@@ -1942,9 +1942,8 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField37">
           <BindingProperties>
-            <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.listleasing.nominal}" target="jTextField37" targetPath="text" updateStrategy="0" immediately="false">
-              <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-            </BindingProperty>
+            <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.listleasing.nominal}" target="jTextField37" targetPath="text" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="enabled" source="jTable1" sourcePath="${selectedElement.listleasing != nulll}" target="jTextField37" targetPath="enabled" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel79">
@@ -1952,14 +1951,12 @@
             <Property name="text" type="java.lang.String" value="TERPENUHI (IDR)"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField4">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="1" type="0"/>
-            </Property>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="jTextField43">
           <BindingProperties>
-            <BindingProperty name="value" source="jTable1" sourcePath="${selectedElement.listleasing.TERPENUHI}" target="jFormattedTextField4" targetPath="value" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.listleasing.TERPENUHI}" target="jTextField43" targetPath="text" updateStrategy="0" immediately="false">
+              <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+            </BindingProperty>
+            <BindingProperty name="enabled" source="jTable1" sourcePath="${selectedElement.listleasing != nulll}" target="jTextField43" targetPath="enabled" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel80">
@@ -2189,7 +2186,7 @@
   <SubComponents>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
       <Properties>
-        <Property name="tabPlacement" type="int" value="2"/>
+        <Property name="tabPlacement" type="int" value="3"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -2950,8 +2947,8 @@
         <Container class="javax.swing.JPanel" name="jPanel19">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="LAP. Transaksi x">
-                <Property name="tabTitle" type="java.lang.String" value="LAP. Transaksi x"/>
+              <JTabbedPaneConstraints tabName="LAPORAN TRANSAKSI">
+                <Property name="tabTitle" type="java.lang.String" value="LAPORAN TRANSAKSI"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
