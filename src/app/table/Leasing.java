@@ -110,6 +110,8 @@ public class Leasing implements Serializable {
 
     @Override
     public String toString() {
+            if (this == null )
+                    return "Hapus";
         return "[ REF=" + leasingId + "; Nama = "+this.nama+" ]";
     }
 

@@ -5,12 +5,20 @@
  */
 package app.view;
 
+import app.utils.Printer;
 import app.utils.TimerThread;
 import java.awt.CardLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +44,7 @@ public class ShowRoom extends javax.swing.JFrame {
         TimerThread timerThread = new TimerThread(this.jLabel3, this.jLabel2);        
         timerThread.start();
     }
-
+    private List<String> properties = new ArrayList<String>();
     private void initBeranda()
     {
         System.out.println("app.view.ShowRoom.initBeranda()");
@@ -49,9 +57,30 @@ public class ShowRoom extends javax.swing.JFrame {
         home = new ImageIcon(newimg);
         this.jLabel1.setIcon(home);
         this.chandePanel("card2");
+        //init combo
+        Class<?> cl = app.utils.Printer.class;
+        System.out.println("cl fooooooooooooooo= " + cl);
+        Method[] methods = cl.getMethods();
+        List<Method> MethodList = Arrays.asList(methods);                
+        for (Method method : MethodList) {
+            if (method.getName().startsWith("Print") && !method.getName().equals("Printing") ) {
+                properties.add(method.getName());                
+            }
+        }
+    }
+     private String status = "";
+
+    public List<String> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<String> properties) {
+        this.properties = properties;
     }
      private void chandePanel(String t)
         {
+            
+            status = t;
             CardLayout cardLayout = (CardLayout) this.getContentPane().getLayout();
             cardLayout.show(this.getContentPane(), t);        // TODO add your handling code here:
         }
@@ -73,6 +102,10 @@ public class ShowRoom extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jMenuItem19 = new javax.swing.JMenuItem();
         jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser2 = new javax.swing.JFileChooser();
+        jDialog2 = new javax.swing.JDialog();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
@@ -128,6 +161,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -163,6 +197,33 @@ public class ShowRoom extends javax.swing.JFrame {
                 jFileChooser1ActionPerformed(evt);
             }
         });
+
+        jFileChooser2.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser2.setApproveButtonText("PRINT DATA SEMUA");
+        jFileChooser2.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        jFileChooser2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser2ActionPerformed(evt);
+            }
+        });
+
+        jDialog2.getContentPane().setLayout(new java.awt.GridLayout(2, 0));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "item" }));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${properties}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jDialog2.getContentPane().add(jComboBox2);
+
+        jButton1.setText("Print");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jDialog2.getContentPane().add(jButton1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -387,6 +448,14 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem29);
 
+        jMenuItem28.setText("Print");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem28);
+
         jMenuItem6.setText("About");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -570,6 +639,33 @@ public class ShowRoom extends javax.swing.JFrame {
             app.utils.Printer.Printing(this.jFileChooser1.getSelectedFile());            
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        this.jDialog2.setSize(400, 400);
+        this.jDialog2.setLocationRelativeTo(null);
+        this.jDialog2.show();
+//        showSaveDialog = this.jFileChooser2.showSaveDialog(jPanel1);        
+        System.out.println("showSaveDialog = " + showSaveDialog);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
+    private void jFileChooser2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser2ActionPerformed
+        Object selectedItem = jComboBox2.getSelectedItem();
+        System.out.println("selectedItem = " + selectedItem);
+        app.utils.Printer.PrintMobil(this.jFileChooser2.getSelectedFile());
+        try {
+              Desktop.getDesktop().open(this.jFileChooser2.getSelectedFile().getParentFile());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFileChooser2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        showSaveDialog = this.jFileChooser2.showSaveDialog(jPanel1);        
+        this.jDialog2.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -607,9 +703,13 @@ public class ShowRoom extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private app.view.FixPanel.Inventaris inventaris1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -637,6 +737,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

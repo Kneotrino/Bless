@@ -57,6 +57,7 @@ public class panelLeasing extends JPanel {
         mobilQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Mobil m");
         mobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilQuery.getResultList());
         newDetailButton1 = new javax.swing.JButton();
+        deleteDetailButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
@@ -66,7 +67,6 @@ public class panelLeasing extends JPanel {
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
-        deleteDetailButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -98,6 +98,13 @@ public class panelLeasing extends JPanel {
 
         newDetailButton1.setText("Tambah List");
         newDetailButton1.addActionListener(formListener);
+
+        deleteDetailButton.setText("Hapus List");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteDetailButton.addActionListener(formListener);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -197,14 +204,6 @@ public class panelLeasing extends JPanel {
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
-
-        deleteDetailButton.setText("Hapus List");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteDetailButton.addActionListener(formListener);
-        jPanel1.add(deleteDetailButton);
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 

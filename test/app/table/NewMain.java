@@ -7,8 +7,10 @@ package app.table;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,11 +33,21 @@ public class NewMain {
     public static void main(String[] args) {
         // TODO code application logic here
     List<String> properties = new ArrayList<String>();
-    Class<?> cl = app.table.Saham.class;
-
-    // check all declared fields
-    for (Field field : cl.getDeclaredFields()) {
-
+//    Class<?> cl = app.table.Saham.class;
+        Class<?> cl = app.utils.Printer.class;
+        Method[] methods = cl.getMethods();
+        List<Method> MethodList = Arrays.asList(methods);                
+        for (Method method : MethodList) {
+            System.out.println("method.getName() = " + method.getName());
+            if (method.getName().startsWith("Print") && !method.getName().equals("Printing") ) {
+                properties.add(method.getName());                
+            }
+        }
+        for (String property : properties) {
+            System.out.println("property = " + property);
+        }
+// check all declared fields
+    for (Field field : cl.getDeclaredFields()) {        
     // if field is private then look for setters/getters
     if (Modifier.isPrivate(field.getModifiers())) {
 

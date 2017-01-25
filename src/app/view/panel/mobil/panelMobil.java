@@ -75,6 +75,7 @@ public class panelMobil extends javax.swing.JPanel {
 public void Refresh()
 {
     System.out.println("app.view.panel.mobil.panelMobil.Refresh()");
+    jButton22ActionPerformed(null);
     this.bankList.clear();
     this.leasingList.clear();
     this.PerjalananList.clear();
@@ -92,10 +93,9 @@ public void Refresh()
         blessingPUEntityManager.refresh(object);                
     }
     this.bankList.addAll(bankQuery.getResultList());
-    this.leasingList.addAll(leasingQuery.getResultList());
     this.leasingList.add(null);    
+    this.leasingList.addAll(leasingQuery.getResultList());
     this.PerjalananList.addAll(query.getResultList());
-    jButton22ActionPerformed(null);
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -2382,16 +2382,16 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-            if (this.getHapus().getListleasing() == null) {
-                        Listleasing l = new Listleasing();
-                        l.setLeasingLeasingId((Leasing) this.jComboBox4.getSelectedItem());
-                        this.getHapus().setListleasing(l);
-            }
-            else {
-                        this.getHapus()
-                                .getListleasing()
-                                .setLeasingLeasingId((Leasing) this.jComboBox4.getSelectedItem());            
-            }            
+//            if (this.getHapus().getListleasing() == null) {
+//                        Listleasing l = new Listleasing();
+//                        l.setLeasingLeasingId((Leasing) this.jComboBox4.getSelectedItem());
+//                        this.getHapus().setListleasing(l);
+//            }
+//            else {
+//                        this.getHapus()
+//                                .getListleasing()
+//                                .setLeasingLeasingId((Leasing) this.jComboBox4.getSelectedItem());            
+//            }            
             this.LeasingMobil.hide();
     }//GEN-LAST:event_jButton17ActionPerformed
 

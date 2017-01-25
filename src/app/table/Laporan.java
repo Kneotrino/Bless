@@ -120,9 +120,9 @@ public class Laporan implements Serializable {
                 || (this instanceof BayarhutangPemasukan) 
                 || (this instanceof BayarPihutangPemasukan) 
                 || (this instanceof PerjalananPemasukan) 
-//                || (this instanceof Perjalanan) 
                 || (this instanceof Modal) 
                 || (this instanceof MobilPemasukan)                 
+                || (this instanceof Terima) 
                 ;
 
     public boolean isName() {
