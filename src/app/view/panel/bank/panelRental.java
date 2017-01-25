@@ -175,7 +175,7 @@ public class panelRental extends JPanel {
 
         setLayout(new java.awt.GridLayout(1, 0));
 
-        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTabbedPane1.addMouseListener(formListener);
         jTabbedPane1.addTab("MOBIL RENTAL", panelMobilRental1);
@@ -210,7 +210,6 @@ public class panelRental extends JPanel {
 
         masterTable.setAutoCreateRowSorter(true);
         masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -332,7 +331,6 @@ public class panelRental extends JPanel {
         detailTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
             detailTable.getColumnModel().getColumn(0).setResizable(false);
-            detailTable.getColumnModel().getColumn(5).setCellEditor(null);
             detailTable.getColumnModel().getColumn(6).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4)
             );
         }
@@ -365,14 +363,20 @@ public class panelRental extends JPanel {
             else if (evt.getSource() == saveButton) {
                 panelRental.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteDetailButton) {
-                panelRental.this.deleteDetailButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == newDetailButton2) {
                 panelRental.this.newDetailButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton1) {
                 panelRental.this.newDetailButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteDetailButton) {
+                panelRental.this.deleteDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton1) {
+                panelRental.this.refreshButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton1) {
+                panelRental.this.saveButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == jComboBox1) {
                 panelRental.this.jComboBox1ActionPerformed(evt);
@@ -394,12 +398,6 @@ public class panelRental extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelRental.this.newDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton1) {
-                panelRental.this.refreshButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton1) {
-                panelRental.this.saveButton1ActionPerformed(evt);
             }
         }
 

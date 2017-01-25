@@ -13,7 +13,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +61,6 @@ public class ShowRoom extends javax.swing.JFrame {
         this.chandePanel("card2");
         //init combo
         Class<?> cl = app.utils.Printer.class;
-        System.out.println("cl fooooooooooooooo= " + cl);
         Method[] methods = cl.getMethods();
         List<Method> MethodList = Arrays.asList(methods);                
         for (Method method : MethodList) {
@@ -209,7 +210,8 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jDialog2.getContentPane().setLayout(new java.awt.GridLayout(2, 0));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "item" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "item,item1", " " }));
+        jComboBox2.setSelectedIndex(1);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${properties}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
@@ -282,6 +284,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem11);
 
+        jMenuItem26.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem26.setText("Neraca");
         jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -440,6 +443,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
         jMenu3.setText("Control");
 
+        jMenuItem29.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem29.setText("Print Data Semua");
         jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -448,6 +452,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem29);
 
+        jMenuItem28.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem28.setText("Print");
         jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -651,12 +656,19 @@ public class ShowRoom extends javax.swing.JFrame {
     private void jFileChooser2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser2ActionPerformed
         Object selectedItem = jComboBox2.getSelectedItem();
         System.out.println("selectedItem = " + selectedItem);
-        app.utils.Printer.PrintMobil(this.jFileChooser2.getSelectedFile());
+//        app.utils.Printer.PrintMobil(this.jFileChooser2.getSelectedFile());
         try {
-              Desktop.getDesktop().open(this.jFileChooser2.getSelectedFile().getParentFile());
-                } catch (IOException ex) {
+              Method method = app.utils.Printer.class.getMethod((String)selectedItem, File.class);
+              System.out.println("method = " + method);
+              method.invoke(null, jFileChooser2.getSelectedFile());
+              Desktop.getDesktop().open(this.jFileChooser2.getSelectedFile());
+                } catch (IOException | NoSuchMethodException | SecurityException ex) {
                     ex.printStackTrace();
-                }
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(ShowRoom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jFileChooser2ActionPerformed
 

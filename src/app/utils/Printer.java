@@ -67,6 +67,10 @@ public class Printer {
                             File dir = new File("D:\\Print");
                             Printing(dir);
        }
+    public static void  Print_Semua(File rootdir)
+    {
+        Printing(rootdir);
+    }
     public static void Printing(File rootdir)
     {
         EventQueue.invokeLater(new Runnable() {
