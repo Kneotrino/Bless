@@ -64,7 +64,7 @@ public class Listleasing implements Serializable {
     @JoinColumn(name = "LEASING_LEASING_ID", referencedColumnName = "LEASING_ID")
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
     private Leasing leasingLeasingId;
-    @OneToOne(mappedBy = "listleasing", cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+    @OneToOne(mappedBy = "listleasing", cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     private Mobil mobil;
     @Column(name = "TERPENUHI")
     private BigInteger TERPENUHI = BigInteger.ZERO;

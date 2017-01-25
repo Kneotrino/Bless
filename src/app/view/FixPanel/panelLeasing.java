@@ -57,13 +57,13 @@ public class panelLeasing extends JPanel {
         mobilQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Mobil m");
         mobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilQuery.getResultList());
         newDetailButton1 = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
@@ -99,13 +99,6 @@ public class panelLeasing extends JPanel {
         newDetailButton1.setText("Tambah List");
         newDetailButton1.addActionListener(formListener);
 
-        deleteButton.setText("Hapus Leasing");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteButton.addActionListener(formListener);
-
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setAutoCreateRowSorter(true);
@@ -132,6 +125,7 @@ public class panelLeasing extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setAutoCreateRowSorter(true);
+        detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasingList}");
@@ -188,6 +182,14 @@ public class panelLeasing extends JPanel {
         newButton1.addActionListener(formListener);
         jPanel1.add(newButton1);
 
+        deleteButton.setText("Hapus Leasing");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteButton.addActionListener(formListener);
+        jPanel1.add(deleteButton);
+
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
@@ -217,9 +219,6 @@ public class panelLeasing extends JPanel {
             if (evt.getSource() == newButton1) {
                 panelLeasing.this.newButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteButton) {
-                panelLeasing.this.deleteButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == saveButton) {
                 panelLeasing.this.saveButtonActionPerformed(evt);
             }
@@ -237,6 +236,9 @@ public class panelLeasing extends JPanel {
             }
             else if (evt.getSource() == newDetailButton1) {
                 panelLeasing.this.newDetailButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteButton) {
+                panelLeasing.this.deleteButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -257,6 +259,8 @@ public class panelLeasing extends JPanel {
             }
             app.table.Listleasing l = iter.next();
             toRemove.add(l);
+            l.getMobil().setListleasing(null);
+            l.setMobil(null);
             entityManager.remove(l);
         }
         ls.removeAll(toRemove);
@@ -319,6 +323,7 @@ public class panelLeasing extends JPanel {
             app.table.Leasing L = list.get(masterTable.convertRowIndexToModel(selected[idx]));
             List<Listleasing> listleasingList = L.getListleasingList();
             for (Listleasing listleasing : listleasingList) {
+                listleasing.getMobil().setListleasing(null);
                 entityManager.remove(listleasing);                
             }
             toRemove.add(L);

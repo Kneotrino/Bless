@@ -27,7 +27,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
  *
@@ -81,7 +80,7 @@ public class Foo {
                     JComponent comp = null;
                     
                     if (rt.equals(String.class)) {
-                        comp = new JTextField();
+                        comp = new javax.swing.JTextField("");
                         label = new JLabel();
                         label.setText(getName(meth));
                         
@@ -133,7 +132,7 @@ public class Foo {
             }
             else 
             {
-                    comp = new javax.swing.JFormattedTextField("Input");                                                         
+                    comp = new javax.swing.JTextField("");                                                         
             }
   
             
