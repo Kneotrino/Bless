@@ -490,6 +490,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
             this.chandePanel("Less");
             this.panelLeasing2.Refresh();
+//            ( (app.view.panel.mobil.panelMobil )(this.jPanel6)).Refresh();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
