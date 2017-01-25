@@ -50,7 +50,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Bank.findByTotalDebit", query = "SELECT b FROM Bank b WHERE b.totalDebit = :totalDebit"),
     @NamedQuery(name = "Bank.findByTotalKredit", query = "SELECT b FROM Bank b WHERE b.totalKredit = :totalKredit"),
     @NamedQuery(name = "Bank.findByNamaBank", query = "SELECT b FROM Bank b WHERE b.namaBank = :namaBank")})
- @ListUrutan({"namaBank","norek","nama","alamat","nomorHp","nomorKtp","totalDebit","totalKredit" })
+ @ListUrutan({"namaBank","norek","nama","alamat","nomorHp","nomorKtp" })
 public class Bank implements Serializable {
 
     @Transient

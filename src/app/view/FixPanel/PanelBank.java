@@ -6,10 +6,12 @@
 package app.view.FixPanel;
 
 import app.table.Bank;
+import app.table.Kirim;
 import app.table.Laporan;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
 import app.table.Saldo;
+import app.table.Terima;
 import app.table.Util;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -82,6 +84,8 @@ public class PanelBank extends JPanel {
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         jDialog1 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Bank.class);
+        jLabel4 = new javax.swing.JLabel();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
         newButton = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
         detailScrollPane = new javax.swing.JScrollPane();
@@ -90,6 +94,15 @@ public class PanelBank extends JPanel {
         newDetailButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jDialog3 = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -98,12 +111,20 @@ public class PanelBank extends JPanel {
         refreshButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
         inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
+
+        jLabel4.setText("Saldo Terakhir");
+        inputPanel1.add(jLabel4);
+
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        inputPanel1.add(jFormattedTextField2);
+
         jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
         newButton.setText("Simpan Data Bank");
@@ -173,6 +194,39 @@ public class PanelBank extends JPanel {
         jButton2.addActionListener(formListener);
 
         jButton3.setText("Tambah Pengeluaran");
+
+        jDialog3.setSize(500, 350);
+        jDialog3.getContentPane().setLayout(new java.awt.GridLayout(4, 0));
+
+        jLabel1.setText("Nominal Transfer");
+        jDialog3.getContentPane().add(jLabel1);
+
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jDialog3.getContentPane().add(jFormattedTextField1);
+
+        jLabel2.setText("Sumber");
+        jDialog3.getContentPane().add(jLabel2);
+
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, jComboBox1);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jDialog3.getContentPane().add(jComboBox1);
+
+        jLabel3.setText("Tujuan");
+        jDialog3.getContentPane().add(jLabel3);
+
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jDialog3.getContentPane().add(jComboBox2);
+
+        jButton6.setText("Transfer");
+        jButton6.addActionListener(formListener);
+        jDialog3.getContentPane().add(jButton6);
+
+        jButton7.setText("Batal");
+        jButton7.addActionListener(formListener);
+        jDialog3.getContentPane().add(jButton7);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -247,6 +301,10 @@ public class PanelBank extends JPanel {
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
+        jButton5.setText("Transfer");
+        jButton5.addActionListener(formListener);
+        jPanel1.add(jButton5);
+
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
         bindingGroup.bind();
@@ -283,6 +341,15 @@ public class PanelBank extends JPanel {
             }
             else if (evt.getSource() == jButton2) {
                 PanelBank.this.jButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton5) {
+                PanelBank.this.jButton5ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton6) {
+                PanelBank.this.jButton6ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton7) {
+                PanelBank.this.jButton7ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -401,19 +468,19 @@ public class PanelBank extends JPanel {
         Saldo trans = new Saldo();
         Saldo trans1 = new Saldo();
         entityManager.persist(trans);
-        entityManager.persist(trans1);
+//        entityManager.persist(trans1);
         trans.setBankId(b);
         trans1.setBankId(b);
         Pemasukan p1 = new Pemasukan();
         Pengeluaran p2 = new Pengeluaran();
         p1.setTransaksi(trans);
-        p2.setTransaksi(trans1);
+//        p2.setTransaksi(trans1);
         trans.setLaporan(p1);
         trans1.setLaporan(p2);
-        p1.setJumlah(b.getTotalDebit());
+        p1.setJumlah(BigInteger.valueOf((long) jFormattedTextField2.getValue()));
         p2.setJumlah(b.getTotalKredit());
         entityManager.persist(p1);
-        entityManager.persist(p2);
+//        entityManager.persist(p2);
         list.add(b);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
@@ -457,6 +524,35 @@ public class PanelBank extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        this.jDialog3.setLocationRelativeTo(null);
+        this.jDialog3.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        BigInteger nominal = BigInteger.valueOf((Long) jFormattedTextField1.getValue());
+        app.table.Kirim kirim = new Kirim();
+        app.table.Terima terima = new Terima();
+        kirim.setJumlah(nominal);
+        terima.setJumlah(nominal);
+        kirim.setTransaksi(new Saldo());
+        terima.setTransaksi(new Saldo());
+        kirim.getTransaksi().setBankId((Bank) jComboBox1.getSelectedItem());
+        terima.getTransaksi().setBankId((Bank) jComboBox2.getSelectedItem());
+        entityManager.persist(kirim);
+        entityManager.persist(terima);
+        saveButtonActionPerformed(evt);
+        refreshButtonActionPerformed(evt);
+        this.jDialog3.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        this.jDialog3.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -469,8 +565,20 @@ public class PanelBank extends JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Bank> list;
     private javax.swing.JScrollPane masterScrollPane;

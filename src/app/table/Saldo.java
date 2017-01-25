@@ -30,6 +30,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.swing.JComboBox;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -206,5 +207,6 @@ public class Saldo implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
+
     
 }
