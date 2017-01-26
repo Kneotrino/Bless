@@ -54,6 +54,7 @@ public class Blessing {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 System.out.println("info.getName() = " + info.getName());
                 if ("Nimbus".equals(info.getName())) {
+                    System.out.println("info = " + info.getClassName());
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

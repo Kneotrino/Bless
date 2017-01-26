@@ -468,27 +468,33 @@ public class panelInvestor extends JPanel {
         BigInteger total3 = BigInteger.ZERO;
         BigInteger total4 = BigInteger.ZERO;
         BigInteger total5 = BigInteger.ZERO;
+        BigInteger total6 = BigInteger.ZERO;
         java.util.List<app.table.Investor> data = query.getResultList();
         for (Investor entity : data) {                   
-           total5 = total5.add(entity.getjumlahPembagaian());
             List<Saham> sahamList = entity.getSahamList();
                 BigInteger total1 = BigInteger.ZERO;
                 BigInteger total2 = BigInteger.ZERO;
             for (Saham saham : sahamList) {
                     total1 = total1.add(saham.getModal() == null? BigInteger.ZERO : saham.getModal().getJumlah());
                     total2 = total2.add(saham.getPrive()== null? BigInteger.ZERO : saham.getPrive().getJumlah());                    
+                    total6 = total6.add(saham.getLaba() == null? BigInteger.ZERO : saham.getLaba().getJumlah());
             }
                 entity.setPrive(total2);
                 entity.setModal(total1.subtract(total2));
-                total3 = total3.add(entity.getModal());                
+                total5 = total5.add(entity.getPrive());
+                total3 = total3.add(entity.getModal());
         }
+        System.out.println("total6 = " + total6);
         float t = total3.floatValue();
         for (Investor investor : data) {
             float p = investor.getModal().floatValue();
             investor.setPer(df.format((p/t)*100)+"%");
         }
         temp.setModal(total3);
-        temp.setPrive(total4);
+        temp.setPrive(total5);
+        temp.setLaba(total6);
+        temp.setjumlahPembagaian(total6);
+        System.out.println("temp.get = " + temp.getjumlahPembagaian());
         temp.setPer("100%");
         list.add(temp);
     }

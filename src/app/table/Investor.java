@@ -142,7 +142,7 @@ public class Investor implements Serializable {
     }
     public BigInteger getjumlahPembagaian()
     {
-    Laba = BigInteger.ZERO;
+//    Laba = BigInteger.ZERO;
     if (1 <= sahamList.size())
         for (Saham saham : sahamList) {
             Laba = Laba.add(saham.getLaba()==null?BigInteger.ZERO:saham.getLaba().getJumlah());
