@@ -92,8 +92,10 @@ public void Refresh()
     for (Object object : B) {
         blessingPUEntityManager.refresh(object);                
     }
-    this.bankList.addAll(bankQuery.getResultList());
     this.leasingList.add(null);    
+    this.bankList.add(null);    
+    this.PerjalananList.add(null);    
+    this.bankList.addAll(bankQuery.getResultList());
     this.leasingList.addAll(leasingQuery.getResultList());
     this.PerjalananList.addAll(query.getResultList());
 }
