@@ -134,7 +134,7 @@ public class panelLaporan extends JPanel {
         jTextField2.setText("jTextField1");
         jPanel1.add(jTextField2);
 
-        jLabel3.setText("Profit");
+        jLabel3.setText("Saldo Terakhir");
         jPanel1.add(jLabel3);
 
         jTextField3.setEditable(false);

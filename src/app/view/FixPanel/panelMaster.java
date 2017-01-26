@@ -13,6 +13,7 @@ import java.awt.EventQueue;
 import java.beans.Beans;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -95,7 +96,6 @@ public class panelMaster extends JPanel {
             this.jButton1.hide();
             this.newButton.hide();
             this.deleteButton.hide();
-//            this.masterTable.setEnabled(false);
             Rest();
     }
 public void Rest()
@@ -121,6 +121,11 @@ public void Rest()
                 .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 .getResultList());
     }
+       BigInteger temp = BigInteger.ZERO; 
+         for (Laporan laporan : list) {
+            temp = temp.add(laporan.getJumlah());
+        }
+         jFormattedTextField2.setValue(temp);
 }
 public void Restall()
 {
@@ -175,6 +180,8 @@ public void Restall()
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -255,7 +262,7 @@ public void Restall()
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setColumnSelectionAllowed(false);
+        masterTable.setCellSelectionEnabled(true);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -290,6 +297,13 @@ public void Restall()
 
         jLabel2.setText("Laporan");
         jPanel1.add(jLabel2);
+
+        jLabel3.setText("Total");
+        jPanel1.add(jLabel3);
+
+        jFormattedTextField2.setEditable(false);
+        jFormattedTextField2.setPreferredSize(new java.awt.Dimension(100, 27));
+        jPanel1.add(jFormattedTextField2);
 
         newButton.setText("Baru");
         newButton.addActionListener(formListener);
@@ -376,7 +390,11 @@ public void Restall()
         list.clear();
         list.addAll((Collection<? extends Laporan>) res);
          }
-
+         BigInteger temp = BigInteger.ZERO; 
+         for (Laporan laporan : list) {
+            temp = temp.add(laporan.getJumlah());
+        }
+         jFormattedTextField2.setValue(temp);
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -453,6 +471,11 @@ public void Restall()
             list.clear();
             list.addAll(createQuery.getResultList());
          }
+         BigInteger temp = BigInteger.ZERO; 
+         for (Laporan laporan : list) {
+            temp = temp.add(laporan.getJumlah());
+        }
+         jFormattedTextField2.setValue(temp);
     }//GEN-LAST:event_refreshButton1ActionPerformed
 
 
@@ -469,8 +492,10 @@ public void Restall()
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel jumlahLabel;
     private javax.swing.JTextField keteranganField;

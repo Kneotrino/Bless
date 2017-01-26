@@ -489,7 +489,7 @@ public class Printer {
                         Tuple.of("namaAsset","namaAsset", d -> d==null?" ":d),
                         Tuple.of("status","status", d -> d==null?" ":d),
                         Tuple.of("stock","stock", d -> d==null?" ":d),
-                        Tuple.of("hargaBarang","hargaBarang", d -> d==null?" ":d),
+                        Tuple.of("hargaBarang","hargaBarang",d -> IDR.format(d)),
                         Tuple.of("Jumlah", "pengeluaran", d -> IDR.format(d) ),
                         Tuple.of("Jenis", "jenis", d -> d),
                         Tuple.of("Bank", "transaksi.bankId", d -> d)
