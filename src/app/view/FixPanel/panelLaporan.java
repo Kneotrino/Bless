@@ -10,6 +10,7 @@ import app.table.Laporan;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
 import app.table.Saldo;
+import static app.utils.ExcelConverter.ExcelConverter;
 import app.utils.Printer;
 import static app.utils.Printer.PrintLaporan;
 import com.joobar.csvbless.CSVUtil;
@@ -597,7 +598,7 @@ public void Refresh(){
         File root = jFileChooser1.getSelectedFile();
         Date p = new Date();
         final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
-        final DecimalFormat IDR = new DecimalFormat("#,##0");
+        final DecimalFormat IDR = new DecimalFormat("###0");
         List a = list;
         File file = new File(root, "Laporan Utama "+formator.format(p)+".CSV");
         System.out.println("file = " + file);
@@ -614,7 +615,10 @@ public void Refresh(){
                         Tuple.of("Bank", "transaksi.bankId", d -> d==null? "":d)
                 ).dataList(a);
         try {
+                 List<File> cvs = new java.util.LinkedList<>();
+                 cvs.add(file);
                  dataList.write();            
+                 ExcelConverter(cvs, new File(root, "Laporan Utama "+formator.format(p)+".xls"));
                 } catch (Exception e) {
                     e.printStackTrace();
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena tidak bisa di akses\n"+e);
@@ -629,7 +633,7 @@ public void Refresh(){
 
         if (confirm ==0) {
             if (file.exists()) {
-                     try {  desktop.open(file);
+                     try {  desktop.open( new File(root, "Laporan Utama "+formator.format(p)+".xls"));
                      } 
                      catch (Exception ex) {
                                          javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena tidak bisa di akses\n"+ex);

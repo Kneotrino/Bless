@@ -8,6 +8,7 @@ package app.view.FixPanel.akuntansi;
 //import app.table.Akuntansi;
 import app.table.Bank;
 import app.table.Laporan;
+import static app.utils.ExcelConverter.ExcelConverter;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
 import java.awt.Desktop;
@@ -295,7 +296,6 @@ public class panelAkuntansi extends JPanel {
             LaporanPenyesuaian.add( kosong);
             totalProfit = totalProfit.add(temp.getPemasukan())
                     .subtract(temp.getPengeluaran());
-            System.out.println("totalProfit = " + totalProfit);
         }
         LaporanPenyesuaian.add(new Akun()
                 .setAkun("Total profit 2017")
@@ -306,7 +306,6 @@ public class panelAkuntansi extends JPanel {
     public Akun ProfitBulanan(Akun profit)
     {
       profit.setAkun("Bulan "+ profit.getNomor());
-        System.out.println("profit.getNomor() = " + profit.getNomor());
       BigInteger pemasukan = BigInteger.ZERO;
       BigInteger pengeluaran = BigInteger.ZERO;
         //add pemasukan
@@ -536,16 +535,21 @@ public class panelAkuntansi extends JPanel {
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         File root = jFileChooser1.getSelectedFile();
+        List<File> cvs = new java.util.LinkedList<>();
         System.out.println("root = " + root);
         Date p = new Date();
         final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
         File akun = new File(root, "Neraca "+formator.format(p)+".CSV");
         File laba = new File(root, "Laba-Rugi "+formator.format(p)+".CSV");
         File lap = new File(root, "Laporan profit "+formator.format(p)+".CSV");
+        cvs.add(akun);
+        cvs.add(laba);
+        cvs.add(lap);
+        
         List a = AkuntansiList;
         List b = LabaList;
         List c = LaporanPenyesuaian;
-        final DecimalFormat IDR = new DecimalFormat("#,##0");              
+        final DecimalFormat IDR = new DecimalFormat("###0");              
         Function f = d -> d==null?"0":IDR.format(d);
         WriteStep AkunPrinter = CSVUtil.of(akun)
                 .type(app.view.FixPanel.akuntansi.Akun.class)
@@ -593,14 +597,16 @@ public class panelAkuntansi extends JPanel {
             );
             Desktop desktop = Desktop.getDesktop();
             try {
+                File T = new File(root,"Akuntasi-Laba-Rugi-Profit.xls");
+                ExcelConverter(cvs, new File(root,"Akuntasi-Laba-Rugi-Profit.xls"));
                 if(!Desktop.isDesktopSupported()){
                         System.out.println("Desktop is not supported");
                         return;
                 }
                 if (confirm == 0) {
-                    if(akun.exists()) desktop.open(akun);
-                    if(laba.exists()) desktop.open(laba);                    
-                    if(lap.exists()) desktop.open(lap);                    
+                    if(T.exists()) desktop.open(T);
+//                    if(laba.exists()) desktop.open(laba);                    
+//                    if(lap.exists()) desktop.open(lap);                    
                 }
             } catch (Exception ex) {
                     Logger.getLogger(panelAkuntansi.class.getName()).log(Level.SEVERE, null, ex);
