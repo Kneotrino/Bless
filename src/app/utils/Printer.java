@@ -36,6 +36,7 @@ import java.io.File;
 import javaslang.Tuple;
 import app.table.Util;
 import app.table.pembagianLaba;
+import static app.utils.ExcelConverter.ExcelConverter;
 import com.joobar.csvbless.WriteStep;
 import java.awt.Desktop;
 import java.io.FileNotFoundException;
@@ -81,21 +82,21 @@ public class Printer {
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();                    
-                    PrintHutang(folder);
-                    PrintPiHutang(folder);
-                    PrintLeasing(folder);
-                    PrintRentalMobil(folder);
-                    PrintInvestor(folder);
-                    PrintAsset(folder);
+//                    PrintHutang(folder);
+//                    PrintInvestor(folder);
+//                    PrintPiHutang(folder);
+//                    PrintLeasing(folder);
+//                    PrintRentalMobil(folder);
+//                    PrintAsset(folder);
                     PrintMobil(folder);
-                    PrintJasa(folder);
-                    PrintPerjalanan(folder);
-                    PrintKas(folder);
-                    PrintPegawai(folder);
-                    PrintLaporan(folder, Laporan.class);
-                    PrintLaporan(folder, Pemasukan.class);
-                    PrintLaporan(folder, Pengeluaran.class);
-                    PrintLaporan(folder, pembagianLaba.class);                    
+//                    PrintJasa(folder);
+//                    PrintPerjalanan(folder);
+//                    PrintKas(folder);
+//                    PrintPegawai(folder);
+//                    PrintLaporan(folder, Laporan.class);
+//                    PrintLaporan(folder, Pemasukan.class);
+//                    PrintLaporan(folder, Pengeluaran.class);
+//                    PrintLaporan(folder, pembagianLaba.class);                    
                 try {
                     Desktop.getDesktop().open(folder);
                 } catch (IOException ex) {
@@ -104,14 +105,17 @@ public class Printer {
             }});
     }
               final static  DecimalFormat IDR = new DecimalFormat("###0");              
+              List<File> Allcvs = new java.util.LinkedList<>();
     public static void PrintHutang(File place)
     {
+              List<File> cvs = new java.util.LinkedList<>();
               File f = new File(place, "Data Hutang-Peminjam");
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               List<app.table.Hutang> resultList = getDataList(app.table.Hutang.class);
               File T = new File(f, "Daftar Peminjam.CSV");
+              cvs.add(T);
               System.out.println("resultList = " + resultList.size());    
                WriteStep data = CSVUtil.of(T)
                         .type(app.table.Hutang.class)
@@ -142,6 +146,7 @@ public class Printer {
                           +peg.getKeterangan()+
                           ".CSV";
                   File p = new File(f, pe);
+                  cvs.add(p);
                   List<Bayarhutang> pegawaigajiList = peg.getBayarhutangs();
                   List a = pegawaigajiList;
                   WriteStep dataList = CSVUtil.of(p)
@@ -155,7 +160,9 @@ public class Printer {
                                 Tuple.of("Bank", "transaksi.bankId", d -> d)
                     ).dataList(a);
                 try {
-                    dataList.write();            
+                    dataList.write();
+                    ExcelConverter(cvs, new File(place, "Data Hutang-Peminjam.xls"));
+
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -169,12 +176,14 @@ public class Printer {
               File f = new File(place, "Data Pihutang-Pinjaman");
               f.mkdirs();
               System.out.println("f = " + f);
+              List<File> cvs = new java.util.LinkedList<>();
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
 //              final DecimalFormat IDR = new DecimalFormat("#,##0");              
               List<app.table.Piutang> resultList = getDataList(app.table.Piutang.class);
               File T = new File(f, "Daftar Pinjaman.CSV");
+              cvs.add(T);
               System.out.println("resultList = " + resultList.size());    
-               WriteStep data = CSVUtil.of(T)
+              WriteStep data = CSVUtil.of(T)
                         .type(app.table.Piutang.class)
                             .properties(
                                     Tuple.of("REF","piutangid", d -> d==null?" ":d),
@@ -200,6 +209,7 @@ public class Printer {
                           +peg.getKeterangan()+"-"+
                           ".CSV";
                   File p = new File(f, pe);
+                  cvs.add(p);
                   List<app.table.Bayarpihutang> pegawaigajiList = peg.getBayarpihutangList();
                   List a = pegawaigajiList;
                   WriteStep dataList = CSVUtil.of(p)
@@ -213,7 +223,8 @@ public class Printer {
                                 Tuple.of("Bank", "transaksi.bankId", d -> d)
                     ).dataList(a);
                 try {
-                    dataList.write();            
+                    dataList.write();       
+
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -221,18 +232,22 @@ public class Printer {
                     return ;
                 }
         }
+                    ExcelConverter(cvs, new File(place, "Data Pihutang-Pinjaman.xls"));
     }
     public static void PrintLeasing(File place)
     {    
         File f = new File(place, "Data Leasing");
         f.mkdirs();
         System.out.println("f = " + f);
+        List<File> cvs = new java.util.LinkedList<>();
         final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
 //        final DecimalFormat IDR = new DecimalFormat("#,##0"); 
         List<app.table.Leasing> dataList = getDataList(app.table.Leasing.class);
         for (Leasing leasing : dataList) {
                 List a = leasing.getListleasingList();
-                WriteStep bpkb = CSVUtil.of(new File(f, leasing.getNama()+".CSV"))
+                File pi = new File(f, leasing.getNama()+".CSV");
+                cvs.add(pi);
+                WriteStep bpkb = CSVUtil.of(pi)
                         .type(app.table.Listleasing.class)
                             .properties(
                                 Tuple.of("REF","listleasingId", d -> d==null?" ":d),
@@ -250,7 +265,7 @@ public class Printer {
                                 Tuple.of("Leasing REF","leasingLeasingId", d -> d==null?" ":d)
                     ).dataList(a);
                 try {
-                    bpkb.write();            
+                    bpkb.write();
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -258,13 +273,16 @@ public class Printer {
                     return ;
                 }
         }
+                    ExcelConverter(cvs, new File(place,"Data Leasing.xls"));
 
     }
     public static void PrintRentalMobil(File place)
     {
               File f = new File(place, "Data Rental");
               f.mkdirs();
-              File f1 = new File(f, "[Mobil Rental].CSV");
+              File f1 = new File(f, "Mobil Rental.CSV");
+              List<File> cvs = new java.util.LinkedList<>();
+              cvs.add(f1);
               System.out.println("f = " + f);
               System.out.println("f = " + f1);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
@@ -281,8 +299,8 @@ public class Printer {
                           ff.format(rental.getTglmulai())+"-"
                           +".CSV";
                   File t = new File(f, foo);
-                  System.out.println("foo = " + foo);
                   List as = rental.getBayarrentalList();
+                  cvs.add(t);
                   WriteStep data = CSVUtil.of(t)
                         .type(app.table.Bayarrental.class)
                             .properties(
@@ -297,7 +315,6 @@ public class Printer {
                         .dataList(as);
                     try {
                         data.write();      
-                        System.out.println("t = " + t);
                 } catch (Exception e) {
                     e.printStackTrace();
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -306,7 +323,6 @@ public class Printer {
                   
         }
               List a = b;
-              System.out.println("a = " + a);
               WriteStep dataList = CSVUtil.of(f1)
                 .type(app.table.Mobilrental.class)
                 .properties(
@@ -321,7 +337,8 @@ public class Printer {
                 )
                 .dataList(resultList);
                     try {
-                    dataList.write();            
+                    dataList.write();
+                    ExcelConverter(cvs, new File(place,"Data Mobil Rental.xls"));
                 } catch (Exception e) {
                     e.printStackTrace();
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -333,6 +350,7 @@ public class Printer {
     }
     public static void PrintJasa(File place)
     {
+              List<File> cvs = new java.util.LinkedList<>();
               File f = new File(place, "Data Jasa Cabut Berkasa");
               f.mkdirs();
               System.out.println("f = " + f);
@@ -351,6 +369,7 @@ public class Printer {
                   List<Bayarjasa> Sal = peg.getBayarjasaList();
                   BigInteger temp = BigInteger.ZERO;
                   List a = Sal;
+                  cvs.add(p);
                   WriteStep dataList = CSVUtil.of(p)
                         .type(app.table.Bayarjasa.class)
                             .properties(
@@ -363,7 +382,8 @@ public class Printer {
                         Tuple.of("Bank", "transaksi.bankId", d -> d)                                    
                     ).dataList(a);
                 try {
-                    dataList.write();            
+                    dataList.write();
+                    ExcelConverter(cvs, new File(place, "Data Jasa.xls"));
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -376,9 +396,11 @@ public class Printer {
     }
     public static void PrintInvestor(File place)
     {
+              List<File> cvs = new java.util.LinkedList<>();
               File T = new File(place, "Data Investor");
               T.mkdirs();
               File f = new File(T, "Data Investor.CSV");
+              cvs.add(f);
               System.out.println("f = " + f);
               DecimalFormat df = new DecimalFormat();
               df.setMaximumFractionDigits(2);
@@ -449,6 +471,7 @@ public class Printer {
                   List<Saham> pegawaigajiList = peg.getSahamList();
                   System.out.println("pegawaigajiList = " + pegawaigajiList.size());
                   List b = pegawaigajiList;
+                  cvs.add(p);
                   WriteStep data = CSVUtil.of(p)
                         .type(app.table.Saham.class)
                             .properties(
@@ -463,7 +486,9 @@ public class Printer {
                                 Tuple.of("Bank", "b", d -> d)
                     ).dataList(b);
                 try {
-                    data.write();            
+                    data.write();
+                    ExcelConverter(cvs, new File(place, "Data Investor.xls"));
+
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -495,7 +520,11 @@ public class Printer {
                         Tuple.of("Bank", "transaksi.bankId", d -> d)
                     ).dataList(a);
                 try {
-                    dataList.write();            
+                    dataList.write();                    
+                    List<File> cvs = new java.util.LinkedList<>();
+                    cvs.add(f);
+                    ExcelConverter(cvs, new File(place, "Daftar Asset.xls"));
+            
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -508,15 +537,18 @@ public class Printer {
               File f = new File(place, "Data Kas");
               f.mkdirs();
               System.out.println("f = " + f);
+              List<File> cvs = new java.util.LinkedList<>();
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
 //              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               List<app.table.Bank> resultList = getDataList(app.table.Bank.class);
               System.out.println("resultList = " + resultList.size());    
+              
               for (Bank peg : resultList) {
                   String pe = peg.getBankId()+"-"
                           +peg.getNamaBank()+
                           ".CSV";
                   File p = new File(f, pe);
+                  cvs.add(p);
                   List<Saldo> Sal = peg.getSaldoList();
                   BigInteger temp = BigInteger.ZERO;
                   for (Saldo saldo : Sal) {
@@ -533,12 +565,13 @@ public class Printer {
                                 Tuple.of("Keterangan", "laporan.keterangan", d -> d),
                                 Tuple.of("Pemasukan", "laporan.pemasukan", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Pengeluaran", "laporan.pengeluaran", d -> d==null?"0":IDR.format(d) ),
-                                Tuple.of("Pengeluaran", "laporan.saldo", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Saldo", "laporan.saldo", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Jenis", "laporan.jenis", d -> d),
                                 Tuple.of("Bank", "bankId", d -> d)
                     ).dataList(a);
                 try {
-                    dataList.write();            
+                    dataList.write();
+                    ExcelConverter(cvs, new File(place, "Data Kas.xls"));
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -641,7 +674,10 @@ public class Printer {
                 )
                 .dataList(getList(kelas));
                     try {
-                    dataList.write();            
+                    dataList.write();
+                    List<File> cvs = new java.util.LinkedList<>();
+                    cvs.add(f);
+                    ExcelConverter(cvs, new File(place, kelas.getSimpleName()+ ".xls"));
                 } catch (Exception e) {
                     e.printStackTrace();
                     javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -714,6 +750,8 @@ public class Printer {
               List c = resultList;
               Function fungsi = d -> d==null?" ":d;
               Function tanggal = d -> d==null?" ":formator.format(d);
+              List<File> cvs = new java.util.LinkedList<>();
+              cvs.add(new File(f, "Daftar Mobil.CSV"));
               WriteStep data = CSVUtil.of(new File(f, "Daftar Mobil.CSV"))
                         .type(app.table.Mobil.class)
                             .properties(
@@ -739,6 +777,7 @@ public class Printer {
                                     Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
                                     Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi)
                     ).dataList(getDataList(app.table.Mobil.class));
+               cvs.add(new File(f, "Daftar Debitur.CSV"));
                 WriteStep debitur = CSVUtil.of(new File(f, "Daftar Debitur.CSV"))
                         .type(app.table.Debitur.class)
                             .properties(
@@ -753,6 +792,7 @@ public class Printer {
                                     Tuple.of("scan","scan", d -> d==null?" ":d),
                                     Tuple.of("mobil REF","mobil", d -> d==null?" ":d)
                     ).dataList(getDataList(app.table.Debitur.class));
+                cvs.add(new File(f, "Daftar BPKB.CSV"));
                 WriteStep bpkb = CSVUtil.of(new File(f, "Daftar BPKB.CSV"))
                         .type(app.table.Bpkb.class)
                             .properties(
@@ -794,31 +834,39 @@ public class Printer {
                             mobil.getDebitur().getNama()+ ".CSV"
                             ;
                       File p = new File(f, mo);
+                      cvs.add(p);
                       List<KeuanganMobil> b = mobil.getKeuanganMobils();
-//                      KeuanganMobil total1 = new MobilPemasukan();
-//                      total1.setKeterangan("Total Pemasukan");
-//                      KeuanganMobil total2 = new MobilPengeluaran();
-//                      total2.setKeterangan("Total Pengeluaran");
-//                      KeuanganMobil laba = new MobilPemasukan();
-//                      laba.setKeterangan("Laba");
-//                      BigInteger temp1 = BigInteger.ZERO;
-//                      BigInteger temp2 = BigInteger.ZERO;
-//                      Saldo saldo1 = new Saldo();
-//                      Bank bank = new Bank();
-//                      saldo1.setBankId(bank);                      
-//                      for (KeuanganMobil m : b) {                          
-//                          temp1 = temp1.add(m.getPemasukan());
-//                          temp2 = temp2.add(m.getPengeluaran());
-//                      }
-//                      total1.setTransaksi(saldo1);
-//                      total2.setTransaksi(saldo1);
-//                      laba.setTransaksi(saldo1);
-//                      total1.setJumlah(temp1);
-//                      total2.setJumlah(temp2);
-//                      laba.setJumlah(temp1.subtract(temp2));
-//                      b.add(total1);
-//                      b.add(total2);
-//                      b.add(laba);
+                      KeuanganMobil total1 = new MobilPemasukan();
+                      total1.setId(0l);
+                      total1.setKeterangan("Total Pemasukan");
+                      KeuanganMobil total2 = new MobilPengeluaran();
+                      total2.setId(0l);
+                      total2.setKeterangan("Total Pengeluaran");
+                      KeuanganMobil laba = new MobilPemasukan();
+                      laba.setKeterangan("Profit");
+                      BigInteger temp1 = BigInteger.ZERO;
+                      BigInteger temp2 = BigInteger.ZERO;
+                      Saldo saldo1 = new Saldo();
+                      Bank bank = new Bank();
+                      saldo1.setBankId(bank);                      
+                      for (KeuanganMobil m : b) {                          
+                          temp1 = temp1.add(m.getPemasukan());
+                          temp2 = temp2.add(m.getPengeluaran());
+                      }
+                      total1.setTransaksi(saldo1);
+                      total2.setTransaksi(saldo1);
+                      laba.setTransaksi(saldo1);
+                      total1.setJumlah(temp1);
+                      total2.setJumlah(temp2);
+                      BigInteger profit = BigInteger.ZERO;
+                      System.out.println("temp1 = " + temp1);
+                      profit = profit.subtract(temp2);
+                      profit = profit.add(temp1);
+                      System.out.println("profit = " + profit);
+                      laba.setJumlah(profit);
+                      b.add(total1);
+                      b.add(total2);
+                      b.add(laba);
                       List a = b;
                       WriteStep dataList = CSVUtil.of(p)
                         .type(app.table.KeuanganMobil.class)
@@ -831,7 +879,7 @@ public class Printer {
                                 Tuple.of("Bank", "transaksi.bankId", d -> d)
                 ).dataList(a);
                     try {
-                    dataList.write();            
+                    dataList.write();
                 } catch (Exception e) {
                     e.printStackTrace();
                     javax.swing.JOptionPane.showMessageDialog(null
@@ -840,6 +888,7 @@ public class Printer {
                 } 
 
         }
+                    ExcelConverter(cvs, new File(place,"Data Mobil.xls"));
     }
         public static EntityManagerFactory factory = Persistence.createEntityManagerFactory("blessingPU");
         public static EntityManager EM = factory.createEntityManager();

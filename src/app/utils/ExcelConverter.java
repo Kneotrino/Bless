@@ -15,18 +15,28 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 /**
  *
  * @author SEED
  */
 public class ExcelConverter {
-   public static void ExcelConverter(File CSV, File Excel)
+   public static void ExcelConverter(List<File> cvs, File Excel)
     {
-        FileInputStream fis=null;
+        List<FileInputStream> fis=new LinkedList<>();
+        List<DataInputStream> dat = new LinkedList<>();
+        HSSFWorkbook hwb = new HSSFWorkbook();
+
     try
     {
         ArrayList arList=null;
@@ -34,8 +44,12 @@ public class ExcelConverter {
         String fName = "D:\\Test.csv";
         String thisLine;
         int count=0;
-           fis = new FileInputStream(CSV);
-           DataInputStream myInput = new DataInputStream(fis);
+           for (File cv : cvs) {
+            FileInputStream input = new FileInputStream(cv);
+            fis.add(input);
+            dat.add(new DataInputStream(input));
+        }
+           for (DataInputStream myInput : dat) {
            int i=0;
            arList = new ArrayList();
            while ((thisLine = myInput.readLine()) != null)
@@ -46,12 +60,30 @@ public class ExcelConverter {
                { al.add(strar[j]); }
                arList.add(al);
                i++;
-           }
+           }            
+        }
+
            try
            {
-               HSSFWorkbook hwb = new HSSFWorkbook();
-               HSSFSheet sheet = hwb.createSheet("new sheet");
-               hwb.createSheet("New sheet2");
+               for (File cv : cvs) {
+                   HSSFSheet sheet = hwb.createSheet(cv.getName());   
+                   String formatStr = "";
+                    HSSFCellStyle style = hwb.createCellStyle();
+                    HSSFDataFormat format = hwb.createDataFormat();
+                    style.setDataFormat(format.getFormat(formatStr));
+                   FileInputStream input = new FileInputStream(cv);
+                   DataInputStream baca = new DataInputStream(input);
+                   arList = new ArrayList();
+                   int i=0;
+                   while ((thisLine = baca.readLine()) != null)
+                   {
+                   al = new ArrayList();
+                   String strar[] = thisLine.split(",");
+                   for(int j=0;j<strar.length;j++)
+                        { al.add(strar[j]); }
+                   arList.add(al);
+                   i++;
+                   }
                for(int k=0;k<arList.size();k++)
                {
                    ArrayList ardata = (ArrayList)arList.get(k);
@@ -59,32 +91,30 @@ public class ExcelConverter {
                    for(int p=0;p<ardata.size();p++)
                    {
                        HSSFCell cell = row.createCell((short) p);
-                       String data = ardata.get(p).toString();
+                       Object dot = ardata.get(p);
+                       String data = dot.toString();                       
+//                       cell.setCellStyle(style);
+//                       cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
                        if(data.startsWith("=")){
-                           cell.setCellType(Cell.CELL_TYPE_STRING);
                            data=data.replaceAll("\"", "");
                            data=data.replaceAll("=", "");
                            cell.setCellValue(data);
                        }
                        else if(data.startsWith("\"")){
                            data=data.replaceAll("\"", "");
-                           cell.setCellType(Cell.CELL_TYPE_STRING);
                            cell.setCellValue(data);
                        }else{
                            data=data.replaceAll("\"", "");
-                           cell.setCellType(Cell.CELL_TYPE_NUMERIC);
                            cell.setCellValue(data);
                        }
-//*/
-// cell.setCellValue(ardata.get(p).toString());
+
+               }
                    }
-//        System.out.println();
                }
                FileOutputStream fileOut = new FileOutputStream(Excel);
-               System.out.println("fileOut = " + fileOut);
                hwb.write(fileOut);
                fileOut.close();
-               System.out.println("Your excel file has been generated");
+               System.out.println("Your excel file has been generated = "+Excel.getCanonicalPath());
            }
            catch ( Exception ex ) {
                ex.printStackTrace();
@@ -95,11 +125,13 @@ public class ExcelConverter {
         } catch (IOException ex) {
            Logger.getLogger(ExcelConverter.class.getName()).log(Level.SEVERE, null, ex);
        } finally {
-           try {
-               fis.close();
-           } catch (IOException ex) {
-               Logger.getLogger(ExcelConverter.class.getName()).log(Level.SEVERE, null, ex);
-           }
+            for (File cv : cvs) {
+                try {
+                    Files.delete(cv.toPath());
+                } catch (Exception ex) {
+                }
+        }
+        
        } //main method ends        
     }
     
@@ -107,9 +139,7 @@ public class ExcelConverter {
     {
             List<File> cvs = new java.util.LinkedList<>();
             cvs.add(new File("D:\\Test.csv"));
-            cvs.add(new File("D:\\Test2.csv"));            
-//            ExcelConverter(new File("D:\\Test.csv"), new File("D:\\Test.xls"));
-//            ExcelConverter(new File("D:\\Test.csv"), new File("D:\\Test.xls"));
+            ExcelConverter(cvs, new File("Test.xls"));
 
 }
 }

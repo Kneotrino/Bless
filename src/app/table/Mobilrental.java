@@ -54,11 +54,11 @@ public class Mobilrental implements Serializable {
     @Column(name = "MERK", length = 32)
     private String merk = "merk";
     @Column(name = "TYPE", length = 32)
-    private String type = "tyoe";
+    private String type = "tipe";
     @Column(name = "WARNA", length = 32)
     private String warna = "warna";
     @Column(name = "TAHUN")
-    private Integer tahun = 2000;
+    private Integer tahun = 2017;
     @Column(name = "KETERANGAN", length = 64)
     private String keterangan = "input";
     @Column(name = "STATUS_MOBIL", length = 232)
