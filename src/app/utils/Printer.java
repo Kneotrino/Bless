@@ -103,13 +103,13 @@ public class Printer {
                 }
             }});
     }
+              final static  DecimalFormat IDR = new DecimalFormat("###0");              
     public static void PrintHutang(File place)
     {
               File f = new File(place, "Data Hutang-Peminjam");
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("#,##0");              
               List<app.table.Hutang> resultList = getDataList(app.table.Hutang.class);
               File T = new File(f, "Daftar Peminjam.CSV");
               System.out.println("resultList = " + resultList.size());    
@@ -170,7 +170,7 @@ public class Printer {
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("#,##0");              
+//              final DecimalFormat IDR = new DecimalFormat("#,##0");              
               List<app.table.Piutang> resultList = getDataList(app.table.Piutang.class);
               File T = new File(f, "Daftar Pinjaman.CSV");
               System.out.println("resultList = " + resultList.size());    
@@ -228,7 +228,7 @@ public class Printer {
         f.mkdirs();
         System.out.println("f = " + f);
         final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-        final DecimalFormat IDR = new DecimalFormat("#,##0"); 
+//        final DecimalFormat IDR = new DecimalFormat("#,##0"); 
         List<app.table.Leasing> dataList = getDataList(app.table.Leasing.class);
         for (Leasing leasing : dataList) {
                 List a = leasing.getListleasingList();
@@ -269,7 +269,7 @@ public class Printer {
               System.out.println("f = " + f1);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               final SimpleDateFormat ff = new SimpleDateFormat("dd-MM-yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+//              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               List resultList = getDataList(app.table.Mobilrental.class);
               System.out.println("resultList = " + resultList.size());    
               List<app.table.Rental> b = getDataList(app.table.Rental.class);
@@ -337,7 +337,7 @@ public class Printer {
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("#,##0");              
+//              final DecimalFormat IDR = new DecimalFormat("#,##0");              
               List<app.table.Bpkbtitipan> resultList = getDataList(app.table.Bpkbtitipan.class);
               System.out.println("resultList = " + resultList.size());    
               for (Bpkbtitipan peg : resultList) {
@@ -383,7 +383,7 @@ public class Printer {
               DecimalFormat df = new DecimalFormat();
               df.setMaximumFractionDigits(2);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("#,##0");              
+//              final DecimalFormat IDR = new DecimalFormat("#,##0");              
               List<app.table.Investor> resultList = getDataList(app.table.Investor.class);
               app.table.Investor temp = new Investor(0);
               BigInteger total3 = BigInteger.ZERO;
@@ -478,7 +478,7 @@ public class Printer {
               File f = new File(place, "Daftar Asset.CSV");
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");            
+//              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");            
               List a = getDataList(app.table.Asset.class);
               WriteStep dataList = CSVUtil.of(f)
                         .type(app.table.Perjalanan.class)
@@ -509,7 +509,7 @@ public class Printer {
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+//              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               List<app.table.Bank> resultList = getDataList(app.table.Bank.class);
               System.out.println("resultList = " + resultList.size());    
               for (Bank peg : resultList) {
@@ -554,7 +554,7 @@ public class Printer {
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+//              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               List<app.table.Pegawai> resultList = getDataList(app.table.Pegawai.class);
               File T = new File(f, "Daftar Pegawai.CSV");
               System.out.println("resultList = " + resultList.size());    
@@ -628,7 +628,7 @@ public class Printer {
         }
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+//              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               WriteStep dataList = CSVUtil.of(f)
                 .type(kelas)
                 .properties(
@@ -703,7 +703,7 @@ public class Printer {
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
+//              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               TypedQuery createQuery = EM.createQuery(
                       "SELECT m FROM Mobil m order by m desc", app.table.Mobil.class);   
               List<Mobil> resultList = createQuery.getResultList();
