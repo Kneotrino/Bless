@@ -82,21 +82,21 @@ public class Printer {
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();                    
-//                    PrintHutang(folder);
-//                    PrintInvestor(folder);
-//                    PrintPiHutang(folder);
-//                    PrintLeasing(folder);
-//                    PrintRentalMobil(folder);
-//                    PrintAsset(folder);
-//                    PrintMobil(folder);
-//                    PrintJasa(folder);
+                    PrintHutang(folder);
+                    PrintInvestor(folder);
+                    PrintPiHutang(folder);
+                    PrintLeasing(folder);
+                    PrintRentalMobil(folder);
+                    PrintAsset(folder);
+                    PrintMobil(folder);
+                    PrintJasa(folder);
                     PrintPerjalanan(folder);
-//                    PrintKas(folder);
-//                    PrintPegawai(folder);
-//                    PrintLaporan(folder, Laporan.class);
-//                    PrintLaporan(folder, Pemasukan.class);
-//                    PrintLaporan(folder, Pengeluaran.class);
-//                    PrintLaporan(folder, pembagianLaba.class);                    
+                    PrintKas(folder);
+                    PrintPegawai(folder);
+                    PrintLaporan(folder, Laporan.class);
+                    PrintLaporan(folder, Pemasukan.class);
+                    PrintLaporan(folder, Pengeluaran.class);
+                    PrintLaporan(folder, pembagianLaba.class);                    
                 try {
                     Desktop.getDesktop().open(folder);
                 } catch (IOException ex) {
@@ -520,7 +520,9 @@ public class Printer {
     }
     public static void PrintAsset(File place)
     {
-              File f = new File(place, "Daftar Asset.CSV");
+              File M = new File(place, "Data Asset");
+              M.mkdirs();
+              File f = new File(M, "Daftar Asset.CSV");
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
 //              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");            
@@ -559,10 +561,7 @@ public class Printer {
               System.out.println("f = " + f);
               List<File> cvs = new java.util.LinkedList<>();
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-//              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
-              List<app.table.Bank> resultList = getDataList(app.table.Bank.class);
-              System.out.println("resultList = " + resultList.size());    
-              
+              List<app.table.Bank> resultList = getDataList(app.table.Bank.class);              
               for (Bank peg : resultList) {
                   String pe = peg.getBankId()+"-"
                           +peg.getNamaBank()+
@@ -591,7 +590,6 @@ public class Printer {
                     ).dataList(a);
                 try {
                     dataList.write();
-                    ExcelConverter(cvs, new File(place, "Data Kas.xls"));
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
@@ -599,6 +597,25 @@ public class Printer {
                     return ;
                 }
         }
+         List b = resultList;
+         File T = new File(f,"Data Kas.CVS");                 
+         WriteStep dataList = CSVUtil.of(T)
+              .type(app.table.Bank.class)
+                            .properties(
+                                Tuple.of("Ref","bankId", d -> d==null?" ":d),
+                                Tuple.of("norek","norek", d -> d==null?" ":d),
+                                Tuple.of("namaBank","namaBank", d -> d==null?" ":d),
+                                Tuple.of("nama","nama", d -> d==null?" ":d),
+                                Tuple.of("alamat","alamat", d -> d==null?" ":d),
+                                Tuple.of("nomorHp","nomorHp", d -> d==null?" ":d),
+                                Tuple.of("nomorKtp","nomorKtp", d -> d==null?" ":d),
+                                Tuple.of("totalSaldo","totalSaldo", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("totalDebit","totalDebit", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("totalKredit","totalKredit", d -> d==null?" ":IDR.format(d))
+                    ).dataList(b);
+         dataList.write();
+        cvs.add(0,T);
+       ExcelConverter(cvs, new File(place, "Data Kas.xls"));
     
     }
     public static void PrintPegawai(File place)
@@ -610,7 +627,8 @@ public class Printer {
 //              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               List<app.table.Pegawai> resultList = getDataList(app.table.Pegawai.class);
               File T = new File(f, "Daftar Pegawai.CSV");
-              System.out.println("resultList = " + resultList.size());    
+              List<File> cvs = new java.util.LinkedList<>();
+              cvs.add(T);
                WriteStep data = CSVUtil.of(T)
                         .type(app.table.Pegawai.class)
                             .properties(
@@ -636,6 +654,7 @@ public class Printer {
                           +peg.getStatus()+
                           ".CSV";
                   File p = new File(f, pe);
+                  cvs.add(p);
                   List<Pegawaigaji> pegawaigajiList = peg.getPegawaigajiList();
                   List a = pegawaigajiList;
                   WriteStep dataList = CSVUtil.of(p)
@@ -656,6 +675,7 @@ public class Printer {
                     return ;
                 }
         }
+        ExcelConverter(cvs, new File(place, "Data Pegawai.xls"));
     }
     public static  List getList(Class kelas)
     {
@@ -675,9 +695,11 @@ public class Printer {
     public static void PrintLaporan(File place,Class kelas)
     {
               String filename = kelas.getSimpleName()+ ".CSV";
-              File f = new File(place, filename);
+              File M = new File(place,"Data Lap");
+              M.mkdirs();
+              File f = new File(M, filename);
               if (kelas == app.table.Pengeluaran.class) {
-              f = new File(place, "Operasional.CSV");            
+              f = new File(M, "Operasional.CSV");            
         }
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
