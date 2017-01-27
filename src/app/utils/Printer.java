@@ -88,9 +88,9 @@ public class Printer {
 //                    PrintLeasing(folder);
 //                    PrintRentalMobil(folder);
 //                    PrintAsset(folder);
-                    PrintMobil(folder);
+//                    PrintMobil(folder);
 //                    PrintJasa(folder);
-//                    PrintPerjalanan(folder);
+                    PrintPerjalanan(folder);
 //                    PrintKas(folder);
 //                    PrintPegawai(folder);
 //                    PrintLaporan(folder, Laporan.class);
@@ -353,10 +353,29 @@ public class Printer {
               List<File> cvs = new java.util.LinkedList<>();
               File f = new File(place, "Data Jasa Cabut Berkasa");
               f.mkdirs();
-              System.out.println("f = " + f);
+              File T = new File(f, "Data Jasa Cabut Berkas.CSV");
+              cvs.add(T);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-//              final DecimalFormat IDR = new DecimalFormat("#,##0");              
               List<app.table.Bpkbtitipan> resultList = getDataList(app.table.Bpkbtitipan.class);
+              List b = resultList;
+              WriteStep listData = CSVUtil.of(T)
+                        .type(app.table.Bpkbtitipan.class)
+                            .properties(
+                                Tuple.of("REF","bpkbId", d -> d==null?" ":d),
+                                Tuple.of("Atas Nama BPKB","anBpkb", d -> d==null?" ":d),
+                                Tuple.of("Keterangan","ket", d -> d==null?" ":d),
+                                Tuple.of("noBpkb","noBpkb", d -> d==null?" ":d),
+                                Tuple.of("noPolisiAktif","noPolisiAktif", d -> d==null?" ":d),
+                                Tuple.of("posisi","posisi", d -> d==null?" ":d),
+                                Tuple.of("status","status", d -> d==null?" ":d),
+                                Tuple.of("stnk","stnk", d -> d==null?" ":d),
+                                Tuple.of("tglBbn","tglBbn", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglCb","tglCb", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglKembaliBbn","tglKembaliBbn", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglKembaliCb","tglKembaliCb", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglLeasing","tglLeasing", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglTerima","tglTerima", d -> d==null?" ":formator.format(d))                                  
+                    ).dataList(b);
               System.out.println("resultList = " + resultList.size());    
               for (Bpkbtitipan peg : resultList) {
                   String pe = 
@@ -383,13 +402,14 @@ public class Printer {
                     ).dataList(a);
                 try {
                     dataList.write();
-                    ExcelConverter(cvs, new File(place, "Data Jasa.xls"));
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
                     e.printStackTrace();
                     return ;
                 }
+                    listData.write();
+                    ExcelConverter(cvs, new File(place, "Data Jasa.xls"));
         }
     
     
@@ -694,21 +714,27 @@ public class Printer {
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               List<app.table.Trips> resultList = getDataList(app.table.Trips.class);
               System.out.println("resultList = " + resultList.size());
+              List<File> cvs = new java.util.LinkedList<>();
               for (Trips t : resultList) {
+//                    java.math.BigInteger sal = new java.math.BigInteger("0");            
+                    java.math.BigInteger kirim = new java.math.BigInteger("0");            
+                    java.math.BigInteger pakai = new java.math.BigInteger("0");
                   String tip = 
                           "Lap.Perjalanan-"+
                           t.getPerjalananke()+"-"+
-                          t.getKeterangan()+".CSV";
-                      File p = new File(f, tip);            
+                          ".CSV";
+                      File p = new File(f, tip);          
+                      cvs.add(p);
                 List<Perjalanan> PL = t.getPerjalananList();
                 java.math.BigInteger saldo = new java.math.BigInteger("0");            
                 for (Perjalanan a : PL) {
+                    kirim = kirim.add( a.getTransfer() == null ? BigInteger.ZERO: a.getTransfer().getJumlah());
                     saldo = saldo.subtract(a.getPengeluaran());
                     saldo = saldo.add(a.getPemasukan());
                     a.setSaldo(saldo);
+                    pakai = pakai.add(a.getPengeluaran());
                 }    
                 List a = PL;
                   WriteStep dataList = CSVUtil.of(p)
@@ -722,6 +748,9 @@ public class Printer {
                                 Tuple.of("Pakai", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Saldo", "saldo", d -> IDR.format(d) )
                     ).dataList(a);
+              t.setTotalSaldo(saldo);
+              t.setTotalPakai(pakai);
+              t.setTotalKirim(kirim);
                 try {
                     dataList.write();            
                 } catch (Exception e) {
@@ -731,7 +760,24 @@ public class Printer {
                     return ;
                 }                   
         }
-    
+        List b = resultList;
+        File file = new File(f, "Data Perjalanan.CVS");
+        WriteStep dataList = CSVUtil.of(file)
+                        .type(app.table.Trips.class)
+                            .properties(
+                                Tuple.of("Ref","tripsId", d -> d==null?" ":d),
+                                Tuple.of("keterangan","keterangan", d -> d==null?" ":d),
+                                Tuple.of("perjalananke","perjalananke", d -> d==null?" ":d),
+                                Tuple.of("tanggalBerangkat","tanggalBerangkat", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tanggalKembali","tanggalKembali", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("totalKirim","totalKirim", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("totalPakai","totalPakai", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("totalSaldo","totalSaldo2", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Kembalikan", "kembalikan", d -> d==null?"0":IDR.format(d) )
+                    ).dataList(b);   
+     dataList.write();
+     cvs.add(0, file);
+    ExcelConverter(cvs, new File(place,"Laporan Perjalanan.xls"));
     }
     public static void PrintMobil(File place)
     {
@@ -859,10 +905,8 @@ public class Printer {
                       total1.setJumlah(temp1);
                       total2.setJumlah(temp2);
                       BigInteger profit = BigInteger.ZERO;
-                      System.out.println("temp1 = " + temp1);
                       profit = profit.subtract(temp2);
                       profit = profit.add(temp1);
-                      System.out.println("profit = " + profit);
                       laba.setJumlah(profit);
                       b.add(total1);
                       b.add(total2);

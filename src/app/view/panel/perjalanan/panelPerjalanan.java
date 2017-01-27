@@ -17,6 +17,7 @@ import app.table.Util;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -219,7 +220,7 @@ public class panelPerjalanan extends JPanel {
         add(jPanel1);
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(30);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -238,6 +239,18 @@ public class panelPerjalanan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalKembali}"));
         columnBinding.setColumnName("Tanggal Kembali");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalKirim}"));
+        columnBinding.setColumnName("Total Kirim");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPakai}"));
+        columnBinding.setColumnName("Total Pakai");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalSaldo}"));
+        columnBinding.setColumnName("Saldo Sisa");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -690,11 +703,18 @@ public class panelPerjalanan extends JPanel {
     for (Trips trips : list) {
             List<Perjalanan> mop = trips.getPerjalananList();
             java.math.BigInteger saldo = new java.math.BigInteger("0");            
+            java.math.BigInteger kirim = new java.math.BigInteger("0");            
+            java.math.BigInteger pakai = new java.math.BigInteger("0");            
             for (Perjalanan a : mop) {
+                kirim = kirim.add( a.getTransfer() == null ? BigInteger.ZERO: a.getTransfer().getJumlah());
                 saldo = saldo.subtract(a.getPengeluaran());
+                pakai = pakai.add(a.getPengeluaran());
                 saldo = saldo.add(a.getPemasukan());
                 a.setSaldo(saldo);
             }
+            trips.setTotalSaldo(saldo);
+            trips.setTotalPakai(pakai);
+            trips.setTotalKirim(kirim);
         }
 //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

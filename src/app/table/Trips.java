@@ -159,6 +159,14 @@ public class Trips implements Serializable {
     public BigInteger getTotalPakai() {
         return totalPakai;
     }
+    public BigInteger getTotalPakai2() {
+        BigInteger zero = BigInteger.ZERO;
+        for (Perjalanan perjalanan : perjalananList) {
+            zero = zero.add(perjalanan.getPemasukan());
+            zero = zero.subtract(perjalanan.getPengeluaran());
+        }
+        return zero;
+    }
 
     public void setTotalPakai(BigInteger totalPakai) {
         BigInteger oldTotalPakai = this.totalPakai;
@@ -168,7 +176,15 @@ public class Trips implements Serializable {
 
     public BigInteger getTotalSaldo() {
         return totalSaldo;
-    }
+    }    
+    public BigInteger getTotalSaldo2() {
+        BigInteger zero = BigInteger.ZERO;
+        for (Perjalanan perjalanan : perjalananList) {
+            zero = zero.add(perjalanan.getPemasukan());
+            zero = zero.subtract(perjalanan.getPengeluaran());
+        }
+        return zero;
+    }    
 
     public void setTotalSaldo(BigInteger totalSaldo) {
         BigInteger oldTotalSaldo = this.totalSaldo;
