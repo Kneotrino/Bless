@@ -7,7 +7,9 @@ package app.view.FixPanel.akuntansi;
 
 //import app.table.Akuntansi;
 import app.table.Bank;
+import app.table.KeuanganMobil;
 import app.table.Laporan;
+import app.table.Mobil;
 import static app.utils.ExcelConverter.ExcelConverter;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
@@ -15,6 +17,7 @@ import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.io.File;
 import java.math.BigInteger;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -44,6 +47,26 @@ public class panelAkuntansi extends JPanel {
     private java.util.List<Akun> AkuntansiList = new ArrayList<>();
     private java.util.List<Akun> LabaList = new ArrayList<>();
     private java.util.List<Akun> LaporanPenyesuaian = new ArrayList<>();
+
+    private List<Akun> ProfitMobil = new ArrayList<>();
+
+    /**
+     * Get the value of ProfitMobil
+     *
+     * @return the value of ProfitMobil
+     */
+    public List<Akun> getProfitMobil() {
+        return ProfitMobil;
+    }
+
+    /**
+     * Set the value of ProfitMobil
+     *
+     * @param ProfitMobil new value of ProfitMobil
+     */
+    public void setProfitMobil(List<Akun> ProfitMobil) {
+        this.ProfitMobil = ProfitMobil;
+    }
 
     public List<Akun> getLaporanPenyesuaian() {
         return LaporanPenyesuaian;
@@ -283,29 +306,64 @@ public class panelAkuntansi extends JPanel {
         );        
         AkuntansiList.add(total);
         //Penyesuaian
-        BigInteger totalProfit = BigInteger.ZERO;
+//        BigInteger totalProfit = BigInteger.ZERO;
+        Akun totalProfit = new Akun()
+                .setAkun("Total profit " + Calendar.getInstance().get(Calendar.YEAR));
         for (int i = 1; i < 13; i++) {
             Akun temp = new Akun(i);
             LaporanPenyesuaian.add( ProfitBulanan(temp) );
-            Akun profit = new Akun()
-                    .setAkun("Profit Bersih ")
-                    .setPemasukan(temp.getPemasukan())
-                    .subPemasukan(temp.getPengeluaran());
+            totalProfit.addPemasukan( temp.getPemasukan());
+            totalProfit.addPengeluaran(temp.getPengeluaran());
+//            Akun profit = new Akun()
+//                    .setAkun("Profit Bersih (Potong Pembagian Laba) ")
+//                    .setPemasukan(temp.getPemasukan())
+//                    .subPemasukan(temp.getPengeluaran());
 //                    .setPengeluaran(sumAll(getList(app.table.pembagianLaba.class)));
-            LaporanPenyesuaian.add( profit);
-            LaporanPenyesuaian.add( kosong);
-            totalProfit = totalProfit.add(temp.getPemasukan())
-                    .subtract(temp.getPengeluaran());
+//            LaporanPenyesuaian.add( profit);
+//            LaporanPenyesuaian.add( kosong);
+//            totalProfit = totalProfit.add(temp.getPemasukan())
+//                    .subtract(temp.getPengeluaran());
         }
-        LaporanPenyesuaian.add(new Akun()
-                .setAkun("Total profit 2017")
-                .setPemasukan(totalProfit)
-        );
+        LaporanPenyesuaian.add(totalProfit);
+        TypedQuery createQuery = entityManager.createQuery("SELECT m FROM Mobil m", app.table.Mobil.class);
+        List<Mobil> mobilList = createQuery.getResultList();
+        int i = 0;
+        Akun TotalMobil = new Akun()
+                .setAkun("Total Profit Mobil");
+        for (Mobil mobil : mobilList) {
+            i++;
+            BigInteger pemasukan = BigInteger.ZERO;
+            BigInteger pengeluaran = BigInteger.ZERO;
+            List<KeuanganMobil> KM = mobil.getKeuanganMobil2();
+            for (KeuanganMobil k : KM) {
+                pemasukan = pemasukan.add(k.getPemasukan());
+                pengeluaran = pengeluaran.add(k.getPengeluaran());
+            }
+            Akun veh = new Akun(i)
+                    .setAkun(
+                            mobil+ " " +
+                            mobil.getMerk()+ " " +
+                            mobil.getType()+ " " +
+                            mobil.getWarna()+ " " +
+                            mobil.getTahun()+ " " 
+                    )
+                    .setPemasukan(pemasukan)
+                    .setPengeluaran(pengeluaran)
+                    ;
+            TotalMobil.addPemasukan(pemasukan)
+                    .addPengeluaran(pengeluaran);
+            ProfitMobil.add(veh);
+        }
+            ProfitMobil.add(TotalMobil);
         initComponents();
     }
+    public String getMonth(int month) {
+    return new DateFormatSymbols().getMonths()[month-1];
+}
     public Akun ProfitBulanan(Akun profit)
     {
-      profit.setAkun("Bulan "+ profit.getNomor());
+      profit.setAkun("Bulan "+profit.getNomor() 
+              + " "+getMonth(profit.getNomor()) + " " + Calendar.getInstance().get(Calendar.YEAR));
       BigInteger pemasukan = BigInteger.ZERO;
       BigInteger pengeluaran = BigInteger.ZERO;
         //add pemasukan
@@ -390,6 +448,8 @@ public class panelAkuntansi extends JPanel {
         jTable2 = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable6 = new javax.swing.JTable();
 
         FormListener formListener = new FormListener();
 
@@ -501,11 +561,46 @@ public class panelAkuntansi extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane6.setViewportView(jTable5);
 
         jTabbedPane1.addTab("LAPORAN PROFIT BERSIH TAHUNAN", jScrollPane6);
+
+        jScrollPane5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PROFIT MOBIL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable6.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable6.setAutoCreateRowSorter(true);
+        jTable6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${profitMobil}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable6);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
+        columnBinding.setColumnName("Nomor");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
+        columnBinding.setColumnName("Akun");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane5.setViewportView(jTable6);
+        if (jTable6.getColumnModel().getColumnCount() > 0) {
+            jTable6.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jTabbedPane1.addTab("PROFIT MOBIL", jScrollPane5);
 
         jPanel1.add(jTabbedPane1);
 
@@ -633,6 +728,7 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
@@ -640,6 +736,7 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
+    private javax.swing.JTable jTable6;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
@@ -677,6 +774,7 @@ public class panelAkuntansi extends JPanel {
                 jDialog1.show();
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {
+                e.printStackTrace();
                 javax.swing.JOptionPane.showMessageDialog(null, e);
                 jDialog1 = null;
 //                System.exit(100);

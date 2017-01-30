@@ -5,6 +5,8 @@
  */
 package app.view.FixPanel.akuntansi;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -19,6 +21,49 @@ public class Akun implements Serializable
     private String akun;
     private java.math.BigInteger Pemasukan = BigInteger.ZERO;
     private java.math.BigInteger Pengeluaran= BigInteger.ZERO;    
+    private BigInteger Profit = BigInteger.ZERO;
+
+    public static final String PROP_PROFIT = "Profit";
+
+    /**
+     * Get the value of Profit
+     *
+     * @return the value of Profit
+     */
+    public BigInteger getProfit() {
+        return Profit = Pemasukan.subtract(Pengeluaran);
+    }
+
+    /**
+     * Set the value of Profit
+     *
+     * @param Profit new value of Profit
+     */
+    public void setProfit(BigInteger Profit) {
+        BigInteger oldProfit = this.Profit;
+        this.Profit = Profit;
+        propertyChangeSupport.firePropertyChange(PROP_PROFIT, oldProfit, Profit);
+    }
+
+    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+    /**
+     * Add PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Remove PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
 
     public int getNomor() {
         return nomor;

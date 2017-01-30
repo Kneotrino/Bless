@@ -553,9 +553,13 @@
           <Properties>
             <Property name="autoCreateRowSorter" type="boolean" value="true"/>
             <Property name="autoResizeMode" type="int" value="4"/>
-            <Property name="cellSelectionEnabled" type="boolean" value="true"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -595,6 +599,7 @@
                 </Column>
               </TableColumnModel>
             </Property>
+            <Property name="columnSelectionAllowed" type="boolean" value="false"/>
             <Property name="rowHeight" type="int" value="25"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -625,6 +630,11 @@
               <Subbinding sourcePath="${pengeluaran}">
                 <BindingParameter name="NAME" value="Pengeluaran"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${saldo}">
+                <BindingParameter name="NAME" value="Saldo"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${jenis}">
                 <BindingParameter name="NAME" value="Tipe x"/>

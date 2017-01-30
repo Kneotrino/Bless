@@ -270,7 +270,7 @@ public class panelJasa extends JPanel {
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarjasaList}");
@@ -291,6 +291,10 @@ public class panelJasa extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
+        columnBinding.setColumnName("Saldo");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("Tipe x");
         columnBinding.setColumnClass(String.class);
@@ -303,7 +307,7 @@ public class panelJasa extends JPanel {
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
-            detailTable.getColumnModel().getColumn(6).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1)
+            detailTable.getColumnModel().getColumn(7).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1)
             );
         }
 
@@ -329,14 +333,20 @@ public class panelJasa extends JPanel {
             else if (evt.getSource() == saveButton) {
                 panelJasa.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteDetailButton) {
-                panelJasa.this.deleteDetailButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == jButton3) {
                 panelJasa.this.jButton3ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton4) {
                 panelJasa.this.jButton4ActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteDetailButton) {
+                panelJasa.this.deleteDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton1) {
+                panelJasa.this.refreshButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton1) {
+                panelJasa.this.saveButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton) {
                 panelJasa.this.newDetailButtonActionPerformed(evt);
@@ -349,12 +359,6 @@ public class panelJasa extends JPanel {
             }
             else if (evt.getSource() == newButton2) {
                 panelJasa.this.newButton2ActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton1) {
-                panelJasa.this.refreshButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton1) {
-                panelJasa.this.saveButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
