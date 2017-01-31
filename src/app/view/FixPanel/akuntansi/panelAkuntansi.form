@@ -416,12 +416,12 @@
                         <BindingParameter name="NAME" value="Akun"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
-                      <Subbinding sourcePath="${pemasukan}">
-                        <BindingParameter name="NAME" value="Pemasukan"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-                      </Subbinding>
                       <Subbinding sourcePath="${pengeluaran}">
                         <BindingParameter name="NAME" value="Pengeluaran"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${pemasukan}">
+                        <BindingParameter name="NAME" value="Pemasukan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${profit}">
@@ -510,12 +510,12 @@
                         <BindingParameter name="NAME" value="Akun"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
-                      <Subbinding sourcePath="${pemasukan}">
-                        <BindingParameter name="NAME" value="Pemasukan"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-                      </Subbinding>
                       <Subbinding sourcePath="${pengeluaran}">
                         <BindingParameter name="NAME" value="Pengeluaran"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${pemasukan}">
+                        <BindingParameter name="NAME" value="Pemasukan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${profit}">

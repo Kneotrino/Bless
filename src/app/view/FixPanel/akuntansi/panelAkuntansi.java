@@ -555,11 +555,11 @@ public class panelAkuntansi extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
         columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Pemasukan");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
         columnBinding.setColumnName("Profit");
@@ -584,11 +584,11 @@ public class panelAkuntansi extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
         columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
-        columnBinding.setColumnName("Pemasukan");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
         columnBinding.setColumnName("Profit");
@@ -637,13 +637,16 @@ public class panelAkuntansi extends JPanel {
         File akun = new File(root, "Neraca "+formator.format(p)+".CSV");
         File laba = new File(root, "Laba-Rugi "+formator.format(p)+".CSV");
         File lap = new File(root, "Laporan profit "+formator.format(p)+".CSV");
+        File mob = new File(root, "Mobil profit "+formator.format(p)+".CSV");
         cvs.add(akun);
         cvs.add(laba);
         cvs.add(lap);
+        cvs.add(mob);
         
         List a = AkuntansiList;
         List b = LabaList;
         List c = LaporanPenyesuaian;
+        List e = ProfitMobil;
         final DecimalFormat IDR = new DecimalFormat("###0");              
         Function f = d -> d==null?"0":IDR.format(d);
         WriteStep AkunPrinter = CSVUtil.of(akun)
@@ -669,20 +672,34 @@ public class panelAkuntansi extends JPanel {
                 .properties(
                         Tuple.of("No", "nomor", null),
                         Tuple.of("Akun", "akun", null),
+                        Tuple.of("Pengeluaran", "pemasukan", f),
                         Tuple.of("Pemasukan", "pengeluaran", f),
-                        Tuple.of("Pengeluaran", "pemasukan", f)
+                        Tuple.of("Profit", "profit", f)
                 )
                 .dataList(c);        
+        WriteStep MobilPrint = CSVUtil.of(mob)
+                .type(app.view.FixPanel.akuntansi.Akun.class)
+                .properties(
+                        Tuple.of("No", "nomor", null),
+                        Tuple.of("Akun", "akun", null),
+                        Tuple.of("Pengeluaran", "pemasukan", f),
+                        Tuple.of("Pengeluaran", "pemasukan", f),
+                        Tuple.of("Pemasukan", "pengeluaran", f),
+                        Tuple.of("Profit", "profit", f)
+                )
+                .dataList(e);        
         try {
                  AkunPrinter.write();
                  LabaPrinter.write();
                  Simpulan.write();
+                 MobilPrint.write();
          
-        } catch (Exception e) {
+        } catch (Exception ex) {
             javax
                     .swing
                     .JOptionPane.showMessageDialog(null, 
-                    "Gagal Print, Karena file sementara terbuka\n"+e);                
+                    "Gagal Print, Karena file sementara terbuka\n"+ex);     
+            
         }
             int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
                     "Berhasil Print apakah anada ingin membuka File?"
