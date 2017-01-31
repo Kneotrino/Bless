@@ -190,7 +190,7 @@ public class panelAkuntansi extends JPanel {
                 .setAkun("Pelunasan Hutang ")
                 .setPemasukan(sumAll(getList(app.table.BayarPihutangPengeluaran.class)));
         Akun  sisaHutang = new Akun()
-                .setAkun("Sisa Hutang ")                
+                .setAkun("Beban Hutang ")                
                 ;
         Akun Mobil = new Akun()
                 .setAkun("Pemasukan Mobil")
@@ -235,6 +235,7 @@ public class panelAkuntansi extends JPanel {
         AkuntansiList.add(Operasional);
         AkuntansiList.add(Pegawai);                    
         AkuntansiList.add(Asset);
+        LabaList.add(sisaHutang);
         LabaList.add(bebanMobil);
         LabaList.add(bebanPeminjaman);
         LabaList.add(pengeluaranRental);
@@ -289,18 +290,17 @@ public class panelAkuntansi extends JPanel {
                 .setPengeluaran(laba.getPengeluaran())
                 .subPengeluaran(laba.getPemasukan())
                 .DividePengeluaran();
-        ProfitBersih.subPengeluaran(LabaTahan.getPengeluaran());
+//        ProfitBersih.subPengeluaran(LabaTahan.getPengeluaran());
         ProfitBersih.subPengeluaran(PembagianLaba.getPemasukan());
-        LabaList.add(
-                Profit
-        );
+//        LabaList.add(
+//                Profit
+//        );
         LabaList.add(
                 PembagianLaba
         );
-        LabaList.add(
-              LabaTahan   
-        );
-        
+//        LabaList.add(
+//              LabaTahan   
+//        );        
         LabaList.add(
               ProfitBersih   
         );        
@@ -325,6 +325,10 @@ public class panelAkuntansi extends JPanel {
 //                    .subtract(temp.getPengeluaran());
         }
         LaporanPenyesuaian.add(totalProfit);
+        Akun labaditahan = new Akun()
+                .setAkun("Total Laba di tahan sebesar 25%");
+        labaditahan.setPemasukan(totalProfit.getProfit().divide(new BigInteger("4")));        
+        LaporanPenyesuaian.add(labaditahan);        
         TypedQuery createQuery = entityManager.createQuery("SELECT m FROM Mobil m", app.table.Mobil.class);
         List<Mobil> mobilList = createQuery.getResultList();
         int i = 0;
@@ -377,6 +381,8 @@ public class panelAkuntansi extends JPanel {
       pemasukan.add(sumAll(getMonthList(app.table.Pemasukan.class,profit.getNomor())));
       pemasukan = 
       pemasukan.add(sumAll(getMonthList(app.table.BayarhutangPemasukan.class,profit.getNomor())));
+      pemasukan = 
+              pemasukan.add(sumAll(getMonthList(app.table.BayarPihutangPemasukan.class,profit.getNomor())));
       //add pengeluaran
       pengeluaran = 
               pengeluaran.add(sumAll(getMonthList(app.table.MobilPengeluaran.class,profit.getNomor())));
@@ -397,8 +403,7 @@ public class panelAkuntansi extends JPanel {
       pengeluaran = 
               pengeluaran.add(sumAll(getMonthList(app.table.Asset.class,profit.getNomor())));
       pengeluaran = 
-              pengeluaran.add(sumAll(getMonthList(app.table.pembagianLaba.class,profit.getNomor())));
-      
+              pengeluaran.add(sumAll(getMonthList(app.table.pembagianLaba.class,profit.getNomor())));      
       //set pemasukan dan pengeluaran
       profit.setPemasukan(pemasukan);
       profit.setPengeluaran(pengeluaran);
@@ -411,12 +416,9 @@ public class panelAkuntansi extends JPanel {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
                 + "where en.tanggal BETWEEN :startDate AND :endDate"
                 ;
-//        System.out.println("Month = " + Month);        
-       Date bulanAwal = new Date(awalBulan.getYear()+1, Month-1, 0);
-//        System.out.println("bulanAwal = " + bulanAwal);
-       Date bulanAkhir = new Date(awalBulan.getYear()+1, Month, 0);
-//        System.out.println("bulanAkhir = " + bulanAkhir);
-        TypedQuery createQuery = entityManager.createQuery(que, kelas)
+       Date bulanAwal = new Date(awalBulan.getYear(), Month-1, 0);
+       Date bulanAkhir = new Date(awalBulan.getYear(), Month, 0);
+       TypedQuery createQuery = entityManager.createQuery(que, kelas)
                 .setParameter("startDate", bulanAwal, TemporalType.TIMESTAMP)
                 .setParameter("endDate", bulanAkhir, TemporalType.TIMESTAMP)  
                 ;
@@ -672,8 +674,8 @@ public class panelAkuntansi extends JPanel {
                 .properties(
                         Tuple.of("No", "nomor", null),
                         Tuple.of("Akun", "akun", null),
-                        Tuple.of("Pengeluaran", "pemasukan", f),
-                        Tuple.of("Pemasukan", "pengeluaran", f),
+                        Tuple.of("Pengeluaran", "pengeluaran", f),
+                        Tuple.of("Pemasukan", "pemasukan", f),
                         Tuple.of("Profit", "profit", f)
                 )
                 .dataList(c);        
@@ -682,9 +684,8 @@ public class panelAkuntansi extends JPanel {
                 .properties(
                         Tuple.of("No", "nomor", null),
                         Tuple.of("Akun", "akun", null),
+                        Tuple.of("Pengeluaran", "pengeluaran", f),
                         Tuple.of("Pengeluaran", "pemasukan", f),
-                        Tuple.of("Pengeluaran", "pemasukan", f),
-                        Tuple.of("Pemasukan", "pengeluaran", f),
                         Tuple.of("Profit", "profit", f)
                 )
                 .dataList(e);        
