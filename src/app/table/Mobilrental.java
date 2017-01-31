@@ -52,7 +52,7 @@ public class Mobilrental implements Serializable {
     @Column(name = "NO_POLISI_AKTIF", length = 16)
     private String noPolisiAktif = "nopol";
     @Column(name = "MERK", length = 32)
-    private String merk = "merk";
+    private String merk = "Merk";
     @Column(name = "TYPE", length = 32)
     private String type = "tipe";
     @Column(name = "WARNA", length = 32)

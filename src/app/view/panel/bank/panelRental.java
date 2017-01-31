@@ -13,6 +13,7 @@ import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -108,7 +109,7 @@ public class panelRental extends JPanel {
         jComboBox1.addActionListener(formListener);
         inputPanel1.add(jComboBox1);
 
-        newButton.setText("Tambah");
+        newButton.setText("Simpan");
         newButton.addActionListener(formListener);
         inputPanel1.add(newButton);
 
@@ -131,7 +132,7 @@ public class panelRental extends JPanel {
         jComboBox2.addActionListener(formListener);
         inputPanel2.add(jComboBox2);
 
-        newButton2.setText("Tambah");
+        newButton2.setText("Simpan");
         newButton2.addActionListener(formListener);
         inputPanel2.add(newButton2);
 
@@ -152,7 +153,7 @@ public class panelRental extends JPanel {
         jComboBox3.addActionListener(formListener);
         inputPanel3.add(jComboBox3);
 
-        newButton3.setText("Tambah");
+        newButton3.setText("Simpan");
         newButton3.addActionListener(formListener);
         inputPanel3.add(newButton3);
 
@@ -294,7 +295,6 @@ public class panelRental extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
 
-        detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         detailTable.setColumnSelectionAllowed(true);
         detailTable.setRowHeight(25);
@@ -317,6 +317,10 @@ public class panelRental extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("Jenis x");
         columnBinding.setColumnClass(String.class);
@@ -331,7 +335,7 @@ public class panelRental extends JPanel {
         detailTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
             detailTable.getColumnModel().getColumn(0).setResizable(false);
-            detailTable.getColumnModel().getColumn(6).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4)
+            detailTable.getColumnModel().getColumn(7).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4)
             );
         }
 
@@ -503,18 +507,21 @@ public class panelRental extends JPanel {
         app.table.Rental r = (app.table.Rental) this.inputPanel1.getTarget();
         Object m = this.jComboBox1.getSelectedItem();
         r.setMobilrental((Mobilrental) m);
+        r.setBayarrentalList(new LinkedList<Bayarrental>());
         entityManager.persist(r);
         list.add(r);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
         this.jDialog1.hide();
+        saveButton1ActionPerformed(evt);
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -563,6 +570,7 @@ public class panelRental extends JPanel {
     private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
         this.newDetailButtonActionPerformed(evt);
         jDialog2.hide();
+        saveButton1ActionPerformed(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton2ActionPerformed
 
@@ -573,6 +581,7 @@ public class panelRental extends JPanel {
     private void newButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton3ActionPerformed
         this.newDetailButtonActionPerformed(evt);
         jDialog3.hide();
+        saveButton1ActionPerformed(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton3ActionPerformed
 

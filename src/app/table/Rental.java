@@ -190,7 +190,7 @@ public class Rental implements Serializable {
 
     @XmlTransient
     public List<Bayarrental> getBayarrentalList() {
-        return bayarrentalList;
+        return (List<Bayarrental>) app.table.Util.hitungSaldo(bayarrentalList);
     }
 
     public void setBayarrentalList(List<Bayarrental> bayarrentalList) {

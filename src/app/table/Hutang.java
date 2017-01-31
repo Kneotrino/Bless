@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -73,7 +74,7 @@ public class Hutang implements Serializable {
     @Column(name = "ALAMAT", length = 255)
     private String alamat = "input";
     @Column(name = "JUMLAHPINJAMAN")
-    private BigInteger jumlahpinjaman = new BigInteger("0");
+    private BigInteger jumlahpinjaman = new BigInteger("100");
     @Lob
     @Column(name = "KETERANGAN")
     private String keterangan ="input" ;
@@ -84,7 +85,7 @@ public class Hutang implements Serializable {
     @Column(name = "NOMORKTP", length = 255)
     private String nomorktp = "input";
     @Column(name = "SISAPINJAMAN")
-    private BigInteger sisapinjaman = new BigInteger("0");
+    private BigInteger sisapinjaman = new BigInteger("110");
     @Column(name = "TANGGALLUNAS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggallunas = new Date();
@@ -93,9 +94,9 @@ public class Hutang implements Serializable {
     private Date tanggalpinjam = new Date();
     @OneToMany(mappedBy = "hutangid",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     @OrderBy("tanggal ASC")
-    private List<Bayarhutang> bayarhutangs;
+    private List<Bayarhutang> bayarhutangs = new LinkedList<>();
     @Column(name = "BUNGA")
-    private BigInteger bunga;
+    private BigInteger bunga = BigInteger.ZERO;
 
     public static final String PROP_BUNGA = "bunga";
 
@@ -116,11 +117,12 @@ public class Hutang implements Serializable {
     public void setBunga(BigInteger bunga) {
         BigInteger oldBunga = this.bunga;
         this.bunga = bunga;
+        Hitung();
         changeSupport.firePropertyChange(PROP_BUNGA, oldBunga, bunga);
     }
 
     public List<Bayarhutang> getBayarhutangs() {
-        return bayarhutangs;
+        return (List<Bayarhutang>) app.table.Util.hitungSaldo(bayarhutangs);
     }
 
     public void setBayarhutangs(List<Bayarhutang> bayarhutangs) {
@@ -213,14 +215,13 @@ public class Hutang implements Serializable {
     public BigInteger getSisapinjaman() {
         return sisapinjaman;
     }
-
     public void setSisapinjaman(BigInteger sisapinjaman) {
         BigInteger oldSisapinjaman = this.sisapinjaman;
         this.sisapinjaman = sisapinjaman;
         changeSupport.firePropertyChange("sisapinjaman", oldSisapinjaman, sisapinjaman);
 //        changeSupport.fi
     }
-    @PostPersist    @PostUpdate @PostLoad
+    @PostPersist
     public void Hitung()
     {
         BigInteger temp = BigInteger.ZERO;

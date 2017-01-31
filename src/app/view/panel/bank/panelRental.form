@@ -98,7 +98,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="newButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tambah"/>
+                <Property name="text" type="java.lang.String" value="Simpan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButtonActionPerformed"/>
@@ -187,7 +187,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="newButton2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tambah"/>
+                <Property name="text" type="java.lang.String" value="Simpan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButton2ActionPerformed"/>
@@ -251,7 +251,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="newButton3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tambah"/>
+                <Property name="text" type="java.lang.String" value="Simpan"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButton3ActionPerformed"/>
@@ -623,11 +623,15 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="detailTable">
                   <Properties>
-                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                     <Property name="autoResizeMode" type="int" value="4"/>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="1">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>
                           <Renderer/>
@@ -697,6 +701,11 @@
                       <Subbinding sourcePath="${pengeluaran}">
                         <BindingParameter name="NAME" value="Pengeluaran"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${saldo}">
+                        <BindingParameter name="NAME" value="Profit"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                       </Subbinding>
                       <Subbinding sourcePath="${jenis}">
                         <BindingParameter name="NAME" value="Jenis x"/>

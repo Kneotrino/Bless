@@ -8,10 +8,12 @@ package app.view.panel.hutang;
 import app.table.Bank;
 import app.table.Bayarhutang;
 import app.table.BayarhutangPengeluaran;
+import app.table.Hutang;
 import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -77,8 +79,8 @@ public class panelHutang extends JPanel {
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -107,7 +109,7 @@ public class panelHutang extends JPanel {
         jDialog4.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog4.getContentPane().add(inputPanel3, java.awt.BorderLayout.CENTER);
 
-        newButton2.setText("Tambah");
+        newButton2.setText("Simpan");
         newButton2.addActionListener(formListener);
         jDialog4.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
 
@@ -121,7 +123,7 @@ public class panelHutang extends JPanel {
         jDialog5.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog5.getContentPane().add(inputPanel4, java.awt.BorderLayout.CENTER);
 
-        newButton3.setText("Tambah");
+        newButton3.setText("Simpan");
         newButton3.addActionListener(formListener);
         jDialog5.getContentPane().add(newButton3, java.awt.BorderLayout.PAGE_START);
 
@@ -137,7 +139,7 @@ public class panelHutang extends JPanel {
         inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
         jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
-        newButton.setText("Baru");
+        newButton.setText("Simpan");
         newButton.addActionListener(formListener);
         jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
@@ -175,7 +177,7 @@ public class panelHutang extends JPanel {
 
         masterTable.setAutoCreateRowSorter(true);
         masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -208,7 +210,6 @@ public class panelHutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bunga}"));
         columnBinding.setColumnName("Bunga");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalpinjam}"));
         columnBinding.setColumnName("Tanggalpinjam");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -237,7 +238,6 @@ public class panelHutang extends JPanel {
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         detailTable.setRowHeight(25);
 
@@ -259,6 +259,10 @@ public class panelHutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pinjam/Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("Jenis x");
         columnBinding.setColumnClass(String.class);
@@ -271,18 +275,10 @@ public class panelHutang extends JPanel {
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
-            detailTable.getColumnModel().getColumn(6).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2));
+            detailTable.getColumnModel().getColumn(7).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2));
         }
 
         jPanel2.add(detailScrollPane, java.awt.BorderLayout.CENTER);
-
-        jButton5.setText("Pinjaman/Pengeluaran");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jButton5, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        jButton5.addActionListener(formListener);
-        jPanel4.add(jButton5);
 
         jButton2.setText("Kembali/Pemasukan");
 
@@ -291,6 +287,14 @@ public class panelHutang extends JPanel {
 
         jButton2.addActionListener(formListener);
         jPanel4.add(jButton2);
+
+        jButton5.setText("Pinjaman/Pengeluaran");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jButton5, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jButton5.addActionListener(formListener);
+        jPanel4.add(jButton5);
 
         deleteDetailButton.setText("Hapus");
 
@@ -326,14 +330,17 @@ public class panelHutang extends JPanel {
             else if (evt.getSource() == deleteButton) {
                 panelHutang.this.deleteButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == refreshButton1) {
+                panelHutang.this.refreshButton1ActionPerformed(evt);
+            }
             else if (evt.getSource() == jButton4) {
                 panelHutang.this.jButton4ActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton2) {
-                panelHutang.this.jButton2ActionPerformed(evt);
-            }
             else if (evt.getSource() == jButton5) {
                 panelHutang.this.jButton5ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton2) {
+                panelHutang.this.jButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteDetailButton) {
                 panelHutang.this.deleteDetailButtonActionPerformed(evt);
@@ -358,9 +365,6 @@ public class panelHutang extends JPanel {
             }
             else if (evt.getSource() == newButton) {
                 panelHutang.this.newButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton1) {
-                panelHutang.this.refreshButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -429,10 +433,10 @@ public class panelHutang extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        java.util.Collection data = query.getResultList();
-        for (Object entity : data) {
+        java.util.Collection<Hutang> data = query.getResultList();
+        data.forEach((entity) -> {
             entityManager.refresh(entity);
-        }
+        });
         list.clear();
         list.addAll(data);
         bankList.clear();
@@ -460,17 +464,18 @@ public class panelHutang extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Hutang h = (app.table.Hutang) this.inputPanel1.getTarget();
-        h.setBunga(h.getSisapinjaman().subtract(h.getJumlahpinjaman()));
+        System.out.println("bayarpinjaman = " + h.getSisapinjaman());
         BayarhutangPengeluaran bp = new app.table.BayarhutangPengeluaran();
-        Saldo ts = new app.table.Saldo();
-        ts.setBankId((Bank) jComboBox5.getSelectedItem());
-        bp.setTransaksi(ts);
-        bp.setJumlah(h.getJumlahpinjaman());
-        bp.setHutangid(h);        
+            Saldo ts = new app.table.Saldo();
+            ts.setBankId((Bank) jComboBox5.getSelectedItem());
+            bp.setTransaksi(ts);
+            bp.setJumlah(h.getJumlahpinjaman());
+            bp.setHutangid(h);        
         List<app.table.Bayarhutang> bh = h.getBayarhutangs();
-        bh = bh == null ? new ArrayList<>() : bh;
-        bh.add((app.table.Bayarhutang)bp);
-        h.setBayarhutangs(bh);        
+            bh.add((app.table.Bayarhutang)bp);
+            h.setBayarhutangs(bh);
+        BigInteger subtract = h.getSisapinjaman().subtract(h.getJumlahpinjaman());
+        h.setBunga(subtract);
         entityManager.persist(bp);
         entityManager.persist(h);
         list.add(h);
@@ -478,6 +483,7 @@ public class panelHutang extends JPanel {
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
         jDialog1.hide();
+        saveButtonActionPerformed(evt);
 //        this.refreshButtonActionPerformed(evt);
     }//GEN-LAST:event_newButtonActionPerformed
     
@@ -485,6 +491,7 @@ public class panelHutang extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            refreshButton1ActionPerformed(evt);
 //            list.clear();
 //            list.addAll(query.getResultList());
         } catch (RollbackException rex) {
@@ -537,12 +544,14 @@ public class panelHutang extends JPanel {
         // TODO add your handling code here:
         this.newDetailButtonActionPerformed(evt);
         this.jDialog4.hide();
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newButton2ActionPerformed
 
     private void newButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton3ActionPerformed
         // TODO add your handling code here:
         this.newDetailButtonActionPerformed(evt);
         this.jDialog5.hide();
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newButton3ActionPerformed
 
     private void refreshButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton1ActionPerformed
