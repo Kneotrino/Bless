@@ -100,7 +100,7 @@ public class panelJasa extends JPanel {
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
-        newButton.setText("Tambah");
+        newButton.setText("Simpan");
         newButton.addActionListener(formListener);
         jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
@@ -111,7 +111,7 @@ public class panelJasa extends JPanel {
 
         jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
-        newButton1.setText("Tambah");
+        newButton1.setText("Simpan");
         newButton1.addActionListener(formListener);
         jDialog3.getContentPane().add(newButton1, java.awt.BorderLayout.PAGE_START);
 
@@ -128,7 +128,7 @@ public class panelJasa extends JPanel {
 
         jDialog4.getContentPane().add(inputPanel3, java.awt.BorderLayout.CENTER);
 
-        newButton2.setText("Tambah");
+        newButton2.setText("Simpan");
         newButton2.addActionListener(formListener);
         jDialog4.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
 
@@ -268,9 +268,8 @@ public class panelJasa extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        detailTable.setAutoCreateRowSorter(true);
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        detailTable.setColumnSelectionAllowed(false);
+        detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarjasaList}");
@@ -426,9 +425,6 @@ public class panelJasa extends JPanel {
         bs.add(b);
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
-//        int row = bs.size() - 1;
-//        detailTable.setRowSelectionInterval(row, row);
-//        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
     
     @SuppressWarnings("unchecked")
@@ -468,12 +464,14 @@ public class panelJasa extends JPanel {
 //        this.jDialog2.setSize(500, 600);
 //        this.jDialog2.setLocationRelativeTo(null);
         this.jDialog2.hide();
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         try {            
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            this.refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -498,6 +496,7 @@ public class panelJasa extends JPanel {
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
         this.newDetailButtonActionPerformed(null);
         jDialog3.hide();
+        saveButtonActionPerformed(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
     boolean pemasukan;
@@ -521,6 +520,7 @@ public class panelJasa extends JPanel {
         // TODO add your handling code here:
         this.newDetailButtonActionPerformed(evt);
         this.jDialog4.hide();
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newButton2ActionPerformed
 
     private void refreshButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton1ActionPerformed

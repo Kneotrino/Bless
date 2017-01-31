@@ -250,8 +250,9 @@ public class Bpkbtitipan implements Serializable {
 
     @XmlTransient
     public List<Bayarjasa> getBayarjasaList() {
+        
 //        org.jdesktop.observablecollections.ObservableCollections.observableList(bayarjasaList);
-        return bayarjasaList;
+        return (List<Bayarjasa>) app.table.Util.hitungSaldo(bayarjasaList);
     }
 
     public void setBayarjasaList(List<Bayarjasa> bayarjasaList) {

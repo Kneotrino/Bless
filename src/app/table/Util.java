@@ -5,6 +5,7 @@
  */
 package app.table;
 
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -53,6 +54,16 @@ public class Util {
              data.forEach((laporan) -> {
                  manager.refresh(laporan);
             });
+    }
+    public static List<? extends Laporan> hitungSaldo(List<? extends Laporan> LaporanList)
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Laporan lap : LaporanList) {
+            temp = temp.add(lap.getPemasukan());
+            temp = temp.subtract(lap.getPengeluaran());
+            lap.setSaldo(temp);
+        }
+        return LaporanList;
     }
 
     public Util() {
