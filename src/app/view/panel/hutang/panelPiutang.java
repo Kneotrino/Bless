@@ -103,7 +103,7 @@ public class panelPiutang extends JPanel {
 
         jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
-        newButton.setText("Tambah");
+        newButton.setText("Simpan");
         newButton.addActionListener(formListener);
         jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
 
@@ -120,7 +120,7 @@ public class panelPiutang extends JPanel {
 
         inputPanel2.add(jComboBox6);
 
-        newButton2.setText("Tambah");
+        newButton2.setText("Simpan");
         newButton2.addActionListener(formListener);
         inputPanel2.add(newButton2);
 
@@ -139,7 +139,7 @@ public class panelPiutang extends JPanel {
 
         inputPanel3.add(jComboBox7);
 
-        newButton3.setText("Tambah");
+        newButton3.setText("Simpan");
         newButton3.addActionListener(formListener);
         inputPanel3.add(newButton3);
 
@@ -287,6 +287,10 @@ public class panelPiutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pelunasan/Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
+        columnBinding.setColumnName("Profit/Balance");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("Jenis x");
         columnBinding.setColumnClass(String.class);
@@ -300,7 +304,7 @@ public class panelPiutang extends JPanel {
         detailScrollPane.setViewportView(detailTable);
         detailTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
-            detailTable.getColumnModel().getColumn(6).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1));
+            detailTable.getColumnModel().getColumn(7).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1));
         }
 
         add(detailScrollPane);
@@ -455,6 +459,7 @@ public class panelPiutang extends JPanel {
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
         jDialog1.hide();
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newButtonActionPerformed
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -497,6 +502,7 @@ public class panelPiutang extends JPanel {
     private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
         this.newDetailButtonActionPerformed(evt);
         this.jDialog2.hide();
+        saveButtonActionPerformed(evt);
         // TODO add your handling code here:
 
     }//GEN-LAST:event_newButton2ActionPerformed
@@ -504,6 +510,7 @@ public class panelPiutang extends JPanel {
     private void newButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton3ActionPerformed
         this.newDetailButtonActionPerformed(evt);
         this.jDialog3.hide();
+        saveButtonActionPerformed(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton3ActionPerformed
 

@@ -200,7 +200,7 @@ public class Piutang implements Serializable {
 
     @XmlTransient
     public List<Bayarpihutang> getBayarpihutangList() {
-        return bayarpihutangList;
+        return (List<Bayarpihutang>) Util.hitungSaldo(bayarpihutangList);
     }
 
     public void setBayarpihutangList(List<Bayarpihutang> bayarpihutangList) {
