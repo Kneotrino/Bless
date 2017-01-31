@@ -109,7 +109,7 @@ public class Printer {
     public static void PrintHutang(File place)
     {
               List<File> cvs = new java.util.LinkedList<>();
-              File f = new File(place, "Data Hutang-Peminjam");
+              File f = new File(place, "Data");
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
@@ -157,6 +157,7 @@ public class Printer {
                                 Tuple.of("Keterangan", "keterangan", d -> d),
                                 Tuple.of("Pengeluaran/Peminjaman", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Pemasukan/Pelunasan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Bank", "transaksi.bankId", d -> d)
                     ).dataList(a);
                 try {
@@ -173,7 +174,7 @@ public class Printer {
     }
     public static void PrintPiHutang(File place)
     {    
-              File f = new File(place, "Data Pihutang-Pinjaman");
+              File f = new File(place, "Data");
               f.mkdirs();
               System.out.println("f = " + f);
               List<File> cvs = new java.util.LinkedList<>();
@@ -220,6 +221,7 @@ public class Printer {
                                 Tuple.of("Keterangan", "keterangan", d -> d),
                                 Tuple.of("Peminjaman/Pemasukan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Pelunasan/Pelunasan", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
                                 Tuple.of("Bank", "transaksi.bankId", d -> d)
                     ).dataList(a);
                 try {
@@ -236,7 +238,7 @@ public class Printer {
     }
     public static void PrintLeasing(File place)
     {    
-        File f = new File(place, "Data Leasing");
+        File f = new File(place, "Data");
         f.mkdirs();
         System.out.println("f = " + f);
         List<File> cvs = new java.util.LinkedList<>();
@@ -278,7 +280,7 @@ public class Printer {
     }
     public static void PrintRentalMobil(File place)
     {
-              File f = new File(place, "Data Rental");
+              File f = new File(place, "Data");
               f.mkdirs();
               File f1 = new File(f, "Mobil Rental.CSV");
               List<File> cvs = new java.util.LinkedList<>();
@@ -309,6 +311,7 @@ public class Printer {
                                 Tuple.of("Keterangan", "keterangan", d -> d),
                                 Tuple.of("Pemasukan", "pemasukan", d -> IDR.format(d) ),
                                 Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
+                                Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
                                 Tuple.of("Jenis", "jenis", d -> d),
                                 Tuple.of("Bank", "transaksi.bankId", d -> d)
                                 )
@@ -351,7 +354,7 @@ public class Printer {
     public static void PrintJasa(File place)
     {
               List<File> cvs = new java.util.LinkedList<>();
-              File f = new File(place, "Data Jasa Cabut Berkasa");
+              File f = new File(place, "Data");
               f.mkdirs();
               File T = new File(f, "Data Jasa Cabut Berkas.CSV");
               cvs.add(T);
@@ -397,6 +400,7 @@ public class Printer {
                         Tuple.of("Keterangan", "keterangan", d -> d),
                         Tuple.of("Pemasukan", "pemasukan", d -> IDR.format(d) ),
                         Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
+                        Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
                         Tuple.of("Jenis", "jenis", d -> d),
                         Tuple.of("Bank", "transaksi.bankId", d -> d)                                    
                     ).dataList(a);
@@ -417,7 +421,7 @@ public class Printer {
     public static void PrintInvestor(File place)
     {
               List<File> cvs = new java.util.LinkedList<>();
-              File T = new File(place, "Data Investor");
+              File T = new File(place, "Data");
               T.mkdirs();
               File f = new File(T, "Data Investor.CSV");
               cvs.add(f);
@@ -520,7 +524,7 @@ public class Printer {
     }
     public static void PrintAsset(File place)
     {
-              File M = new File(place, "Data Asset");
+              File M = new File(place, "Data");
               M.mkdirs();
               File f = new File(M, "Daftar Asset.CSV");
               System.out.println("f = " + f);
@@ -556,7 +560,7 @@ public class Printer {
     }
     public static void PrintKas(File place)
     {
-              File f = new File(place, "Data Kas");
+              File f = new File(place, "Data");
               f.mkdirs();
               System.out.println("f = " + f);
               List<File> cvs = new java.util.LinkedList<>();
@@ -620,7 +624,7 @@ public class Printer {
     }
     public static void PrintPegawai(File place)
     {
-              File f = new File(place, "Data Pegawai");
+              File f = new File(place, "Data");
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
@@ -694,8 +698,8 @@ public class Printer {
     }
     public static void PrintLaporan(File place,Class kelas)
     {
-              String filename = kelas.getSimpleName()+ ".CSV";
-              File M = new File(place,"Data Lap");
+              String filename = "Lap."+kelas.getSimpleName()+ ".CSV";
+              File M = new File(place,"Data");
               M.mkdirs();
               File f = new File(M, filename);
               if (kelas == app.table.Pengeluaran.class) {
@@ -732,7 +736,7 @@ public class Printer {
     }
     public static void  PrintPerjalanan (File place)
     {
-              File f = new File(place, "Laporan Perjalanan");
+              File f = new File(place, "Data");
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
@@ -803,7 +807,7 @@ public class Printer {
     }
     public static void PrintMobil(File place)
     {
-              File f = new File(place, "Data Mobil");
+              File f = new File(place, "Data");
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
