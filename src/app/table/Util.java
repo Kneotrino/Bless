@@ -65,6 +65,23 @@ public class Util {
         }
         return LaporanList;
     }
+    public static BigInteger getTotalPemasukan(List<? extends Laporan> LaporanList)
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Laporan laporan : LaporanList) {
+            temp = temp.add(laporan.getPemasukan());
+        }
+        return temp;
+    }
+    public static BigInteger getTotalPengeluaran(List<? extends Laporan> LaporanList)
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Laporan laporan : LaporanList) {
+            temp = temp.add(laporan.getPengeluaran());
+        }
+        return temp;
+    }
+
 
     public Util() {
     }

@@ -9,6 +9,7 @@ import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -193,7 +194,14 @@ public class Rental implements Serializable {
         this.jammulai = jammulai;
         changeSupport.firePropertyChange("jammulai", oldJammulai, jammulai);
     }
-
+public  BigInteger gettotalPemasukan()
+    {
+        return Util.getTotalPemasukan(bayarrentalList);
+    }
+    public  BigInteger gettotalPengeluaran()
+    {
+        return Util.getTotalPengeluaran(bayarrentalList);
+    }
     public Date getJamselesai() {
         return jamselesai;
     }
@@ -244,7 +252,12 @@ public class Rental implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Rental[ rentalid=" + rentalid + " ]";
+        return "Jasa Rental[ Ref=" + rentalid 
+                +"-"
+                +pemakai
+                +"-"
+                +mobilrental                
+                + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

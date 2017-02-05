@@ -7,9 +7,12 @@ package app.view.FixPanel.akuntansi;
 
 //import app.table.Akuntansi;
 import app.table.Bank;
+import app.table.Bpkbtitipan;
+import app.table.Hutang;
 import app.table.KeuanganMobil;
 import app.table.Laporan;
 import app.table.Mobil;
+import app.table.Rental;
 import static app.utils.ExcelConverter.ExcelConverter;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
@@ -49,6 +52,11 @@ public class panelAkuntansi extends JPanel {
     private java.util.List<Akun> LabaList = new ArrayList<>();
     private java.util.List<Akun> LaporanPenyesuaian = new ArrayList<>();
     private List<Akun> ProfitMobil = new ArrayList<>();
+    private List<Akun> ProfitJasa = new ArrayList<>();
+
+    public List<Akun> getProfitJasa() {
+        return ProfitJasa;
+    }
     private List<Akun> Open = new ArrayList<>();
     private List<Akun> Closed = new ArrayList<>();
 
@@ -325,12 +333,19 @@ public class panelAkuntansi extends JPanel {
             totalProfit.addPengeluaran(temp.getPengeluaran());
         }
         LaporanPenyesuaian.add(totalProfit);
-        Akun labaditahan = new Akun()
-                .setAkun("Total Laba di tahan sebesar 25%");
-        labaditahan.setPemasukan(totalProfit.getProfit().divide(new BigInteger("4")));        
-        LaporanPenyesuaian.add(labaditahan);        
+//        Akun labaditahan = new Akun()
+//                .setAkun("Total Laba di tahan sebesar 25%");
+//        labaditahan.setPemasukan(totalProfit.getProfit().divide(new BigInteger("4")));        
+//        LaporanPenyesuaian.add(labaditahan);        
         TypedQuery createQuery = entityManager.createQuery("SELECT m FROM Mobil m", app.table.Mobil.class);
+        TypedQuery createQuery1 = entityManager.createQuery("SELECT m FROM Bpkbtitipan m", app.table.Bpkbtitipan.class);
+        TypedQuery createQuery2 = entityManager.createQuery("SELECT m FROM Rental m", app.table.Rental.class);
+        TypedQuery createQuery3 = entityManager.createQuery("SELECT m FROM Hutang m", app.table.Hutang.class);
         List<Mobil> mobilList = createQuery.getResultList();
+        List<Bpkbtitipan> bpkb = createQuery1.getResultList();
+        List<Rental> rental = createQuery2.getResultList();
+        List<Hutang> HutangList = createQuery3.getResultList();
+        
         int i = 0;
         Akun TotalMobil = new Akun()
                 .setAkun("Total Profit Mobil");
@@ -361,20 +376,54 @@ public class panelAkuntansi extends JPanel {
             ProfitMobil.add(veh);
         }
             ProfitMobil.add(TotalMobil);
-            Open.addAll(ProfitMobil);
             Closed.addAll(ProfitMobil);
             String op = "OPEN";
             String cl = "CLOSE";
-            Open.removeIf(a -> !a.getKeterangan().equals(op));
+            for (Bpkbtitipan b : bpkb) {
+            Akun temp = new Akun()
+                    .setAkun(b.toString());
+            temp.setKeterangan(b.getLaba());
+            temp.setPemasukan(b.gettotalPemasukan());
+            temp.setPengeluaran(b.gettotalPengeluaran());
+            ProfitJasa.add(temp);
+        }
+            for (Rental r : rental) {
+            Akun temp = new Akun()
+                    .setAkun(r.toString());
+            temp.setKeterangan(r.getLABA());
+            temp.setPemasukan(r.gettotalPemasukan());
+            temp.setPengeluaran(r.gettotalPengeluaran());
+            ProfitJasa.add(temp);            
+        }
+            for (Hutang r : HutangList) {
+            Akun temp = new Akun()
+                    .setAkun(r.toString());
+            temp.setKeterangan(r.getLABA());
+            temp.setPemasukan(r.gettotalPemasukan());
+            temp.setPengeluaran(r.gettotalPengeluaran());
+            ProfitJasa.add(temp);            
+        }
+            Akun ProfitJasaTotal = new Akun()
+                    .setAkun("Profit Jasa Total");
+                    ProfitJasaTotal.setKeterangan("");
+            for (Akun akun : ProfitJasa) {
+            ProfitJasaTotal.addPemasukan(akun.getPemasukan());
+            ProfitJasaTotal.addPengeluaran(akun.getPengeluaran());
+        }
+            ProfitJasa.add(ProfitJasaTotal);
+            Closed.addAll(ProfitJasa);
             Closed.removeIf(a -> !a.getKeterangan().equals(cl));
+            Open.addAll(ProfitMobil);
+            Open.addAll(ProfitJasa);
+            Open.removeIf(a -> !a.getKeterangan().equals(op));
             Akun TO = new Akun();
                 TO.setAkun("Total Open ");
                 for (Akun akun : Open) {
                     TO.addPemasukan(akun.getPemasukan());
                     TO.addPengeluaran(akun.getPengeluaran());
-        }
+                }
             Akun TC = new Akun();
-                TC.setAkun("Total laba mobil Close ");
+                TC.setAkun("Total Close ");
                 for (Akun akun : Closed) {
                     TC.addPemasukan(akun.getPemasukan());
                     TC.addPengeluaran(akun.getPengeluaran());
@@ -482,6 +531,8 @@ public class panelAkuntansi extends JPanel {
         jTable5 = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jTable9 = new javax.swing.JTable();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable7 = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -641,7 +692,42 @@ public class panelAkuntansi extends JPanel {
 
         jTabbedPane1.addTab("STATUS MOBIL", jScrollPane5);
 
-        jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "STATUS OPEN MOBIL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "STATUS SEMUA JASA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable9.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable9.setAutoCreateRowSorter(true);
+        jTable9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${profitJasa}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable9);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
+        columnBinding.setColumnName("Nomor");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
+        columnBinding.setColumnName("Akun");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane9.setViewportView(jTable9);
+        if (jTable9.getColumnModel().getColumnCount() > 0) {
+            jTable9.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jTabbedPane1.addTab("STATUS JASA", jScrollPane9);
+
+        jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "STATUS OPEN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable7.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable7.setAutoCreateRowSorter(true);
@@ -674,9 +760,9 @@ public class panelAkuntansi extends JPanel {
             jTable7.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jTabbedPane1.addTab("OPEN MOBIL", jScrollPane7);
+        jTabbedPane1.addTab("PROFIT OPEN", jScrollPane7);
 
-        jScrollPane8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "STATUS CLOSED MOBIL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "STATUS CLOSED", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable8.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable8.setAutoCreateRowSorter(true);
@@ -709,7 +795,7 @@ public class panelAkuntansi extends JPanel {
             jTable8.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jTabbedPane1.addTab("CLOSED MOBIL", jScrollPane8);
+        jTabbedPane1.addTab("PROFIT CLOSE", jScrollPane8);
 
         jPanel1.add(jTabbedPane1);
 
@@ -890,6 +976,7 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
@@ -899,6 +986,7 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
+    private javax.swing.JTable jTable9;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {

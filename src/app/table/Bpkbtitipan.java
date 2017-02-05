@@ -9,7 +9,9 @@ import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -99,7 +101,7 @@ public class Bpkbtitipan implements Serializable {
     private Date tglTerima = new Date();
     @OneToMany(targetEntity = Bayarjasa.class,cascade = CascadeType.ALL)
     @OrderBy("tanggal ASC")
-    private List<Bayarjasa> bayarjasaList;
+    private List<Bayarjasa> bayarjasaList = new LinkedList<>();
     @Column(name = "LABA", length = 32)
     private String laba = "OPEN";
 
@@ -306,7 +308,7 @@ public class Bpkbtitipan implements Serializable {
 
     @Override
     public String toString() {
-        return " [ bpkbId REF=" + bpkbId + " ]";
+        return "Jasa CB [REF=" + bpkbId + "-"+anBpkb+"-"+noPolisiAktif+ "]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -316,5 +318,12 @@ public class Bpkbtitipan implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+    public  BigInteger gettotalPemasukan()
+    {
+        return Util.getTotalPemasukan(bayarjasaList);
+    }
+    public  BigInteger gettotalPengeluaran()
+    {
+        return Util.getTotalPengeluaran(bayarjasaList);
+    }
 }

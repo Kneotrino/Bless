@@ -154,7 +154,14 @@ public class Hutang implements Serializable {
     public void setBayarhutangs(List<Bayarhutang> bayarhutangs) {
         this.bayarhutangs = bayarhutangs;
     }
-
+public  BigInteger gettotalPemasukan()
+    {
+        return Util.getTotalPemasukan(bayarhutangs);
+    }
+    public  BigInteger gettotalPengeluaran()
+    {
+        return Util.getTotalPengeluaran(bayarhutangs);
+    }
     public Hutang() {
     }
 
@@ -297,7 +304,11 @@ public class Hutang implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Hutang[ hutangid=" + hutangid + " ]";
+        return "Jasa Hutang[ Ref=" 
+                + hutangid 
+                + "-" 
+                + nama 
+                + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

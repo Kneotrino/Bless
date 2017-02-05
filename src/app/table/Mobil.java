@@ -591,7 +591,7 @@ public class Mobil implements Serializable {
 
     @Override
     public String toString() {
-        return "[ id= " + mobilId + ";"+"NoPol ="+noPolisiAktif+" ]";
+        return "Mobil [Ref= " + mobilId + ";"+"NoPol ="+noPolisiAktif+" ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
