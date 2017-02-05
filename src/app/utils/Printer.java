@@ -193,9 +193,8 @@ public class Printer {
                                     Tuple.of("jaminan","jaminan", d -> d==null?" ":d),
                                     Tuple.of("Total Peminjaman","jumlahPelunasan", d -> d==null?" ":IDR.format(d)),
                                     Tuple.of("Total Pelunasan","jumlahPimjaman", d -> d==null?" ":IDR.format(d)),
-                                    Tuple.of("sisa","sisa", d -> d==null?" ":IDR.format(d)),
-                                    Tuple.of("Tanggal Awal","tglawal", d -> d==null?" ":formator.format(d)),
-                                    Tuple.of("Tanggal Akhir","tglakhir", d -> d==null?" ":formator.format(d))
+                                    Tuple.of("Total Bunga","totalBunga", d -> d==null?" ":IDR.format(d)),
+                                    Tuple.of("Lunas","LABA", d -> d==null?" ":(d))
                             ).dataList(getDataList(app.table.Piutang.class));
               try {
                     data.write();            
@@ -220,7 +219,8 @@ public class Printer {
                                 Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
                                 Tuple.of("Keterangan", "keterangan", d -> d),
                                 Tuple.of("Peminjaman/Pemasukan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
-                                Tuple.of("Pelunasan/Pelunasan", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pelunasan/Pengeluaran", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bunga/Pengeluaran", "bunga", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
                                 Tuple.of("Bank", "transaksi.bankId", d -> d)
                     ).dataList(a);
