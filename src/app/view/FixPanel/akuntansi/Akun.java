@@ -18,7 +18,7 @@ public class Akun implements Serializable
 {    
     private static final long serialVersionUID = 3041287746818525952L;
     private int nomor;
-    private String akun;
+    private String akun = "-";
     private java.math.BigInteger Pemasukan = BigInteger.ZERO;
     private java.math.BigInteger Pengeluaran= BigInteger.ZERO;    
     private BigInteger Profit = BigInteger.ZERO;
@@ -32,6 +32,33 @@ public class Akun implements Serializable
      */
     public BigInteger getProfit() {
         return Profit = Pemasukan.subtract(Pengeluaran);
+    }
+
+    private String Keterangan;
+
+    public static final String PROP_KETERANGAN = "Keterangan";
+
+    /**
+     * Get the value of Keterangan
+     *
+     * @return the value of Keterangan
+     */
+    public String getKeterangan() {
+        return Keterangan;
+    }
+    public Boolean getOpen() {
+        return Keterangan.equals("OPEN");
+    }
+
+    /**
+     * Set the value of Keterangan
+     *
+     * @param Keterangan new value of Keterangan
+     */
+    public void setKeterangan(String Keterangan) {
+        String oldKeterangan = this.Keterangan;
+        this.Keterangan = Keterangan;
+        propertyChangeSupport.firePropertyChange(PROP_KETERANGAN, oldKeterangan, Keterangan);
     }
 
     /**

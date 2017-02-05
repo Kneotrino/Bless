@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javaslang.Tuple;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -47,8 +48,17 @@ public class panelAkuntansi extends JPanel {
     private java.util.List<Akun> AkuntansiList = new ArrayList<>();
     private java.util.List<Akun> LabaList = new ArrayList<>();
     private java.util.List<Akun> LaporanPenyesuaian = new ArrayList<>();
-
     private List<Akun> ProfitMobil = new ArrayList<>();
+    private List<Akun> Open = new ArrayList<>();
+    private List<Akun> Closed = new ArrayList<>();
+
+    public List<Akun> getOpen() {
+        return Open;
+    }
+
+    public List<Akun> getClosed() {
+        return Closed;
+    }
 
     /**
      * Get the value of ProfitMobil
@@ -58,7 +68,6 @@ public class panelAkuntansi extends JPanel {
     public List<Akun> getProfitMobil() {
         return ProfitMobil;
     }
-
     /**
      * Set the value of ProfitMobil
      *
@@ -314,15 +323,6 @@ public class panelAkuntansi extends JPanel {
             LaporanPenyesuaian.add( ProfitBulanan(temp) );
             totalProfit.addPemasukan( temp.getPemasukan());
             totalProfit.addPengeluaran(temp.getPengeluaran());
-//            Akun profit = new Akun()
-//                    .setAkun("Profit Bersih (Potong Pembagian Laba) ")
-//                    .setPemasukan(temp.getPemasukan())
-//                    .subPemasukan(temp.getPengeluaran());
-//                    .setPengeluaran(sumAll(getList(app.table.pembagianLaba.class)));
-//            LaporanPenyesuaian.add( profit);
-//            LaporanPenyesuaian.add( kosong);
-//            totalProfit = totalProfit.add(temp.getPemasukan())
-//                    .subtract(temp.getPengeluaran());
         }
         LaporanPenyesuaian.add(totalProfit);
         Akun labaditahan = new Akun()
@@ -334,6 +334,7 @@ public class panelAkuntansi extends JPanel {
         int i = 0;
         Akun TotalMobil = new Akun()
                 .setAkun("Total Profit Mobil");
+        TotalMobil.setKeterangan("----");
         for (Mobil mobil : mobilList) {
             i++;
             BigInteger pemasukan = BigInteger.ZERO;
@@ -354,11 +355,40 @@ public class panelAkuntansi extends JPanel {
                     .setPemasukan(pemasukan)
                     .setPengeluaran(pengeluaran)
                     ;
+            veh.setKeterangan(mobil.getStatusMobil());
             TotalMobil.addPemasukan(pemasukan)
                     .addPengeluaran(pengeluaran);
             ProfitMobil.add(veh);
         }
             ProfitMobil.add(TotalMobil);
+            Open.addAll(ProfitMobil);
+            Closed.addAll(ProfitMobil);
+            String op = "OPEN";
+            String cl = "CLOSE";
+            Open.removeIf(a -> !a.getKeterangan().equals(op));
+            Closed.removeIf(a -> !a.getKeterangan().equals(cl));
+            Akun TO = new Akun();
+                TO.setAkun("Total Open ");
+                for (Akun akun : Open) {
+                    TO.addPemasukan(akun.getPemasukan());
+                    TO.addPengeluaran(akun.getPengeluaran());
+        }
+            Akun TC = new Akun();
+                TC.setAkun("Total laba mobil Close ");
+                for (Akun akun : Closed) {
+                    TC.addPemasukan(akun.getPemasukan());
+                    TC.addPengeluaran(akun.getPengeluaran());
+        }
+            Open.add(TO);
+            Closed.add(TC);
+            Akun LabaMobilTahan = new Akun()
+                    .setPemasukan(TC.getProfit().divide(new BigInteger("4")))
+//                    .setPengeluaran(TC.getPengeluaran().divide(new BigInteger("4")))
+                    ;
+            LabaMobilTahan.setAkun("Laba di tahan 25 %");
+//            LabaMobilTahan.setProfit(TC.getProfit().divide(new BigInteger("4")));
+            Closed.add(LabaMobilTahan);
+            
         initComponents();
     }
     public String getMonth(int month) {
@@ -416,8 +446,8 @@ public class panelAkuntansi extends JPanel {
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
                 + "where en.tanggal BETWEEN :startDate AND :endDate"
                 ;
-       Date bulanAwal = new Date(awalBulan.getYear(), Month-1, 0);
-       Date bulanAkhir = new Date(awalBulan.getYear(), Month, 0);
+       Date bulanAwal = new Date(akhirBulan.getYear(), Month-1, 0);
+       Date bulanAkhir = new Date(akhirBulan.getYear(), Month, 0);
        TypedQuery createQuery = entityManager.createQuery(que, kelas)
                 .setParameter("startDate", bulanAwal, TemporalType.TIMESTAMP)
                 .setParameter("endDate", bulanAkhir, TemporalType.TIMESTAMP)  
@@ -452,6 +482,10 @@ public class panelAkuntansi extends JPanel {
         jTable5 = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTable7 = new javax.swing.JTable();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable8 = new javax.swing.JTable();
 
         FormListener formListener = new FormListener();
 
@@ -572,7 +606,7 @@ public class panelAkuntansi extends JPanel {
 
         jTabbedPane1.addTab("LAPORAN PROFIT BERSIH TAHUNAN", jScrollPane6);
 
-        jScrollPane5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PROFIT MOBIL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "STATUS SEMUA MOBIL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable6.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable6.setAutoCreateRowSorter(true);
@@ -584,16 +618,19 @@ public class panelAkuntansi extends JPanel {
         columnBinding.setColumnName("Nomor");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
-        columnBinding.setColumnName("Akun");
+        columnBinding.setColumnName("Mobil");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
-        columnBinding.setColumnName("Profit");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -602,7 +639,77 @@ public class panelAkuntansi extends JPanel {
             jTable6.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jTabbedPane1.addTab("PROFIT MOBIL", jScrollPane5);
+        jTabbedPane1.addTab("STATUS MOBIL", jScrollPane5);
+
+        jScrollPane7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "STATUS OPEN MOBIL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable7.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable7.setAutoCreateRowSorter(true);
+        jTable7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${open}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable7);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
+        columnBinding.setColumnName("Nomor");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
+        columnBinding.setColumnName("Mobil");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane7.setViewportView(jTable7);
+        if (jTable7.getColumnModel().getColumnCount() > 0) {
+            jTable7.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jTabbedPane1.addTab("OPEN MOBIL", jScrollPane7);
+
+        jScrollPane8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "STATUS CLOSED MOBIL", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+
+        jTable8.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable8.setAutoCreateRowSorter(true);
+        jTable8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${closed}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable8);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
+        columnBinding.setColumnName("No");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
+        columnBinding.setColumnName("Mobil");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane8.setViewportView(jTable8);
+        if (jTable8.getColumnModel().getColumnCount() > 0) {
+            jTable8.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jTabbedPane1.addTab("CLOSED MOBIL", jScrollPane8);
 
         jPanel1.add(jTabbedPane1);
 
@@ -640,15 +747,21 @@ public class panelAkuntansi extends JPanel {
         File laba = new File(root, "Laba-Rugi "+formator.format(p)+".CSV");
         File lap = new File(root, "Laporan profit "+formator.format(p)+".CSV");
         File mob = new File(root, "Mobil profit "+formator.format(p)+".CSV");
+        File mob1 = new File(root, "Open Mobil profit "+formator.format(p)+".CSV");
+        File mob2 = new File(root, "Close Mobil profit "+formator.format(p)+".CSV");
         cvs.add(akun);
         cvs.add(laba);
         cvs.add(lap);
         cvs.add(mob);
+        cvs.add(mob1);
+        cvs.add(mob2);
         
         List a = AkuntansiList;
         List b = LabaList;
         List c = LaporanPenyesuaian;
         List e = ProfitMobil;
+        List h = Open;
+        List g = Closed;
         final DecimalFormat IDR = new DecimalFormat("###0");              
         Function f = d -> d==null?"0":IDR.format(d);
         WriteStep AkunPrinter = CSVUtil.of(akun)
@@ -659,7 +772,7 @@ public class panelAkuntansi extends JPanel {
                         Tuple.of("Aktiva(Harta + Pengeluaran)", "pemasukan", f),
                         Tuple.of("Pasiva(Hutang + Modal + Pemasukan)", "pengeluaran", f)
                 )
-                .dataList(a);
+                .dataList(a);        
         WriteStep LabaPrinter = CSVUtil.of(laba)
                 .type(app.view.FixPanel.akuntansi.Akun.class)
                 .properties(
@@ -683,17 +796,44 @@ public class panelAkuntansi extends JPanel {
                 .type(app.view.FixPanel.akuntansi.Akun.class)
                 .properties(
                         Tuple.of("No", "nomor", null),
-                        Tuple.of("Akun", "akun", null),
+                        Tuple.of("Mobil", "akun", null),
+                        Tuple.of("Status", "keterangan", null),
                         Tuple.of("Pengeluaran", "pengeluaran", f),
                         Tuple.of("Pengeluaran", "pemasukan", f),
                         Tuple.of("Profit", "profit", f)
                 )
-                .dataList(e);        
+                .dataList(e);    
+        
+        WriteStep MobilPrint1 = CSVUtil.of(mob1)
+                .type(app.view.FixPanel.akuntansi.Akun.class)
+                .properties(
+                        Tuple.of("No", "nomor", null),
+                        Tuple.of("Mobil", "akun", null),
+                        Tuple.of("Status", "keterangan", null),
+                        Tuple.of("Pengeluaran", "pengeluaran", f),
+                        Tuple.of("Pengeluaran", "pemasukan", f),
+                        Tuple.of("Profit", "profit", f)
+                )
+                .dataList(h);        
+        WriteStep MobilPrint2 = CSVUtil.of(mob2)
+                .type(app.view.FixPanel.akuntansi.Akun.class)
+                .properties(
+                        Tuple.of("No", "nomor", null),
+                        Tuple.of("Mobil", "akun", null),
+                        Tuple.of("Status", "keterangan", null),
+                        Tuple.of("Pengeluaran", "pengeluaran", f),
+                        Tuple.of("Pengeluaran", "pemasukan", f),
+                        Tuple.of("Profit", "profit", f)
+                )
+                .dataList(h);        
         try {
                  AkunPrinter.write();
                  LabaPrinter.write();
                  Simpulan.write();
                  MobilPrint.write();
+                 MobilPrint1.write();
+                 MobilPrint2.write();
+                 
          
         } catch (Exception ex) {
             javax
@@ -748,6 +888,8 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
@@ -755,6 +897,8 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
+    private javax.swing.JTable jTable7;
+    private javax.swing.JTable jTable8;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
