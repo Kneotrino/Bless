@@ -54,6 +54,8 @@
     <class>app.table.pembagianLaba</class>
     <class>app.table.Kirim</class>
     <class>app.table.Terima</class>
+    <class>app.table.BayarPihutangBunga</class>
+    <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>
       <property name="javax.persistence.jdbc.user" value="blessing"/>

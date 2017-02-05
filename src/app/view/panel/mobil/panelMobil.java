@@ -1641,7 +1641,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable1.setDefaultEditor(long.class, new app.utils.TablePopupEditor());
     jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-    jTable1.setCellSelectionEnabled(true);
+    jTable1.setColumnSelectionAllowed(false);
     jTable1.setRowHeight(24);
     jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -1651,6 +1651,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding.setColumnName("Ref");
     columnBinding.setColumnClass(Integer.class);
     columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${statusMobil}"));
+    columnBinding.setColumnName("Status");
+    columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiAktif}"));
     columnBinding.setColumnName("No Polisi Aktif");
     columnBinding.setColumnClass(String.class);
@@ -1713,9 +1716,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalJual}"));
     columnBinding.setColumnName("Tanggal Jual");
     columnBinding.setColumnClass(java.util.Date.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${statusMobil}"));
-    columnBinding.setColumnName("Status");
-    columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
     columnBinding.setColumnName("Keterangan");
     columnBinding.setColumnClass(String.class);
@@ -1725,7 +1725,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jScrollPane1.setViewportView(jTable1);
     if (jTable1.getColumnModel().getColumnCount() > 0) {
-        jTable1.getColumnModel().getColumn(21).setCellEditor(new DefaultCellEditor(jComboBox10)
+        jTable1.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(jComboBox10)
         );
     }
 
