@@ -156,9 +156,9 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItem22 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
@@ -410,26 +410,31 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem8);
 
-        jMenuItem18.setText("Rental Mobil");
+        jMenuItem18.setText("Jasa Rental Mobil");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem18ActionPerformed(evt);
             }
         });
         jMenu2.add(jMenuItem18);
-        jMenu2.add(jSeparator5);
 
-        jMenuItem22.setText("Management Hutang/Piutang");
-        jMenuItem22.setEnabled(false);
-        jMenu2.add(jMenuItem22);
-
-        jMenuItem14.setText("Peminjaman");
+        jMenuItem14.setText("Jasa Peminjaman");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem14ActionPerformed(evt);
             }
         });
         jMenu2.add(jMenuItem14);
+        jMenu2.add(jSeparator5);
+
+        jMenuItem22.setText("Management Hutang");
+        jMenuItem22.setEnabled(false);
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem22);
 
         jMenuItem15.setText("Pinjaman Bank");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
@@ -677,6 +682,10 @@ public class ShowRoom extends javax.swing.JFrame {
         this.jDialog2.hide();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     /**
      * @param args the command line arguments
