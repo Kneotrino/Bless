@@ -78,6 +78,16 @@ public class Piutang implements Serializable {
      * @return the value of LABA
      */
     public String getLABA() {
+        int res = getJumlahPimjaman().compareTo(getJumlahPelunasan());
+      String str1 = "Lunas ";
+      String str2 = "Lunas Lebih ";
+      String str3 = "Belum Lunas";
+      if( res == 0 )
+      return ( str1 );
+      else if( res == 1 )
+      return ( str2 );
+      else if( res == -1 )
+      return ( str3 );
         return LABA;
     }
 

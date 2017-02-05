@@ -14,6 +14,7 @@ import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -69,6 +70,10 @@ public class panelPiutang extends JPanel {
         newButton3 = new javax.swing.JButton();
         jDialog4 = new javax.swing.JDialog();
         inputPanel4 = new app.utils.inputPanel(app.table.BayarPihutangBunga.class);
+        jLabel5 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel6 = new javax.swing.JLabel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         jComboBox8 = new javax.swing.JComboBox<>();
         newButton4 = new javax.swing.JButton();
@@ -156,6 +161,14 @@ public class panelPiutang extends JPanel {
         jDialog4.setTitle("Pengeluaran");
         jDialog4.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog4.setType(java.awt.Window.Type.POPUP);
+
+        jLabel5.setText("TANGGAL AWAL");
+        inputPanel4.add(jLabel5);
+        inputPanel4.add(jDateChooser1);
+
+        jLabel6.setText("TANGGAL AKHIR");
+        inputPanel4.add(jLabel6);
+        inputPanel4.add(jDateChooser2);
 
         jLabel4.setText("Bank Sumber");
         inputPanel4.add(jLabel4);
@@ -447,6 +460,13 @@ public class panelPiutang extends JPanel {
         else if (evt.getSource() == newButton4)
         {
             b = (Bayarpihutang) this.inputPanel4.getTarget();
+            String ket = b.getKeterangan();
+            ket += " ";            
+            ket += jDateChooser1.getDate()!=null?formator.format(jDateChooser1.getDate()):" ";
+            ket += ">";
+            ket += jDateChooser2.getDate()!=null?formator.format(jDateChooser2.getDate()):" ";
+            ket += " ";  
+            b.setKeterangan(ket);
             ts.setBankId((Bank) this.jComboBox7.getSelectedItem());        
         }
         b.setTransaksi(ts);
@@ -459,7 +479,7 @@ public class panelPiutang extends JPanel {
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
     }//GEN-LAST:event_newDetailButtonActionPerformed
-    
+    SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
@@ -610,6 +630,8 @@ public class panelPiutang extends JPanel {
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox<String> jComboBox8;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -618,6 +640,8 @@ public class panelPiutang extends JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Piutang> list;
