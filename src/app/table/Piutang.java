@@ -234,13 +234,28 @@ public class Piutang implements Serializable {
 
     @XmlTransient
     public List<Bayarpihutang> getBayarpihutangList() {
-        return (List<Bayarpihutang>) Util.hitungSaldo(bayarpihutangList);
+        BigInteger temp = BigInteger.ZERO;
+        for (Bayarpihutang lap : bayarpihutangList) {
+            temp = temp.add(lap.getPemasukan());
+            temp = temp.subtract(lap.getPengeluaran());
+            temp = temp.subtract(lap.getBunga());
+            lap.setSaldo(temp);
+        }
+            return bayarpihutangList;
+//        return (List<Bayarpihutang>) Util.hitungSaldo(bayarpihutangList);
     }
 
     public void setBayarpihutangList(List<Bayarpihutang> bayarpihutangList) {
         this.bayarpihutangList = bayarpihutangList;
     }
-
+    public BigInteger getTotalBunga()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Bayarpihutang b : bayarpihutangList) {
+            temp = temp.add(b.getBunga());
+        }
+        return temp;
+    }
     @Override
     public int hashCode() {
         int hash = 0;

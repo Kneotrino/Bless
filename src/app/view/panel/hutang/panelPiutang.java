@@ -244,11 +244,15 @@ public class panelPiutang extends JPanel {
         columnBinding.setColumnName("Jaminan");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahPelunasan}"));
-        columnBinding.setColumnName("Peminjaman x");
+        columnBinding.setColumnName("T.Peminjaman");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahPimjaman}"));
-        columnBinding.setColumnName("Pelunasan x");
+        columnBinding.setColumnName("T.Pelunasan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalBunga}"));
+        columnBinding.setColumnName("T.Bunga");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${LABA}"));
@@ -337,7 +341,7 @@ public class panelPiutang extends JPanel {
         columnBinding.setColumnName("Bunga/Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
-        columnBinding.setColumnName("Sisa Hutang");
+        columnBinding.setColumnName("Profit/Balance");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
