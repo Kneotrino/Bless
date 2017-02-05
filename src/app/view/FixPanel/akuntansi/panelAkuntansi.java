@@ -833,12 +833,14 @@ public class panelAkuntansi extends JPanel {
         File laba = new File(root, "Laba-Rugi "+formator.format(p)+".CSV");
         File lap = new File(root, "Laporan profit "+formator.format(p)+".CSV");
         File mob = new File(root, "Mobil profit "+formator.format(p)+".CSV");
-        File mob1 = new File(root, "Open Mobil profit "+formator.format(p)+".CSV");
-        File mob2 = new File(root, "Close Mobil profit "+formator.format(p)+".CSV");
+        File jas = new File(root, "Jasa profit "+formator.format(p)+".CSV");
+        File mob1 = new File(root, "Open Profit "+formator.format(p)+".CSV");
+        File mob2 = new File(root, "Close Profit "+formator.format(p)+".CSV");
         cvs.add(akun);
         cvs.add(laba);
         cvs.add(lap);
         cvs.add(mob);
+        cvs.add(jas);
         cvs.add(mob1);
         cvs.add(mob2);
         
@@ -848,6 +850,7 @@ public class panelAkuntansi extends JPanel {
         List e = ProfitMobil;
         List h = Open;
         List g = Closed;
+        List j = ProfitJasa;
         final DecimalFormat IDR = new DecimalFormat("###0");              
         Function f = d -> d==null?"0":IDR.format(d);
         WriteStep AkunPrinter = CSVUtil.of(akun)
@@ -912,6 +915,17 @@ public class panelAkuntansi extends JPanel {
                         Tuple.of("Profit", "profit", f)
                 )
                 .dataList(h);        
+        WriteStep JasaPrint = CSVUtil.of(jas)
+                .type(app.view.FixPanel.akuntansi.Akun.class)
+                .properties(
+                        Tuple.of("No", "nomor", null),
+                        Tuple.of("Mobil", "akun", null),
+                        Tuple.of("Status", "keterangan", null),
+                        Tuple.of("Pengeluaran", "pengeluaran", f),
+                        Tuple.of("Pengeluaran", "pemasukan", f),
+                        Tuple.of("Profit", "profit", f)
+                )
+                .dataList(j);        
         try {
                  AkunPrinter.write();
                  LabaPrinter.write();
@@ -919,6 +933,7 @@ public class panelAkuntansi extends JPanel {
                  MobilPrint.write();
                  MobilPrint1.write();
                  MobilPrint2.write();
+                 JasaPrint.write();
                  
          
         } catch (Exception ex) {
@@ -930,9 +945,6 @@ public class panelAkuntansi extends JPanel {
         }
             int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
                     "Berhasil Print apakah anada ingin membuka File?"
-                            + "\nPath Neraca File= "+ akun
-                            + "\nPath Laporan profit File= "+ akun
-                            + "\nPath Laba-Rugi File= "+ laba
             );
             Desktop desktop = Desktop.getDesktop();
             try {
