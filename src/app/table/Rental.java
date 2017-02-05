@@ -67,8 +67,33 @@ public class Rental implements Serializable {
     @Column(name = "TGLSELESAI")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tglselesai;
-    @Column(name = "PEMAKAI", length = 255)
+    @Column(name = "PEMAKAI", length = 255)    
     private String pemakai;
+    @Column(name = "LABA", length = 255)
+    private String LABA = "OPEN";
+
+    public static final String PROP_LABA = "LABA";
+
+    /**
+     * Get the value of LABA
+     *
+     * @return the value of LABA
+     */
+    public String getLABA() {
+        return LABA;
+    }
+
+    /**
+     * Set the value of LABA
+     *
+     * @param LABA new value of LABA
+     */
+    public void setLABA(String LABA) {
+        String oldLABA = this.LABA;
+        this.LABA = LABA;
+        changeSupport.firePropertyChange(PROP_LABA, oldLABA, LABA);
+    }
+
     @Column(name = "JAMMULAI")
     @Temporal(TemporalType.TIMESTAMP)
     private Date jammulai = new Date();

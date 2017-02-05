@@ -100,6 +100,30 @@ public class Bpkbtitipan implements Serializable {
     @OneToMany(targetEntity = Bayarjasa.class,cascade = CascadeType.ALL)
     @OrderBy("tanggal ASC")
     private List<Bayarjasa> bayarjasaList;
+    @Column(name = "LABA", length = 32)
+    private String laba = "OPEN";
+
+    public static final String PROP_LABA = "laba";
+
+    /**
+     * Get the value of laba
+     *
+     * @return the value of laba
+     */
+    public String getLaba() {
+        return laba;
+    }
+
+    /**
+     * Set the value of laba
+     *
+     * @param laba new value of laba
+     */
+    public void setLaba(String laba) {
+        String oldLaba = this.laba;
+        this.laba = laba;
+        changeSupport.firePropertyChange(PROP_LABA, oldLaba, laba);
+    }
 
     public Bpkbtitipan() {
     }

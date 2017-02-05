@@ -65,9 +65,33 @@ public class Piutang implements Serializable {
     private String keterangan;
     @Lob
     @Column(name = "JAMINAN")
-    private String jaminan;
+    private String jaminan;    
     @Column(name = "PIMJAMAN")
     private BigInteger pimjaman = BigInteger.ZERO;
+    @Column(name = "LABA")
+    private String LABA = "Belum Lunas";
+    public static final String PROP_LABA = "LABA";
+
+    /**
+     * Get the value of LABA
+     *
+     * @return the value of LABA
+     */
+    public String getLABA() {
+        return LABA;
+    }
+
+    /**
+     * Set the value of LABA
+     *
+     * @param LABA new value of LABA
+     */
+    public void setLABA(String LABA) {
+        String oldLABA = this.LABA;
+        this.LABA = LABA;
+        changeSupport.firePropertyChange(PROP_LABA, oldLABA, LABA);
+    }
+
     @Column(name = "SISA")
     private BigInteger sisa = BigInteger.ZERO;
     @Column(name = "TGLBYR")

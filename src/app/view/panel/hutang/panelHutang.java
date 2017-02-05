@@ -67,6 +67,7 @@ public class panelHutang extends JPanel {
         inputPanel1 = new app.utils.inputPanel(app.table.Hutang.class);
         newButton = new javax.swing.JButton();
         jComboBox5 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -136,6 +137,7 @@ public class panelHutang extends JPanel {
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog1.setType(java.awt.Window.Type.POPUP);
 
+        inputPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INPUT DATA PEMINJAM", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
         jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
@@ -148,6 +150,8 @@ public class panelHutang extends JPanel {
         bindingGroup.addBinding(jComboBoxBinding);
 
         jDialog1.getContentPane().add(jComboBox5, java.awt.BorderLayout.PAGE_END);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SELESAI" }));
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -177,7 +181,6 @@ public class panelHutang extends JPanel {
 
         masterTable.setAutoCreateRowSorter(true);
         masterTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -220,9 +223,16 @@ public class panelHutang extends JPanel {
         columnBinding.setColumnName("Lunas");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${LABA}"));
+        columnBinding.setColumnName("P. Laba");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(12).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1)
+            );
+        }
 
         jPanel1.add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
@@ -336,11 +346,11 @@ public class panelHutang extends JPanel {
             else if (evt.getSource() == jButton4) {
                 panelHutang.this.jButton4ActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton5) {
-                panelHutang.this.jButton5ActionPerformed(evt);
-            }
             else if (evt.getSource() == jButton2) {
                 panelHutang.this.jButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton5) {
+                panelHutang.this.jButton5ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteDetailButton) {
                 panelHutang.this.deleteDetailButtonActionPerformed(evt);
@@ -576,6 +586,7 @@ public class panelHutang extends JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;

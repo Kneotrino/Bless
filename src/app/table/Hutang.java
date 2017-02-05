@@ -84,6 +84,32 @@ public class Hutang implements Serializable {
     private String nomorhp = "input";
     @Column(name = "NOMORKTP", length = 255)
     private String nomorktp = "input";
+    
+    @Column(name = "LABA", length = 255)
+    private String LABA = "OPEN";
+
+    public static final String PROP_LABA = "LABA";
+
+    /**
+     * Get the value of LABA
+     *
+     * @return the value of LABA
+     */
+    public String getLABA() {
+        return LABA;
+    }
+
+    /**
+     * Set the value of LABA
+     *
+     * @param LABA new value of LABA
+     */
+    public void setLABA(String LABA) {
+        String oldLABA = this.LABA;
+        this.LABA = LABA;
+        changeSupport.firePropertyChange(PROP_LABA, oldLABA, LABA);
+    }
+
     @Column(name = "SISAPINJAMAN")
     private BigInteger sisapinjaman = new BigInteger("110");
     @Column(name = "TANGGALLUNAS")

@@ -69,6 +69,7 @@ public class panelPiutang extends JPanel {
         newButton3 = new javax.swing.JButton();
         newDetailButton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -90,6 +91,7 @@ public class panelPiutang extends JPanel {
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog1.setType(java.awt.Window.Type.POPUP);
 
+        inputPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INPUT DATA PEMINJAMAN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
 
         jLabel3.setText("Bank Tujuan");
@@ -160,6 +162,8 @@ public class panelPiutang extends JPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.transaksi.bankId}"), jComboBox1, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SELESAI" }));
+
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         newButton1.setText("Tambah");
@@ -216,10 +220,16 @@ public class panelPiutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglakhir}"));
         columnBinding.setColumnName("Tanggal Akhir");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${LABA}"));
+        columnBinding.setColumnName("Lunas");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
         masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(8).setCellEditor(null);
+        }
 
         add(masterScrollPane);
 
@@ -545,6 +555,7 @@ public class panelPiutang extends JPanel {
     private app.utils.inputPanel inputPanel2;
     private app.utils.inputPanel inputPanel3;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;

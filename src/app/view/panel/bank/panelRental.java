@@ -72,6 +72,7 @@ public class panelRental extends JPanel {
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         newDetailButton = new javax.swing.JButton();
         jComboBox4 = new javax.swing.JComboBox<>();
+        jComboBox5 = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panelMobilRental1 = new app.view.panel.bank.PanelMobilRental();
         jPanel3 = new javax.swing.JPanel();
@@ -174,6 +175,8 @@ public class panelRental extends JPanel {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.transaksi.bankId}"), jComboBox4, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SELESAI" }));
+
         setLayout(new java.awt.GridLayout(1, 0));
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
@@ -240,6 +243,9 @@ public class panelRental extends JPanel {
         columnBinding.setColumnName("Mobilrental");
         columnBinding.setColumnClass(app.table.Mobilrental.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${LABA}"));
+        columnBinding.setColumnName("P. Laba");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -249,6 +255,8 @@ public class panelRental extends JPanel {
             masterTable.getColumnModel().getColumn(5).setPreferredWidth(60);
             masterTable.getColumnModel().getColumn(6).setPreferredWidth(60);
             masterTable.getColumnModel().getColumn(7).setPreferredWidth(200);
+            masterTable.getColumnModel().getColumn(8).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox5)
+            );
         }
 
         jPanel3.add(masterScrollPane);
@@ -611,6 +619,7 @@ public class panelRental extends JPanel {
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
