@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -106,6 +107,16 @@ public class Bpkbtitipan implements Serializable {
     private String laba = "OPEN";
 
     public static final String PROP_LABA = "laba";
+    @OneToOne(mappedBy = "b",cascade = CascadeType.ALL)
+    private BagiLaba bagiLaba;
+
+    public BagiLaba getBagiLaba() {
+        return bagiLaba;
+    }
+
+    public void setBagiLaba(BagiLaba bagiLaba) {
+        this.bagiLaba = bagiLaba;
+    }
 
     /**
      * Get the value of laba

@@ -5,6 +5,7 @@
  */
 package app.view.panel.hutang;
 
+import app.table.BagiLaba;
 import app.table.Bank;
 import app.table.Bayarhutang;
 import app.table.BayarhutangPengeluaran;
@@ -474,6 +475,8 @@ public class panelHutang extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Hutang h = (app.table.Hutang) this.inputPanel1.getTarget();
+        BagiLaba BL = new BagiLaba();
+        BL.setH(h);
         System.out.println("bayarpinjaman = " + h.getSisapinjaman());
         BayarhutangPengeluaran bp = new app.table.BayarhutangPengeluaran();
             Saldo ts = new app.table.Saldo();
@@ -488,6 +491,7 @@ public class panelHutang extends JPanel {
         h.setBunga(subtract);
         entityManager.persist(bp);
         entityManager.persist(h);
+        entityManager.persist(BL);
         list.add(h);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);

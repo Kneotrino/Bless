@@ -5,6 +5,7 @@
  */
 package app.view.panel.mobil;
 
+import app.table.BagiLaba;
 import app.table.Bank;
 import app.table.Bpkb;
 import app.table.Debitur;
@@ -1983,7 +1984,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         //relasikan data
         baru.setBpkb(bpkb);
         baru.setDebitur(debitur);        
+        BagiLaba bagiLaba = new BagiLaba();
+        bagiLaba.setM(baru);
         this.persist(baru);
+        this.persist(bagiLaba);
         this.debiturList1.add(debitur);
         this.bpkbList1.add(bpkb);
         this.mobilList.add(0,baru);        

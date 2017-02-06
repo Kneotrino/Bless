@@ -5,6 +5,7 @@
  */
 package app.view.FixPanel;
 
+import app.table.BagiLaba;
 import app.table.Bank;
 import app.table.Bpkbtitipan;
 import app.table.Laporan;
@@ -463,7 +464,10 @@ public class panelJasa extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Bpkbtitipan B = (app.table.Bpkbtitipan) this.inputPanel1.getTarget() ;
+        BagiLaba BL = new BagiLaba();
+        BL.setB(B);
         entityManager.persist(B);
+        entityManager.persist(BL);
         list.add(B);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);

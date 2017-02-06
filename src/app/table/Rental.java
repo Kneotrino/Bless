@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -74,6 +75,8 @@ public class Rental implements Serializable {
     private String LABA = "OPEN";
 
     public static final String PROP_LABA = "LABA";
+    @OneToOne(mappedBy = "r",cascade = CascadeType.ALL)
+    private BagiLaba bagiLaba;
 
     /**
      * Get the value of LABA
@@ -119,6 +122,7 @@ public class Rental implements Serializable {
     }
 
     public Rental(Integer rentalid) {
+        this.bagiLaba = new BagiLaba();
         this.rentalid = rentalid;
     }
 

@@ -5,6 +5,7 @@
  */
 package app.view.panel.bank;
 
+import app.table.BagiLaba;
 import app.table.Bank;
 import app.table.Bayarrental;
 import app.table.Laporan;
@@ -513,10 +514,13 @@ public class panelRental extends JPanel {
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
 //        app.table.Rental r = new app.table.Rental();
         app.table.Rental r = (app.table.Rental) this.inputPanel1.getTarget();
+        BagiLaba bagiLaba = new BagiLaba();
+        bagiLaba.setR(r);
         Object m = this.jComboBox1.getSelectedItem();
         r.setMobilrental((Mobilrental) m);
         r.setBayarrentalList(new LinkedList<Bayarrental>());
         entityManager.persist(r);
+        entityManager.persist(bagiLaba);
         list.add(r);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);

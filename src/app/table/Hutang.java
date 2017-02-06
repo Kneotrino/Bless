@@ -22,6 +22,7 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
@@ -89,6 +90,8 @@ public class Hutang implements Serializable {
     private String LABA = "OPEN";
 
     public static final String PROP_LABA = "LABA";
+    @OneToOne(mappedBy = "h",cascade = CascadeType.ALL)
+    private BagiLaba bagiLaba = new BagiLaba();
 
     /**
      * Get the value of LABA

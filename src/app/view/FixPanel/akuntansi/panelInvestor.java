@@ -83,6 +83,8 @@ public class panelInvestor extends JPanel {
         jButton4 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox<>();
         newDetailButton = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -99,6 +101,7 @@ public class panelInvestor extends JPanel {
         saveButton = new javax.swing.JButton();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
+        panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba();
 
         FormListener formListener = new FormListener();
 
@@ -185,6 +188,8 @@ public class panelInvestor extends JPanel {
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.PAGE_AXIS));
+
         newButton1.setText("Investor Baru");
         newButton1.addActionListener(formListener);
         jPanel2.add(newButton1);
@@ -205,7 +210,7 @@ public class panelInvestor extends JPanel {
         saveButton1.addActionListener(formListener);
         jPanel2.add(saveButton1);
 
-        add(jPanel2);
+        jPanel3.add(jPanel2);
 
         masterTable.setCellSelectionEnabled(true);
 
@@ -245,7 +250,7 @@ public class panelInvestor extends JPanel {
         masterScrollPane.setViewportView(masterTable);
         masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        add(masterScrollPane);
+        jPanel3.add(masterScrollPane);
 
         newDetailButton1.setText("Modal/Pemasukan");
 
@@ -287,7 +292,7 @@ public class panelInvestor extends JPanel {
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
-        add(jPanel1);
+        jPanel3.add(jPanel1);
 
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
@@ -332,7 +337,12 @@ public class panelInvestor extends JPanel {
             detailTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox3));
         }
 
-        add(detailScrollPane);
+        jPanel3.add(detailScrollPane);
+
+        jTabbedPane1.addTab("INVESTOR", jPanel3);
+        jTabbedPane1.addTab("BAGI LABA", panelBagiLaba1);
+
+        add(jTabbedPane1);
 
         bindingGroup.bind();
     }
@@ -397,6 +407,7 @@ public class panelInvestor extends JPanel {
         this.bankList.clear();
         this.bankList.addAll(bankQuery.getResultList());
         this.refreshButtonActionPerformed(null);
+        this.panelBagiLaba1.Refresh();
     }
     
     private void deleteDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDetailButtonActionPerformed
@@ -644,6 +655,8 @@ public class panelInvestor extends JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private java.util.List<app.table.Investor> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
@@ -653,6 +666,7 @@ public class panelInvestor extends JPanel {
     private javax.swing.JButton newDetailButton1;
     private javax.swing.JButton newDetailButton2;
     private javax.swing.JButton newDetailButton3;
+    private app.view.FixPanel.akuntansi.panelBagiLaba panelBagiLaba1;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton refreshButton1;
