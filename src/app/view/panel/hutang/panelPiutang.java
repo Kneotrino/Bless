@@ -334,7 +334,7 @@ public class panelPiutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Peminjaman/Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran2}"));
         columnBinding.setColumnName("Pelunasan/Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bunga}"));
@@ -388,6 +388,9 @@ public class panelPiutang extends JPanel {
             else if (evt.getSource() == newDetailButton2) {
                 panelPiutang.this.newDetailButton2ActionPerformed(evt);
             }
+            else if (evt.getSource() == newDetailButton3) {
+                panelPiutang.this.newDetailButton3ActionPerformed(evt);
+            }
             else if (evt.getSource() == deleteDetailButton) {
                 panelPiutang.this.deleteDetailButtonActionPerformed(evt);
             }
@@ -406,14 +409,11 @@ public class panelPiutang extends JPanel {
             else if (evt.getSource() == newButton3) {
                 panelPiutang.this.newButton3ActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton) {
-                panelPiutang.this.newDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newDetailButton3) {
-                panelPiutang.this.newDetailButton3ActionPerformed(evt);
-            }
             else if (evt.getSource() == newButton4) {
                 panelPiutang.this.newButton4ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newDetailButton) {
+                panelPiutang.this.newDetailButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

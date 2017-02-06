@@ -219,7 +219,7 @@ public class Printer {
                                 Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
                                 Tuple.of("Keterangan", "keterangan", d -> d),
                                 Tuple.of("Peminjaman/Pemasukan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
-                                Tuple.of("Pelunasan/Pengeluaran", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pelunasan/Pengeluaran", "pengeluaran2", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Bunga/Pengeluaran", "bunga", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
                                 Tuple.of("Bank", "transaksi.bankId", d -> d)

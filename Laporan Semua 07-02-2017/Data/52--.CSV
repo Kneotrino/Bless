@@ -1,0 +1,4 @@
+"Ref","Tanggal","Keterangan","Peminjaman/Pemasukan","Pelunasan/Pengeluaran","Bunga/Pengeluaran","Profit/Balance","Bank"
+"101","07/02/2017","","0","300000","0","-300000","[ Tujuan/Sumber =Kas;REF=-1 ]"
+"54","07/02/2017","  >  ","0","0","500000","-1300000","[ Tujuan/Sumber =Kas;REF=-1 ]"
+"51","07/02/2017","input","20000000","0","0","18700000","[ Tujuan/Sumber =Kas;REF=-1 ]"

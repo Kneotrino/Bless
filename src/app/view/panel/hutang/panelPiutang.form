@@ -717,7 +717,7 @@
                 <BindingParameter name="NAME" value="Peminjaman/Pemasukan"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${pengeluaran}">
+              <Subbinding sourcePath="${pengeluaran2}">
                 <BindingParameter name="NAME" value="Pelunasan/Pengeluaran"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>

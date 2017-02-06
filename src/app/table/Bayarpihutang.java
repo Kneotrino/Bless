@@ -47,8 +47,8 @@ public class Bayarpihutang extends Laporan implements Serializable {
             javax.swing.JOptionPane.showMessageDialog(null,  "Tidak bisa di edit");
     }
     
-    @Override
-        public BigInteger getPengeluaran() {
+//    @Override
+        public BigInteger getPengeluaran2() {
         if (this instanceof app.table.BayarPihutangBunga) {
             return BigInteger.ZERO;
         }
@@ -58,8 +58,8 @@ public class Bayarpihutang extends Laporan implements Serializable {
             return getJumlah();
         return BigInteger.ONE;
     }
-    @Override
-       public void setPengeluaran(BigInteger jumlah) {
+//    @Override
+       public void setPengeluaran2(BigInteger jumlah) {
        if (this instanceof app.table.BayarPihutangBunga) {
             javax.swing.JOptionPane.showMessageDialog(null,  "Pengeluran tidak bisa di edit");
         }

@@ -215,6 +215,9 @@ public class panelAkuntansi extends JPanel {
         Akun bebanMobil = new Akun()
                 .setAkun("Beban Mobil")
                 .setPemasukan(sumAll(getList(app.table.MobilPengeluaran.class)));
+        Akun bebanBunga = new Akun()
+                .setAkun("Beban Bunga")
+                .setPemasukan(sumAll(getList(app.table.BayarPihutangBunga.class)));
         Akun PembagianLaba = new Akun()
                 .setAkun("Pembagian Laba")
                 .setPemasukan(sumAll(getList(app.table.pembagianLaba.class)));
@@ -244,6 +247,7 @@ public class panelAkuntansi extends JPanel {
         LabaList.add(Peminjaman);
         //Akun Pengeluaran        
         AkuntansiList.add(sisaHutang);
+        AkuntansiList.add(bebanBunga);
         AkuntansiList.add(bebanMobil);
         AkuntansiList.add(bebanPeminjaman);
         AkuntansiList.add(pengeluaranRental);

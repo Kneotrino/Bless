@@ -1,0 +1,4 @@
+"Ref","Tanggal","Keterangan","Pemasukan","Pengeluaran","Saldo","Jenis","Bank"
+"102","07/02/2017","","0","300000","-300000","BayarPihutangPengeluaran","[ Tujuan/Sumber =Kas;REF=-1 ]"
+"55","07/02/2017","  >  ","0","500000","-800000","BayarPihutangBunga","[ Tujuan/Sumber =Kas;REF=-1 ]"
+"53","07/02/2017","input","20000000","0","19200000","BayarPihutangPemasukan","[ Tujuan/Sumber =Kas;REF=-1 ]"

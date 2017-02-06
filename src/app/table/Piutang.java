@@ -163,7 +163,7 @@ public class Piutang implements Serializable {
         BigInteger temp = BigInteger.ZERO;
         List<Bayarpihutang> BP = getBayarpihutangList();
         for (Bayarpihutang bayarpihutang : BP) {
-            temp = temp.add(bayarpihutang.getPengeluaran());
+            temp = temp.add(bayarpihutang.getPengeluaran2());
         }
         return temp;
     }
@@ -171,7 +171,7 @@ public class Piutang implements Serializable {
         BigInteger temp = BigInteger.ZERO;
         List<Bayarpihutang> BP = getBayarpihutangList();
         for (Bayarpihutang bayarpihutang : BP) {
-            temp = temp.add(bayarpihutang.getPemasukan());
+            temp = temp.add(bayarpihutang.getPemasukan( ));
         }
         return temp;
     }
