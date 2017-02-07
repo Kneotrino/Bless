@@ -256,6 +256,7 @@ public class panelAkuntansi extends JPanel {
         AkuntansiList.add(Operasional);
         AkuntansiList.add(Pegawai);                    
         AkuntansiList.add(Asset);
+        LabaList.add(bebanBunga);
         LabaList.add(sisaHutang);
         LabaList.add(bebanMobil);
         LabaList.add(bebanPeminjaman);
@@ -487,6 +488,8 @@ public class panelAkuntansi extends JPanel {
               pengeluaran.add(sumAll(getMonthList(app.table.Asset.class,profit.getNomor())));
       pengeluaran = 
               pengeluaran.add(sumAll(getMonthList(app.table.pembagianLaba.class,profit.getNomor())));      
+      pengeluaran = 
+              pengeluaran.add(sumAll(getMonthList(app.table.BayarPihutangBunga.class,profit.getNomor())));      
       //set pemasukan dan pengeluaran
       profit.setPemasukan(pemasukan);
       profit.setPengeluaran(pengeluaran);
