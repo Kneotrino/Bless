@@ -128,7 +128,7 @@ public class panelBagiLaba extends JPanel {
             masterTable.getColumnModel().getColumn(0).setMaxWidth(75);
             masterTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jComboBox1));
         }
-        masterTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jComboBox1));
+        masterTable.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(jComboBox1));
         masterTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox1));
         masterTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(jComboBox1));
 
