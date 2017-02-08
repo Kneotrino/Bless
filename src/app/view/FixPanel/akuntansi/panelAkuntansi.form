@@ -848,15 +848,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="app.view.FixPanel.akuntansi.panelBayarSewa" name="panelBayarSewa1">
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="BAYAR SEWA">
-                    <Property name="tabTitle" type="java.lang.String" value="BAYAR SEWA"/>
-                  </JTabbedPaneConstraints>
-                </Constraint>
-              </Constraints>
-            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

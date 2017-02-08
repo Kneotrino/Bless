@@ -102,6 +102,7 @@ public class panelInvestor extends JPanel {
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba();
+        panelBayarSewa1 = new app.view.FixPanel.akuntansi.panelBayarSewa();
 
         FormListener formListener = new FormListener();
 
@@ -341,6 +342,7 @@ public class panelInvestor extends JPanel {
 
         jTabbedPane1.addTab("INVESTOR", jPanel3);
         jTabbedPane1.addTab("BAGI LABA", panelBagiLaba1);
+        jTabbedPane1.addTab("BAYAR SEWA", panelBayarSewa1);
 
         add(jTabbedPane1);
 
@@ -408,6 +410,7 @@ public class panelInvestor extends JPanel {
         this.bankList.addAll(bankQuery.getResultList());
         this.refreshButtonActionPerformed(null);
         this.panelBagiLaba1.Refresh();
+        this.panelBayarSewa1.Refresh();
     }
     
     private void deleteDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDetailButtonActionPerformed
@@ -667,6 +670,7 @@ public class panelInvestor extends JPanel {
     private javax.swing.JButton newDetailButton2;
     private javax.swing.JButton newDetailButton3;
     private app.view.FixPanel.akuntansi.panelBagiLaba panelBagiLaba1;
+    private app.view.FixPanel.akuntansi.panelBayarSewa panelBayarSewa1;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton refreshButton1;

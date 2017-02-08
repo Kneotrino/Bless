@@ -573,7 +573,6 @@ public class panelAkuntansi extends JPanel {
         jTable7 = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable8 = new javax.swing.JTable();
-        panelBayarSewa1 = new app.view.FixPanel.akuntansi.panelBayarSewa();
 
         FormListener formListener = new FormListener();
 
@@ -835,7 +834,6 @@ public class panelAkuntansi extends JPanel {
         }
 
         jTabbedPane1.addTab("PROFIT CLOSE", jScrollPane8);
-        jTabbedPane1.addTab("BAYAR SEWA", panelBayarSewa1);
 
         jPanel1.add(jTabbedPane1);
 
@@ -1039,7 +1037,6 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
     private javax.swing.JTable jTable9;
-    private app.view.FixPanel.akuntansi.panelBayarSewa panelBayarSewa1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
