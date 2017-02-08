@@ -182,6 +182,12 @@
         <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
           <Properties>
             <Property name="tabPlacement" type="int" value="3"/>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[317, 400]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[467, 800]"/>
+            </Property>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
@@ -416,16 +422,16 @@
                         <BindingParameter name="NAME" value="Akun"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
+                      <Subbinding sourcePath="${profit}">
+                        <BindingParameter name="NAME" value="Profit"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                      </Subbinding>
                       <Subbinding sourcePath="${pengeluaran}">
                         <BindingParameter name="NAME" value="Pengeluaran"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${pemasukan}">
                         <BindingParameter name="NAME" value="Pemasukan"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${profit}">
-                        <BindingParameter name="NAME" value="Profit"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                     </BindingProperty>
@@ -842,6 +848,15 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="app.view.FixPanel.akuntansi.panelBayarSewa" name="panelBayarSewa1">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="BAYAR SEWA">
+                    <Property name="tabTitle" type="java.lang.String" value="BAYAR SEWA"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

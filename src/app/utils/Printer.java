@@ -97,6 +97,7 @@ public class Printer {
                     PrintLaporan(folder, Pemasukan.class);
                     PrintLaporan(folder, Pengeluaran.class);
                     PrintLaporan(folder, pembagianLaba.class);                    
+                    PrintLaporan(folder, app.table.Bayarsewa.class);                    
                 try {
                     Desktop.getDesktop().open(folder);
                 } catch (IOException ex) {

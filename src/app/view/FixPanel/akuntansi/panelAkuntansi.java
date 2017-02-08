@@ -232,6 +232,9 @@ public class panelAkuntansi extends JPanel {
             jumlahhutang = jumlahhutang.subtract(bayarhutang);
             sisaHutang.setPengeluaran(jumlahhutang);
         }
+        Akun Bayasewa = new Akun()
+                .setAkun("Beban Sewa Ruko")
+                .setPemasukan(sumAll(getList(app.table.Bayarsewa.class)));
         AkuntansiList.add(ModalSebelumnya);
         AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
         AkuntansiList.add(PembagianLaba);
@@ -256,6 +259,7 @@ public class panelAkuntansi extends JPanel {
         AkuntansiList.add(Operasional);
         AkuntansiList.add(Pegawai);                    
         AkuntansiList.add(Asset);
+        AkuntansiList.add(Bayasewa);
         LabaList.add(bebanBunga);
         LabaList.add(sisaHutang);
         LabaList.add(bebanMobil);
@@ -266,6 +270,7 @@ public class panelAkuntansi extends JPanel {
         LabaList.add(Operasional);
         LabaList.add(Pegawai);                    
         LabaList.add(Asset);
+        LabaList.add(Bayasewa);
 
         X = 1;
         total.setPemasukan(BigInteger.ZERO);
@@ -330,7 +335,7 @@ public class panelAkuntansi extends JPanel {
         //Penyesuaian
 //        BigInteger totalProfit = BigInteger.ZERO;
         Akun totalProfit = new Akun()
-                .setAkun("Total profit " + Calendar.getInstance().get(Calendar.YEAR));
+                .setAkun("Total " + Calendar.getInstance().get(Calendar.YEAR));
         for (int i = 1; i < 13; i++) {
             Akun temp = new Akun(i);
             LaporanPenyesuaian.add( ProfitBulanan(temp) );
@@ -338,10 +343,6 @@ public class panelAkuntansi extends JPanel {
             totalProfit.addPengeluaran(temp.getPengeluaran());
         }
         LaporanPenyesuaian.add(totalProfit);
-//        Akun labaditahan = new Akun()
-//                .setAkun("Total Laba di tahan sebesar 25%");
-//        labaditahan.setPemasukan(totalProfit.getProfit().divide(new BigInteger("4")));        
-//        LaporanPenyesuaian.add(labaditahan);        
         TypedQuery createQuery = entityManager.createQuery("SELECT m FROM Mobil m", app.table.Mobil.class);
         TypedQuery createQuery1 = entityManager.createQuery("SELECT m FROM Bpkbtitipan m", app.table.Bpkbtitipan.class);
         TypedQuery createQuery2 = entityManager.createQuery("SELECT m FROM Rental m", app.table.Rental.class);
@@ -437,11 +438,21 @@ public class panelAkuntansi extends JPanel {
             Closed.add(TC);
             Akun LabaMobilTahan = new Akun()
                     .setPemasukan(TC.getProfit().divide(new BigInteger("4")))
-//                    .setPengeluaran(TC.getPengeluaran().divide(new BigInteger("4")))
                     ;
             LabaMobilTahan.setAkun("Laba di tahan 25 %");
-//            LabaMobilTahan.setProfit(TC.getProfit().divide(new BigInteger("4")));
+            Akun BayarRuko = new Akun()
+                    .setAkun("Bayar Ruko Tahun " + Calendar.getInstance().get(Calendar.YEAR))
+                    .setPengeluaran(sumAll(getYearList(app.table.Bayarsewa.class)));
+
+            Closed.add(new Akun());
             Closed.add(LabaMobilTahan);
+            Closed.add(BayarRuko);
+            Closed.add(new Akun()
+                    .setAkun("Sisa Laba Di tahan " + Calendar.getInstance().get(Calendar.YEAR))
+                    .setPemasukan(LabaMobilTahan.getPemasukan())
+                    .setPengeluaran(BayarRuko.getPengeluaran())
+            );
+                    
             
         initComponents();
     }
@@ -490,6 +501,8 @@ public class panelAkuntansi extends JPanel {
               pengeluaran.add(sumAll(getMonthList(app.table.pembagianLaba.class,profit.getNomor())));      
       pengeluaran = 
               pengeluaran.add(sumAll(getMonthList(app.table.BayarPihutangBunga.class,profit.getNomor())));      
+      pengeluaran = 
+              pengeluaran.add(sumAll(getMonthList(app.table.Bayarsewa.class,profit.getNomor())));      
       //set pemasukan dan pengeluaran
       profit.setPemasukan(pemasukan);
       profit.setPengeluaran(pengeluaran);
@@ -510,6 +523,22 @@ public class panelAkuntansi extends JPanel {
                 ;
         return createQuery.getResultList();
     }
+    public List getYearList(Class kelas)
+    {
+        String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
+                + "where en.tanggal BETWEEN :startDate AND :endDate"
+                ;
+       Date bulanAwal = new Date(akhirBulan.getYear(), 0, 0);
+        System.out.println("Tahun Awal = " + bulanAwal);
+       Date bulanAkhir = new Date(akhirBulan.getYear()+1, 0, 0);
+        System.out.println("Tahun Akhir = " + bulanAkhir);
+       TypedQuery createQuery = entityManager.createQuery(que, kelas)
+                .setParameter("startDate", bulanAwal, TemporalType.TIMESTAMP)
+                .setParameter("endDate", bulanAkhir, TemporalType.TIMESTAMP)  
+                ;
+        return createQuery.getResultList();
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -544,6 +573,7 @@ public class panelAkuntansi extends JPanel {
         jTable7 = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable8 = new javax.swing.JTable();
+        panelBayarSewa1 = new app.view.FixPanel.akuntansi.panelBayarSewa();
 
         FormListener formListener = new FormListener();
 
@@ -581,6 +611,8 @@ public class panelAkuntansi extends JPanel {
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        jTabbedPane1.setMinimumSize(new java.awt.Dimension(317, 400));
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(467, 800));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
@@ -649,14 +681,14 @@ public class panelAkuntansi extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
         columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Pemasukan");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
-        columnBinding.setColumnName("Profit");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -803,6 +835,7 @@ public class panelAkuntansi extends JPanel {
         }
 
         jTabbedPane1.addTab("PROFIT CLOSE", jScrollPane8);
+        jTabbedPane1.addTab("BAYAR SEWA", panelBayarSewa1);
 
         jPanel1.add(jTabbedPane1);
 
@@ -1006,6 +1039,7 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
     private javax.swing.JTable jTable9;
+    private app.view.FixPanel.akuntansi.panelBayarSewa panelBayarSewa1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
