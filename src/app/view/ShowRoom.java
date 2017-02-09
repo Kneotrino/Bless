@@ -322,7 +322,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem30);
 
-        jMenuItem27.setText("Investor/Pemilik Modal");
+        jMenuItem27.setText("Investor/Pemilik Modal $ Status Profit");
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem27ActionPerformed(evt);

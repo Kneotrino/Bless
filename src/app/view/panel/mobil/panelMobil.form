@@ -127,7 +127,10 @@
             </Constraint>
           </Constraints>
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+            <Property name="columns" type="int" value="0"/>
+            <Property name="rows" type="int" value="1"/>
+          </Layout>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jScrollPane4">
               <Properties>
@@ -140,11 +143,6 @@
                   <Dimension value="[400, 713]"/>
                 </Property>
               </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                  <BorderConstraints direction="West"/>
-                </Constraint>
-              </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
@@ -345,11 +343,6 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel1">
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                  <BorderConstraints direction="Center"/>
-                </Constraint>
-              </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
               <SubComponents>
@@ -1695,6 +1688,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="jLabel54">
                       <Properties>
+                        <Property name="text" type="java.lang.String" value="1"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[300, 120]"/>
                         </Property>
@@ -1702,19 +1696,13 @@
                       <BindingProperties>
                         <BindingProperty name="icon" source="jTable1" sourcePath="${selectedElement.gambar1}" target="jLabel54" targetPath="icon" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel72">
-                      <Properties>
-                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[300, 120]"/>
-                        </Property>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="icon" source="jTable1" sourcePath="${selectedElement.gambar2}" target="jLabel72" targetPath="icon" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel54MouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel73">
                       <Properties>
+                        <Property name="text" type="java.lang.String" value="3"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[300, 120]"/>
                         </Property>
@@ -1722,19 +1710,13 @@
                       <BindingProperties>
                         <BindingProperty name="icon" source="jTable1" sourcePath="${selectedElement.gambar3}" target="jLabel73" targetPath="icon" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel74">
-                      <Properties>
-                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[300, 120]"/>
-                        </Property>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="icon" source="jTable1" sourcePath="${selectedElement.gambar4}" target="jLabel74" targetPath="icon" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel73MouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel75">
                       <Properties>
+                        <Property name="text" type="java.lang.String" value="5"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[300, 120]"/>
                         </Property>
@@ -1742,9 +1724,41 @@
                       <BindingProperties>
                         <BindingProperty name="icon" source="jTable1" sourcePath="${selectedElement.gambar5}" target="jLabel75" targetPath="icon" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel75MouseClicked"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel72">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="2"/>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[300, 120]"/>
+                        </Property>
+                      </Properties>
+                      <BindingProperties>
+                        <BindingProperty name="icon" source="jTable1" sourcePath="${selectedElement.gambar2}" target="jLabel72" targetPath="icon" updateStrategy="0" immediately="false"/>
+                      </BindingProperties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel72MouseClicked"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel74">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="4"/>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[300, 120]"/>
+                        </Property>
+                      </Properties>
+                      <BindingProperties>
+                        <BindingProperty name="icon" source="jTable1" sourcePath="${selectedElement.gambar4}" target="jLabel74" targetPath="icon" updateStrategy="0" immediately="false"/>
+                      </BindingProperties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel74MouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel76">
                       <Properties>
+                        <Property name="text" type="java.lang.String" value="6"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[300, 120]"/>
                         </Property>
@@ -1752,6 +1766,9 @@
                       <BindingProperties>
                         <BindingProperty name="icon" source="jTable1" sourcePath="${selectedElement.gambar6}" target="jLabel76" targetPath="icon" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel76MouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -2313,6 +2330,7 @@
                   <Properties>
                     <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                     <Property name="autoResizeMode" type="int" value="0"/>
+                    <Property name="cellSelectionEnabled" type="boolean" value="true"/>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">

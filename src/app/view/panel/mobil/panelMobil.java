@@ -297,10 +297,10 @@ public void Refresh()
         jScrollPane6 = new javax.swing.JScrollPane();
         jPanel14 = new javax.swing.JPanel();
         jLabel54 = new javax.swing.JLabel();
-        jLabel72 = new javax.swing.JLabel();
         jLabel73 = new javax.swing.JLabel();
-        jLabel74 = new javax.swing.JLabel();
         jLabel75 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
         jLabel76 = new javax.swing.JLabel();
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
@@ -372,7 +372,7 @@ public void Refresh()
         addMobil.setSize(new java.awt.Dimension(1000, 700));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
-        jPanel6.setLayout(new java.awt.BorderLayout());
+        jPanel6.setLayout(new java.awt.GridLayout());
 
         jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jScrollPane4.setPreferredSize(new java.awt.Dimension(400, 713));
@@ -500,7 +500,7 @@ public void Refresh()
 
         jScrollPane4.setViewportView(jPanel4);
 
-        jPanel6.add(jScrollPane4, java.awt.BorderLayout.WEST);
+        jPanel6.add(jScrollPane4);
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -614,7 +614,7 @@ public void Refresh()
 
         jPanel1.add(jPanel3);
 
-        jPanel6.add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanel6.add(jPanel1);
 
         addMobil.getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
 
@@ -1316,46 +1316,82 @@ public void Refresh()
         jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 1, true), "GAMBAR MOBIL"));
         jPanel14.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
 
+        jLabel54.setText("1");
         jLabel54.setPreferredSize(new java.awt.Dimension(300, 120));
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar1}"), jLabel54, org.jdesktop.beansbinding.BeanProperty.create("icon"));
         bindingGroup.addBinding(binding);
 
+        jLabel54.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel54MouseClicked(evt);
+            }
+        });
         jPanel14.add(jLabel54);
 
-        jLabel72.setPreferredSize(new java.awt.Dimension(300, 120));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar2}"), jLabel72, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
-        jPanel14.add(jLabel72);
-
+        jLabel73.setText("3");
         jLabel73.setPreferredSize(new java.awt.Dimension(300, 120));
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar3}"), jLabel73, org.jdesktop.beansbinding.BeanProperty.create("icon"));
         bindingGroup.addBinding(binding);
 
+        jLabel73.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel73MouseClicked(evt);
+            }
+        });
         jPanel14.add(jLabel73);
 
-        jLabel74.setPreferredSize(new java.awt.Dimension(300, 120));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar4}"), jLabel74, org.jdesktop.beansbinding.BeanProperty.create("icon"));
-        bindingGroup.addBinding(binding);
-
-        jPanel14.add(jLabel74);
-
+        jLabel75.setText("5");
         jLabel75.setPreferredSize(new java.awt.Dimension(300, 120));
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar5}"), jLabel75, org.jdesktop.beansbinding.BeanProperty.create("icon"));
         bindingGroup.addBinding(binding);
 
+        jLabel75.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel75MouseClicked(evt);
+            }
+        });
         jPanel14.add(jLabel75);
 
+        jLabel72.setText("2");
+        jLabel72.setPreferredSize(new java.awt.Dimension(300, 120));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar2}"), jLabel72, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        bindingGroup.addBinding(binding);
+
+        jLabel72.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel72MouseClicked(evt);
+            }
+        });
+        jPanel14.add(jLabel72);
+
+        jLabel74.setText("4");
+        jLabel74.setPreferredSize(new java.awt.Dimension(300, 120));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar4}"), jLabel74, org.jdesktop.beansbinding.BeanProperty.create("icon"));
+        bindingGroup.addBinding(binding);
+
+        jLabel74.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel74MouseClicked(evt);
+            }
+        });
+        jPanel14.add(jLabel74);
+
+        jLabel76.setText("6");
         jLabel76.setPreferredSize(new java.awt.Dimension(300, 120));
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.gambar6}"), jLabel76, org.jdesktop.beansbinding.BeanProperty.create("icon"));
         bindingGroup.addBinding(binding);
 
+        jLabel76.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel76MouseClicked(evt);
+            }
+        });
         jPanel14.add(jLabel76);
 
         jScrollPane6.setViewportView(jPanel14);
@@ -1642,7 +1678,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable1.setDefaultEditor(long.class, new app.utils.TablePopupEditor());
     jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-    jTable1.setColumnSelectionAllowed(false);
+    jTable1.setCellSelectionEnabled(true);
     jTable1.setRowHeight(24);
     jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -2245,7 +2281,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
-         int returnVal = this.jFileChooser6.showOpenDialog(this);    
+    int returnVal = this.jFileChooser6.showOpenDialog(this);    
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         try {
             this.jTextField18.setText(this.jFileChooser6.getSelectedFile().getCanonicalPath());
@@ -2265,8 +2301,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         int returnVal = this.jFileChooser7.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
-                this.jTextField40.setText(this.jFileChooser7.getSelectedFile().getCanonicalPath());
-                
+                this.jTextField40.setText(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -2579,6 +2614,90 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         bpkbList1.addAll(bpkbQuery1.getResultList());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton27ActionPerformed
+
+    private void jLabel54MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel54MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setTampilanDepan(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel54MouseClicked
+
+    private void jLabel74MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel74MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setTampilanSmpKanan(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel74MouseClicked
+
+    private void jLabel72MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel72MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setTampilanSmpKanan(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel72MouseClicked
+
+    private void jLabel75MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel75MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setInteriorI(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel75MouseClicked
+
+    private void jLabel73MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel73MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setTampilanSmpKiri(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel73MouseClicked
+
+    private void jLabel76MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel76MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setInteriorIi(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel76MouseClicked
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
