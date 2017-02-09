@@ -128,6 +128,8 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panelModal1 = new app.view.FixPanel.panelModal();
         panelInvestor1 = new app.view.FixPanel.akuntansi.panelInvestor();
+        jPanel9 = new app.view.FixPanel.panelMaster(app.table.Bayarsewa.class)
+        ;
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -137,6 +139,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem20 = new javax.swing.JMenuItem();
@@ -257,6 +260,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(jPanel8, "card2");
         getContentPane().add(panelModal1, "Modal");
         getContentPane().add(panelInvestor1, "Investor");
+        getContentPane().add(jPanel9, "BayarSewa");
 
         jMenu1.setText("Akutansi");
 
@@ -268,7 +272,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Laporan Bulanan x");
+        jMenuItem2.setText("Laporan Bulanan");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -276,7 +280,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem11.setText("Transaksi Harian x");
+        jMenuItem11.setText("Transaksi Harian");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
@@ -309,6 +313,14 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem3);
+
+        jMenuItem30.setText("Bayar Sewa Ruko");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem30);
 
         jMenuItem27.setText("Investor/Pemilik Modal");
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
@@ -687,6 +699,12 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        ((app.view.FixPanel.panelMaster)this.jPanel2).Refresh();
+        this.chandePanel("BayarSewa");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -761,6 +779,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -775,6 +794,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;

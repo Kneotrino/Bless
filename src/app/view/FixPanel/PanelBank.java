@@ -330,6 +330,9 @@ public class PanelBank extends JPanel {
             else if (evt.getSource() == saveButton) {
                 PanelBank.this.saveButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton5) {
+                PanelBank.this.jButton5ActionPerformed(evt);
+            }
             else if (evt.getSource() == newButton) {
                 PanelBank.this.newButtonActionPerformed(evt);
             }
@@ -341,9 +344,6 @@ public class PanelBank extends JPanel {
             }
             else if (evt.getSource() == jButton2) {
                 PanelBank.this.jButton2ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton5) {
-                PanelBank.this.jButton5ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton6) {
                 PanelBank.this.jButton6ActionPerformed(evt);
@@ -477,7 +477,10 @@ public class PanelBank extends JPanel {
 //        p2.setTransaksi(trans1);
         trans.setLaporan(p1);
         trans1.setLaporan(p2);
-        p1.setJumlah(BigInteger.valueOf((long) jFormattedTextField2.getValue()));
+        try {
+        p1.setJumlah(BigInteger.valueOf((long) jFormattedTextField2.getValue()));            
+        } catch (Exception e) {
+        }
         p2.setJumlah(b.getTotalKredit());
         entityManager.persist(p1);
 //        entityManager.persist(p2);

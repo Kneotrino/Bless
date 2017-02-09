@@ -701,17 +701,8 @@
         <Component class="app.view.FixPanel.akuntansi.panelBagiLaba" name="panelBagiLaba1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="BAGI LABA">
-                <Property name="tabTitle" type="java.lang.String" value="BAGI LABA"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="app.view.FixPanel.akuntansi.panelBayarSewa" name="panelBayarSewa1">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="BAYAR SEWA">
-                <Property name="tabTitle" type="java.lang.String" value="BAYAR SEWA"/>
+              <JTabbedPaneConstraints tabName="MOBIL DAN JASA STATUS">
+                <Property name="tabTitle" type="java.lang.String" value="MOBIL DAN JASA STATUS"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>

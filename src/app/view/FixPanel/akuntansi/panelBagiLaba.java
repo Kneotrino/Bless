@@ -92,7 +92,7 @@ public class panelBagiLaba extends JPanel {
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
 
-        saveButton.setText("Save");
+        saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
