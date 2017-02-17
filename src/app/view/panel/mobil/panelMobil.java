@@ -154,6 +154,8 @@ public void Refresh()
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
+        jLabel83 = new javax.swing.JLabel();
+        jLabel84 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel81 = new javax.swing.JLabel();
@@ -171,6 +173,8 @@ public void Refresh()
         jTextField10 = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jTextField37 = new javax.swing.JTextField();
+        jTextField43 = new javax.swing.JTextField();
         jTextField15 = new javax.swing.JTextField();
         editMobil = new javax.swing.JDialog();
         jPanel15 = new javax.swing.JPanel();
@@ -221,6 +225,10 @@ public void Refresh()
         jTextField22 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jTextField23 = new javax.swing.JTextField();
+        jLabel85 = new javax.swing.JLabel();
+        jTextField54 = new javax.swing.JTextField();
+        jLabel86 = new javax.swing.JLabel();
+        jTextField60 = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
         jLabel15 = new javax.swing.JLabel();
@@ -372,7 +380,7 @@ public void Refresh()
         addMobil.setSize(new java.awt.Dimension(1000, 700));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jScrollPane4.setPreferredSize(new java.awt.Dimension(400, 713));
@@ -556,6 +564,12 @@ public void Refresh()
         jLabel34.setText("TANGGAL PEMBELIAN");
         jPanel2.add(jLabel34);
 
+        jLabel83.setText("PENJUAL");
+        jPanel2.add(jLabel83);
+
+        jLabel84.setText("NOMOR HP PENJUAL");
+        jPanel2.add(jLabel84);
+
         jLabel30.setText("KETERANGAN");
         jPanel2.add(jLabel30);
 
@@ -604,6 +618,20 @@ public void Refresh()
 
         jDateChooser2.setDate(new java.util.Date());
         jPanel3.add(jDateChooser2);
+
+        jTextField37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField37ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jTextField37);
+
+        jTextField43.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField43ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jTextField43);
 
         jTextField15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -846,6 +874,32 @@ public void Refresh()
             }
         });
         jPanel11.add(jTextField23);
+
+        jLabel85.setText("PENJUAL");
+        jPanel11.add(jLabel85);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.penjual}"), jTextField54, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jTextField54.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField54ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jTextField54);
+
+        jLabel86.setText("NOMOR HP PENJUAL");
+        jPanel11.add(jLabel86);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.no_Hp_Penjual}"), jTextField60, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jTextField60.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField60ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jTextField60);
 
         jLabel18.setText("HARGA BELI");
         jPanel11.add(jLabel18);
@@ -1678,7 +1732,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable1.setDefaultEditor(long.class, new app.utils.TablePopupEditor());
     jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-    jTable1.setCellSelectionEnabled(true);
+    jTable1.setColumnSelectionAllowed(false);
     jTable1.setRowHeight(24);
     jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -1753,6 +1807,12 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalJual}"));
     columnBinding.setColumnName("Tanggal Jual");
     columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${penjual}"));
+    columnBinding.setColumnName("Penjual");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${no_Hp_Penjual}"));
+    columnBinding.setColumnName("NO HP Penjual");
+    columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
     columnBinding.setColumnName("Keterangan");
     columnBinding.setColumnClass(String.class);
@@ -1992,7 +2052,8 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         baru.setNoRangka(this.jTextField9.getText());
         baru.setNoMesin(this.jTextField10.getText());
         baru.setBahanBakar(this.jTextField11.getText());        
-//        baru.setPenjual(this.jTextField12.getText());
+        baru.setPenjual(this.jTextField37.getText());
+        baru.setNo_Hp_Penjual(this.jTextField43.getText());
         baru.setHargaPembelian(0);
 //        baru.setHargaPembelian((Integer) (int) (long) this.jFormattedTextField1.getValue());
 //        baru.setDpPertama((Integer) (int) (long) this.jFormattedTextField1.getValue());
@@ -2698,6 +2759,22 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel76MouseClicked
+
+    private void jTextField37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField37ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField37ActionPerformed
+
+    private void jTextField43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField43ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField43ActionPerformed
+
+    private void jTextField54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField54ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField54ActionPerformed
+
+    private void jTextField60ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField60ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField60ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -2871,6 +2948,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
+    private javax.swing.JLabel jLabel83;
+    private javax.swing.JLabel jLabel84;
+    private javax.swing.JLabel jLabel85;
+    private javax.swing.JLabel jLabel86;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
@@ -2934,12 +3015,14 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField34;
     private javax.swing.JTextField jTextField35;
     private javax.swing.JTextField jTextField36;
+    private javax.swing.JTextField jTextField37;
     private javax.swing.JTextField jTextField38;
     private javax.swing.JTextField jTextField39;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField40;
     private javax.swing.JTextField jTextField41;
     private javax.swing.JTextField jTextField42;
+    private javax.swing.JTextField jTextField43;
     private javax.swing.JTextField jTextField44;
     private javax.swing.JTextField jTextField45;
     private javax.swing.JTextField jTextField46;
@@ -2951,12 +3034,14 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField jTextField51;
     private javax.swing.JTextField jTextField52;
     private javax.swing.JTextField jTextField53;
+    private javax.swing.JTextField jTextField54;
     private javax.swing.JTextField jTextField55;
     private javax.swing.JTextField jTextField56;
     private javax.swing.JTextField jTextField57;
     private javax.swing.JTextField jTextField58;
     private javax.swing.JTextField jTextField59;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField60;
     private javax.swing.JTextField jTextField61;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;

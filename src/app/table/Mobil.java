@@ -157,6 +157,21 @@ public class Mobil implements Serializable {
     private Listleasing listleasing = new Listleasing();
     @OneToOne(mappedBy = "m",cascade = CascadeType.ALL)
     private BagiLaba bagiLaba;
+    @JoinColumn(name = "no_HP_penjual")    
+    private String No_Hp_Penjual = " ";
+
+    public static final String PROP_NO_HP_PENJUAL = "No_Hp_Penjual";
+
+    public String getNo_Hp_Penjual() {
+        return No_Hp_Penjual;
+    }
+
+    public void setNo_Hp_Penjual(String No_Hp_Penjual) {
+        String oldNo_Hp_Penjual = this.No_Hp_Penjual;
+        this.No_Hp_Penjual = No_Hp_Penjual;
+        changeSupport.firePropertyChange(PROP_NO_HP_PENJUAL, oldNo_Hp_Penjual, No_Hp_Penjual);
+    }
+
 
     public Listleasing getListleasing() {
         return listleasing;

@@ -846,6 +846,8 @@ public class Printer {
                                     Tuple.of("warna","warna", fungsi),
                                     Tuple.of("tanggalBeli","tanggalBeli", d -> d == null? " ": formator.format(d)),
                                     Tuple.of("tanggalJual","tanggalJual", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Penjual","penjual", fungsi),
+                                    Tuple.of("no_Hp_Penjual","no_Hp_Penjual", fungsi),
                                     Tuple.of("keterangan","keterangan", fungsi),
                                     Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
                                     Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi)
