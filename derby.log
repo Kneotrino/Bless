@@ -1,8 +1,8 @@
 ----------------------------------------------------------------
-Fri Feb 17 00:46:58 SGT 2017:
-Booting Derby (version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631)) instance a816c00e-015a-47d1-d3cf-0000006d34b0 
-on database directory C:\Users\blessing in READ ONLY mode with class loader sun.misc.Launcher$AppClassLoader@117d9a3. 
-Loaded from file:/C:/Program%20Files%20(x86)/Java/jdk1.8.0_77/db/lib/derby.jar.
+Mon Feb 20 02:12:38 SGT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015a-5793-57a5-00000046dcb0 
+on database directory C:\Users\blessing with class loader sun.misc.Launcher$AppClassLoader@117d9a3 
+Loaded from file:/C:/Program%20Files%20(x86)/Java/jdk1.8.0_77/db/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_77-b03
 user.dir=C:\Users\SEED\Documents\jo\blessing

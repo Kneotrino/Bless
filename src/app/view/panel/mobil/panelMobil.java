@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -340,6 +341,17 @@ public void Refresh()
         bankQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jComboBox10 = new javax.swing.JComboBox<>();
+        FilterDialog = new javax.swing.JDialog();
+        jLabel87 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel88 = new javax.swing.JLabel();
+        jComboBox11 = new javax.swing.JComboBox<>();
+        jLabel90 = new javax.swing.JLabel();
+        jDateChooser11 = new com.toedter.calendar.JDateChooser();
+        jLabel89 = new javax.swing.JLabel();
+        jDateChooser12 = new com.toedter.calendar.JDateChooser();
+        jButton28 = new javax.swing.JButton();
+        jButton30 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -349,7 +361,8 @@ public void Refresh()
         jButton6 = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton29 = new javax.swing.JButton();
+        jComboBox12 = new javax.swing.JComboBox<>();
         jButton23 = new javax.swing.JButton();
         jTextField32 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -1652,6 +1665,51 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE" }));
 
+    FilterDialog.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
+    FilterDialog.setSize(400, 500);
+
+    jLabel87.setText("STATUS MOBIL");
+    FilterDialog.getContentPane().add(jLabel87);
+
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEMUANYA", "READY", "OPEN", "CLOSE", "SELESAI" }));
+    FilterDialog.getContentPane().add(jComboBox1);
+
+    jLabel88.setText("PILIHAN");
+    FilterDialog.getContentPane().add(jLabel88);
+
+    jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TANGGAL MOBIL BELI", "TANGGAL MOBIL JUAL" }));
+    FilterDialog.getContentPane().add(jComboBox11);
+
+    jLabel90.setText("TANGGAL AWAL");
+    FilterDialog.getContentPane().add(jLabel90);
+
+    jDateChooser11.setDate(new Date());
+    jDateChooser11.setDateFormatString("dd-MM-yyyy");
+    FilterDialog.getContentPane().add(jDateChooser11);
+
+    jLabel89.setText("TANGGAL AKHIR");
+    FilterDialog.getContentPane().add(jLabel89);
+
+    jDateChooser12.setDate(new Date());
+    jDateChooser12.setDateFormatString("dd-MM-yyyy");
+    FilterDialog.getContentPane().add(jDateChooser12);
+
+    jButton28.setText("FILTER");
+    jButton28.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton28ActionPerformed(evt);
+        }
+    });
+    FilterDialog.getContentPane().add(jButton28);
+
+    jButton30.setText("KEMBALI");
+    jButton30.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton30ActionPerformed(evt);
+        }
+    });
+    FilterDialog.getContentPane().add(jButton30);
+
     setLayout(new java.awt.BorderLayout());
 
     jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
@@ -1702,7 +1760,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     jPanel7.add(jButton22);
 
-    jButton14.setText("FILTER");
+    jButton14.setText("FILTER TANGGAL");
     jButton14.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton14ActionPerformed(evt);
@@ -1710,8 +1768,16 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     jPanel7.add(jButton14);
 
-    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE", "SELESAI" }));
-    jPanel7.add(jComboBox1);
+    jButton29.setText("FILTER STATUS");
+    jButton29.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton29ActionPerformed(evt);
+        }
+    });
+    jPanel7.add(jButton29);
+
+    jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE", "SELESAI" }));
+    jPanel7.add(jComboBox12);
 
     jButton23.setText("CARI");
     jButton23.addActionListener(new java.awt.event.ActionListener() {
@@ -1732,7 +1798,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable1.setDefaultEditor(long.class, new app.utils.TablePopupEditor());
     jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-    jTable1.setColumnSelectionAllowed(false);
     jTable1.setRowHeight(24);
     jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -2579,9 +2644,12 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        String pilihan = (String) this.jComboBox1.getSelectedItem();
-        System.out.println("pilihan = " + pilihan==null?"kosong":pilihan);
-        mobilList.removeIf(a -> !a.getStatusMobil().equals(pilihan));
+//        String pilihan = (String) this.jComboBox1.getSelectedItem();
+//        System.out.println("pilihan = " + pilihan==null?"kosong":pilihan);
+//        mobilList.removeIf(a -> !a.getStatusMobil().equals(pilihan));
+        this.FilterDialog.setLocationRelativeTo(null);        
+        this.FilterDialog.show();
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton14ActionPerformed
 
@@ -2775,6 +2843,74 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private void jTextField60ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField60ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField60ActionPerformed
+
+    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+        if (!this.blessingPUEntityManager.getTransaction().isActive()) 
+            blessingPUEntityManager.getTransaction().begin(); 
+            blessingPUEntityManager.getTransaction().rollback();
+        String pilihan = (String) this.jComboBox1.getSelectedItem();
+        String que = " SELECT m FROM Mobil m ";
+        if (this.jComboBox1.getSelectedIndex() != 0)
+            {
+                que += "WHERE m.statusMobil = :cari AND ";
+            }
+        else 
+        {
+            que += " WHERE ";
+        }
+        
+        if (this.jComboBox11.getSelectedIndex() == 0) {
+             que +=" m.tanggalBeli BETWEEN :startDate AND :endDate";
+        }
+        else    
+            {
+              que += " m.tanggalJual BETWEEN :startDate AND :endDate";
+
+        }
+        System.out.println("que = " + que);        
+//        mobilQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT m FROM Mobil m WHERE  ");
+        TypedQuery createQuery = blessingPUEntityManager
+                .createQuery(que, app.table.Mobil.class)
+//                    .setParameter("cari", pilihan)
+                    .setParameter("startDate",this.jDateChooser11.getDate(), TemporalType.TIMESTAMP)
+                    .setParameter("endDate", this.jDateChooser12.getDate(), TemporalType.TIMESTAMP)
+                ;
+       if (this.jComboBox1.getSelectedIndex() != 0)
+            {
+                createQuery.setParameter("cari", pilihan);
+            }
+
+        java.util.Collection mob = createQuery.getResultList();
+        for (Object object : mob) {
+            blessingPUEntityManager.refresh(object);                        
+        }
+        this.mobilList.clear();
+        this.mobilList.addAll(mob);        // TODO add your handling code here:
+        FilterDialog.hide();
+    }//GEN-LAST:event_jButton28ActionPerformed
+
+    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
+        if (!this.blessingPUEntityManager.getTransaction().isActive()) 
+            blessingPUEntityManager.getTransaction().begin(); 
+            blessingPUEntityManager.getTransaction().rollback();
+        String pilihan = (String) this.jComboBox12.getSelectedItem();
+        TypedQuery createQuery = blessingPUEntityManager
+                .createQuery("SELECT m FROM Mobil m WHERE m.statusMobil = :cari" , app.table.Mobil.class)
+                    .setParameter("cari", pilihan);
+         java.util.Collection mob = createQuery.getResultList();
+        for (Object object : mob) {
+            blessingPUEntityManager.refresh(object);                        
+        }
+        this.mobilList.clear();
+        this.mobilList.addAll(mob);
+                    
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton29ActionPerformed
+
+    private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
+        FilterDialog.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton30ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -2798,6 +2934,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 //    private Mobil baru;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BPKB;
+    private javax.swing.JDialog FilterDialog;
     private javax.swing.JDialog LeasingMobil;
     private java.util.List<app.table.Trips> PerjalananList;
     private javax.swing.JDialog addMobil;
@@ -2829,13 +2966,18 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
+    private javax.swing.JButton jButton28;
+    private javax.swing.JButton jButton29;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox10;
+    private javax.swing.JComboBox<String> jComboBox11;
+    private javax.swing.JComboBox<String> jComboBox12;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -2846,6 +2988,8 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JComboBox<String> jComboBox9;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser10;
+    private com.toedter.calendar.JDateChooser jDateChooser11;
+    private com.toedter.calendar.JDateChooser jDateChooser12;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
@@ -2952,7 +3096,11 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel85;
     private javax.swing.JLabel jLabel86;
+    private javax.swing.JLabel jLabel87;
+    private javax.swing.JLabel jLabel88;
+    private javax.swing.JLabel jLabel89;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel90;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
