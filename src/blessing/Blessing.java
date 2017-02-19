@@ -7,6 +7,10 @@ package blessing;
 
 //import app.view.main;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -21,17 +25,27 @@ public class Blessing {
      */
     public static void main(String[] args) {
         System.out.println("blessing.Blessing.main()");
+        Properties prop = new Properties();
+        OutputStream output = null;
         try{      
            File f = null;
            f = new File("C:\\Users\\bleesing");         
            System.out.println("Directory created? "+f.exists() +"\nDatabase Location :\t"+ f.getCanonicalPath());
            f = new File("C:\\Users\\blessing\\sd");         
-           System.out.println("Directory created? "+f.exists() +"\nResource Location :\t"+ f.getCanonicalPath());
+           System.out.println("Directory created? "+f.exists() +"\nResource Location :\t"+ f.getCanonicalPath());           
             if (!f.exists()) {
                 f.mkdir();                
                 System.out.println("Directory created? "+f.exists() +"\nResource Location :\t"+ f.getCanonicalPath());
             }
-
+            File p = new File(f, "config.properties");
+           System.out.println("Property created? "+p.exists() +"\nProperty Location :\t"+ p.getCanonicalPath());
+            if (!p.exists())
+            {
+                output = new FileOutputStream(p);
+                prop.setProperty("Ruko", "25");
+                prop.store(output, "Setting");
+                System.out.println("Property created "+p.exists() +"\nProperty Location :\t"+ p.getCanonicalPath());
+            }
         }catch(Exception e){
            // if any error occurs
            e.printStackTrace();

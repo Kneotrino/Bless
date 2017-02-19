@@ -341,7 +341,7 @@ public class panelBayarSewa extends JPanel {
         asset.setTransaksi(saldo);
         entityManager.persist(asset);
         list.add(asset);
-        this.jDialog1.hide();
+        this.jDialog2.hide();
         saveButtonActionPerformed(evt);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 

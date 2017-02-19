@@ -25,6 +25,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JSlider;
 
 /**
  *
@@ -107,6 +108,11 @@ public class ShowRoom extends javax.swing.JFrame {
         jDialog2 = new javax.swing.JDialog();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jDialog3 = new javax.swing.JDialog();
+        jLabel4 = new javax.swing.JLabel();
+        jSlider1 = new javax.swing.JSlider();
+        jTextField1 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
@@ -128,8 +134,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panelModal1 = new app.view.FixPanel.panelModal();
         panelInvestor1 = new app.view.FixPanel.akuntansi.panelInvestor();
-        jPanel9 = new app.view.FixPanel.panelMaster(app.table.Bayarsewa.class)
-        ;
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -139,7 +143,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem20 = new javax.swing.JMenuItem();
@@ -166,6 +169,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -230,9 +234,33 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jDialog2.getContentPane().add(jButton1);
 
+        jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
+
+        jLabel4.setText("Persentase Modal di tahan");
+        jDialog3.getContentPane().add(jLabel4);
+
+        jSlider1.setMaximum(50);
+        jSlider1.setValue(25);
+        jDialog3.getContentPane().add(jSlider1);
+
+        jTextField1.setEditable(false);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jSlider1, org.jdesktop.beansbinding.ELProperty.create("${value}"), jTextField1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jDialog3.getContentPane().add(jTextField1);
+
+        jButton2.setText("Simpan");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jDialog3.getContentPane().add(jButton2);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jLabel2, org.jdesktop.beansbinding.ELProperty.create("${text}"), this, org.jdesktop.beansbinding.BeanProperty.create("title"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jLabel2, org.jdesktop.beansbinding.ELProperty.create("${text}"), this, org.jdesktop.beansbinding.BeanProperty.create("title"));
         bindingGroup.addBinding(binding);
 
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -260,7 +288,6 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(jPanel8, "card2");
         getContentPane().add(panelModal1, "Modal");
         getContentPane().add(panelInvestor1, "Investor");
-        getContentPane().add(jPanel9, "BayarSewa");
 
         jMenu1.setText("Akutansi");
 
@@ -313,14 +340,6 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem3);
-
-        jMenuItem30.setText("Bayar Sewa Ruko");
-        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem30ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem30);
 
         jMenuItem27.setText("Investor/Pemilik Modal $ Status Profit");
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
@@ -478,6 +497,14 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem28);
 
+        jMenuItem30.setText("Setting Modal Di Tahan");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem30);
+
         jMenuItem6.setText("About");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -629,7 +656,8 @@ public class ShowRoom extends javax.swing.JFrame {
 //        jPanel10 = new app.view.FixPanel.akuntansi.panelAkuntansi();    
 //        this.chandePanel("Akun");
 //        ((app.view.FixPanel.panelLaporan) this.jPanel1).Refresh();
-        app.view.FixPanel.akuntansi.panelAkuntansi.main(null);
+//        private String[] prop = {"25"}; 
+        app.view.FixPanel.akuntansi.panelAkuntansi.Neraca(this.jTextField1.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
@@ -700,10 +728,16 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
-        ((app.view.FixPanel.panelMaster)this.jPanel2).Refresh();
-        this.chandePanel("BayarSewa");
+        jDialog3.setSize(300, 300);
+        jDialog3.setLocationRelativeTo(null);
+        jDialog3.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        jDialog3.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -743,15 +777,18 @@ public class ShowRoom extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private app.view.FixPanel.Inventaris inventaris1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -794,7 +831,6 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -802,7 +838,9 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JSlider jSlider1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.akuntansi.panelInvestor panelInvestor1;
     private app.view.FixPanel.panelLeasing panelLeasing2;

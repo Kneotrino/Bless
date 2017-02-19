@@ -122,7 +122,7 @@ public class panelAkuntansi extends JPanel {
             Calendar cal = Calendar.getInstance();
             Date akhirBulan;
             Date awalBulan;
-    public panelAkuntansi() {
+    public panelAkuntansi(String Value) {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
                  Query query = entityManager.createQuery("SELECT l FROM Laporan l");
                  java.util.List<app.table.Laporan> data = query.getResultList();
@@ -234,15 +234,20 @@ public class panelAkuntansi extends JPanel {
         }
         Akun Bayasewa = new Akun()
                 .setAkun("Beban Sewa Ruko")
-                .setPemasukan(sumAll(getList(app.table.Bayarsewa.class)));
+                .setPemasukan(sumAll(getList(app.table.BayarSewaKeluar.class)));
+        Akun ModalDitahan = new Akun()
+                .setAkun("Modal Di Tahan")
+                .setPengeluaran(sumAll(getList(app.table.BayarSewaMasuk.class)));
         AkuntansiList.add(ModalSebelumnya);
         AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
+        AkuntansiList.add(ModalDitahan);
         AkuntansiList.add(PembagianLaba);
         AkuntansiList.add(Mobil);        
         AkuntansiList.add(Rental);        
         AkuntansiList.add(Jasa);        
         AkuntansiList.add(Pemasukan);        
         AkuntansiList.add(Peminjaman);        
+        LabaList.add(ModalDitahan);
         LabaList.add(Mobil);
         LabaList.add(Rental);
         LabaList.add(Jasa);
@@ -437,21 +442,23 @@ public class panelAkuntansi extends JPanel {
             Open.add(TO);
             Closed.add(TC);
             Akun LabaMobilTahan = new Akun()
-                    .setPemasukan(TC.getProfit().divide(new BigInteger("4")))
+                    .setPemasukan(
+                            TC.getProfit()
+                            .divide(new BigInteger("100"))
+                            .multiply(new BigInteger(Value))
+                    
+                    )
                     ;
-            LabaMobilTahan.setAkun("Laba di tahan 25 %");
-            Akun BayarRuko = new Akun()
-                    .setAkun("Bayar Ruko Tahun " + Calendar.getInstance().get(Calendar.YEAR))
-                    .setPengeluaran(sumAll(getYearList(app.table.Bayarsewa.class)));
+            LabaMobilTahan.setAkun("Laba di tahan "+Value+"%");
 
             Closed.add(new Akun());
             Closed.add(LabaMobilTahan);
-            Closed.add(BayarRuko);
-            Closed.add(new Akun()
-                    .setAkun("Sisa Laba Di tahan " + Calendar.getInstance().get(Calendar.YEAR))
-                    .setPemasukan(LabaMobilTahan.getPemasukan())
-                    .setPengeluaran(BayarRuko.getPengeluaran())
-            );
+//            Closed.add(BayarRuko);
+//            Closed.add(new Akun()
+//                    .setAkun("Sisa Laba Di tahan " + Calendar.getInstance().get(Calendar.YEAR))
+//                    .setPemasukan(LabaMobilTahan.getPemasukan())
+//                    .setPengeluaran(BayarRuko.getPengeluaran())
+//            );
                     
             
         initComponents();
@@ -478,6 +485,8 @@ public class panelAkuntansi extends JPanel {
       pemasukan.add(sumAll(getMonthList(app.table.BayarhutangPemasukan.class,profit.getNomor())));
       pemasukan = 
               pemasukan.add(sumAll(getMonthList(app.table.BayarPihutangPemasukan.class,profit.getNomor())));
+      pemasukan = 
+              pemasukan.add(sumAll(getMonthList(app.table.BayarSewaMasuk.class,profit.getNomor())));
       //add pengeluaran
       pengeluaran = 
               pengeluaran.add(sumAll(getMonthList(app.table.MobilPengeluaran.class,profit.getNomor())));
@@ -502,7 +511,7 @@ public class panelAkuntansi extends JPanel {
       pengeluaran = 
               pengeluaran.add(sumAll(getMonthList(app.table.BayarPihutangBunga.class,profit.getNomor())));      
       pengeluaran = 
-              pengeluaran.add(sumAll(getMonthList(app.table.Bayarsewa.class,profit.getNomor())));      
+              pengeluaran.add(sumAll(getMonthList(app.table.BayarSewaKeluar.class,profit.getNomor())));      
       //set pemasukan dan pengeluaran
       profit.setPemasukan(pemasukan);
       profit.setPengeluaran(pengeluaran);
@@ -1070,7 +1079,7 @@ public class panelAkuntansi extends JPanel {
                 try {
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
-                jDialog1.getContentPane().add(new panelAkuntansi());
+                jDialog1.getContentPane().add(new panelAkuntansi("25"));
                 jDialog1.show();
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {
@@ -1081,5 +1090,22 @@ public class panelAkuntansi extends JPanel {
             }
         });
     }
-    
+    public static void Neraca(String value)
+    {
+        EventQueue.invokeLater(() -> {
+                System.out.println("app.view.FixPanel.akuntansi.panelAkuntansi.main()");
+                javax.swing.JFrame jDialog1 = new JFrame("Akuntasi");
+                try {
+                jDialog1.setSize(1200, 700);
+                jDialog1.setLocationRelativeTo(null);
+                jDialog1.getContentPane().add(new panelAkuntansi(value));
+                jDialog1.show();
+                jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                javax.swing.JOptionPane.showMessageDialog(null, e);
+                jDialog1 = null;
+            }
+        });
+    }
 }
