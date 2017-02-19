@@ -16,8 +16,13 @@ import app.table.Mobil;
 import app.table.Perjalanan;
 import app.table.Saldo;
 import app.table.Trips;
+import static app.utils.ExcelConverter.ExcelConverter;
+import static app.utils.Printer.getDataList;
 import app.view.FixPanel.panelLeasing;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -27,12 +32,15 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javaslang.Tuple;
 import javax.imageio.ImageIO;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
@@ -40,6 +48,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -352,6 +361,7 @@ public void Refresh()
         jDateChooser12 = new com.toedter.calendar.JDateChooser();
         jButton28 = new javax.swing.JButton();
         jButton30 = new javax.swing.JButton();
+        jFileChooser8 = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -365,6 +375,7 @@ public void Refresh()
         jComboBox12 = new javax.swing.JComboBox<>();
         jButton23 = new javax.swing.JButton();
         jTextField32 = new javax.swing.JTextField();
+        jButton31 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         BPKB = new javax.swing.JPanel();
@@ -1710,6 +1721,8 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     });
     FilterDialog.getContentPane().add(jButton30);
 
+    jFileChooser8.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+
     setLayout(new java.awt.BorderLayout());
 
     jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
@@ -1789,6 +1802,14 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jTextField32.setPreferredSize(new java.awt.Dimension(150, 30));
     jPanel7.add(jTextField32);
+
+    jButton31.setText("PRINT DATA");
+    jButton31.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton31ActionPerformed(evt);
+        }
+    });
+    jPanel7.add(jButton31);
 
     jPanel5.add(jPanel7, java.awt.BorderLayout.NORTH);
 
@@ -2911,6 +2932,141 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         FilterDialog.hide();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton30ActionPerformed
+public void FileSave() throws IOException
+{
+   JFileChooser chooser=new JFileChooser(".");
+   FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+   chooser.addChoosableFileFilter(filter);
+   chooser.setFileFilter(filter);
+   chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+   chooser.setDialogTitle("Save File");
+   File filetemp = new File( System.getProperties().getProperty("user.home"), "Data Mobil.xls");
+   chooser.setSelectedFile(filetemp);
+  int returnVal1=chooser.showSaveDialog(this);
+  if (returnVal1 == JFileChooser.APPROVE_OPTION) 
+  {
+       File file1 = chooser.getSelectedFile();
+        if(!file1.exists())
+        {
+              List a = mobilList;
+              SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              Function fungsi = d -> d==null?" ":d;         
+              Function tanggal = d -> d==null?" ":formator.format(d);
+              List<File> cvs = new java.util.LinkedList<>(); 
+              cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"));
+              WriteStep data = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"))
+                        .type(app.table.Mobil.class)
+                            .properties(
+                                    Tuple.of("mobilId","mobilId", d-> d),
+                                    Tuple.of("noPolisiAktif","noPolisiAktif", fungsi),
+                                    Tuple.of("noPolisiLama","noPolisiLama", fungsi),
+                                    Tuple.of("jenis","jenis", fungsi),
+                                    Tuple.of("type","type", fungsi),
+                                    Tuple.of("merk","merk", fungsi),
+                                    Tuple.of("bahanBakar","bahanBakar", fungsi),
+                                    Tuple.of("noMesin","noMesin", fungsi),
+                                    Tuple.of("noRangka","noRangka", fungsi),
+                                    Tuple.of("pemilikBaru","pemilikBaru", fungsi),
+                                    Tuple.of("pemilikLama","pemilikLama", fungsi),
+                                    Tuple.of("silinder","silinder", fungsi),
+                                    Tuple.of("statusMobil","statusMobil", fungsi),
+                                    Tuple.of("tahun","tahun", fungsi),
+                                    Tuple.of("warna","warna", fungsi),
+                                    Tuple.of("tanggalBeli","tanggalBeli", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("tanggalJual","tanggalJual", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Penjual","penjual", fungsi),
+                                    Tuple.of("no_Hp_Penjual","no_Hp_Penjual", fungsi),
+                                    Tuple.of("keterangan","keterangan", fungsi),
+                                    Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
+                                    Tuple.of("Nama Pembeli","debitur.nama", fungsi),
+                                    Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi),
+                                    Tuple.of("Atas Nama BPKB","bpkb.anBpkb", fungsi)
+                    ).dataList(a);
+              data.write();
+              ExcelConverter(cvs, chooser.getSelectedFile());
+            System.out.println("\n File Berhasil Di Print");
+            JOptionPane.showMessageDialog(this,"File Created.");
+            Desktop.getDesktop().open(chooser.getSelectedFile());
+        }
+        else if(file1.exists())
+        {
+            int res=JOptionPane.showConfirmDialog(this,"File already exists.Do you wish to overwrite?");
+            if(res == JOptionPane.YES_OPTION)
+            {
+              List a = mobilList;
+              SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              Function fungsi = d -> d==null?" ":d;         
+              Function tanggal = d -> d==null?" ":formator.format(d);
+              List<File> cvs = new java.util.LinkedList<>(); 
+              cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"));
+              WriteStep data = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"))
+                        .type(app.table.Mobil.class)
+                            .properties(
+                                    Tuple.of("mobilId","mobilId", d-> d),
+                                    Tuple.of("noPolisiAktif","noPolisiAktif", fungsi),
+                                    Tuple.of("noPolisiLama","noPolisiLama", fungsi),
+                                    Tuple.of("jenis","jenis", fungsi),
+                                    Tuple.of("type","type", fungsi),
+                                    Tuple.of("merk","merk", fungsi),
+                                    Tuple.of("bahanBakar","bahanBakar", fungsi),
+                                    Tuple.of("noMesin","noMesin", fungsi),
+                                    Tuple.of("noRangka","noRangka", fungsi),
+                                    Tuple.of("pemilikBaru","pemilikBaru", fungsi),
+                                    Tuple.of("pemilikLama","pemilikLama", fungsi),
+                                    Tuple.of("silinder","silinder", fungsi),
+                                    Tuple.of("statusMobil","statusMobil", fungsi),
+                                    Tuple.of("tahun","tahun", fungsi),
+                                    Tuple.of("warna","warna", fungsi),
+                                    Tuple.of("tanggalBeli","tanggalBeli", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("tanggalJual","tanggalJual", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Penjual","penjual", fungsi),
+                                    Tuple.of("no_Hp_Penjual","no_Hp_Penjual", fungsi),
+                                    Tuple.of("keterangan","keterangan", fungsi),
+                                    Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
+                                    Tuple.of("Nama Pembeli","debitur.nama", fungsi),
+                                    Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi),
+                                    Tuple.of("Atas Nama BPKB","bpkb.anBpkb", fungsi)
+                    ).dataList(a);
+              data.write();
+              ExcelConverter(cvs, chooser.getSelectedFile());
+            System.out.println("\n File Berhasil Di Print");
+            JOptionPane.showMessageDialog(this,"File Created.");
+            Desktop.getDesktop().open(chooser.getSelectedFile());
+            }
+            else if(res == JOptionPane.NO_OPTION)
+            {
+                int returnVal2=chooser.showSaveDialog(this);
+                if (returnVal2 == JFileChooser.APPROVE_OPTION) 
+                {
+                    File file2 = chooser.getSelectedFile();
+                    if(!file2.exists())
+                    {
+                        
+//                        FileOutputStream fileOut =  new FileOutputStream(file2);
+//                        hwb.write(fileOut);
+//                        fileOut.close();
+                        System.out.println("\n Your Excel file has been generated!");
+                        JOptionPane.showMessageDialog(this,"File Created.");
+                    }
+
+                }
+            }
+            else if (res == JOptionPane.CANCEL_OPTION) 
+            {
+                JOptionPane.showMessageDialog(this, "User cancelled operation.");
+            } 
+        }
+        }
+
+}
+    private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
+        try {
+            FileSave();
+            // TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(panelMobil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton31ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -2970,6 +3126,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton jButton29;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton30;
+    private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -3007,6 +3164,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JFileChooser jFileChooser5;
     private javax.swing.JFileChooser jFileChooser6;
     private javax.swing.JFileChooser jFileChooser7;
+    private javax.swing.JFileChooser jFileChooser8;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;

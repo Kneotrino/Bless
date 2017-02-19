@@ -37,10 +37,6 @@ public class Bayarsewa extends Laporan  implements Serializable {
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
-//    @Id
-//    @Basic(optional = false)
-//    @Column(name = "ID", nullable = false)
-//    private Integer id;
     @Column(name = "BAYAR")
     private Boolean bayar;
 

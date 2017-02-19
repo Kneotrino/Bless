@@ -539,8 +539,8 @@ public void Restall()
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new panelMaster(1));
-//                frame.setContentPane(new panelMaster(app.table.Pemasukan.class));
+//                frame.setContentPane(new panelMaster(1));
+                frame.setContentPane(new panelMaster(app.table.BayarSewaMasuk.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

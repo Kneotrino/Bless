@@ -812,7 +812,6 @@ public class Printer {
               f.mkdirs();
               System.out.println("f = " + f);
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-//              final DecimalFormat IDR = new DecimalFormat("IDR #,##0");              
               TypedQuery createQuery = EM.createQuery(
                       "SELECT m FROM Mobil m order by m desc", app.table.Mobil.class);   
               List<Mobil> resultList = createQuery.getResultList();
@@ -839,7 +838,7 @@ public class Printer {
                                     Tuple.of("noRangka","noRangka", fungsi),
                                     Tuple.of("pemilikBaru","pemilikBaru", fungsi),
                                     Tuple.of("pemilikLama","pemilikLama", fungsi),
-                                    Tuple.of("penjual","penjual", fungsi),
+//                                    Tuple.of("penjual","penjual", fungsi),
                                     Tuple.of("silinder","silinder", fungsi),
                                     Tuple.of("statusMobil","statusMobil", fungsi),
                                     Tuple.of("tahun","tahun", fungsi),
@@ -850,7 +849,9 @@ public class Printer {
                                     Tuple.of("no_Hp_Penjual","no_Hp_Penjual", fungsi),
                                     Tuple.of("keterangan","keterangan", fungsi),
                                     Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
-                                    Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi)
+                                    Tuple.of("Nama Pembeli","debitur.nama", fungsi),
+                                    Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi),
+                                    Tuple.of("Atas Nama BPKB","bpkb.anBpkb", fungsi)
                     ).dataList(getDataList(app.table.Mobil.class));
                cvs.add(new File(f, "Daftar Debitur.CSV"));
                 WriteStep debitur = CSVUtil.of(new File(f, "Daftar Debitur.CSV"))

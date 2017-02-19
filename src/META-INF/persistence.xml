@@ -57,6 +57,8 @@
     <class>app.table.BayarPihutangBunga</class>
     <class>app.table.BagiLaba</class>
     <class>app.table.Bayarsewa</class>
+    <class>app.table.BayarSewaMasuk</class>
+    <class>app.table.BayarSewaKeluar</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>

@@ -123,6 +123,7 @@ public class Laporan implements Serializable {
                 || (this instanceof Modal) 
                 || (this instanceof MobilPemasukan)                 
                 || (this instanceof Terima) 
+                || (this instanceof BayarSewaMasuk) 
                 ;
 
     public boolean isName() {

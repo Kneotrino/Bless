@@ -7,11 +7,13 @@ package app.view.FixPanel.akuntansi;
 
 import app.table.Bank;
 import app.table.Bayarsewa;
+import app.table.Laporan;
 import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.RollbackException;
@@ -65,6 +67,7 @@ public class panelBayarSewa extends JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         newButton1 = new javax.swing.JButton();
+        newButton2 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -114,6 +117,10 @@ public class panelBayarSewa extends JPanel {
         newButton1.addActionListener(formListener);
         jPanel1.add(newButton1);
 
+        newButton2.setText("Baru");
+        newButton2.addActionListener(formListener);
+        jPanel1.add(newButton2);
+
         deleteButton.setText("Delete");
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -150,8 +157,14 @@ public class panelBayarSewa extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
+        columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("Jenis");
@@ -163,7 +176,8 @@ public class panelBayarSewa extends JPanel {
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(5).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2)
+            masterTable.getColumnModel().getColumn(6).setHeaderValue("Jenis");
+            masterTable.getColumnModel().getColumn(7).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2)
             );
         }
 
@@ -177,23 +191,26 @@ public class panelBayarSewa extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == saveButton) {
-                panelBayarSewa.this.saveButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                panelBayarSewa.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newButton) {
-                panelBayarSewa.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == newButton1) {
+                panelBayarSewa.this.newButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelBayarSewa.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton1) {
-                panelBayarSewa.this.newButton1ActionPerformed(evt);
+            else if (evt.getSource() == refreshButton) {
+                panelBayarSewa.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                panelBayarSewa.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton4) {
                 panelBayarSewa.this.jButton4ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
+                panelBayarSewa.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton2) {
+                panelBayarSewa.this.newButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -211,8 +228,9 @@ public class panelBayarSewa extends JPanel {
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
+        List<? extends Laporan> hitungSaldo = app.table.Util.hitungSaldo((List<? extends Laporan>) data);
         list.clear();
-        list.addAll(data);
+        list.addAll((Collection<? extends Bayarsewa>) hitungSaldo);
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         
@@ -276,6 +294,16 @@ public class panelBayarSewa extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
+        app.table.BayarSewaMasuk b = new app.table.BayarSewaMasuk();
+        entityManager.persist(b);
+        list.add(b);
+        int row = list.size() - 1;
+        masterTable.setRowSelectionInterval(row, row);
+        masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -295,6 +323,7 @@ public class panelBayarSewa extends JPanel {
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
     private javax.swing.JButton newButton1;
+    private javax.swing.JButton newButton2;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;
