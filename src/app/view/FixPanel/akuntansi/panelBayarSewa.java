@@ -56,10 +56,15 @@ public class panelBayarSewa extends JPanel {
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bayarsewa b");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         jDialog1 = new javax.swing.JDialog();
-        inputPanel1 = new app.utils.inputPanel(app.table.Bayarsewa.class);
+        inputPanel1 = new app.utils.inputPanel(app.table.BayarSewaMasuk.class);
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
+        jDialog2 = new javax.swing.JDialog();
+        inputPanel2 = new app.utils.inputPanel(app.table.BayarSewaKeluar.class);
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jButton5 = new javax.swing.JButton();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
         newButton = new javax.swing.JButton();
@@ -99,6 +104,29 @@ public class panelBayarSewa extends JPanel {
 
         jDialog1.getContentPane().add(inputPanel1);
 
+        jDialog2.setTitle("Data Baru");
+        jDialog2.setAlwaysOnTop(true);
+        jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog2.setType(java.awt.Window.Type.POPUP);
+        jDialog2.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
+
+        jLabel3.setText("Tujuan");
+        inputPanel2.add(jLabel3);
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox3);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        inputPanel2.add(jComboBox3);
+
+        jButton5.setText("TAMBAH");
+        jButton5.addActionListener(formListener);
+        inputPanel2.add(jButton5);
+
+        jDialog2.getContentPane().add(inputPanel2);
+
         newButton.setText("Simpan");
         newButton.addActionListener(formListener);
 
@@ -113,11 +141,11 @@ public class panelBayarSewa extends JPanel {
         jLabel1.setText("TABEL BAYAR SEWA RUKO");
         jPanel1.add(jLabel1);
 
-        newButton1.setText("Baru");
+        newButton1.setText("Pemasukan");
         newButton1.addActionListener(formListener);
         jPanel1.add(newButton1);
 
-        newButton2.setText("Baru");
+        newButton2.setText("Pengeluaran");
         newButton2.addActionListener(formListener);
         jPanel1.add(newButton2);
 
@@ -145,6 +173,7 @@ public class panelBayarSewa extends JPanel {
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
+        masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
@@ -194,6 +223,9 @@ public class panelBayarSewa extends JPanel {
             if (evt.getSource() == newButton1) {
                 panelBayarSewa.this.newButton1ActionPerformed(evt);
             }
+            else if (evt.getSource() == newButton2) {
+                panelBayarSewa.this.newButton2ActionPerformed(evt);
+            }
             else if (evt.getSource() == deleteButton) {
                 panelBayarSewa.this.deleteButtonActionPerformed(evt);
             }
@@ -209,8 +241,8 @@ public class panelBayarSewa extends JPanel {
             else if (evt.getSource() == newButton) {
                 panelBayarSewa.this.newButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton2) {
-                panelBayarSewa.this.newButton2ActionPerformed(evt);
+            else if (evt.getSource() == jButton5) {
+                panelBayarSewa.this.jButton5ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -295,14 +327,23 @@ public class panelBayarSewa extends JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
-        app.table.BayarSewaMasuk b = new app.table.BayarSewaMasuk();
-        entityManager.persist(b);
-        list.add(b);
-        int row = list.size() - 1;
-        masterTable.setRowSelectionInterval(row, row);
-        masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+        this.jDialog2.setSize(400, 600);
+        this.jDialog2.setLocationRelativeTo(null);
+        this.jDialog2.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
+        Bayarsewa asset = (Bayarsewa) this.inputPanel2.getTarget();
+        Saldo saldo = new Saldo();
+        saldo.setBankId((Bank) this.jComboBox3.getSelectedItem());
+        asset.setTransaksi(saldo);
+        entityManager.persist(asset);
+        list.add(asset);
+        this.jDialog1.hide();
+        saveButtonActionPerformed(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -311,12 +352,17 @@ public class panelBayarSewa extends JPanel {
     private javax.swing.JButton deleteButton;
     private javax.persistence.EntityManager entityManager;
     private app.utils.inputPanel inputPanel1;
+    private app.utils.inputPanel inputPanel2;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Bayarsewa> list;
     private javax.swing.JScrollPane masterScrollPane;
