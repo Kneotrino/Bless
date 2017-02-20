@@ -83,7 +83,6 @@ public class panelInvestor extends JPanel {
         jButton4 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox<>();
         newDetailButton = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
@@ -101,7 +100,6 @@ public class panelInvestor extends JPanel {
         saveButton = new javax.swing.JButton();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
-        panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba();
 
         FormListener formListener = new FormListener();
 
@@ -339,10 +337,7 @@ public class panelInvestor extends JPanel {
 
         jPanel3.add(detailScrollPane);
 
-        jTabbedPane1.addTab("INVESTOR", jPanel3);
-        jTabbedPane1.addTab("MOBIL DAN JASA STATUS", panelBagiLaba1);
-
-        add(jTabbedPane1);
+        add(jPanel3);
 
         bindingGroup.bind();
     }
@@ -407,7 +402,7 @@ public class panelInvestor extends JPanel {
         this.bankList.clear();
         this.bankList.addAll(bankQuery.getResultList());
         this.refreshButtonActionPerformed(null);
-        this.panelBagiLaba1.Refresh();
+//        this.panelBagiLaba1.Refresh();
     }
     
     private void deleteDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDetailButtonActionPerformed
@@ -656,7 +651,6 @@ public class panelInvestor extends JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private java.util.List<app.table.Investor> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
@@ -666,7 +660,6 @@ public class panelInvestor extends JPanel {
     private javax.swing.JButton newDetailButton1;
     private javax.swing.JButton newDetailButton2;
     private javax.swing.JButton newDetailButton3;
-    private app.view.FixPanel.akuntansi.panelBagiLaba panelBagiLaba1;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton refreshButton1;

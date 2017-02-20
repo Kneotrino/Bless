@@ -237,6 +237,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jDialog2.getContentPane().add(jButton1);
 
+        jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
 
         jLabel4.setText("Persentase Modal di tahan");
@@ -677,6 +678,9 @@ public class ShowRoom extends javax.swing.JFrame {
 //        this.chandePanel("Akun");
 //        ((app.view.FixPanel.panelLaporan) this.jPanel1).Refresh();
 //        private String[] prop = {"25"}; 
+        jDialog3.setSize(300, 300);
+        jDialog3.setLocationRelativeTo(null);
+        jDialog3.show();
         app.view.FixPanel.akuntansi.panelAkuntansi.Neraca(this.jTextField1.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem26ActionPerformed
@@ -762,11 +766,15 @@ public class ShowRoom extends javax.swing.JFrame {
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         this.chandePanel("Sewa");
         panelBayarSewa1.Refresh();
+//        app.view.FixPanel.akuntansi.panelBayarSewa.main(null);
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
+        jDialog3.setSize(300, 300);
+        jDialog3.setLocationRelativeTo(null);
+        jDialog3.show();
         this.chandePanel("Profit");
         app.view.FixPanel.akuntansi.panelBagiLaba.BagiLaba(this.jTextField1.getText());
     }//GEN-LAST:event_jMenuItem32ActionPerformed

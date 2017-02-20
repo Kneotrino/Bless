@@ -86,7 +86,7 @@ public class panelMobil extends javax.swing.JPanel {
 public void Refresh()
 {
     System.out.println("app.view.panel.mobil.panelMobil.Refresh()");
-    jButton22ActionPerformed(null);
+//    jButton22ActionPerformed(null);
     this.bankList.clear();
     this.leasingList.clear();
     this.PerjalananList.clear();

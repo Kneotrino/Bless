@@ -12,9 +12,11 @@ import app.table.Saldo;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
@@ -149,7 +151,7 @@ public class panelBayarSewa extends JPanel {
         newButton2.addActionListener(formListener);
         jPanel1.add(newButton2);
 
-        deleteButton.setText("Delete");
+        deleteButton.setText("Hapus");
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -195,17 +197,19 @@ public class panelBayarSewa extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldo}"));
         columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("Jenis");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
         columnBinding.setColumnName("Transaksi Bank");
         columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(6).setHeaderValue("Jenis");
             masterTable.getColumnModel().getColumn(7).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2)
             );
         }
@@ -260,8 +264,9 @@ public class panelBayarSewa extends JPanel {
             entityManager.refresh(entity);
         }
         List<? extends Laporan> hitungSaldo = app.table.Util.hitungSaldo((List<? extends Laporan>) data);
-        list.clear();
         list.addAll((Collection<? extends Bayarsewa>) hitungSaldo);
+        list.clear();
+//        list.addAll(data);
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
      }
@@ -269,13 +274,19 @@ public class panelBayarSewa extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        java.util.Collection data = query.getResultList();
+        java.util.Collection<Bayarsewa> data = query.getResultList();
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
-        List<? extends Laporan> hitungSaldo = app.table.Util.hitungSaldo((List<? extends Laporan>) data);
+        BigInteger temp = BigInteger.ZERO;
+        for (Bayarsewa lap : data) {
+            temp = temp.add(lap.getPemasukan());
+            temp = temp.subtract(lap.getPengeluaran());
+            lap.setSaldo(temp);
+        }        
+        saveButtonActionPerformed(evt);
         list.clear();
-        list.addAll((Collection<? extends Bayarsewa>) hitungSaldo);
+        list.addAll(data);
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         
@@ -305,7 +316,7 @@ public class panelBayarSewa extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
-            refreshButtonActionPerformed(evt);
+
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -419,6 +430,7 @@ public class panelBayarSewa extends JPanel {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
+                frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
                 frame.setContentPane(new panelBayarSewa());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
