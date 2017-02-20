@@ -312,28 +312,24 @@ public class panelBagiLaba extends JPanel {
         for (BagiLaba a : list) {
              if (a.getM() != null) {
                  if (a.getM().getStatusMobil().equals("CLOSE")) {
-                     a.getM().setStatusMobil("SELESAI");
                      temp.add(a);                     
                  }
             }
             else if ( a.getH() != null)
             {
                 if (a.getH().getLABA().equals("CLOSE")) {
-                    a.getH().setLABA("SELESAI");               
                     temp.add(a);        
                 }
             }
             else if ( a.getR() != null)
             {
                 if (a.getR().getLABA().equals("CLOSE")) {
-                a.getR().setLABA("SELESAI");      
                 temp.add(a);        
                 }
             }
             else if ( a.getB() != null)
             {                
                 if (a.getB().getLaba().equals("CLOSE")) {
-                    a.getB().setLaba("SELESAI");
                     temp.add(a);        
                 }
 
@@ -398,6 +394,33 @@ public class panelBagiLaba extends JPanel {
         asset.setTransaksi(saldo);
         entityManager.persist(asset);
         this.jDialog1.hide();
+        for (BagiLaba a : list) {
+             if (a.getM() != null) {
+                 if (a.getM().getStatusMobil().equals("CLOSE")) {
+                     a.getM().setStatusMobil("SELESAI");
+                 }
+            }
+            else if ( a.getH() != null)
+            {
+                if (a.getH().getLABA().equals("CLOSE")) {
+                    a.getH().setLABA("SELESAI");               
+                }
+            }
+            else if ( a.getR() != null)
+            {
+                if (a.getR().getLABA().equals("CLOSE")) {
+                a.getR().setLABA("SELESAI");      
+                }
+            }
+            else if ( a.getB() != null)
+            {                
+                if (a.getB().getLaba().equals("CLOSE")) {
+                    a.getB().setLaba("SELESAI");
+                }
+
+            }
+        }
+
         saveButtonActionPerformed(evt);
         //        Util.RefreshLaporan();
 
