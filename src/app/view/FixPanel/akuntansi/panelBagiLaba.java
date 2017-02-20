@@ -130,7 +130,6 @@ public class panelBagiLaba extends JPanel {
         jLabel1.setText("NOMINAL");
         jDialog1.getContentPane().add(jLabel1);
 
-        jFormattedTextField1.setEditable(false);
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
         jDialog1.getContentPane().add(jFormattedTextField1);
 
