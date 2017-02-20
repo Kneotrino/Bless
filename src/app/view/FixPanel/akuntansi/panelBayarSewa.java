@@ -238,20 +238,33 @@ public class panelBayarSewa extends JPanel {
             else if (evt.getSource() == jButton4) {
                 panelBayarSewa.this.jButton4ActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton) {
-                panelBayarSewa.this.newButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == jButton5) {
                 panelBayarSewa.this.jButton5ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
+                panelBayarSewa.this.newButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
 
-        public void Refresh()
+     public void Refresh()
     {
         this.refreshButtonActionPerformed(null);
     }
-
+     public void Reset()
+     {
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();
+        java.util.Collection data = query.getResultList();
+        for (Object entity : data) {
+            entityManager.refresh(entity);
+        }
+        List<? extends Laporan> hitungSaldo = app.table.Util.hitungSaldo((List<? extends Laporan>) data);
+        list.clear();
+        list.addAll((Collection<? extends Bayarsewa>) hitungSaldo);
+        bankList.clear();
+        bankList.addAll(bankQuery.getResultList());
+     }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
@@ -292,6 +305,7 @@ public class panelBayarSewa extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -305,6 +319,7 @@ public class panelBayarSewa extends JPanel {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+//        refreshButtonActionPerformed(evt);        
         this.jDialog1.setSize(400, 600);
         this.jDialog1.setLocationRelativeTo(null);
         this.jDialog1.show();
@@ -327,6 +342,7 @@ public class panelBayarSewa extends JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
+//        refreshButtonActionPerformed(evt);                
         this.jDialog2.setSize(400, 600);
         this.jDialog2.setLocationRelativeTo(null);
         this.jDialog2.show();

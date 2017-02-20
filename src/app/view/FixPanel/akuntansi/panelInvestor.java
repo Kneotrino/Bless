@@ -410,6 +410,7 @@ public class panelInvestor extends JPanel {
         this.bankList.addAll(bankQuery.getResultList());
         this.refreshButtonActionPerformed(null);
         this.panelBagiLaba1.Refresh();
+        this.panelBayarSewa1.Refresh();
     }
     
     private void deleteDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDetailButtonActionPerformed
