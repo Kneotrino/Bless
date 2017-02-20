@@ -8,12 +8,15 @@ package app.table;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
@@ -127,7 +130,6 @@ public class BagiLaba implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
-
     public Integer getId() {
         return id;
     }
@@ -162,5 +164,55 @@ public class BagiLaba implements Serializable {
     public String toString() {
         return "app.table.BagiLaba[ id=" + id + " ]";
     }
-    
+    @Transient 
+    private BigInteger Profit = BigInteger.ZERO;
+
+    public static final String PROP_PROFIT = "Profit";
+
+    /**
+     * Get the value of Profit
+     *
+     * @return the value of Profit
+     */
+    public BigInteger getProfit() {
+       if (m != null) {
+           List<KeuanganMobil> keuanganMobil2 = m.getKeuanganMobil2();
+           fungsi(keuanganMobil2);
+        }
+        else if ( h != null)
+        {
+           List<Bayarhutang> bayarhutangs = h.getBayarhutangs();
+           fungsi(bayarhutangs);
+        }
+        else if ( r!= null)
+        {
+           List<Bayarrental> bayarrentalList = r.getBayarrentalList();
+            fungsi(bayarrentalList);
+        }
+        else if ( b != null)
+        {
+           List<Bayarjasa> bayarjasaList = b.getBayarjasaList();
+           fungsi(bayarjasaList);           
+        }
+        return Profit;
+    }
+    public void fungsi(List<? extends Laporan> LaporanList)
+    {
+        for (Laporan laporan : LaporanList) {
+                Profit =Profit.add(laporan.getPemasukan());
+                Profit =Profit.subtract(laporan.getPengeluaran());
+        }
+    }
+
+    /**
+     * Set the value of Profit
+     *
+     * @param Profit new value of Profit
+     */
+    public void setProfit(BigInteger Profit) {
+        BigInteger oldProfit = this.Profit;
+        this.Profit = Profit;
+        propertyChangeSupport.firePropertyChange(PROP_PROFIT, oldProfit, Profit);
+    }
+
 }

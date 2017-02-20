@@ -134,6 +134,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panelModal1 = new app.view.FixPanel.panelModal();
         panelInvestor1 = new app.view.FixPanel.akuntansi.panelInvestor();
+        panelBayarSewa1 = new app.view.FixPanel.akuntansi.panelBayarSewa();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -143,6 +144,8 @@ public class ShowRoom extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem20 = new javax.swing.JMenuItem();
@@ -288,6 +291,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(jPanel8, "card2");
         getContentPane().add(panelModal1, "Modal");
         getContentPane().add(panelInvestor1, "Investor");
+        getContentPane().add(panelBayarSewa1, "Sewa");
 
         jMenu1.setText("Akutansi");
 
@@ -341,7 +345,23 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem3);
 
-        jMenuItem27.setText("Investor/Pemilik Modal $ Status Profit");
+        jMenuItem31.setText("Modal Di Tahan");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem31);
+
+        jMenuItem32.setText("Status Keuntungan");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem32);
+
+        jMenuItem27.setText("Investor/Pemilik Modal");
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem27ActionPerformed(evt);
@@ -739,6 +759,18 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        this.chandePanel("Sewa");
+        panelBayarSewa1.Refresh();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        // TODO add your handling code here:
+        this.chandePanel("Profit");
+        app.view.FixPanel.akuntansi.panelBagiLaba.BagiLaba(this.jTextField1.getText());
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -817,6 +849,8 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -841,6 +875,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private app.view.FixPanel.akuntansi.panelBayarSewa panelBayarSewa1;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.akuntansi.panelInvestor panelInvestor1;
     private app.view.FixPanel.panelLeasing panelLeasing2;

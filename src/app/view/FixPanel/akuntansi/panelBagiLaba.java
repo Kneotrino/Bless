@@ -5,12 +5,27 @@
  */
 package app.view.FixPanel.akuntansi;
 
+import app.table.BagiLaba;
+import app.table.Bank;
+import app.table.BayarSewaMasuk;
+import app.table.Bayarhutang;
+import app.table.Bayarjasa;
+import app.table.Bayarrental;
+import app.table.Bayarsewa;
+import app.table.KeuanganMobil;
+import app.table.Saldo;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.RollbackException;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -19,8 +34,15 @@ import javax.swing.JPanel;
  * @author SEED
  */
 public class panelBagiLaba extends JPanel {
-    
+    String Value = "25";
     public panelBagiLaba() {
+        initComponents();
+        if (!Beans.isDesignTime()) {
+            entityManager.getTransaction().begin();
+        }
+    }
+    public panelBagiLaba(String value) {
+        Value = value;
         initComponents();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
@@ -46,13 +68,26 @@ public class panelBagiLaba extends JPanel {
         idLabel = new javax.swing.JLabel();
         keteranganLabel = new javax.swing.JLabel();
         newButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
         keteranganField = new javax.swing.JTextField();
         idField = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
+        deleteButton = new javax.swing.JButton();
+        jDialog1 = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
+        bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
+        bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
         jPanel1 = new javax.swing.JPanel();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        saveButton1 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
 
@@ -65,14 +100,7 @@ public class panelBagiLaba extends JPanel {
         newButton.setText("New");
         newButton.addActionListener(formListener);
 
-        deleteButton.setText("Delete");
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteButton.addActionListener(formListener);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keterangan}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keterangan}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         binding.setSourceUnreadableValue("null");
         bindingGroup.addBinding(binding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -86,6 +114,51 @@ public class panelBagiLaba extends JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE", "SELESAI" }));
 
+        deleteButton.setText("Delete");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        deleteButton.addActionListener(formListener);
+
+        jDialog1.setTitle("Data Baru");
+        jDialog1.setAlwaysOnTop(true);
+        jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog1.setType(java.awt.Window.Type.POPUP);
+        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
+
+        jLabel1.setText("NOMINAL");
+        jDialog1.getContentPane().add(jLabel1);
+
+        jFormattedTextField1.setEditable(false);
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jDialog1.getContentPane().add(jFormattedTextField1);
+
+        jLabel3.setText("KETERANGAN");
+        jDialog1.getContentPane().add(jLabel3);
+        jDialog1.getContentPane().add(jTextField2);
+
+        jLabel4.setText("TANGGAL");
+        jDialog1.getContentPane().add(jLabel4);
+
+        jDateChooser1.setDate(new java.util.Date());
+        jDialog1.getContentPane().add(jDateChooser1);
+
+        jLabel2.setText("TUJUAN");
+        jDialog1.getContentPane().add(jLabel2);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jDialog1.getContentPane().add(jComboBox2);
+
+        jButton4.setText("TAMBAH");
+        jButton4.addActionListener(formListener);
+        jDialog1.getContentPane().add(jButton4);
+
         setLayout(new java.awt.BorderLayout());
 
         refreshButton.setText("Refresh");
@@ -96,8 +169,13 @@ public class panelBagiLaba extends JPanel {
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
+        saveButton1.setText("CLOSE TO SELESAI");
+        saveButton1.addActionListener(formListener);
+        jPanel1.add(saveButton1);
+
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
+        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
         masterTable.setRowHeight(25);
 
@@ -105,6 +183,11 @@ public class panelBagiLaba extends JPanel {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("REF");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
@@ -127,11 +210,12 @@ public class panelBagiLaba extends JPanel {
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(0).setMinWidth(75);
             masterTable.getColumnModel().getColumn(0).setMaxWidth(75);
-            masterTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jComboBox1));
+            masterTable.getColumnModel().getColumn(3).setCellEditor(null);
+            masterTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox1));
         }
-        masterTable.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(jComboBox1));
-        masterTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox1));
+        masterTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jComboBox1));
         masterTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(jComboBox1));
+        masterTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox1));
 
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
@@ -149,11 +233,17 @@ public class panelBagiLaba extends JPanel {
             else if (evt.getSource() == saveButton) {
                 panelBagiLaba.this.saveButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == saveButton1) {
+                panelBagiLaba.this.saveButton1ActionPerformed(evt);
+            }
             else if (evt.getSource() == newButton) {
                 panelBagiLaba.this.newButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 panelBagiLaba.this.deleteButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton4) {
+                panelBagiLaba.this.jButton4ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -169,7 +259,17 @@ public class panelBagiLaba extends JPanel {
         }
         list.clear();
         list.addAll(data);
+        bankList.clear();
+        bankList.addAll(bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed
+
+    public List<Bank> getBankList() {
+        return bankList;
+    }
+
+    public void setBankList(List<Bank> bankList) {
+        this.bankList = bankList;
+    }
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int[] selected = masterTable.getSelectedRows();
@@ -207,14 +307,123 @@ public class panelBagiLaba extends JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
+        java.util.List<app.table.BagiLaba> temp = new LinkedList<>();
+        for (BagiLaba a : list) {
+             if (a.getM() != null) {
+                 if (a.getM().getStatusMobil().equals("CLOSE")) {
+                     a.getM().setStatusMobil("SELESAI");
+                     temp.add(a);                     
+                 }
+            }
+            else if ( a.getH() != null)
+            {
+                if (a.getH().getLABA().equals("CLOSE")) {
+                    a.getH().setLABA("SELESAI");               
+                    temp.add(a);        
+                }
+            }
+            else if ( a.getR() != null)
+            {
+                if (a.getR().getLABA().equals("CLOSE")) {
+                a.getR().setLABA("SELESAI");      
+                temp.add(a);        
+                }
+            }
+            else if ( a.getB() != null)
+            {                
+                if (a.getB().getLaba().equals("CLOSE")) {
+                    a.getB().setLaba("SELESAI");
+                    temp.add(a);        
+                }
+
+            }
+        }
+        System.out.println("temp = " + temp.size());
+        BigInteger b = BigInteger.ZERO;
+        for (BagiLaba a : temp) {
+             if (a.getM() != null) {
+                List<KeuanganMobil> bayarjasaList = a.getM().getKeuanganMobil2();
+                    for (KeuanganMobil laporan : bayarjasaList) {
+                            b =b.add(laporan.getPemasukan());
+                            b =b.subtract(laporan.getPengeluaran());
+                    }
+
+            }
+            else if ( a.getH() != null)
+            {
+                List<Bayarhutang> bayarjasaList = a.getH().getBayarhutangs();
+                    for (Bayarhutang laporan : bayarjasaList) {
+                            b =b.add(laporan.getPemasukan());
+                            b =b.subtract(laporan.getPengeluaran());
+                    }
+            }
+            else if ( a.getR() != null)
+            {
+                List<Bayarrental> bayarjasaList = a.getR().getBayarrentalList();
+                    for (Bayarrental laporan : bayarjasaList) {
+                            b =b.add(laporan.getPemasukan());
+                            b =b.subtract(laporan.getPengeluaran());
+                    }
+
+            }
+            else if ( a.getB() != null)
+            {                
+                List<Bayarjasa> bayarjasaList = a.getB().getBayarjasaList();
+                    for (Bayarjasa laporan : bayarjasaList) {
+                            b =b.add(laporan.getPemasukan());
+                            b =b.subtract(laporan.getPengeluaran());
+                    }
+            }
+        }
+        System.out.println("b = " + b);
+        b = b.divide(new BigInteger("100"))
+                .multiply(new BigInteger(Value));
+        jFormattedTextField1.setValue(b);
+        //        jTextField1.setText(b.toString());
+        jDialog1.setSize(300, 300);
+        jDialog1.setLocationRelativeTo(null);
+        jDialog1.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
+        Bayarsewa asset = new BayarSewaMasuk();
+        asset.setPemasukan((BigInteger) jFormattedTextField1.getValue());
+        asset.setKeterangan(jTextField2.getText());
+        asset.setTanggal(jDateChooser1.getDate());
+        Saldo saldo = new Saldo();
+        saldo.setBankId((Bank) this.jComboBox2.getSelectedItem());
+        asset.setTransaksi(saldo);
+        entityManager.persist(asset);
+        this.jDialog1.hide();
+        saveButtonActionPerformed(evt);
+        //        Util.RefreshLaporan();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.util.List<app.table.Bank> bankList;
+    private javax.persistence.Query bankQuery;
     private javax.swing.JButton deleteButton;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel idLabel;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField keteranganField;
     private javax.swing.JLabel keteranganLabel;
     private java.util.List<app.table.BagiLaba> list;
@@ -224,6 +433,7 @@ public class panelBagiLaba extends JPanel {
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;
+    private javax.swing.JButton saveButton1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
@@ -254,8 +464,20 @@ public class panelBagiLaba extends JPanel {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new panelBagiLaba());
+                frame.setContentPane(new panelBagiLaba("30"));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+    }
+    public static void BagiLaba(String Value)
+    {
+            EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                JFrame frame = new JFrame("STATUS KEUNTUNGAN /"+Value+" %MODAL DI TAHAN");
+                frame.setContentPane(new panelBagiLaba(Value));
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
             }
