@@ -198,6 +198,10 @@ public class panelBayarSewa extends JPanel {
         columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
+        columnBinding.setColumnName("Jenis");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
         columnBinding.setColumnName("Transaksi Bank");
         columnBinding.setColumnClass(app.table.Bank.class);
@@ -206,7 +210,7 @@ public class panelBayarSewa extends JPanel {
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(6).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2)
+            masterTable.getColumnModel().getColumn(7).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2)
             );
         }
 
@@ -312,6 +316,7 @@ public class panelBayarSewa extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
