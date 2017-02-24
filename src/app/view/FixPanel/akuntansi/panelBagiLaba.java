@@ -13,6 +13,8 @@ import app.table.Bayarjasa;
 import app.table.Bayarrental;
 import app.table.Bayarsewa;
 import app.table.KeuanganMobil;
+import app.table.Laba;
+import app.table.Laporanlaba;
 import app.table.Saldo;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -308,6 +310,7 @@ public class panelBagiLaba extends JPanel {
 
     private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
         java.util.List<app.table.BagiLaba> temp = new LinkedList<>();
+        java.util.List<app.table.Laba> lap = new LinkedList<>();
         for (BagiLaba a : list) {
              if (a.getM() != null) {
                  if (a.getM().getStatusMobil().equals("CLOSE")) {
@@ -371,6 +374,18 @@ public class panelBagiLaba extends JPanel {
                     }
             }
         }
+        Laporanlaba laporanlaba = new Laporanlaba();
+        for (BagiLaba bagiLaba : temp) {
+            Laba l = new Laba();
+            l.setKeterangan(bagiLaba.getKeterangan());
+            l.setJumlah(bagiLaba.getProfit());
+//            l.setTipe(Value);
+            lap.add(l);
+            l.setLaporanlabaRef(laporanlaba);
+            entityManager.persist(l);
+        }
+//        laporanlaba.setLabaList(lap);        
+        entityManager.persist(laporanlaba);
         System.out.println("b = " + b);
         b = b.divide(new BigInteger("100"))
                 .multiply(new BigInteger(Value));

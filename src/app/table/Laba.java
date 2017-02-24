@@ -8,6 +8,7 @@ package app.table;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -50,7 +51,7 @@ public class Laba implements Serializable {
     private Long id;
     @Basic(optional = false)
     @Column(name = "JUMLAH", nullable = false)
-    private long jumlah;
+    private BigInteger jumlah;
     @Lob
     @Column(name = "KETERANGAN")
     private String keterangan;
@@ -94,7 +95,7 @@ public class Laba implements Serializable {
 
     public Laba(Long id, long jumlah) {
         this.id = id;
-        this.jumlah = jumlah;
+//        this.jumlah = jumlah;
     }
 
     public Long getId() {
@@ -107,12 +108,12 @@ public class Laba implements Serializable {
         changeSupport.firePropertyChange("id", oldId, id);
     }
 
-    public long getJumlah() {
+    public BigInteger getJumlah() {
         return jumlah;
     }
 
-    public void setJumlah(long jumlah) {
-        long oldJumlah = this.jumlah;
+    public void setJumlah(BigInteger jumlah) {
+        BigInteger oldJumlah = this.jumlah;
         this.jumlah = jumlah;
         changeSupport.firePropertyChange("jumlah", oldJumlah, jumlah);
     }

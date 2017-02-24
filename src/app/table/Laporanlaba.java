@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,8 +59,28 @@ public class Laporanlaba implements Serializable {
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggal;
-    @OneToMany(mappedBy = "laporanlabaRef")
+    @OneToMany(mappedBy = "laporanlabaRef", cascade = {CascadeType.ALL})
     private List<Laba> labaList;
+    @PostPersist
+    public void logPersist()
+    {
+        try {
+            javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menyimpan \n");
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null,"Gagal Menyimpan \n");
+        }
+            
+    }
+    @PostRemove
+    public void logRemove()
+    {
+        try {
+            javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menghapus \n");
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null,"Gagal Menghapus \n");
+        }
+            
+    }
 
     public Laporanlaba() {
     }
