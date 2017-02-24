@@ -238,7 +238,7 @@ public class Piutang implements Serializable {
         for (Bayarpihutang lap : bayarpihutangList) {
             temp = temp.add(lap.getPemasukan());
             temp = temp.subtract(lap.getPengeluaran());
-            temp = temp.subtract(lap.getBunga());
+//            temp = temp.subtract(lap.getBunga());
             lap.setSaldo(temp);
         }
             return bayarpihutangList;
