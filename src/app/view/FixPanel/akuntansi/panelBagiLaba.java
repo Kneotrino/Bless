@@ -468,6 +468,7 @@ public class panelBagiLaba extends JPanel {
             l.setLaporanlabaRef(laporanlaba);
             entityManager.persist(l);
         }                
+        this.jDialog1.hide();
         entityManager.persist(laporanlaba);
 
 //        Bayarsewa asset = new BayarSewaMasuk();
@@ -478,7 +479,6 @@ public class panelBagiLaba extends JPanel {
 //        saldo.setBankId((Bank) this.jComboBox2.getSelectedItem());
 //        asset.setTransaksi(saldo);
 //        entityManager.persist(asset);
-        this.jDialog1.hide();
         
         
         for (BagiLaba a : list) {

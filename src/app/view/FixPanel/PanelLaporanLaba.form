@@ -50,7 +50,7 @@
     </Component>
     <Container class="javax.swing.JDialog" name="jDialog1">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jDialog1.setSize(800, 700);&#xa;jDialog1.setLocationRelativeTo(null);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jDialog1.setSize(1000, 700);&#xa;jDialog1.setLocationRelativeTo(null);"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -77,12 +77,12 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="350" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

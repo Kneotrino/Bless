@@ -136,6 +136,7 @@ public class ShowRoom extends javax.swing.JFrame {
         panelInvestor1 = new app.view.FixPanel.akuntansi.panelInvestor();
         panelBayarSewa1 = new app.view.FixPanel.akuntansi.panelBayarSewa();
         panelLaporanLaba1 = new app.view.FixPanel.PanelLaporanLaba();
+        panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -296,6 +297,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(panelInvestor1, "Investor");
         getContentPane().add(panelBayarSewa1, "Sewa");
         getContentPane().add(panelLaporanLaba1, "Pembagian");
+        getContentPane().add(panelBagiLaba1, "Profit");
 
         jMenu1.setText("Akutansi");
 
@@ -783,11 +785,12 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
-        jDialog3.setSize(300, 300);
-        jDialog3.setLocationRelativeTo(null);
-        jDialog3.show();
+//        jDialog3.setSize(300, 300);
+//        jDialog3.setLocationRelativeTo(null);
+//        jDialog3.show();
         this.chandePanel("Profit");
-        app.view.FixPanel.akuntansi.panelBagiLaba.BagiLaba(this.jTextField1.getText());
+        panelBagiLaba1.Refresh();
+//        app.view.FixPanel.akuntansi.panelBagiLaba.BagiLaba(this.jTextField1.getText());
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
@@ -902,6 +905,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private app.view.FixPanel.akuntansi.panelBagiLaba panelBagiLaba1;
     private app.view.FixPanel.akuntansi.panelBayarSewa panelBayarSewa1;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.akuntansi.panelInvestor panelInvestor1;

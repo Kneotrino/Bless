@@ -67,7 +67,7 @@ public class PanelLaporanLaba extends JPanel {
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
 
-        jDialog1.setSize(800, 700);
+        jDialog1.setSize(1000, 700);
         jDialog1.setLocationRelativeTo(null);
 
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
@@ -109,6 +109,8 @@ public class PanelLaporanLaba extends JPanel {
         detailScrollPane.setViewportView(detailTable);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
             detailTable.getColumnModel().getColumn(0).setMaxWidth(100);
+            detailTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            detailTable.getColumnModel().getColumn(2).setPreferredWidth(350);
         }
 
         jDialog1.getContentPane().add(detailScrollPane, java.awt.BorderLayout.CENTER);
