@@ -23,5 +23,13 @@ public class pembagianLaba extends Laporan implements Serializable {
 
     @OneToOne(mappedBy = "Laba")
     private Saham saham;
+
+    public Saham getSaham() {
+        return saham;
+    }
+
+    public void setSaham(Saham saham) {
+        this.saham = saham;
+    }
     
 }

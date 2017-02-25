@@ -62,6 +62,9 @@
     <class>app.table.Laba</class>
     <class>app.table.Lappemlaba</class>
     <class>app.table.Laporanlaba</class>
+    <class>app.table.LaporanSaham</class>
+    <class>app.table.Laporansaham</class>
+    <class>app.table.Relasi</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>

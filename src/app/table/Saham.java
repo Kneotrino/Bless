@@ -53,12 +53,22 @@ public class Saham implements Serializable {
     private Modal modal;
     @OneToOne(cascade = {CascadeType.ALL})
     private Prive prive;    
-
     @OneToOne(cascade = {CascadeType.ALL})
     private pembagianLaba Laba;
+//    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
+    private Relasi relasi;
+
+    public Relasi getRelasi() {
+        return relasi;
+    }
+
+    public void setRelasi(Relasi relasi) {
+        this.relasi = relasi;
+    }
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date Tanggal = new Date();    
-    private String Keterangan = "Keterangan";
+    private String Keterangan = "";
     public pembagianLaba getLaba() {
         return Laba;
     }
@@ -113,6 +123,10 @@ public class Saham implements Serializable {
         {
             return prive.getKeterangan();
         }    
+        else if (Laba != null)
+        {
+            return Laba.getKeterangan();
+        }    
         return Keterangan;
     }
 
@@ -130,6 +144,10 @@ public class Saham implements Serializable {
         else if (prive != null)
         {
             prive.setKeterangan(Keterangan);
+        }
+        else if (Laba  != null)
+        {
+            Laba.setKeterangan(Keterangan);
         }
     
         changeSupport.firePropertyChange(PROP_KETERANGAN, oldKeterangan, Keterangan);

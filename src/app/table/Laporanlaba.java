@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.Table;
@@ -62,6 +64,66 @@ public class Laporanlaba implements Serializable {
     private Date tanggal;
     @OneToMany(mappedBy = "laporanlabaRef", cascade = {CascadeType.ALL})
     private List<Laba> labaList;
+    @OneToOne( cascade = {CascadeType.ALL})
+    private LaporanSaham laporanSaham = new LaporanSaham();    
+    private BigInteger Persen;
+    @OneToOne( cascade = {CascadeType.ALL})
+    private BayarSewaMasuk ModalTahan;
+
+    public static final String PROP_MODALTAHAN = "ModalTahan";
+
+    /**
+     * Get the value of ModalTahan
+     *
+     * @return the value of ModalTahan
+     */
+    public BayarSewaMasuk getModalTahan() {
+        return ModalTahan;
+    }
+
+    /**
+     * Set the value of ModalTahan
+     *
+     * @param ModalTahan new value of ModalTahan
+     */
+    public void setModalTahan(BayarSewaMasuk ModalTahan) {
+        BayarSewaMasuk oldModalTahan = this.ModalTahan;
+        this.ModalTahan = ModalTahan;
+        changeSupport.firePropertyChange(PROP_MODALTAHAN, oldModalTahan, ModalTahan);
+    }
+
+
+    public static final String PROP_PERSEN = "Persen";
+
+    /**
+     * Get the value of Persen
+     *
+     * @return the value of Persen
+     */
+    public BigInteger getPersen() {
+        return Persen;
+    }
+
+    /**
+     * Set the value of Persen
+     *
+     * @param Persen new value of Persen
+     */
+    public void setPersen(BigInteger Persen) {
+        BigInteger oldPersen = this.Persen;
+        this.Persen = Persen;
+        changeSupport.firePropertyChange(PROP_PERSEN, oldPersen, Persen);
+    }
+
+    
+
+    public LaporanSaham getLaporanSaham() {
+        return laporanSaham;
+    }
+
+    public void setLaporanSaham(LaporanSaham laporanSaham) {
+        this.laporanSaham = laporanSaham;
+    }
     @PostPersist
     public void logPersist()
     {
@@ -144,6 +206,9 @@ public class Laporanlaba implements Serializable {
     }
 
     public Laporanlaba() {
+        laporanSaham = new LaporanSaham();
+        List<Relasi> relasis = new LinkedList<>();
+        laporanSaham.setRelasis(relasis);
     }
 
     public Laporanlaba(Integer ref) {

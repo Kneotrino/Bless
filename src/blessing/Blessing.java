@@ -6,6 +6,7 @@
 package blessing;
 
 //import app.view.main;
+import app.view.FixPanel.PanelBank;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -52,6 +53,8 @@ public class Blessing {
         }
         feel();        
         try {
+        PanelBank panelBank = new PanelBank();
+        panelBank = null;
         JFrame form = new app.view.ShowRoom();
         form.show();            
         } 

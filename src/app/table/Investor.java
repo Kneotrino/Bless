@@ -209,7 +209,7 @@ public class Investor implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Investor[ id=" + id + " ]";
+        return this.nama + " [ REF=" + id + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

@@ -7,10 +7,12 @@ package app.table;
 
 import app.ListUrutan;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -19,4 +21,15 @@ import javax.persistence.Id;
 @Entity
 @ListUrutan({"tanggal","keterangan","jumlah"})
 public class BayarSewaMasuk extends Bayarsewa implements Serializable {    
+
+    @OneToOne(mappedBy = "ModalTahan",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Laporanlaba laporanlaba;
+
+    public Laporanlaba getLaporanlaba() {
+        return laporanlaba;
+    }
+
+    public void setLaporanlaba(Laporanlaba laporanlaba) {
+        this.laporanlaba = laporanlaba;
+    }
 }
