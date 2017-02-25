@@ -14,18 +14,25 @@ import app.table.Bayarrental;
 import app.table.Bayarsewa;
 import app.table.KeuanganMobil;
 import app.table.Laba;
+import app.table.Laporan;
 import app.table.Laporanlaba;
 import app.table.Saldo;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.RollbackException;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -74,15 +81,19 @@ public class panelBagiLaba extends JPanel {
         idField = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         deleteButton = new javax.swing.JButton();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jDialog1 = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField(0);
         jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel6 = new javax.swing.JLabel();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
         jButton4 = new javax.swing.JButton();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
@@ -123,30 +134,7 @@ public class panelBagiLaba extends JPanel {
 
         deleteButton.addActionListener(formListener);
 
-        jDialog1.setTitle("Data Baru");
-        jDialog1.setAlwaysOnTop(true);
-        jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog1.setType(java.awt.Window.Type.POPUP);
-        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
-
-        jLabel1.setText("NOMINAL");
-        jDialog1.getContentPane().add(jLabel1);
-
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jDialog1.getContentPane().add(jFormattedTextField1);
-
-        jLabel3.setText("KETERANGAN");
-        jDialog1.getContentPane().add(jLabel3);
-        jDialog1.getContentPane().add(jTextField2);
-
-        jLabel4.setText("TANGGAL");
-        jDialog1.getContentPane().add(jLabel4);
-
-        jDateChooser1.setDate(new java.util.Date());
-        jDialog1.getContentPane().add(jDateChooser1);
-
-        jLabel2.setText("TUJUAN");
-        jDialog1.getContentPane().add(jLabel2);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -154,9 +142,42 @@ public class panelBagiLaba extends JPanel {
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
 
-        jDialog1.getContentPane().add(jComboBox2);
+        jDialog1.setTitle("Data Baru");
+        jDialog1.setAlwaysOnTop(true);
+        jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog1.setType(java.awt.Window.Type.POPUP);
+        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
 
-        jButton4.setText("TAMBAH");
+        jLabel1.setText("Pembagian Laporan KE");
+        jDialog1.getContentPane().add(jLabel1);
+
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jFormattedTextField2.setValue(0l);
+        jDialog1.getContentPane().add(jFormattedTextField2);
+
+        jLabel3.setText("KETERANGAN");
+        jDialog1.getContentPane().add(jLabel3);
+        jDialog1.getContentPane().add(jTextField2);
+
+        jLabel4.setText("TANGGAL PEMBAGIAN LABA");
+        jDialog1.getContentPane().add(jLabel4);
+
+        jDateChooser1.setDate(new java.util.Date());
+        jDialog1.getContentPane().add(jDateChooser1);
+
+        jLabel5.setText("TANGGAL AWAL PENGELUARAN");
+        jDialog1.getContentPane().add(jLabel5);
+
+        jDateChooser2.setDate(new java.util.Date());
+        jDialog1.getContentPane().add(jDateChooser2);
+
+        jLabel6.setText("TANGGAL AKHIR PENGELUARAN");
+        jDialog1.getContentPane().add(jLabel6);
+
+        jDateChooser3.setDate(new java.util.Date());
+        jDialog1.getContentPane().add(jDateChooser3);
+
+        jButton4.setText("SIMPAN");
         jButton4.addActionListener(formListener);
         jDialog1.getContentPane().add(jButton4);
 
@@ -211,7 +232,6 @@ public class panelBagiLaba extends JPanel {
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(0).setMinWidth(75);
             masterTable.getColumnModel().getColumn(0).setMaxWidth(75);
-            masterTable.getColumnModel().getColumn(3).setCellEditor(null);
             masterTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox1));
         }
         masterTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jComboBox1));
@@ -308,8 +328,9 @@ public class panelBagiLaba extends JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
         java.util.List<app.table.BagiLaba> temp = new LinkedList<>();
+    private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
+        temp = new LinkedList<>();
         java.util.List<app.table.Laba> lap = new LinkedList<>();
         for (BagiLaba a : list) {
              if (a.getM() != null) {
@@ -374,40 +395,92 @@ public class panelBagiLaba extends JPanel {
                     }
             }
         }
-        Laporanlaba laporanlaba = new Laporanlaba();
-        for (BagiLaba bagiLaba : temp) {
-            Laba l = new Laba();
-            l.setKeterangan(bagiLaba.getKeterangan());
-            l.setJumlah(bagiLaba.getProfit());
-//            l.setTipe(Value);
-            lap.add(l);
-            l.setLaporanlabaRef(laporanlaba);
-            entityManager.persist(l);
-        }
-//        laporanlaba.setLabaList(lap);        
-        entityManager.persist(laporanlaba);
+//        Laporanlaba laporanlaba = new Laporanlaba();
+//        for (BagiLaba bagiLaba : temp) {
+//            Laba l = new Laba();
+//            l.setKeterangan(bagiLaba.getKeterangan());
+//            l.setJumlah(bagiLaba.getProfit());
+//            lap.add(l);
+//            l.setLaporanlabaRef(laporanlaba);
+//            entityManager.persist(l);
+//        }
+//        entityManager.persist(laporanlaba);
         System.out.println("b = " + b);
         b = b.divide(new BigInteger("100"))
                 .multiply(new BigInteger(Value));
         jFormattedTextField1.setValue(b);
-        //        jTextField1.setText(b.toString());
         jDialog1.setSize(300, 300);
         jDialog1.setLocationRelativeTo(null);
         jDialog1.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButton1ActionPerformed
-
+    public List getMonthList(Class kelas,Date awal,Date Akhir)
+    {
+        String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
+                + "where en.tanggal BETWEEN :startDate AND :endDate"
+                ;
+       TypedQuery createQuery = entityManager.createQuery(que, kelas)
+                .setParameter("startDate", awal, TemporalType.TIMESTAMP)
+                .setParameter("endDate", Akhir, TemporalType.TIMESTAMP)  
+                ;
+        return createQuery.getResultList();
+    }
+        private BigInteger sumAll(List<? extends Laporan> laporanList)
+    {
+        BigInteger temp = new BigInteger("0");
+        for (Laporan list : laporanList) {
+            temp = temp.add(list.getJumlah());
+        }
+        return temp;
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
-        Bayarsewa asset = new BayarSewaMasuk();
-        asset.setPemasukan((BigInteger) jFormattedTextField1.getValue());
-        asset.setKeterangan(jTextField2.getText());
-        asset.setTanggal(jDateChooser1.getDate());
-        Saldo saldo = new Saldo();
-        saldo.setBankId((Bank) this.jComboBox2.getSelectedItem());
-        asset.setTransaksi(saldo);
-        entityManager.persist(asset);
+        Laporanlaba laporanlaba = new Laporanlaba();
+        Long foo = (Long) jFormattedTextField2.getValue();
+        Integer correctButComplicated = Integer.valueOf(foo.intValue());
+        laporanlaba.setKeterangan(jTextField2.getText());
+        laporanlaba.setKe(correctButComplicated);
+        laporanlaba.setTanggal(jDateChooser1.getDate());
+        Date Awal = jDateChooser2.getDate();
+        Date Akhir = jDateChooser3.getDate();
+        for (BagiLaba bagiLaba : temp) {
+            Laba l = new Laba();
+            l.setKeterangan(bagiLaba.getKeterangan());
+            l.setJumlah(bagiLaba.getProfit());
+            l.setLaporanlabaRef(laporanlaba);
+            entityManager.persist(l);
+        }
+         java.util.List<Class> KelasList = new LinkedList<>();
+        KelasList.add(app.table.Pengeluaran.class);
+        KelasList.add(app.table.Pegawaigaji.class);
+        KelasList.add(app.table.Asset.class);
+        KelasList.add(app.table.BayarPihutangBunga.class);
+        Map nama = new LinkedHashMap();
+        nama.put(app.table.Pengeluaran.class, "Operasional");
+        nama.put(app.table.Asset.class, "Asset");
+        nama.put(app.table.Pegawaigaji.class, "Gaji Pegawai");
+        nama.put(app.table.BayarPihutangBunga.class, "Bunga Bank");
+        final SimpleDateFormat ff = new SimpleDateFormat("dd-MM-yyyy");
+        for (Class class1 : KelasList) {
+            Laba l = new Laba();
+            l.setKeterangan("Pengeluaran "+ nama.get(class1) + " "+ff.format(Awal)+"->"+ff.format(Akhir));
+            l.setPengeluaran( sumAll(getMonthList(class1, Awal, Akhir)));
+            l.setLaporanlabaRef(laporanlaba);
+            entityManager.persist(l);
+        }                
+        entityManager.persist(laporanlaba);
+
+//        Bayarsewa asset = new BayarSewaMasuk();
+//        asset.setPemasukan((BigInteger) jFormattedTextField1.getValue());
+//        asset.setKeterangan(jTextField2.getText());
+//        asset.setTanggal(jDateChooser1.getDate());
+//        Saldo saldo = new Saldo();
+//        saldo.setBankId((Bank) this.jComboBox2.getSelectedItem());
+//        asset.setTransaksi(saldo);
+//        entityManager.persist(asset);
         this.jDialog1.hide();
+        
+        
         for (BagiLaba a : list) {
              if (a.getM() != null) {
                  if (a.getM().getStatusMobil().equals("CLOSE")) {
@@ -434,7 +507,6 @@ public class panelBagiLaba extends JPanel {
 
             }
         }
-
         saveButtonActionPerformed(evt);
         //        Util.RefreshLaporan();
 
@@ -453,12 +525,16 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField keteranganField;

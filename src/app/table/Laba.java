@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,14 +52,39 @@ public class Laba implements Serializable {
     private Long id;
     @Basic(optional = false)
     @Column(name = "JUMLAH", nullable = false)
-    private BigInteger jumlah;
+    private BigInteger jumlah = BigInteger.ZERO;
+    @Basic(optional = false)
+    @Column(name = "Pengeluaran", nullable = false)     
+    private BigInteger Pengeluaran = BigInteger.ZERO;
+    public static final String PROP_PENGELUARAN = "Pengeluaran";
+
+    /**
+     * Get the value of Pengeluaran
+     *
+     * @return the value of Pengeluaran
+     */
+    public BigInteger getPengeluaran() {
+        return Pengeluaran;
+    }
+
+    /**
+     * Set the value of Pengeluaran
+     *
+     * @param Pengeluaran new value of Pengeluaran
+     */
+    public void setPengeluaran(BigInteger Pengeluaran) {
+        BigInteger oldPengeluaran = this.Pengeluaran;
+        this.Pengeluaran = Pengeluaran;
+        changeSupport.firePropertyChange(PROP_PENGELUARAN, oldPengeluaran, Pengeluaran);
+    }
+
     @Lob
     @Column(name = "KETERANGAN")
-    private String keterangan;
+    private String keterangan = "";
     @Column(name = "TIPE", length = 255)
-    private String tipe;
+    private String tipe = "";
     @JoinColumn(name = "LAPORANLABA_REF", referencedColumnName = "REF")
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     private Laporanlaba laporanlabaRef;
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.TIMESTAMP)

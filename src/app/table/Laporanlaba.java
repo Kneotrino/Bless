@@ -8,6 +8,7 @@ package app.table;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -75,11 +76,67 @@ public class Laporanlaba implements Serializable {
     public void logRemove()
     {
         try {
-            javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menghapus \n");
+//            javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menghapus \n");
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null,"Gagal Menghapus \n");
         }
             
+    }
+    @Transient
+    private BigInteger TMasuk = BigInteger.ZERO;
+
+    public static final String PROP_TMASUK = "TMasuk";
+    @Transient
+    private BigInteger TKeluar = BigInteger.ZERO;
+
+    public static final String PROP_TKELUAR = "TKeluar";
+
+    /**
+     * Get the value of TKeluar
+     *
+     * @return the value of TKeluar
+     */
+    public BigInteger getTKeluar() {
+        TKeluar = BigInteger.ZERO;
+        for (Laba laba : labaList) {
+            TKeluar = TKeluar.add(laba.getPengeluaran());
+        }
+        return TKeluar;
+    }
+
+    /**
+     * Set the value of TKeluar
+     *
+     * @param TKeluar new value of TKeluar
+     */
+    public void setTKeluar(BigInteger TKeluar) {
+        BigInteger oldTKeluar = this.TKeluar;
+        this.TKeluar = TKeluar;
+        changeSupport.firePropertyChange(PROP_TKELUAR, oldTKeluar, TKeluar);
+    }
+
+    /**
+     * Get the value of TMasuk
+     *
+     * @return the value of TMasuk
+     */
+    public BigInteger getTMasuk() {
+        TMasuk = BigInteger.ZERO;
+        for (Laba laba : labaList) {
+            TMasuk = TMasuk.add(laba.getJumlah());
+        }
+        return TMasuk;
+    }
+
+    /**
+     * Set the value of TMasuk
+     *
+     * @param TMasuk new value of TMasuk
+     */
+    public void setTMasuk(BigInteger TMasuk) {
+        BigInteger oldTMasuk = this.TMasuk;
+        this.TMasuk = TMasuk;
+        changeSupport.firePropertyChange(PROP_TMASUK, oldTMasuk, TMasuk);
     }
 
     public Laporanlaba() {
@@ -131,6 +188,17 @@ public class Laporanlaba implements Serializable {
 
     @XmlTransient
     public List<Laba> getLabaList() {
+//        BigInteger a = BigInteger.ZERO;
+//        BigInteger b = BigInteger.ZERO;
+//        Laba pem = new Laba();
+//        pem.setKeterangan("Total Pemasukan");
+//        Laba peng = new Laba();
+//        peng.setKeterangan("Total Pengeluaran");
+//        for (Laba laba : labaList) {
+//            a = a.add(laba.getJumlah());
+//        }
+//        pem.setJumlah(a);
+//        labaList.add(pem);
         return labaList;
     }
 
