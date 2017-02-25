@@ -127,6 +127,10 @@ public class Laporanlaba implements Serializable {
         }
         return TMasuk;
     }
+    public BigInteger getProfit()
+    {
+        return TMasuk.subtract(TKeluar);
+    }
 
     /**
      * Set the value of TMasuk

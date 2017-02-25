@@ -44,60 +44,31 @@ public class PanelLaporanLaba extends JPanel {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT L FROM Laporanlaba L");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
-        masterScrollPane = new javax.swing.JScrollPane();
-        masterTable = new javax.swing.JTable();
-        newButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
+        jDialog1 = new javax.swing.JDialog();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
-        saveButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
-        deleteDetailButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         newDetailButton = new javax.swing.JButton();
+        deleteDetailButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        masterScrollPane = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        newButton1 = new javax.swing.JButton();
+        newButton2 = new javax.swing.JButton();
+        newButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        refreshButton1 = new javax.swing.JButton();
+        saveButton1 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
-        masterTable.setAutoCreateRowSorter(true);
-        masterTable.setCellSelectionEnabled(true);
-        masterTable.setRowHeight(25);
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(formListener);
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ref}"));
-        columnBinding.setColumnName("Ref");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ke}"));
-        columnBinding.setColumnName("Pembagian Laba Ke");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
-        columnBinding.setColumnName("Keterangan");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
-        columnBinding.setColumnName("Tanggal");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${TKeluar}"));
-        columnBinding.setColumnName("TKeluar");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${TMasuk}"));
-        columnBinding.setColumnName("TMasuk");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding.setEditable(false);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        masterScrollPane.setViewportView(masterTable);
-        masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-
-        newButton.setText("New");
-        newButton.addActionListener(formListener);
-
-        deleteButton.setText("Delete");
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        deleteButton.addActionListener(formListener);
+        jDialog1.setSize(800, 700);
+        jDialog1.setLocationRelativeTo(null);
 
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
@@ -112,8 +83,8 @@ public class PanelLaporanLaba extends JPanel {
         detailTable.setRowHeight(25);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.labaList}");
-        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("Id");
         columnBinding.setColumnClass(Long.class);
         columnBinding.setEditable(false);
@@ -136,12 +107,19 @@ public class PanelLaporanLaba extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
+        if (detailTable.getColumnModel().getColumnCount() > 0) {
+            detailTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
 
-        saveButton.setText("Save");
-        saveButton.addActionListener(formListener);
+        jDialog1.getContentPane().add(detailScrollPane, java.awt.BorderLayout.CENTER);
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
+        newDetailButton.setText("Baru");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton.addActionListener(formListener);
+        jPanel2.add(newDetailButton);
 
         deleteDetailButton.setText("Delete");
 
@@ -149,64 +127,86 @@ public class PanelLaporanLaba extends JPanel {
         bindingGroup.addBinding(binding);
 
         deleteDetailButton.addActionListener(formListener);
+        jPanel2.add(deleteDetailButton);
 
-        newDetailButton.setText("New");
+        saveButton.setText("Simpan");
+        saveButton.addActionListener(formListener);
+        jPanel2.add(saveButton);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        jDialog1.getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        setLayout(new java.awt.BorderLayout());
+
+        masterTable.setAutoCreateRowSorter(true);
+        masterTable.setCellSelectionEnabled(true);
+        masterTable.setRowHeight(25);
+
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ref}"));
+        columnBinding.setColumnName("Ref");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ke}"));
+        columnBinding.setColumnName("Pembagian Laba Ke");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
+        columnBinding.setColumnName("Tanggal");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${TKeluar}"));
+        columnBinding.setColumnName("T.Keluar");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${TMasuk}"));
+        columnBinding.setColumnName("T.Masuk");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        masterScrollPane.setViewportView(masterTable);
+        masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        add(masterScrollPane, java.awt.BorderLayout.CENTER);
+
+        newButton1.setText("Print");
+        newButton1.addActionListener(formListener);
+        jPanel1.add(newButton1);
+
+        newButton2.setText("Lihat Detail");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newButton2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        newDetailButton.addActionListener(formListener);
+        newButton2.addActionListener(formListener);
+        jPanel1.add(newButton2);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(newButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 70, Short.MAX_VALUE)
-                                .addComponent(newDetailButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(deleteDetailButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(refreshButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(saveButton))
-                            .addComponent(masterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                            .addComponent(detailScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
+        newButton.setText("Baru");
+        newButton.addActionListener(formListener);
+        jPanel1.add(newButton);
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {deleteButton, newButton});
+        deleteButton.setText("Hapus");
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {deleteDetailButton, newDetailButton, refreshButton, saveButton});
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(masterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteButton)
-                    .addComponent(newButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(detailScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton)
-                    .addComponent(refreshButton)
-                    .addComponent(deleteDetailButton)
-                    .addComponent(newDetailButton))
-                .addContainerGap())
-        );
+        deleteButton.addActionListener(formListener);
+        jPanel1.add(deleteButton);
+
+        refreshButton1.setText("Refresh");
+        refreshButton1.addActionListener(formListener);
+        jPanel1.add(refreshButton1);
+
+        saveButton1.setText("Simpan");
+        saveButton1.addActionListener(formListener);
+        jPanel1.add(saveButton1);
+
+        add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         bindingGroup.bind();
     }
@@ -233,6 +233,18 @@ public class PanelLaporanLaba extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 PanelLaporanLaba.this.newDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton1) {
+                PanelLaporanLaba.this.newButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton2) {
+                PanelLaporanLaba.this.newButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton1) {
+                PanelLaporanLaba.this.refreshButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton1) {
+                PanelLaporanLaba.this.saveButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -313,8 +325,10 @@ public class PanelLaporanLaba extends JPanel {
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         try {
+            jDialog1.hide();
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -327,6 +341,25 @@ public class PanelLaporanLaba extends JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton1ActionPerformed
+
+    private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
+        jDialog1.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton2ActionPerformed
+
+    private void refreshButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton1ActionPerformed
+        refreshButtonActionPerformed(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refreshButton1ActionPerformed
+
+    private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
+        saveButtonActionPerformed(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -334,14 +367,21 @@ public class PanelLaporanLaba extends JPanel {
     private javax.swing.JScrollPane detailScrollPane;
     private javax.swing.JTable detailTable;
     private javax.persistence.EntityManager entityManager;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Laporanlaba> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
+    private javax.swing.JButton newButton1;
+    private javax.swing.JButton newButton2;
     private javax.swing.JButton newDetailButton;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JButton refreshButton1;
     private javax.swing.JButton saveButton;
+    private javax.swing.JButton saveButton1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
