@@ -785,12 +785,12 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
-//        jDialog3.setSize(300, 300);
-//        jDialog3.setLocationRelativeTo(null);
-//        jDialog3.show();
-        this.chandePanel("Profit");
-        panelBagiLaba1.Refresh();
-//        app.view.FixPanel.akuntansi.panelBagiLaba.BagiLaba(this.jTextField1.getText());
+        jDialog3.setSize(300, 300);
+        jDialog3.setLocationRelativeTo(null);
+        jDialog3.show();
+//        this.chandePanel("Profit");
+//        panelBagiLaba1.Refresh();
+        app.view.FixPanel.akuntansi.panelBagiLaba.BagiLaba(this.jTextField1.getText());
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed

@@ -69,7 +69,6 @@ public class Laporanlaba implements Serializable {
     private BigInteger Persen;
     @OneToOne( cascade = {CascadeType.ALL})
     private BayarSewaMasuk ModalTahan;
-
     public static final String PROP_MODALTAHAN = "ModalTahan";
 
     /**
@@ -193,6 +192,26 @@ public class Laporanlaba implements Serializable {
     {
         return TMasuk.subtract(TKeluar);
     }
+    public BigInteger getSisaBigInteger()
+    {
+        BigInteger temp = getProfit();
+        temp = temp.subtract(getTotalBagi());
+        if (ModalTahan != null) {
+            temp = temp.subtract(ModalTahan.getJumlah());
+        }
+        return temp;
+    }
+    public BigInteger getTotalBagi()
+    {        
+        BigInteger temp = BigInteger.ZERO;
+        List<Relasi> relasis = this.getLaporanSaham().getRelasis();
+        for (Relasi relasi : relasis) {
+            BigInteger jumlah = relasi.getSaham().getLaba().getJumlah();
+            temp = temp.add(jumlah);
+        }
+        return temp;
+    }
+    
 
     /**
      * Set the value of TMasuk

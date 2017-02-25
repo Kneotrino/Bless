@@ -177,7 +177,7 @@ public class panelBagiLaba extends JPanel {
         jDateChooser3.setDate(new java.util.Date());
         jDialog1.getContentPane().add(jDateChooser3);
 
-        jLabel11.setText("===============================================================================");
+        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jDialog1.getContentPane().add(jLabel11);
 
         jLabel7.setText("JUMLAH MODAL DI TAHAN");
@@ -438,7 +438,7 @@ public class panelBagiLaba extends JPanel {
         System.out.println("b = " + b);
         b = b.divide(new BigInteger("100"))
                 .multiply(new BigInteger(Value));
-        jFormattedTextField1.setValue(b);
+        jFormattedTextField1.setValue(b.longValue());
 //        jDialog1.setSize(300, 300);
         jDialog1.setLocationRelativeTo(null);
         jDialog1.show();

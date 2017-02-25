@@ -54,13 +54,14 @@ public class PanelLaporanLaba extends JPanel {
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         refreshButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
         jDialog1 = new javax.swing.JDialog();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         newDetailButton = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
+        saveButton3 = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
         detailScrollPane1 = new javax.swing.JScrollPane();
         detailTable1 = new javax.swing.JTable();
@@ -92,6 +93,9 @@ public class PanelLaporanLaba extends JPanel {
 
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(formListener);
+
+        saveButton.setText("Simpan");
+        saveButton.addActionListener(formListener);
 
         jDialog1.setSize(1000, 700);
         jDialog1.setLocationRelativeTo(null);
@@ -157,9 +161,9 @@ public class PanelLaporanLaba extends JPanel {
         deleteDetailButton.addActionListener(formListener);
         jPanel2.add(deleteDetailButton);
 
-        saveButton.setText("Simpan");
-        saveButton.addActionListener(formListener);
-        jPanel2.add(saveButton);
+        saveButton3.setText("Simpan");
+        saveButton3.addActionListener(formListener);
+        jPanel2.add(saveButton3);
 
         jDialog1.getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
@@ -257,9 +261,8 @@ public class PanelLaporanLaba extends JPanel {
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ke}"));
-        columnBinding.setColumnName("Pembagian Laba Ke");
+        columnBinding.setColumnName("Ke");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
@@ -277,8 +280,15 @@ public class PanelLaporanLaba extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
         columnBinding.setColumnName("Profit");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalBagi}"));
+        columnBinding.setColumnName("T. Pembagian Bagi");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${modalTahan.jumlah}"));
-        columnBinding.setColumnName("ModalDiTahan");
+        columnBinding.setColumnName("Modal Di Tahan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${sisaBigInteger}"));
+        columnBinding.setColumnName("Sisa");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -343,6 +353,9 @@ public class PanelLaporanLaba extends JPanel {
             else if (evt.getSource() == newButton2) {
                 PanelLaporanLaba.this.newButton2ActionPerformed(evt);
             }
+            else if (evt.getSource() == newButton4) {
+                PanelLaporanLaba.this.newButton4ActionPerformed(evt);
+            }
             else if (evt.getSource() == newButton) {
                 PanelLaporanLaba.this.newButtonActionPerformed(evt);
             }
@@ -376,11 +389,11 @@ public class PanelLaporanLaba extends JPanel {
             else if (evt.getSource() == saveButton2) {
                 PanelLaporanLaba.this.saveButton2ActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton4) {
-                PanelLaporanLaba.this.newButton4ActionPerformed(evt);
-            }
             else if (evt.getSource() == jButton4) {
                 PanelLaporanLaba.this.jButton4ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton3) {
+                PanelLaporanLaba.this.saveButton3ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -535,7 +548,9 @@ public class PanelLaporanLaba extends JPanel {
     }//GEN-LAST:event_deleteDetailButton1ActionPerformed
 
     private void saveButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton2ActionPerformed
+        jDialog2.hide();
         saveButtonActionPerformed(evt);
+        refreshButtonActionPerformed(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButton2ActionPerformed
 
@@ -585,6 +600,12 @@ public class PanelLaporanLaba extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void saveButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton3ActionPerformed
+        saveButtonActionPerformed(evt);
+        refreshButtonActionPerformed(evt);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -626,6 +647,7 @@ public class PanelLaporanLaba extends JPanel {
     private javax.swing.JButton saveButton;
     private javax.swing.JButton saveButton1;
     private javax.swing.JButton saveButton2;
+    private javax.swing.JButton saveButton3;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
