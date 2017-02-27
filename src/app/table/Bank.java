@@ -257,8 +257,7 @@ public class Bank implements Serializable {
     @Override
     public String toString() {
         DecimalFormat nf = new DecimalFormat("IDR #,##0");
-        System.out.println("nf = " + getTotalSaldo());
-        return "[ Tujuan/Sumber ="+namaBank+";REF=" + bankId +"; Saldo : "+ " ]";
+        return "[ Tujuan/Sumber ="+namaBank+";REF=" + bankId +"; Saldo : "+nf.format(getFoo())+ " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
