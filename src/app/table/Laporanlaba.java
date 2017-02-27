@@ -211,6 +211,10 @@ public class Laporanlaba implements Serializable {
         }
         return temp;
     }
+    public BigInteger getTotalSiapBagi()
+    {
+        return getProfit().subtract(getModalTahan().getJumlah());
+    }
     
 
     /**

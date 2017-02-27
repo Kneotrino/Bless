@@ -193,6 +193,7 @@ public class PanelLaporanLaba extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saham.id}"));
         columnBinding.setColumnName("REF");
         columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saham.tanggal}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -292,11 +293,14 @@ public class PanelLaporanLaba extends JPanel {
         columnBinding.setColumnName("Profit");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalBagi}"));
-        columnBinding.setColumnName("T. Pembagian Bagi");
-        columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${modalTahan.jumlah}"));
         columnBinding.setColumnName("Modal Di Tahan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalSiapBagi}"));
+        columnBinding.setColumnName("T. Siap di bagi");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalBagi}"));
+        columnBinding.setColumnName("T. Pembagian");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${sisaBigInteger}"));
         columnBinding.setColumnName("Sisa");
@@ -578,6 +582,7 @@ public class PanelLaporanLaba extends JPanel {
 
     private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
         saveButtonActionPerformed(evt);
+        refreshButtonActionPerformed(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButton1ActionPerformed
 

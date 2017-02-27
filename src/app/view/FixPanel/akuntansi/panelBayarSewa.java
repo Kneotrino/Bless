@@ -69,8 +69,8 @@ public class panelBayarSewa extends JPanel {
         jButton5 = new javax.swing.JButton();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
-        newButton = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
+        newButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         newButton1 = new javax.swing.JButton();
@@ -129,14 +129,14 @@ public class panelBayarSewa extends JPanel {
 
         jDialog2.getContentPane().add(inputPanel2);
 
-        newButton.setText("Simpan");
-        newButton.addActionListener(formListener);
-
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
         bindingGroup.addBinding(jComboBoxBinding);
+
+        newButton.setText("Simpan");
+        newButton.addActionListener(formListener);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -203,14 +203,14 @@ public class panelBayarSewa extends JPanel {
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
-        columnBinding.setColumnName("Transaksi Bank");
+        columnBinding.setColumnName("Sumber/Tujuan");
         columnBinding.setColumnClass(app.table.Bank.class);
-        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(7).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2)
+
             );
         }
 

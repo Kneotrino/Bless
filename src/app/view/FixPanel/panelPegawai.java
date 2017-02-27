@@ -168,7 +168,6 @@ public class panelPegawai extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.pegawaigajiList}");
