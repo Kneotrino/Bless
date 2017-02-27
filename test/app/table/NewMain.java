@@ -34,7 +34,7 @@ public class NewMain {
         // TODO code application logic here
     List<String> properties = new ArrayList<String>();
 //    Class<?> cl = app.table.Saham.class;
-        Class<?> cl = app.table.Bayarhutang.class;
+        Class<?> cl = app.table.Laba.class;
         Method[] methods = cl.getMethods();
         List<Method> MethodList = Arrays.asList(methods);                
         for (Method method : MethodList) {

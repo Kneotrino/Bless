@@ -7,23 +7,34 @@ package app.view.FixPanel;
 
 import app.table.Bank;
 import app.table.Investor;
+import app.table.Laba;
 import app.table.LaporanSaham;
 import app.table.Laporanlaba;
 import app.table.Relasi;
 import app.table.Saldo;
 import app.table.pembagianLaba;
+import static app.utils.ExcelConverter.ExcelConverter;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
+import javaslang.Tuple;
 import javax.persistence.RollbackException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -179,9 +190,9 @@ public class PanelLaporanLaba extends JPanel {
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.laporanSaham.relasis}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, detailTable1);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saham}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saham.id}"));
         columnBinding.setColumnName("REF");
-        columnBinding.setColumnClass(app.table.Saham.class);
+        columnBinding.setColumnClass(Long.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saham.tanggal}"));
         columnBinding.setColumnName("Tanggal");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -298,6 +309,10 @@ public class PanelLaporanLaba extends JPanel {
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
         newButton1.setText("Print");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newButton1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
         newButton1.addActionListener(formListener);
         jPanel1.add(newButton1);
 
@@ -371,14 +386,17 @@ public class PanelLaporanLaba extends JPanel {
             else if (evt.getSource() == refreshButton) {
                 PanelLaporanLaba.this.refreshButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == saveButton) {
+                PanelLaporanLaba.this.saveButtonActionPerformed(evt);
+            }
             else if (evt.getSource() == newDetailButton) {
                 PanelLaporanLaba.this.newDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == deleteDetailButton) {
                 PanelLaporanLaba.this.deleteDetailButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == saveButton) {
-                PanelLaporanLaba.this.saveButtonActionPerformed(evt);
+            else if (evt.getSource() == saveButton3) {
+                PanelLaporanLaba.this.saveButton3ActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton1) {
                 PanelLaporanLaba.this.newDetailButton1ActionPerformed(evt);
@@ -391,9 +409,6 @@ public class PanelLaporanLaba extends JPanel {
             }
             else if (evt.getSource() == jButton4) {
                 PanelLaporanLaba.this.jButton4ActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton3) {
-                PanelLaporanLaba.this.saveButton3ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -495,6 +510,59 @@ public class PanelLaporanLaba extends JPanel {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+   JFileChooser chooser=new JFileChooser(".");
+   FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+   chooser.addChoosableFileFilter(filter);
+   chooser.setFileFilter(filter);
+   chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+   chooser.setDialogTitle("Save File");
+   File filetemp = new File( System.getProperties().getProperty("user.home"), "Data Detail.xls");
+   chooser.setSelectedFile(filetemp);
+   int returnVal1=chooser.showSaveDialog(this);
+   if (returnVal1 == JFileChooser.APPROVE_OPTION) 
+        {
+             File file1 = chooser.getSelectedFile();
+             SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+             Function fungsi = d -> d==null?" ":d;         
+             Function tanggal = d -> d==null?" ":formator.format(d);
+             List<File> cvs = new java.util.LinkedList<>(); 
+             cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Detail.CSV"));
+             cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Pembagian Laba.CSV"));
+             int index = masterTable.getSelectedRow();
+             app.table.Laporanlaba L = list.get(masterTable.convertRowIndexToModel(index));
+             List a = L.getLabaList();
+             List b = L.getLaporanSaham().getRelasis();
+             WriteStep data = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar Detail.CSV"))
+                        .type(app.table.Mobil.class)
+                            .properties(
+                                    Tuple.of("REF","id", fungsi),
+                                    Tuple.of("Tanggal","tanggal", tanggal),
+                                    Tuple.of("Keterangan","keterangan", fungsi),
+                                    Tuple.of("Tipe","tipe", fungsi),
+                                    Tuple.of("Pemasukan","jumlah", fungsi),
+                                    Tuple.of("Pengeluaran","pengeluaran", fungsi)
+                    ).dataList(a); 
+             WriteStep data1 = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar Pembagian Laba.CSV"))
+                        .type(app.table.Relasi.class)
+                            .properties(
+                                    Tuple.of("REF","saham.id", fungsi),
+                                    Tuple.of("Tanggal","saham.tanggal", tanggal),
+                                    Tuple.of("Keterangan","saham.keterangan", fungsi),
+                                    Tuple.of("Jumlah","saham.laba.jumlah", fungsi),
+                                    Tuple.of("Investor","saham.investorId", fungsi),
+                                    Tuple.of("Sumber","saham.b", fungsi)
+                    ).dataList(b); 
+             try {
+              data.write();
+              data1.write();
+              ExcelConverter(cvs, chooser.getSelectedFile());           
+              Desktop.getDesktop().open(chooser.getSelectedFile());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+                    
+        }
+    
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
 

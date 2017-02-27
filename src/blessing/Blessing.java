@@ -56,6 +56,7 @@ public class Blessing {
         PanelBank panelBank = new PanelBank();
         panelBank = null;
         JFrame form = new app.view.ShowRoom();
+        
         form.show();            
         } 
         catch (org.eclipse.persistence.exceptions.DatabaseException ex) {

@@ -463,7 +463,7 @@
     </Menu>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
   </Properties>
   <BindingProperties>
     <BindingProperty name="title" source="jLabel2" sourcePath="${text}" target="Form" targetPath="title" updateStrategy="0" immediately="false"/>

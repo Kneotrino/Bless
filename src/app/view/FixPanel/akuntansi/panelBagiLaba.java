@@ -630,7 +630,8 @@ public class panelBagiLaba extends JPanel {
             public void run() {
                 JFrame frame = new JFrame("STATUS KEUNTUNGAN /"+Value+" %MODAL DI TAHAN");
                 frame.setContentPane(new panelBagiLaba(Value));
-                frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+                
+//                frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

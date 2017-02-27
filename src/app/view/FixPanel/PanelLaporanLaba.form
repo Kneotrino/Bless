@@ -298,9 +298,9 @@
               </Properties>
               <BindingProperties>
                 <BindingProperty name="elements" source="masterTable" sourcePath="${selectedElement.laporanSaham.relasis}" target="detailTable1" targetPath="elements" updateStrategy="0" immediately="true">
-                  <Subbinding sourcePath="${saham}">
+                  <Subbinding sourcePath="${saham.id}">
                     <BindingParameter name="NAME" value="REF"/>
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Saham.class"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Long.class"/>
                   </Subbinding>
                   <Subbinding sourcePath="${saham.tanggal}">
                     <BindingParameter name="NAME" value="Tanggal"/>
@@ -648,6 +648,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Print"/>
           </Properties>
+          <BindingProperties>
+            <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="newButton1" targetPath="enabled" updateStrategy="0" immediately="false"/>
+          </BindingProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButton1ActionPerformed"/>
           </Events>
