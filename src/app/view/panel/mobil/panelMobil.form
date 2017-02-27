@@ -462,7 +462,13 @@
                     <Property name="verticalGap" type="int" value="10"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel81">
+                    <Component class="javax.swing.JButton" name="jButton2">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="RESET"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField1">
                       <Events>
@@ -2225,10 +2231,11 @@
     <Component class="javax.swing.JComboBox" name="jComboBox10">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
+          <StringArray count="4">
             <StringItem index="0" value="READY"/>
             <StringItem index="1" value="OPEN"/>
             <StringItem index="2" value="CLOSE"/>
+            <StringItem index="3" value="SELESAI"/>
           </StringArray>
         </Property>
       </Properties>

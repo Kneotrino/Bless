@@ -168,7 +168,7 @@ public void Refresh()
         jLabel84 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel81 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
@@ -600,7 +600,14 @@ public void Refresh()
         jPanel1.add(jPanel2);
 
         jPanel3.setLayout(new java.awt.GridLayout(0, 1, 10, 10));
-        jPanel3.add(jLabel81);
+
+        jButton2.setText("RESET");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton2);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1674,7 +1681,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jDialog2.getContentPane().add(jComboBox6, java.awt.BorderLayout.PAGE_END);
 
-    jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE" }));
+    jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE", "SELESAI" }));
 
     FilterDialog.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
     FilterDialog.setSize(400, 500);
@@ -3067,6 +3074,22 @@ public void FileSave() throws IOException
             Logger.getLogger(panelMobil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton31ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jTextField11.setText("");
+        jTextField15.setText("");
+        jTextField37.setText("");
+        jTextField43.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -3114,6 +3137,7 @@ public void FileSave() throws IOException
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
@@ -3248,7 +3272,6 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
-    private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
     private javax.swing.JLabel jLabel84;

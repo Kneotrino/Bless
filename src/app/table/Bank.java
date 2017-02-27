@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -73,11 +74,11 @@ public class Bank implements Serializable {
     @Column(name = "NOMOR_KTP", length = 64)
     private String nomorKtp;
     @Column(name = "TOTAL_SALDO")
-    private BigInteger totalSaldo;
+    private BigInteger totalSaldo = BigInteger.ZERO;
     @Column(name = "TOTAL_DEBIT")
-    private BigInteger totalDebit;
+    private BigInteger totalDebit = BigInteger.ZERO;
     @Column(name = "TOTAL_KREDIT")
-    private BigInteger totalKredit;
+    private BigInteger totalKredit = BigInteger.ZERO;
     @Column(name = "NAMA_BANK", length = 32)
     private String namaBank;
     @OneToMany(mappedBy = "bankId", fetch = FetchType.EAGER , cascade = {CascadeType.ALL})
@@ -255,7 +256,9 @@ public class Bank implements Serializable {
     
     @Override
     public String toString() {
-        return "[ Tujuan/Sumber ="+namaBank+";REF=" + bankId + " ]";
+        DecimalFormat nf = new DecimalFormat("IDR #,##0");
+        System.out.println("nf = " + getTotalSaldo());
+        return "[ Tujuan/Sumber ="+namaBank+";REF=" + bankId +"; Saldo : "+ " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

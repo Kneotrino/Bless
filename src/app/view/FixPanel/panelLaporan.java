@@ -243,7 +243,6 @@ public class panelLaporan extends JPanel {
         //masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         //masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
-        masterTable.setAutoCreateRowSorter(true);
         masterTable.setGridColor(new java.awt.Color(0, 0, 0));
         masterTable.setRowHeight(25);
 
