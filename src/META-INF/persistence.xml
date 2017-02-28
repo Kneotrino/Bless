@@ -65,6 +65,8 @@
     <class>app.table.LaporanSaham</class>
     <class>app.table.Laporansaham</class>
     <class>app.table.Relasi</class>
+    <class>app.table.Barang</class>
+    <class>app.view.FixPanel.Barang</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\blessing;create=true"/>

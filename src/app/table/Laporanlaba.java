@@ -137,11 +137,10 @@ public class Laporanlaba implements Serializable {
     public void logRemove()
     {
         try {
-//            javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menghapus \n");
+            javax.swing.JOptionPane.showMessageDialog(null,"Berhasil Menghapus \n");
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(null,"Gagal Menghapus \n");
-        }
-            
+        }            
     }
     @Transient
     private BigInteger TMasuk = BigInteger.ZERO;

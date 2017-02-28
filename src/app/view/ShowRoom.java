@@ -154,6 +154,7 @@ public class ShowRoom extends javax.swing.JFrame {
         panelBayarSewa1 = new app.view.FixPanel.akuntansi.panelBayarSewa();
         panelLaporanLaba1 = new app.view.FixPanel.PanelLaporanLaba();
         panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba();
+        panelBarang1 = new app.view.FixPanel.PanelBarang();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -192,6 +193,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -315,6 +317,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(panelBayarSewa1, "Sewa");
         getContentPane().add(panelLaporanLaba1, "Pembagian");
         getContentPane().add(panelBagiLaba1, "Profit");
+        getContentPane().add(panelBarang1, "Barang");
 
         jMenu1.setText("Akutansi");
 
@@ -547,6 +550,14 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem28);
+
+        jMenuItem34.setText("Inventaris Barang");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem34);
 
         jMenuItem30.setText("Setting Modal Di Tahan");
         jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
@@ -817,6 +828,13 @@ public class ShowRoom extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        // TODO add your handling code here:
+         this.chandePanel("Barang");
+         panelBarang1.refresh();
+         
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -898,6 +916,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -923,6 +942,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private app.view.FixPanel.akuntansi.panelBagiLaba panelBagiLaba1;
+    private app.view.FixPanel.PanelBarang panelBarang1;
     private app.view.FixPanel.akuntansi.panelBayarSewa panelBayarSewa1;
     private app.view.panel.hutang.panelHutang panelHutang1;
     private app.view.FixPanel.akuntansi.panelInvestor panelInvestor1;
