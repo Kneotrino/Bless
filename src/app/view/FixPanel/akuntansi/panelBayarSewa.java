@@ -69,7 +69,7 @@ public class panelBayarSewa extends JPanel {
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
-        bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
+        bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jComboBox2 = new javax.swing.JComboBox<>();
         newButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -254,6 +254,8 @@ public class panelBayarSewa extends JPanel {
 
      public void Refresh()
     {
+//        this.bankList.clear();
+//        this.bankList.addAll(bankQuery.getResultList());
         this.refreshButtonActionPerformed(null);
     }
      public void Reset()
@@ -275,22 +277,35 @@ public class panelBayarSewa extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        java.util.Collection<Bayarsewa> data = query.getResultList();
+        java.util.Collection data = query.getResultList();
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
+        java.util.List Res = this.bankQuery.getResultList();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        this.bankList.clear();
+        this.bankList.addAll(Res);
+        list.clear();
+        list.addAll(data);
+
+//        entityManager.getTransaction().rollback();
+//        entityManager.getTransaction().begin();
+//        for (Object entity : data) {
+//            entityManager.refresh(entity);
+//        }
+//        java.util.List Res = this.bankQuery.getResultList();
+//        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+//        this.bankList.clear();
+//        this.bankList.addAll(Res);
+//        list.clear();
+//        list.addAll(data);
+        java.util.Collection<Bayarsewa> sip = query.getResultList();
         BigInteger temp = BigInteger.ZERO;
-        for (Bayarsewa lap : data) {
+        for (Bayarsewa lap : sip) {
             temp = temp.add(lap.getPemasukan());
             temp = temp.subtract(lap.getPengeluaran());
             lap.setSaldo(temp);
         }        
-        list.clear();
-        list.addAll(data);
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        bankList.clear();
-        bankList.addAll(bankQuery.getResultList());
-        
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -318,6 +333,7 @@ public class panelBayarSewa extends JPanel {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
             refreshButtonActionPerformed(evt);
+            refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -332,7 +348,7 @@ public class panelBayarSewa extends JPanel {
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
 //        refreshButtonActionPerformed(evt);        
-        this.jDialog1.setSize(400, 600);
+        this.jDialog1.setSize(400, 400);
         this.jDialog1.setLocationRelativeTo(null);
         this.jDialog1.show();
         // TODO add your handling code here:
@@ -348,6 +364,7 @@ public class panelBayarSewa extends JPanel {
         list.add(asset);
         this.jDialog1.hide();
         saveButtonActionPerformed(evt);
+//        refreshButtonActionPerformed(evt);
         //        Util.RefreshLaporan();
 
         // TODO add your handling code here:
@@ -355,7 +372,7 @@ public class panelBayarSewa extends JPanel {
 
     private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
 //        refreshButtonActionPerformed(evt);                
-        this.jDialog2.setSize(400, 600);
+        this.jDialog2.setSize(400, 400);
         this.jDialog2.setLocationRelativeTo(null);
         this.jDialog2.show();
         // TODO add your handling code here:
@@ -370,7 +387,9 @@ public class panelBayarSewa extends JPanel {
         entityManager.persist(asset);
         list.add(asset);
         this.jDialog2.hide();
-        saveButtonActionPerformed(evt);        // TODO add your handling code here:
+        saveButtonActionPerformed(evt);
+//        refreshButtonActionPerformed(evt);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
 
