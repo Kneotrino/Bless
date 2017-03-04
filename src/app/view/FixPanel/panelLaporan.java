@@ -450,9 +450,6 @@ public void hitung()
 }
 public void Refresh(){
         this.refreshButtonActionPerformed(null);
-//        System.out.println("collect = " + collect);
-//        counting = items.stream().collect(
-//                Collectors.groupingBy(Item::getName, Collectors.counting()));
     }
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed

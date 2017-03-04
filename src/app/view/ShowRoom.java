@@ -130,6 +130,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jSlider1 = new javax.swing.JSlider();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jMenuItem32 = new javax.swing.JMenuItem();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
@@ -164,8 +165,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem31 = new javax.swing.JMenuItem();
-        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem33 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
@@ -173,22 +173,18 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem25 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
@@ -284,6 +280,13 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jDialog3.getContentPane().add(jButton2);
 
+        jMenuItem32.setText("Status Keuntungan");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jLabel2, org.jdesktop.beansbinding.ELProperty.create("${text}"), this, org.jdesktop.beansbinding.BeanProperty.create("title"));
@@ -371,21 +374,13 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem3);
 
-        jMenuItem31.setText("Modal Di Tahan");
-        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem22.setText("Modal di tahan");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem31ActionPerformed(evt);
+                jMenuItem22ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem31);
-
-        jMenuItem32.setText("Status Keuntungan");
-        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem32ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem32);
+        jMenu1.add(jMenuItem22);
 
         jMenuItem33.setText("Laporan Pembagian Laba");
         jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
@@ -425,10 +420,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu2.setText("Management");
         jMenu2.add(jSeparator3);
 
-        jMenuItem25.setText("Management Mobil");
-        jMenuItem25.setEnabled(false);
-        jMenu2.add(jMenuItem25);
-
         jMenuItem12.setText("Mobil");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -453,10 +444,6 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem16);
         jMenu2.add(jSeparator4);
-
-        jMenuItem24.setText("Management Sumber Daya");
-        jMenuItem24.setEnabled(false);
-        jMenu2.add(jMenuItem24);
 
         jMenuItem10.setText("Asset");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
@@ -483,10 +470,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenu2.add(jMenuItem9);
         jMenu2.add(jSeparator6);
 
-        jMenuItem23.setText("Management Jasa");
-        jMenuItem23.setEnabled(false);
-        jMenu2.add(jMenuItem23);
-
         jMenuItem8.setText("Jasa Cabut Berkas");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,15 +494,6 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem14);
         jMenu2.add(jSeparator5);
-
-        jMenuItem22.setText("Management Hutang");
-        jMenuItem22.setEnabled(false);
-        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem22ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem22);
 
         jMenuItem15.setText("Pinjaman Bank");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
@@ -645,7 +619,7 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
     this.chandePanel("Bank");
-    ((app.view.FixPanel.PanelBank)this.jPanel5).Reset();
+    ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
@@ -683,6 +657,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         // TODO add your handling code here:
         chandePanel("Piutang");
+        panelPiutang1.Refresh();
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
@@ -788,10 +763,6 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem22ActionPerformed
-
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         jDialog3.setSize(300, 300);
         jDialog3.setLocationRelativeTo(null);
@@ -804,21 +775,14 @@ public class ShowRoom extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
-        this.chandePanel("Sewa");
-        panelBayarSewa1.Refresh();
-//        app.view.FixPanel.akuntansi.panelBayarSewa.main(null);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem31ActionPerformed
-
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
-        jDialog3.setSize(300, 300);
-        jDialog3.setLocationRelativeTo(null);
-        jDialog3.show();
+//        jDialog3.setSize(300, 300);
+//        jDialog3.setLocationRelativeTo(null);
+//        jDialog3.show();
 //        this.chandePanel("Profit");
 //        panelBagiLaba1.Refresh();
-        app.view.FixPanel.akuntansi.panelBagiLaba.BagiLaba(this.jTextField1.getText());
+//        app.view.FixPanel.akuntansi.panelBagiLaba.BagiLaba(this.jTextField1.getText());
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
@@ -834,6 +798,13 @@ public class ShowRoom extends javax.swing.JFrame {
          panelBarang1.refresh();
          
     }//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        // TODO add your handling code here:\
+         this.chandePanel("Sewa");
+         panelBayarSewa1.Refresh();
+         
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -904,16 +875,12 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem24;
-    private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
-    private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem33;
     private javax.swing.JMenuItem jMenuItem34;
@@ -927,7 +894,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    public static javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;

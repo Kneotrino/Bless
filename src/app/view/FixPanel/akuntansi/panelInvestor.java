@@ -10,6 +10,7 @@ import app.table.Investor;
 import app.table.Modal;
 import app.table.Saham;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -465,6 +466,7 @@ public class panelInvestor extends JPanel {
         int row = ss.size() - 1;
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newDetailButtonActionPerformed
     public void Hitung()
     {
@@ -513,6 +515,7 @@ public class panelInvestor extends JPanel {
             entityManager.refresh(entity);
         }
         java.util.List Res = this.bankQuery.getResultList();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         this.bankList.clear();
         this.bankList.addAll(Res);
         list.clear();
@@ -545,6 +548,7 @@ public class panelInvestor extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            this.refreshButtonActionPerformed(evt);
             this.refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();

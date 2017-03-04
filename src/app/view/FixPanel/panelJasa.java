@@ -10,6 +10,7 @@ import app.table.Bank;
 import app.table.Bpkbtitipan;
 import app.table.Laporan;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -441,10 +442,8 @@ public class panelJasa extends JPanel {
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         java.util.List data = query.getResultList();
-//        for (Object entity : data) {
-//            entityManager.refresh(entity);
-//        }
         java.util.List Res = this.bankQuery.getResultList();
+       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         this.bankList.clear();
         this.bankList.addAll(Res);
         list.clear();
@@ -472,9 +471,6 @@ public class panelJasa extends JPanel {
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
-
-//        this.jDialog2.setSize(500, 600);
-//        this.jDialog2.setLocationRelativeTo(null);
         this.jDialog2.hide();
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newButtonActionPerformed

@@ -450,17 +450,14 @@ public class panelAkuntansi extends JPanel {
                     )
                     ;
             LabaMobilTahan.setAkun("Laba di tahan "+Value+"%");
-
-            Closed.add(new Akun());
+//            Closed.add(new Akun());
             Closed.add(LabaMobilTahan);
 //            Closed.add(BayarRuko);
-//            Closed.add(new Akun()
-//                    .setAkun("Sisa Laba Di tahan " + Calendar.getInstance().get(Calendar.YEAR))
-//                    .setPemasukan(LabaMobilTahan.getPemasukan())
-//                    .setPengeluaran(BayarRuko.getPengeluaran())
-//            );
-                    
-            
+            Closed.add(new Akun()
+                    .setAkun("Sisa Laba Di tahan " + Calendar.getInstance().get(Calendar.YEAR))
+                    .setPemasukan(TC.getProfit().subtract(LabaMobilTahan.getProfit()))
+            );
+        panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba(Value);
         initComponents();
     }
     public String getMonth(int month) {
@@ -582,6 +579,7 @@ public class panelAkuntansi extends JPanel {
         jTable7 = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable8 = new javax.swing.JTable();
+        panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba();
 
         FormListener formListener = new FormListener();
 
@@ -844,6 +842,9 @@ public class panelAkuntansi extends JPanel {
 
         jTabbedPane1.addTab("PROFIT CLOSE", jScrollPane8);
 
+        panelBagiLaba1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTabbedPane1.addTab("BAGI LABA", panelBagiLaba1);
+
         jPanel1.add(jTabbedPane1);
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -1046,6 +1047,7 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JTable jTable7;
     private javax.swing.JTable jTable8;
     private javax.swing.JTable jTable9;
+    private app.view.FixPanel.akuntansi.panelBagiLaba panelBagiLaba1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {

@@ -14,6 +14,7 @@ import app.table.Relasi;
 import app.table.Saldo;
 import app.table.pembagianLaba;
 import static app.utils.ExcelConverter.ExcelConverter;
+import app.view.ShowRoom;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
@@ -64,8 +65,8 @@ public class PanelLaporanLaba extends JPanel {
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
-        refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
         jDialog1 = new javax.swing.JDialog();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
@@ -102,11 +103,11 @@ public class PanelLaporanLaba extends JPanel {
 
         FormListener formListener = new FormListener();
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
+
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(formListener);
 
         jDialog1.setSize(1000, 700);
         jDialog1.setLocationRelativeTo(null);
@@ -469,6 +470,7 @@ public class PanelLaporanLaba extends JPanel {
         }
         list.clear();
         list.addAll(data);
+       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         list1.clear();
@@ -670,6 +672,8 @@ public class PanelLaporanLaba extends JPanel {
         detailTable1.scrollRectToVisible(detailTable.getCellRect(row, 0, true));        
         jDialog4.hide();
         saveButtonActionPerformed(evt);
+//        refreshButtonActionPerformed(evt);
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 

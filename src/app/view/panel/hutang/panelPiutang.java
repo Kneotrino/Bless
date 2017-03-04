@@ -10,6 +10,7 @@ import app.table.BayarPihutangPemasukan;
 import app.table.Bayarpihutang;
 import app.table.Piutang;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -494,6 +495,7 @@ public class panelPiutang extends JPanel {
         }
         list.clear();
         list.addAll(data);
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed

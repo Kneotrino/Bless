@@ -8,8 +8,11 @@ package app.view.FixPanel;
 import app.table.Bank;
 import app.table.Laporan;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.Beans;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -27,6 +30,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import static javaslang.API.LinkedMap;
 import static javaslang.API.LinkedMap;
+import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
@@ -73,7 +77,7 @@ public class panelMaster extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
-        this.refreshButtonActionPerformed(null);
+//        this.refreshButtonActionPerformed(null);
         String info = clazz.getSimpleName()
                 .equals("Pengeluaran") ? "Operasional":clazz.getSimpleName();
         this.jLabel2.setText("Laporan "+  info + " Bulan ini"
@@ -195,6 +199,14 @@ public void Restall()
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog1.setType(java.awt.Window.Type.POPUP);
         jDialog1.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
+        jDialog1.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("closing...");
+                jDialog1.hide();
+                refreshButtonActionPerformed(null);
+            }
+        });
 
         tanggalLabel.setText("Tanggal:");
         jDialog1.getContentPane().add(tanggalLabel);
@@ -385,15 +397,16 @@ public void Restall()
             for (Laporan re : res) {
                 entityManager.refresh(re);
             }
-        this.bankList.clear();
-        this.bankList.addAll(bankQuery.getResultList());
         list.clear();
         list.addAll((Collection<? extends Laporan>) res);
          }
          BigInteger temp = BigInteger.ZERO; 
          for (Laporan laporan : list) {
             temp = temp.add(laporan.getJumlah());
-        }
+        }        
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        this.bankList.clear();
+        this.bankList.addAll(bankQuery.getResultList());
          jFormattedTextField2.setValue(temp);
     }//GEN-LAST:event_refreshButtonActionPerformed
 
@@ -447,6 +460,7 @@ public void Restall()
             list.clear();
             list.addAll(merged);
         }
+        this.refreshButtonActionPerformed(evt);
         this.refreshButtonActionPerformed(evt);
     }//GEN-LAST:event_saveButtonActionPerformed
 
@@ -540,7 +554,7 @@ public void Restall()
             public void run() {
                 JFrame frame = new JFrame();
 //                frame.setContentPane(new panelMaster(1));
-                frame.setContentPane(new panelMaster(app.table.BayarSewaMasuk.class));
+                frame.setContentPane(new panelMaster(app.table.Pemasukan.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

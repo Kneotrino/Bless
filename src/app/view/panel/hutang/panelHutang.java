@@ -11,6 +11,7 @@ import app.table.Bayarhutang;
 import app.table.BayarhutangPengeluaran;
 import app.table.Hutang;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -450,6 +451,7 @@ public class panelHutang extends JPanel {
         });
         list.clear();
         list.addAll(data);
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed

@@ -17,6 +17,7 @@ import app.table.Laba;
 import app.table.Laporan;
 import app.table.Laporanlaba;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.lang.reflect.InvocationTargetException;
@@ -310,6 +311,7 @@ public class panelBagiLaba extends JPanel {
         }
         list.clear();
         list.addAll(data);
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed

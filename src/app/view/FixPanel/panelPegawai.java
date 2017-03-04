@@ -9,6 +9,7 @@ import app.table.Bank;
 import app.table.Pegawai;
 import app.table.Pegawaigaji;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -328,6 +329,8 @@ public class panelPegawai extends JPanel {
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
         jDialog3.hide();
+        saveButtonActionPerformed(evt);
+        refreshButtonActionPerformed(evt);
     }//GEN-LAST:event_newDetailButtonActionPerformed
     
     @SuppressWarnings("unchecked")
@@ -339,15 +342,16 @@ public class panelPegawai extends JPanel {
             entityManager.refresh(entity);
         }
         java.util.List Res = this.bankQuery.getResultList();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         this.bankList.clear();
         this.bankList.addAll(Res);
-
         list.clear();
         list.addAll(data);
     }//GEN-LAST:event_refreshButtonActionPerformed
     public void Refrsh()
     {
         this.refreshButtonActionPerformed(null);
+        
     }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int[] selected = masterTable.getSelectedRows();
@@ -379,6 +383,7 @@ public class panelPegawai extends JPanel {
             list.clear();
             list.addAll(merged);
         }
+        
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
@@ -396,6 +401,7 @@ public class panelPegawai extends JPanel {
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
         this.jDialog2.hide();
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed

@@ -66,7 +66,11 @@ public class Bayarsewa extends Laporan  implements Serializable {
         this.bayar = bayar;
         changeSupport.firePropertyChange("bayar", oldBayar, bayar);
     }
-
+    @Override
+    public String getJenis()
+    {
+        return "Modal di Tahan";
+    }
 //    @Override
 //    public int hashCode() {
 //        int hash = 0;

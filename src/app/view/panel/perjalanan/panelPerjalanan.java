@@ -14,6 +14,7 @@ import app.table.PerjalananPengeluaran;
 import app.table.Saldo;
 import app.table.Trips;
 import app.table.Util;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -508,6 +509,7 @@ public class panelPerjalanan extends JPanel {
         }
         list.clear();
         list.addAll(data);
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         Peter = this.entityManager.find(app.table.Bank.class, -2);

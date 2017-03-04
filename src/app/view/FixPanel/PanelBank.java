@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -395,7 +396,11 @@ public class PanelBank extends JPanel {
     }//GEN-LAST:event_newDetailButtonActionPerformed
     public void Reset()
     {
-        Util.RefreshLaporan();    
+        Query query = entityManager.createQuery("SELECT l FROM Laporan l");
+        java.util.List<app.table.Laporan> ALL = query.getResultList();
+        ALL.forEach((laporan) -> {
+                 entityManager.refresh(laporan);
+            });        
         this.refreshButtonActionPerformed(null);
     }
     @SuppressWarnings("unchecked")

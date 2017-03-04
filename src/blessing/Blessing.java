@@ -53,8 +53,8 @@ public class Blessing {
         }
         feel();        
         try {
-        PanelBank panelBank = new PanelBank();
-        panelBank = null;
+//        PanelBank panelBank = new PanelBank();
+//        panelBank = null;
         JFrame form = new app.view.ShowRoom();
         
         form.show();            

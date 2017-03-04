@@ -48,6 +48,9 @@
           <Value id="POPUP"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="jDialog1.addWindowListener(new WindowAdapter() {&#xa;            @Override&#xa;            public void windowClosing(WindowEvent e) {&#xa;                System.out.println(&quot;closing...&quot;);&#xa;                jDialog1.hide();&#xa;                refreshButtonActionPerformed(null);&#xa;            }&#xa;        });"/>
+      </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" value="1"/>

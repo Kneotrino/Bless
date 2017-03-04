@@ -9,6 +9,7 @@ import app.table.Bank;
 import app.table.Bayarsewa;
 import app.table.Laporan;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -266,7 +267,7 @@ public class panelBayarSewa extends JPanel {
         List<? extends Laporan> hitungSaldo = app.table.Util.hitungSaldo((List<? extends Laporan>) data);
         list.addAll((Collection<? extends Bayarsewa>) hitungSaldo);
         list.clear();
-//        list.addAll(data);
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
      }
@@ -284,9 +285,9 @@ public class panelBayarSewa extends JPanel {
             temp = temp.subtract(lap.getPengeluaran());
             lap.setSaldo(temp);
         }        
-        saveButtonActionPerformed(evt);
         list.clear();
         list.addAll(data);
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         
@@ -316,7 +317,7 @@ public class panelBayarSewa extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
-
+            refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();

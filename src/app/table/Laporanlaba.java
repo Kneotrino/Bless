@@ -63,7 +63,7 @@ public class Laporanlaba implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggal;
     @OneToMany(mappedBy = "laporanlabaRef", cascade = {CascadeType.ALL})
-    private List<Laba> labaList;
+    private List<Laba> labaList = new LinkedList<>();
     @OneToOne( cascade = {CascadeType.ALL})
     private LaporanSaham laporanSaham = new LaporanSaham();    
     private BigInteger Persen;
@@ -204,6 +204,9 @@ public class Laporanlaba implements Serializable {
     {        
         BigInteger temp = BigInteger.ZERO;
         List<Relasi> relasis = this.getLaporanSaham().getRelasis();
+        if (relasis.isEmpty()) {
+            return temp;            
+        }
         for (Relasi relasi : relasis) {
             BigInteger jumlah = relasi.getSaham().getLaba().getJumlah();
             temp = temp.add(jumlah);
@@ -212,6 +215,9 @@ public class Laporanlaba implements Serializable {
     }
     public BigInteger getTotalSiapBagi()
     {
+        if (getModalTahan()==null) {
+            return BigInteger.ZERO;
+        }
         return getProfit().subtract(getModalTahan().getJumlah());
     }
     

@@ -11,6 +11,7 @@ import app.table.Bayarrental;
 import app.table.Laporan;
 import app.table.Mobilrental;
 import app.table.Saldo;
+import app.view.ShowRoom;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -498,6 +499,9 @@ public class panelRental extends JPanel {
         }
         list.clear();
         list.addAll(data);
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        this.bankList.clear();
+        this.bankList.addAll(this.bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -701,7 +705,6 @@ public class panelRental extends JPanel {
     public void Refresh()
     {
             this.refreshButtonActionPerformed(null);
-            this.bankList.clear();
-            this.bankList.addAll(this.bankQuery.getResultList());
+            
     }
 }

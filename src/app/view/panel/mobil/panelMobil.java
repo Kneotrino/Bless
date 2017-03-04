@@ -19,6 +19,7 @@ import app.table.Trips;
 import static app.utils.ExcelConverter.ExcelConverter;
 import static app.utils.Printer.getDataList;
 import app.view.FixPanel.panelLeasing;
+import app.view.ShowRoom;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
@@ -87,7 +88,6 @@ public void Refresh()
 {
     System.out.println("app.view.panel.mobil.panelMobil.Refresh()");
 //    jButton22ActionPerformed(null);
-    this.bankList.clear();
     this.leasingList.clear();
     this.PerjalananList.clear();
 //    app.table.Util.RefreshBank();
@@ -99,14 +99,16 @@ public void Refresh()
     for (Object object : resultList) {
         blessingPUEntityManager.refresh(object);        
     }
-    List B = bankQuery.getResultList();
-    for (Object object : B) {
-        blessingPUEntityManager.refresh(object);                
-    }
-    this.leasingList.add(null);    
+//    List B = bankQuery.getResultList();
+//    for (Object object : B) {
+//        blessingPUEntityManager.refresh(object);                
+//    }
+    ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+    this.bankList.clear();
     this.bankList.add(null);    
-    this.PerjalananList.add(null);    
     this.bankList.addAll(bankQuery.getResultList());
+    this.leasingList.add(null);    
+    this.PerjalananList.add(null);    
     this.leasingList.addAll(leasingQuery.getResultList());
     this.PerjalananList.addAll(query.getResultList());
 }
@@ -2486,6 +2488,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.jTextField38.setText(Rp.format(tk) );
         this.jTextField39.setText(Rp.format(td) );
         this.jTextField59.setText(Rp.format(td.subtract(tk)) );
+    ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+    this.bankList.clear();
+    this.bankList.add(null);    
+    this.bankList.addAll(bankQuery.getResultList());
 
     }
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed

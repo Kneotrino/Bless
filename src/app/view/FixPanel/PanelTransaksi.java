@@ -6,6 +6,7 @@
 package app.view.FixPanel;
 
 import app.table.Saldo;
+import app.view.ShowRoom;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.util.ArrayList;
@@ -196,6 +197,7 @@ private Date getMeYesterday(){
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         today = getMeYesterday();
         System.out.println("Today start = " + today);        
         endDay = new Date();

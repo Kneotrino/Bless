@@ -186,6 +186,12 @@ public class Bank implements Serializable {
                 tPem = tPem.add(pem);
                 tPer =tPer.add(per);
         }        
+//       boolean minus = false;
+//       BigInteger temp = tPem.subtract(tPer);                
+//       minus = temp.min(BigInteger.ZERO).equals(BigInteger.ZERO);
+//       if (minus) {
+//           javax.swing.JOptionPane.showMessageDialog(null,  "Saldo tidak cukup");                   
+//       }
         return tPem.subtract(tPer);
     }
 
@@ -275,7 +281,9 @@ public class Bank implements Serializable {
     @PostUpdate
     public void PostUpdate()
     {    
-        javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Update\nNama Bank ="+ namaBank);
+//        javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Update\nNama Bank ="+ namaBank);
+//        javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Update\nNama Bank ="+ namaBank);
+        System.out.println("Update bank");
     }
     @PostRemove
     public void PostHapus()
