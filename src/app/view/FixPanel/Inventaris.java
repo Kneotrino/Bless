@@ -211,12 +211,37 @@ public class Inventaris extends javax.swing.JPanel {
         if (!this.blessingPUEntityManager.getTransaction().isActive()) 
                 this.blessingPUEntityManager.getTransaction().begin();
         this.blessingPUEntityManager.getTransaction().commit(); 
-        this.assetList.clear();
-        this.assetList.addAll(this.assetQuery.getResultList());
+//        this.assetList.clear();
+//        this.assetList.addAll(this.assetQuery.getResultList());
+//        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+//        this.bankList.clear();            
+//        this.bankList.addAll(this.bankQuery.getResultList());
+//        blessingPUEntityManager.getTransaction().rollback();
+        if (!this.blessingPUEntityManager.getTransaction().isActive()) 
+                this.blessingPUEntityManager.getTransaction().begin();
+        java.util.Collection data = assetQuery.getResultList();
+        for (Object entity : data) {
+            blessingPUEntityManager.refresh(entity);
+        }
         ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        this.bankList.clear();            
-        this.bankList.addAll(this.bankQuery.getResultList());
+        java.util.List Res = this.bankQuery.getResultList();
+        this.bankList.clear();
+        this.bankList.addAll(Res);
+//=========================
+        if (!this.blessingPUEntityManager.getTransaction().isActive()) 
+                this.blessingPUEntityManager.getTransaction().begin();
+        java.util.Collection data1 = assetQuery.getResultList();
+        for (Object entity : data1) {
+            blessingPUEntityManager.refresh(entity);
+        }
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        java.util.List Res1 = this.bankQuery.getResultList();
+        this.bankList.clear();
+        this.bankList.addAll(Res1);
 
+
+        assetList.clear();
+        assetList.addAll(data);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -235,9 +260,9 @@ public class Inventaris extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
     public void Refresh()
     {
-            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-            this.bankList.clear();            
-            this.bankList.addAll(this.bankQuery.getResultList());
+//            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+//            this.bankList.clear();            
+//            this.bankList.addAll(this.bankQuery.getResultList());
             jButton2ActionPerformed(null);
     }
     public List<Bank> getBankList() {

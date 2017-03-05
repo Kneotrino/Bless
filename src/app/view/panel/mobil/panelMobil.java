@@ -2551,10 +2551,16 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
 
-        this.UpdatePDP();
+//        this.UpdatePDP();
         this.simpanButtonActionPerformed(evt);
         jButton22ActionPerformed(evt);
         this.editMobil.hide();
+        int row = jTable1.getSelectedRow();
+        jTable1.setRowSelectionInterval(row, row);
+//        jTable1.scrollRectToVisible(jTable1.getCellRect(row, 0, true));
+
+//        this.editMobil.show();
+        
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jTable4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable4PropertyChange
@@ -2579,6 +2585,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         for (Object object : mob) {
             blessingPUEntityManager.refresh(object);                        
         }
+//        jButton22ActionPerformed(evt);
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
