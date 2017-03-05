@@ -2556,7 +2556,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         jButton22ActionPerformed(evt);
         this.editMobil.hide();
         int row = jTable1.getSelectedRow();
-        jTable1.setRowSelectionInterval(row, row);
+//        jTable1.setRowSelectionInterval(row, row);
 //        jTable1.scrollRectToVisible(jTable1.getCellRect(row, 0, true));
 
 //        this.editMobil.show();

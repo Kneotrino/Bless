@@ -341,14 +341,14 @@ public class panelPegawai extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        java.util.List Res = this.bankQuery.getResultList();
+        this.bankList.clear();
+        this.bankList.addAll(Res);
         java.util.Collection data = query.getResultList();
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
-        java.util.List Res = this.bankQuery.getResultList();
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        this.bankList.clear();
-        this.bankList.addAll(Res);
         list.clear();
         list.addAll(data);
     }//GEN-LAST:event_refreshButtonActionPerformed
@@ -377,7 +377,7 @@ public class panelPegawai extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
-            refreshButtonActionPerformed(evt);
+//            refreshButtonActionPerformed(evt);
             refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();

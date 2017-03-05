@@ -442,11 +442,14 @@ public class panelJasa extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        java.util.List data = query.getResultList();
         java.util.List Res = this.bankQuery.getResultList();
        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         this.bankList.clear();
         this.bankList.addAll(Res);
+        java.util.List data = query.getResultList();
+        for (Object entity : data) {
+            entityManager.refresh(entity);
+        }
         list.clear();
         list.addAll(data);
     }//GEN-LAST:event_refreshButtonActionPerformed
@@ -481,7 +484,7 @@ public class panelJasa extends JPanel {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
             this.refreshButtonActionPerformed(evt);
-            this.refreshButtonActionPerformed(evt);
+//            this.refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();

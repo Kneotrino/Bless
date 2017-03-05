@@ -445,15 +445,15 @@ public class panelHutang extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        bankList.clear();
+        bankList.addAll(bankQuery.getResultList());
         java.util.Collection<Hutang> data = query.getResultList();
         data.forEach((entity) -> {
             entityManager.refresh(entity);
         });
         list.clear();
         list.addAll(data);
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        bankList.clear();
-        bankList.addAll(bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     public List<Bank> getBankList() {
@@ -508,7 +508,7 @@ public class panelHutang extends JPanel {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
             refreshButton1ActionPerformed(evt);
-            refreshButton1ActionPerformed(evt);
+//            refreshButton1ActionPerformed(evt);
 //            list.clear();
 //            list.addAll(query.getResultList());
         } catch (RollbackException rex) {

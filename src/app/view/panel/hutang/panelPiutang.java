@@ -489,15 +489,15 @@ public class panelPiutang extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        bankList.clear();
+        bankList.addAll(bankQuery.getResultList());
         java.util.List<app.table.Piutang> data = query.getResultList();
         for (Piutang piutang : data) {
             entityManager.refresh(piutang);
         }
         list.clear();
         list.addAll(data);
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        bankList.clear();
-        bankList.addAll(bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -538,7 +538,7 @@ public class panelPiutang extends JPanel {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
             refreshButtonActionPerformed(evt);
-            refreshButtonActionPerformed(evt);
+//            refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();

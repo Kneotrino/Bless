@@ -493,15 +493,15 @@ public class panelRental extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        this.bankList.clear();
+        this.bankList.addAll(this.bankQuery.getResultList());
         java.util.List data = query.getResultList();
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
         list.clear();
         list.addAll(data);
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        this.bankList.clear();
-        this.bankList.addAll(this.bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
