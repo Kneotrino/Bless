@@ -361,12 +361,11 @@
         <Component class="javax.swing.JComboBox" name="jComboBox3">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="4">
                 <StringItem index="0" value="OPEN"/>
                 <StringItem index="1" value="READY"/>
                 <StringItem index="2" value="CLOSE"/>
                 <StringItem index="3" value="SELESAI"/>
-                <StringItem index="4" value=" "/>
               </StringArray>
             </Property>
           </Properties>
@@ -394,6 +393,11 @@
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="masterTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jComboBox1));&#xa;    masterTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(jComboBox1));&#xa;    masterTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox1));">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="75" minWidth="75" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -453,6 +457,10 @@
                 <BindingParameter name="NAME" value="Keterangan"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+              </Subbinding>
+              <Subbinding sourcePath="${laba}">
+                <BindingParameter name="NAME" value="Status"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${m.statusMobil}">
                 <BindingParameter name="NAME" value="Penjualan Mobil"/>

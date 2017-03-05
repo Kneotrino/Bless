@@ -237,7 +237,7 @@ public class panelBagiLaba extends JPanel {
         saveButton2.addActionListener(formListener);
         jPanel1.add(saveButton2);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "READY", "CLOSE", "SELESAI", " " }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "READY", "CLOSE", "SELESAI" }));
         jPanel1.add(jComboBox3);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -259,6 +259,9 @@ public class panelBagiLaba extends JPanel {
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laba}"));
+        columnBinding.setColumnName("Status");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${m.statusMobil}"));
         columnBinding.setColumnName("Penjualan Mobil");
         columnBinding.setColumnClass(String.class);
@@ -277,7 +280,7 @@ public class panelBagiLaba extends JPanel {
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(0).setMinWidth(75);
             masterTable.getColumnModel().getColumn(0).setMaxWidth(75);
-            masterTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox1));
+            masterTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(jComboBox1));
         }
         masterTable.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(jComboBox1));
         masterTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(jComboBox1));
@@ -579,11 +582,10 @@ public class panelBagiLaba extends JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void saveButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton2ActionPerformed
+        refreshButtonActionPerformed(evt);        
         String pilihan = jComboBox3.getSelectedItem().toString();
         System.out.println("pilihan = " + pilihan);
         list.removeIf( a -> !a.getLaba().equalsIgnoreCase(pilihan));
-        refreshButtonActionPerformed(evt);
-        
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButton2ActionPerformed
 
