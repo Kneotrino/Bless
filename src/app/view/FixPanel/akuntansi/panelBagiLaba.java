@@ -24,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -83,6 +84,7 @@ public class panelBagiLaba extends JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         deleteButton = new javax.swing.JButton();
         jDialog1 = new javax.swing.JDialog();
+        jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField(0);
         jLabel3 = new javax.swing.JLabel();
@@ -93,7 +95,7 @@ public class panelBagiLaba extends JPanel {
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
-        jLabel11 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -106,9 +108,11 @@ public class panelBagiLaba extends JPanel {
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
         jPanel1 = new javax.swing.JPanel();
-        refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         saveButton1 = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
+        saveButton2 = new javax.swing.JButton();
+        jComboBox3 = new javax.swing.JComboBox<>();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
 
@@ -149,6 +153,9 @@ public class panelBagiLaba extends JPanel {
         jDialog1.setType(java.awt.Window.Type.POPUP);
         jDialog1.getContentPane().setLayout(new java.awt.GridLayout(0, 1));
 
+        jSeparator2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INPUT DATA PEMBAGIAN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jDialog1.getContentPane().add(jSeparator2);
+
         jLabel1.setText("Pembagian Laporan KE");
         jDialog1.getContentPane().add(jLabel1);
 
@@ -178,8 +185,8 @@ public class panelBagiLaba extends JPanel {
         jDateChooser3.setDate(new java.util.Date());
         jDialog1.getContentPane().add(jDateChooser3);
 
-        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jDialog1.getContentPane().add(jLabel11);
+        jSeparator1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INPUT MODAL DI TAHAN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jDialog1.getContentPane().add(jSeparator1);
 
         jLabel7.setText("JUMLAH MODAL DI TAHAN");
         jDialog1.getContentPane().add(jLabel7);
@@ -214,10 +221,6 @@ public class panelBagiLaba extends JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel1.add(refreshButton);
-
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
@@ -225,6 +228,17 @@ public class panelBagiLaba extends JPanel {
         saveButton1.setText("CLOSE TO SELESAI");
         saveButton1.addActionListener(formListener);
         jPanel1.add(saveButton1);
+
+        refreshButton.setText("Tampilkan Semua");
+        refreshButton.addActionListener(formListener);
+        jPanel1.add(refreshButton);
+
+        saveButton2.setText("FILTER");
+        saveButton2.addActionListener(formListener);
+        jPanel1.add(saveButton2);
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "READY", "CLOSE", "SELESAI", " " }));
+        jPanel1.add(jComboBox3);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -297,6 +311,9 @@ public class panelBagiLaba extends JPanel {
             else if (evt.getSource() == jButton4) {
                 panelBagiLaba.this.jButton4ActionPerformed(evt);
             }
+            else if (evt.getSource() == saveButton2) {
+                panelBagiLaba.this.saveButton2ActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
 
@@ -311,7 +328,7 @@ public class panelBagiLaba extends JPanel {
         }
         list.clear();
         list.addAll(data);
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+//        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed
@@ -461,6 +478,10 @@ public class panelBagiLaba extends JPanel {
     {
         BigInteger temp = new BigInteger("0");
         for (Laporan list : laporanList) {
+            if (list.getTipe().equalsIgnoreCase("OPEN")) {
+                list.setTipe("CLOSE");
+                System.out.println(list+"->CLOSE");
+            }
             temp = temp.add(list.getJumlah());
         }
         return temp;
@@ -474,8 +495,17 @@ public class panelBagiLaba extends JPanel {
         laporanlaba.setKeterangan(jTextField2.getText());
         laporanlaba.setKe(correctButComplicated);
         laporanlaba.setTanggal(jDateChooser1.getDate());
-        Date Awal = jDateChooser2.getDate();
+        Date Awal = jDateChooser2.getDate();        
+        Awal.setHours(0);
+        Awal.setMinutes(0);
+        System.out.println("Awal = " + Awal);
         Date Akhir = jDateChooser3.getDate();
+        Calendar c = Calendar.getInstance();
+        c.setTime(Akhir);
+        c.add(Calendar.DATE, 1);
+        Akhir = c.getTime();
+        System.out.println("Akhir = " + Akhir);
+//        Akhir.set
         for (BagiLaba bagiLaba : temp) {
             Laba l = new Laba();
             l.setKeterangan(bagiLaba.getKeterangan());
@@ -548,6 +578,15 @@ public class panelBagiLaba extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void saveButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton2ActionPerformed
+        String pilihan = jComboBox3.getSelectedItem().toString();
+        System.out.println("pilihan = " + pilihan);
+        list.removeIf( a -> !a.getLaba().equalsIgnoreCase(pilihan));
+        refreshButtonActionPerformed(evt);
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -559,6 +598,7 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
@@ -568,7 +608,6 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -577,6 +616,8 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField keteranganField;
@@ -589,6 +630,7 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JButton saveButton1;
+    private javax.swing.JButton saveButton2;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {

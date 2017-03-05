@@ -168,7 +168,26 @@ public class BagiLaba implements Serializable {
     private BigInteger Profit = BigInteger.ZERO;
 
     public static final String PROP_PROFIT = "Profit";
-
+public String getLaba()
+{
+    String temp = " ";
+        if (m != null) {
+            temp = m.getStatusMobil();
+        }
+        else if ( h != null)
+        {
+            temp = h.getLABA();
+        }
+        else if ( r!= null)
+        {
+            temp = r.getLABA();
+        }
+        else if ( b != null)
+        {
+            temp = b.getLaba();
+        }
+        return temp;
+}
     /**
      * Get the value of Profit
      *
