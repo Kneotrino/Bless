@@ -538,6 +538,7 @@ public class panelPiutang extends JPanel {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
             refreshButtonActionPerformed(evt);
+            refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();

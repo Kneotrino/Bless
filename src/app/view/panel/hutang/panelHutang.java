@@ -508,6 +508,7 @@ public class panelHutang extends JPanel {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
             refreshButton1ActionPerformed(evt);
+            refreshButton1ActionPerformed(evt);
 //            list.clear();
 //            list.addAll(query.getResultList());
         } catch (RollbackException rex) {

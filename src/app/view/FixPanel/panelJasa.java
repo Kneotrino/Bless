@@ -280,6 +280,7 @@ public class panelJasa extends JPanel {
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarjasaList}");
@@ -479,6 +480,7 @@ public class panelJasa extends JPanel {
         try {            
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            this.refreshButtonActionPerformed(evt);
             this.refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
