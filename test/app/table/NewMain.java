@@ -34,7 +34,7 @@ public class NewMain {
         // TODO code application logic here
     List<String> properties = new ArrayList<String>();
 //    Class<?> cl = app.table.Saham.class;
-        Class<?> cl = app.table.Laba.class;
+        Class<?> cl = app.table.Barang.class;
         Method[] methods = cl.getMethods();
         List<Method> MethodList = Arrays.asList(methods);                
         for (Method method : MethodList) {
@@ -81,7 +81,7 @@ public class NewMain {
 }
 //                            Tuple.of("Keterangan", "keterangan", d -> d),
     for (String property:properties)
-        System.out.println("Tuple.of(\""+property+"\",\""+property+"\""+", d -> d==null?\" \":d),");    
+        System.out.println("Tuple.of(\""+property+"\",\""+property+"\""+", fungsi),");    
 //        System.out.println("Tuple.of(\""+property+"\",\""+property+"\""+", d-> d),");    
     }
     

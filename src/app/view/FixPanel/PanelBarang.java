@@ -5,15 +5,26 @@
  */
 package app.view.FixPanel;
 
+import static app.utils.ExcelConverter.ExcelConverter;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
+import javaslang.Tuple;
 import javax.persistence.RollbackException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -51,12 +62,13 @@ public class PanelBarang extends JPanel {
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        newButton2 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
         jDialog1.setSize(400, 400);
         jDialog1.setLocationRelativeTo(null);
-        jDialog1.getContentPane().setLayout(new java.awt.GridLayout());
+        jDialog1.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         newButton.setText("Simpan");
         newButton.addActionListener(formListener);
@@ -100,9 +112,6 @@ public class PanelBarang extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
-        if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(4).setCellRenderer(null);
-        }
         masterTable.getColumnModel().getColumn(4).setCellRenderer(new app.utils.NominalRender());
         masterTable.getColumnModel().getColumn(6).setCellRenderer(new app.utils.NominalRender());
 
@@ -128,6 +137,10 @@ public class PanelBarang extends JPanel {
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
+        newButton2.setText("Print");
+        newButton2.addActionListener(formListener);
+        jPanel1.add(newButton2);
+
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         bindingGroup.bind();
@@ -138,20 +151,23 @@ public class PanelBarang extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == saveButton) {
-                PanelBarang.this.saveButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton) {
-                PanelBarang.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newButton) {
-                PanelBarang.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == newButton1) {
+                PanelBarang.this.newButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 PanelBarang.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton1) {
-                PanelBarang.this.newButton1ActionPerformed(evt);
+            else if (evt.getSource() == refreshButton) {
+                PanelBarang.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton) {
+                PanelBarang.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
+                PanelBarang.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton2) {
+                PanelBarang.this.newButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -217,6 +233,48 @@ public class PanelBarang extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
 
+    private void newButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton2ActionPerformed
+   JFileChooser chooser=new JFileChooser(".");
+   FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+   chooser.addChoosableFileFilter(filter);
+   chooser.setFileFilter(filter);
+   chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+   chooser.setDialogTitle("Save File");
+   File filetemp = new File( System.getProperties().getProperty("user.home"), "Data Barang.xls");
+   chooser.setSelectedFile(filetemp);
+   int returnVal1=chooser.showSaveDialog(this);
+      if (returnVal1 == JFileChooser.APPROVE_OPTION) 
+        {
+             File file1 = chooser.getSelectedFile();
+             SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+             Function fungsi = d -> d==null?" ":d;         
+             Function tanggal = d -> d==null?" ":formator.format(d);
+             List<File> cvs = new java.util.LinkedList<>(); 
+             cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Detail.CSV"));
+             List a =list;
+             WriteStep data = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar Detail.CSV"))
+                        .type(app.table.Mobil.class)
+                            .properties(
+                                Tuple.of("REF","id", fungsi),
+                                Tuple.of("Nama","nama", fungsi),
+                                Tuple.of("Ket","keterangan", fungsi),
+                                Tuple.of("Tanggal","tanggal", tanggal),
+                                Tuple.of("Harga Unit","hargaunit", fungsi),
+                                Tuple.of("Stock","stock", fungsi),
+                                Tuple.of("Harga Unit","totalHarga", fungsi)
+                    ).dataList(a); 
+             try {
+              data.write();
+              ExcelConverter(cvs, chooser.getSelectedFile());           
+              Desktop.getDesktop().open(chooser.getSelectedFile());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -229,6 +287,7 @@ public class PanelBarang extends JPanel {
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
     private javax.swing.JButton newButton1;
+    private javax.swing.JButton newButton2;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;
