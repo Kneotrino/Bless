@@ -380,7 +380,10 @@ public void Restall()
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
-        entityManager.getTransaction().begin();        
+        entityManager.getTransaction().begin();     
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        this.bankList.clear();
+        this.bankList.addAll(bankQuery.getResultList());
          if (temp != -1) {            
             System.out.println("Laporan = " + m1.get(temp));
             Rest();
@@ -407,9 +410,6 @@ public void Restall()
          for (Laporan laporan : list) {
             temp = temp.add(laporan.getJumlah());
         }        
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        this.bankList.clear();
-        this.bankList.addAll(bankQuery.getResultList());
          jFormattedTextField2.setValue(temp);
     }//GEN-LAST:event_refreshButtonActionPerformed
 
@@ -464,7 +464,7 @@ public void Restall()
             list.addAll(merged);
         }
         this.refreshButtonActionPerformed(evt);
-        this.refreshButtonActionPerformed(evt);
+//        this.refreshButtonActionPerformed(evt);
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -464,15 +464,15 @@ public class PanelLaporanLaba extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        bankList.clear();
+        bankList.addAll(bankQuery.getResultList());
         java.util.Collection data = query.getResultList();
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
         list.clear();
         list.addAll(data);
-       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        bankList.clear();
-        bankList.addAll(bankQuery.getResultList());
         list1.clear();
         list1.addAll(query1.getResultList());
     }//GEN-LAST:event_refreshButtonActionPerformed

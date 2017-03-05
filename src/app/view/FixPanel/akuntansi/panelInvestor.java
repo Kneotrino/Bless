@@ -400,8 +400,8 @@ public class panelInvestor extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
     public void Refresh ()
     {
-        this.bankList.clear();
-        this.bankList.addAll(bankQuery.getResultList());
+//        this.bankList.clear();
+//        this.bankList.addAll(bankQuery.getResultList());
         this.refreshButtonActionPerformed(null);
 //        this.panelBagiLaba1.Refresh();
     }
@@ -510,14 +510,14 @@ public class panelInvestor extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        java.util.List Res = this.bankQuery.getResultList();
+        this.bankList.clear();
+        this.bankList.addAll(Res);
         java.util.Collection data = query.getResultList();
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
-        java.util.List Res = this.bankQuery.getResultList();
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
-        this.bankList.clear();
-        this.bankList.addAll(Res);
         list.clear();
         list.addAll(data);
         Hitung();
@@ -549,7 +549,7 @@ public class panelInvestor extends JPanel {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
             this.refreshButtonActionPerformed(evt);
-            this.refreshButtonActionPerformed(evt);
+//            this.refreshButtonActionPerformed(evt);
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
