@@ -179,6 +179,7 @@ public class panelAkuntansi extends JPanel {
         Akun Pemasukan = new Akun(X++)
                  .setAkun("Pemasukan Lainnya")
                 .setPengeluaran(sumAll(getList(app.table.Pemasukan.class)))
+                .subPengeluaran(sumAll(getList(app.table.PerjalananKembalikan.class)))
                 ;
         Akun Perjalanan = new Akun(X++)
                 .setAkun("Beban Perjalanan")

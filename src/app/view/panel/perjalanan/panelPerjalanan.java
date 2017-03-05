@@ -83,7 +83,7 @@ public class panelPerjalanan extends JPanel {
         jComboBox2 = new javax.swing.JComboBox<>();
         newButton2 = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
-        inputPanel3 = new app.utils.inputPanel(app.table.PerjalananPengeluaran.class);
+        inputPanel3 = new app.utils.inputPanel(app.table.PerjalananKembalikan.class);
         jLabel2 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         newButton3 = new javax.swing.JButton();
@@ -221,7 +221,6 @@ public class panelPerjalanan extends JPanel {
         add(jPanel1);
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(30);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
