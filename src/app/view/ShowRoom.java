@@ -131,7 +131,6 @@ public class ShowRoom extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jMenuItem32 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
         jPanel1 = new app.view.FixPanel.panelLaporan();
         jPanel2 = new app.view.FixPanel.panelMaster(app.table.Pemasukan.class)
@@ -140,7 +139,6 @@ public class ShowRoom extends javax.swing.JFrame {
         ;
         jPanel4 = new app.view.FixPanel.panelJasa();
         jPanel5 = new app.view.FixPanel.PanelBank();
-        inventaris1 = new app.view.FixPanel.Inventaris();
         panelTransaksi1 = new app.view.FixPanel.PanelTransaksi();
         jPanel6 = new app.view.panel.mobil.panelMobil();
         panelLeasing2 = new app.view.FixPanel.panelLeasing();
@@ -157,6 +155,7 @@ public class ShowRoom extends javax.swing.JFrame {
         panelLaporanLaba1 = new app.view.FixPanel.PanelLaporanLaba();
         panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba();
         panelBarang1 = new app.view.FixPanel.PanelBarang();
+        panelInventaris1 = new app.view.FixPanel.PanelInventaris();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -177,6 +176,7 @@ public class ShowRoom extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
@@ -286,13 +286,6 @@ public class ShowRoom extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem10.setText("Asset");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
-            }
-        });
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jLabel2, org.jdesktop.beansbinding.ELProperty.create("${text}"), this, org.jdesktop.beansbinding.BeanProperty.create("title"));
@@ -305,7 +298,6 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(jPanel3, "Pengeluaran");
         getContentPane().add(jPanel4, "Jasa");
         getContentPane().add(jPanel5, "Bank");
-        getContentPane().add(inventaris1, "Asset");
         getContentPane().add(panelTransaksi1, "Transaksi");
         getContentPane().add(jPanel6, "Mobil");
         getContentPane().add(panelLeasing2, "Less");
@@ -327,6 +319,7 @@ public class ShowRoom extends javax.swing.JFrame {
         getContentPane().add(panelLaporanLaba1, "Pembagian");
         getContentPane().add(panelBagiLaba1, "Profit");
         getContentPane().add(panelBarang1, "Barang");
+        getContentPane().add(panelInventaris1, "Asset");
 
         jMenu1.setText("Akutansi");
 
@@ -449,6 +442,14 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem16);
         jMenu2.add(jSeparator4);
+
+        jMenuItem10.setText("Asset");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem10);
 
         jMenuItem17.setText("Pegawai");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
@@ -621,7 +622,8 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        this.inventaris1.Refresh();
+//        this.inventaris1.Refresh();
+        this.panelInventaris1.Refresh();       
         this.chandePanel("Asset");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem10ActionPerformed
@@ -839,7 +841,6 @@ public class ShowRoom extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private app.view.FixPanel.Inventaris inventaris1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -908,6 +909,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private app.view.FixPanel.PanelBarang panelBarang1;
     private app.view.FixPanel.akuntansi.panelBayarSewa panelBayarSewa1;
     private app.view.panel.hutang.panelHutang panelHutang1;
+    private app.view.FixPanel.PanelInventaris panelInventaris1;
     private app.view.FixPanel.akuntansi.panelInvestor panelInvestor1;
     private app.view.FixPanel.PanelLaporanLaba panelLaporanLaba1;
     private app.view.FixPanel.panelLeasing panelLeasing2;

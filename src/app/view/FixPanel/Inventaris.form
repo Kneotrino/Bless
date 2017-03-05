@@ -35,6 +35,9 @@
           <Value id="POPUP"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jDialog1.setSize(400, 600);&#xa;        jDialog1.setLocationRelativeTo(null);"/>
+      </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" value="1"/>

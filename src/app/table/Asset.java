@@ -102,6 +102,7 @@ public class Asset extends Laporan implements Serializable {
         BigInteger item = BigInteger.valueOf(this.stock);
         BigInteger cost = this.hargaBarang;
         BigInteger Total = this.hargaBarang.multiply(item);
+        setJumlah(Total);
 
     }
 
