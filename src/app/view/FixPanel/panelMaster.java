@@ -274,7 +274,7 @@ public void Restall()
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -291,6 +291,9 @@ public void Restall()
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
         columnBinding.setColumnName("Nominal");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipe}"));
+        columnBinding.setColumnName("Status");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
         columnBinding.setColumnName("type x");
         columnBinding.setColumnClass(String.class);
@@ -302,7 +305,7 @@ public void Restall()
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(jComboBox1));
+            masterTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox1));
         }
 
         add(masterScrollPane, java.awt.BorderLayout.CENTER);

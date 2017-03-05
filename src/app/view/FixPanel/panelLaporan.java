@@ -279,6 +279,9 @@ public class panelLaporan extends JPanel {
         columnBinding.setColumnName("Tujuan");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipe}"));
+        columnBinding.setColumnName("Status");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(formListener);

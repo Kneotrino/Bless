@@ -73,7 +73,7 @@ public class Laporan implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggal = new Date();
     @Column(name = "TIPE", length = 255)
-    private String tipe;
+    private String tipe = "OPEN";
     @OneToOne(cascade = {CascadeType.ALL})
     private Saldo Transaksi;
 

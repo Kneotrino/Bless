@@ -41,7 +41,9 @@ public class PanelBank extends JPanel {
     }
     
     public PanelBank() {
+        System.out.println("Init panel bank");
         initComponents();
+//        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
@@ -57,12 +59,14 @@ public class PanelBank extends JPanel {
                     peter.setNamaBank("Peter");
                     entityManager.persist(bank);
                     entityManager.persist(peter);
-                    list.add(bank);
-                    list.add(peter);
-                    int row = list.size() - 1;
-                    masterTable.setRowSelectionInterval(row, row);
-                    masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
-                    this.saveButtonActionPerformed(null);                
+                    entityManager.getTransaction().commit();
+                    entityManager.getTransaction().begin();
+//                    list.add(bank);
+//                    list.add(peter);
+//                    int row = list.size() - 1;
+//                    masterTable.setRowSelectionInterval(row, row);
+//                    masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+//                    this.saveButtonActionPerformed(null);                
             }
         }
 
