@@ -10,6 +10,7 @@ import app.table.Bayarsewa;
 import app.table.Laporan;
 import app.table.Saldo;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -361,6 +362,7 @@ public class panelBayarSewa extends JPanel {
         saldo.setBankId((Bank) this.jComboBox1.getSelectedItem());
         asset.setTransaksi(saldo);
         entityManager.persist(asset);
+//       utilsPanel.simpan(entityManager, p);
         list.add(asset);
         this.jDialog1.hide();
         saveButtonActionPerformed(evt);
@@ -384,8 +386,9 @@ public class panelBayarSewa extends JPanel {
         Saldo saldo = new Saldo();
         saldo.setBankId((Bank) this.jComboBox3.getSelectedItem());
         asset.setTransaksi(saldo);
-        entityManager.persist(asset);
-        list.add(asset);
+//        entityManager.persist(asset);
+        utilsPanel.simpan(entityManager, asset);
+//        list.add(asset);
         this.jDialog2.hide();
         saveButtonActionPerformed(evt);
 //        refreshButtonActionPerformed(evt);

@@ -11,6 +11,7 @@ import app.table.Modal;
 import app.table.Saham;
 import app.table.Saldo;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -450,6 +451,7 @@ public class panelInvestor extends JPanel {
                 s1.setBankId((Bank) jComboBox2.getSelectedItem());
                 p.setTransaksi(s1);
                 s.setPrive(p);
+                utilsPanel.simpan(entityManager, p);
             }
             else if (evt.getSource() == jButton4) {
                 app.table.pembagianLaba p = (app.table.pembagianLaba) inputPanel4.getTarget();
@@ -457,9 +459,11 @@ public class panelInvestor extends JPanel {
                 s1.setBankId((Bank) jComboBox4.getSelectedItem());
                 p.setTransaksi(s1);
                 s.setLaba(p);
+                utilsPanel.simpan(entityManager, p);
             }
+        
         entityManager.persist(s);
-        ss.add(s);
+//        ss.add(s);
         s.setInvestorId(i);
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);

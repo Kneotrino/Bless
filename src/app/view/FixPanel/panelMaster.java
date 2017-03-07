@@ -9,6 +9,7 @@ import app.table.Bank;
 import app.table.Laporan;
 import app.table.Saldo;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
@@ -439,6 +440,7 @@ public void Restall()
         nw.setTransaksi(new Saldo());
         nw.getTransaksi().setBankId((Bank) this.jComboBox1.getSelectedItem());
         entityManager.persist(nw);
+//        utilsPanel.simpan(entityManager, nw);
         list.add(nw);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);

@@ -69,7 +69,7 @@ public class Bayarsewa extends Laporan  implements Serializable {
     @Override
     public String getJenis()
     {
-        return "Modal di Tahan";
+        return "Modal di Tahan"+ (isName()?"Masuk":"Keluar");
     }
 //    @Override
 //    public int hashCode() {

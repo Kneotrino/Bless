@@ -15,6 +15,7 @@ import app.table.Saldo;
 import app.table.pembagianLaba;
 import static app.utils.ExcelConverter.ExcelConverter;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
@@ -661,10 +662,14 @@ public class PanelLaporanLaba extends JPanel {
         l.setSaham(saham);
         l.setLaporanSaham(L.getLaporanSaham());
         saham.setRelasi(l);
-        entityManager.persist(laba);        
+//        entityManager.persist(laba);
+        boolean simpan = utilsPanel.simpan(entityManager, laba);
+        if (simpan) {
         entityManager.persist(l);
         entityManager.persist(saham); 
         ls.add(l);
+            
+        }
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = ls.size() - 1;

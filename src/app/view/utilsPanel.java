@@ -5,8 +5,11 @@
  */
 package app.view;
 
+import app.table.Laporan;
 import app.view.FixPanel.panelMaster;
 import java.awt.EventQueue;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
@@ -29,4 +32,29 @@ public class utilsPanel {
                 jDialog1.show();
         });
     }
+     public static boolean simpan(javax.persistence.EntityManager entityManager, Laporan obj)
+     {
+         BigInteger bank = obj.getTransaksi().getBankId().getFoo();
+//         System.out.println("bank = " + bank);
+         BigInteger keluar = obj.getPengeluaran();
+//         System.out.println("keluar = " + keluar);
+         bank = bank.subtract(keluar);
+//         System.out.println("bank = " + bank);
+         boolean minus;
+         minus = bank.min(BigInteger.ZERO).equals(BigInteger.ZERO);
+         if (minus) {
+//             javax.swing.JOptionPane.showMessageDialog(null,  "Gagal Menyimpan");                          
+             entityManager.persist(obj);
+             return true;
+         }
+         else {
+             DecimalFormat nf = new DecimalFormat("IDR #,##0");
+             javax.swing.JOptionPane.showMessageDialog(null,  "Gagal Menyimpan\n"
+             +"Saldo Bank = "+ nf.format(bank)
+             +"\nPengeluaran = "+ nf.format(keluar)
+                     );  
+             return false;
+         }
+     
+     }
 }

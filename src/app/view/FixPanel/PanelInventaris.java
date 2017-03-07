@@ -9,6 +9,7 @@ import app.table.Asset;
 import app.table.Bank;
 import app.table.Saldo;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -218,8 +219,10 @@ public class PanelInventaris extends JPanel {
         t.setBankId((Bank) this.jComboBox1.getSelectedItem());
         p.setTransaksi(t);
 //        p.getTransaksi().setBankId((Bank) this.jComboBox1.getSelectedItem());
-        entityManager.persist(p);
-        list.add(p);
+//        entityManager.persist(p);
+        utilsPanel.simpan(entityManager, p);
+        
+//        list.add(p);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
         masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));

@@ -49,14 +49,17 @@ public class Saham implements Serializable {
     @JoinColumn(name = "INVESTOR_ID", referencedColumnName = "ID")
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private Investor investorId;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH,CascadeType.REFRESH})
     private Modal modal;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH,CascadeType.REFRESH})
+//    @OneToOne(cascade = {CascadeType.ALL})
     private Prive prive;    
-    @OneToOne(cascade = {CascadeType.ALL})
+//    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH,CascadeType.REFRESH})
     private pembagianLaba Laba;
 //    @OneToOne
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.DETACH,CascadeType.REFRESH})
+//    @OneToOne(cascade = {CascadeType.ALL})
     private Relasi relasi;
 
     public Relasi getRelasi() {

@@ -259,10 +259,10 @@ public class Bank implements Serializable {
         }
         return true;
     }
-    
+    @Transient
+     DecimalFormat nf = new DecimalFormat("IDR #,##0");
     @Override
     public String toString() {
-        DecimalFormat nf = new DecimalFormat("IDR #,##0");
         return "[ Tujuan/Sumber ="+namaBank+";REF=" + bankId +"; Saldo : "+nf.format(getFoo())+ " ]";
     }
 
@@ -283,6 +283,13 @@ public class Bank implements Serializable {
     {    
 //        javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Update\nNama Bank ="+ namaBank);
 //        javax.swing.JOptionPane.showMessageDialog(null,  "Berhasil Update\nNama Bank ="+ namaBank);
+        boolean minus;
+        BigInteger foo = getFoo();
+        minus = foo.min(BigInteger.ZERO).equals(BigInteger.ZERO);
+        if (!minus) {
+                javax.swing.JOptionPane.showMessageDialog(null,  
+                        "Saldo Minus \nNama Bank ="+ namaBank +"\nSaldo = " + nf.format(foo));          
+        }
         System.out.println("Update bank");
     }
     @PostRemove
