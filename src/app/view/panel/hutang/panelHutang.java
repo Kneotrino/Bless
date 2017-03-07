@@ -12,6 +12,7 @@ import app.table.BayarhutangPengeluaran;
 import app.table.Hutang;
 import app.table.Saldo;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -426,9 +427,12 @@ public class panelHutang extends JPanel {
 //            System.out.println("Pengeluaran");
         }
         b.setTransaksi(ts);
-        entityManager.persist(b);
         b.setHutangid(h);
-        bs.add(b);
+        boolean simpan = utilsPanel.simpan(entityManager, b);
+        if (simpan) {
+            bs.add(b);            
+        }
+//        entityManager.persist(b);
         h.Hitung();
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);

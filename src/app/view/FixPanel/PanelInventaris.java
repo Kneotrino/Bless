@@ -49,6 +49,7 @@ public class PanelInventaris extends JPanel {
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
+        jComboBox2 = new javax.swing.JComboBox<>();
         jDialog1 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Asset.class);
         jLabel2 = new javax.swing.JLabel();
@@ -64,6 +65,12 @@ public class PanelInventaris extends JPanel {
 
         FormListener formListener = new FormListener();
 
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         jDialog1.setSize(400, 600);
         jDialog1.setLocationRelativeTo(null);
         jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
@@ -75,8 +82,8 @@ public class PanelInventaris extends JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
         bindingGroup.addBinding(jComboBoxBinding);
 
         inputPanel1.add(jComboBox1);
@@ -94,6 +101,8 @@ public class PanelInventaris extends JPanel {
         masterTable.setDefaultEditor(Integer.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        masterTable.setDefaultEditor(app.table.Bank.class, new javax.swing.DefaultCellEditor(jComboBox2));
+        //getColumnModel().getColumn(4).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2));
         masterTable.setAutoCreateRowSorter(true);
         masterTable.setRowHeight(25);
 
@@ -121,9 +130,8 @@ public class PanelInventaris extends JPanel {
         columnBinding.setColumnName("Jumlah");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
-        columnBinding.setColumnName("Saldo");
+        columnBinding.setColumnName("Bank Sumber");
         columnBinding.setColumnClass(app.table.Bank.class);
-        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -160,8 +168,8 @@ public class PanelInventaris extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == newButton) {
-                PanelInventaris.this.newButtonActionPerformed(evt);
+            if (evt.getSource() == newButton1) {
+                PanelInventaris.this.newButton1ActionPerformed(evt);
             }
             else if (evt.getSource() == deleteButton) {
                 PanelInventaris.this.deleteButtonActionPerformed(evt);
@@ -172,8 +180,8 @@ public class PanelInventaris extends JPanel {
             else if (evt.getSource() == saveButton) {
                 PanelInventaris.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton1) {
-                PanelInventaris.this.newButton1ActionPerformed(evt);
+            else if (evt.getSource() == newButton) {
+                PanelInventaris.this.newButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -267,6 +275,7 @@ public class PanelInventaris extends JPanel {
     private javax.persistence.EntityManager entityManager;
     private app.utils.inputPanel inputPanel1;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

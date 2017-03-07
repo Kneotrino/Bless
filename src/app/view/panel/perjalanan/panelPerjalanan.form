@@ -263,6 +263,11 @@
             <Property name="rows" type="int" value="0"/>
           </Layout>
           <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel3">
+              <BindingProperties>
+                <BindingProperty name="text" source="Form" sourcePath="${peter.foo}" target="jLabel3" targetPath="text" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+            </Component>
             <Component class="javax.swing.JButton" name="newButton4">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Simpan"/>

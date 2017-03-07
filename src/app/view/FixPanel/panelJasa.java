@@ -11,9 +11,11 @@ import app.table.Bpkbtitipan;
 import app.table.Laporan;
 import app.table.Saldo;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -431,9 +433,12 @@ public class panelJasa extends JPanel {
             ts.setBankId((Bank) this.jComboBox2.getSelectedItem());        
         }
         b.setTransaksi(ts);
-        entityManager.persist(b);
+//        entityManager.persist(b);
         b.setBpkbtitipid(B);
-        bs.add(b);
+        boolean simpan = utilsPanel.simpan(entityManager, b);
+        if (simpan) {
+        bs.add(b);            
+        }
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
     }//GEN-LAST:event_newDetailButtonActionPerformed

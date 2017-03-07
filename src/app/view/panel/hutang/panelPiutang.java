@@ -11,6 +11,7 @@ import app.table.Bayarpihutang;
 import app.table.Piutang;
 import app.table.Saldo;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -472,17 +473,21 @@ public class panelPiutang extends JPanel {
             ket += jDateChooser2.getDate()!=null?formator.format(jDateChooser2.getDate()):" ";
             ket += " ";  
             b.setKeterangan(ket);
-            ts.setBankId((Bank) this.jComboBox7.getSelectedItem());        
+            ts.setBankId((Bank) this.jComboBox8.getSelectedItem());        
         }
         b.setTransaksi(ts);
-        entityManager.persist(b);
         b.setPihutangid(p);
-        bs.add(b);
+        boolean simpan = utilsPanel.simpan(entityManager, b);
+        if (simpan) {
+            entityManager.persist(b);
+            bs.add(b);            
+        }
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = bs.size() - 1;
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newDetailButtonActionPerformed
     SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
     @SuppressWarnings("unchecked")

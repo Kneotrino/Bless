@@ -15,6 +15,7 @@ import app.table.Saldo;
 import app.table.Trips;
 import app.table.Util;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -89,6 +90,7 @@ public class panelPerjalanan extends JPanel {
         newButton3 = new javax.swing.JButton();
         jDialog4 = new javax.swing.JDialog();
         inputPanel4 = new app.utils.inputPanel(app.table.PerjalananPengeluaran.class);
+        jLabel3 = new javax.swing.JLabel();
         newButton4 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox4 = new javax.swing.JComboBox<>();
@@ -173,6 +175,11 @@ public class panelPerjalanan extends JPanel {
 
         jDialog4.setTitle("Input Data Pakai");
         jDialog4.setModal(true);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${peter.foo}"), jLabel3, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        inputPanel4.add(jLabel3);
 
         newButton4.setText("Simpan");
         newButton4.addActionListener(formListener);
@@ -465,6 +472,11 @@ public class panelPerjalanan extends JPanel {
                 p.setTransaksi(ts1);                
                 p1.setTransaksi(ts);
                 p.setTransfer(p1);
+                boolean simpan = utilsPanel.simpan(entityManager, p1);
+                        if (simpan) {
+                            utilsPanel.simpan(entityManager, p);
+                            ps.add(p);
+                        }
             }
             else if (evt.getSource() == newButton3) {
                 System.out.println("Kirim/Pengeluaran");
@@ -479,22 +491,28 @@ public class panelPerjalanan extends JPanel {
                 p.setTransaksi(ts1);
                 p.setKembali(p1);
 //                entityManager.persist(p1);
+                boolean simpan = utilsPanel.simpan(entityManager, p);
+                    if (simpan) {  ps.add(p); }   
             }
             else if (evt.getSource() == newButton4) {
                 System.out.println("Pakai");
                 p = (Perjalanan) this.inputPanel4.getTarget();
                 ts.setBankId(Peter);
                 p.setTransaksi(ts);
+                boolean simpan = utilsPanel.simpan(entityManager, p);
+                    if (simpan) {  ps.add(p); }   
             }
 //        p.setTransaksi(ts);
         p.setTripsTripsId(t);
-        entityManager.persist(p);
-        ps.add(p);
+//        entityManager.persist(p);
+//        boolean simpan = false;
+//            simpan =
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = ps.size() - 1;
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newDetailButtonActionPerformed
     
     @SuppressWarnings("unchecked")
@@ -503,16 +521,16 @@ public class panelPerjalanan extends JPanel {
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         java.util.Collection data = query.getResultList();
-        for (Object entity : data) {
-            entityManager.refresh(entity);
-        }
-        list.clear();
-        list.addAll(data);
         ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         Peter = this.entityManager.find(app.table.Bank.class, -2);
         bankList.remove(Peter);
+        for (Object entity : data) {
+            entityManager.refresh(entity);
+        }
+        list.clear();
+        list.addAll(data);
         Hitung();
 
     }//GEN-LAST:event_refreshButtonActionPerformed
@@ -542,6 +560,7 @@ public class panelPerjalanan extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
+            refreshButtonActionPerformed(evt);
 //            Util.RefreshLaporan();
 
         } catch (RollbackException rex) {
@@ -643,6 +662,7 @@ public class panelPerjalanan extends JPanel {
     private javax.swing.JDialog jDialog4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Trips> list;
@@ -718,6 +738,14 @@ public class panelPerjalanan extends JPanel {
             trips.setTotalKirim(kirim);
         }
 //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Bank getPeter() {
+        return Peter;
+    }
+
+    public void setPeter(Bank Peter) {
+        this.Peter = Peter;
     }
     
 }

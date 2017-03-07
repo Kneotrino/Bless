@@ -20,6 +20,7 @@ import static app.utils.ExcelConverter.ExcelConverter;
 import static app.utils.Printer.getDataList;
 import app.view.FixPanel.panelLeasing;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
@@ -2641,6 +2642,11 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.hapus.getKeuanganMobils().add(dp);
         this.Hitung();
         this.jDialog1.hide();
+            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+            this.bankList.clear();
+            this.bankList.add(null);    
+            this.bankList.addAll(bankQuery.getResultList());
+
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
@@ -2649,11 +2655,19 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         ts.setBankId((Bank) this.jComboBox6.getSelectedItem());
         dp.setTransaksi(ts);
         dp.setMobils(hapus);
-        this.keuanganMobilList.add(dp);
-        this.persist(dp);
-        this.hapus.getKeuanganMobils().add(dp);
-        this.jDialog2.hide();
-        this.Hitung();
+        boolean simpan = utilsPanel.simpan(blessingPUEntityManager, dp);
+        if (simpan) {
+            this.keuanganMobilList.add(dp);
+            this.hapus.getKeuanganMobils().add(dp);            
+            this.jDialog2.hide();
+            this.Hitung();
+        }
+            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+            this.bankList.clear();
+            this.bankList.add(null);    
+            this.bankList.addAll(bankQuery.getResultList());
+
+//        this.persist(dp);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton20ActionPerformed

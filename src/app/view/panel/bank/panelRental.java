@@ -12,6 +12,7 @@ import app.table.Laporan;
 import app.table.Mobilrental;
 import app.table.Saldo;
 import app.view.ShowRoom;
+import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -479,14 +480,18 @@ public class panelRental extends JPanel {
 //            System.out.println("Pengeluaran");
         }
         b.setTransaksi(ts);
-        entityManager.persist(b);
         b.setRentalId(r);
-        bs.add(b);
+        boolean simpan = utilsPanel.simpan(entityManager, b);
+        if (simpan) {
+            bs.add(b);            
+        }
+//        entityManager.persist(b);
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = bs.size() - 1;
         detailTable.setRowSelectionInterval(row, row);
         detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+        saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newDetailButtonActionPerformed
     
     @SuppressWarnings("unchecked")

@@ -55,6 +55,24 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;app.table.Bank&gt;"/>
       </AuxValues>
     </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox2">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <BindingProperties>
+        <BindingProperty name="elements" source="Form" sourcePath="${bankList}" target="jComboBox2" targetPath="elements" updateStrategy="0" immediately="false"/>
+      </BindingProperties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
     <Container class="javax.swing.JDialog" name="jDialog1">
       <Properties>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
@@ -234,14 +252,13 @@
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
               <Subbinding sourcePath="${transaksi.bankId}">
-                <BindingParameter name="NAME" value="Saldo"/>
+                <BindingParameter name="NAME" value="Bank Sumber"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
             </BindingProperty>
           </BindingProperties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(BigInteger.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(Integer.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(BigInteger.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(Integer.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());&#xa;masterTable.setDefaultEditor(app.table.Bank.class, new javax.swing.DefaultCellEditor(jComboBox2));&#xa;//getColumnModel().getColumn(4).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2));"/>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
           </AuxValues>
