@@ -19,8 +19,12 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -67,6 +71,12 @@ public class ShowRoom extends javax.swing.JFrame {
                         "Confirmasi Keluar", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (confirm == JOptionPane.YES_OPTION) {
+                  try {
+                      hide();
+                      app.table.Util.backUpDatabase();
+                  } catch (SQLException ex) {
+                      Logger.getLogger(ShowRoom.class.getName()).log(Level.SEVERE, null, ex);
+                  }
                     System.exit(1);
                 }
             }
@@ -572,8 +582,17 @@ public class ShowRoom extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         System.out.println("Exit");
+        this.hide();
+                  try {
+                      app.table.Util.backUpDatabase();
+                  } catch (SQLException ex) {
+                      Logger.getLogger(ShowRoom.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+
         System.exit(0);
             
     }//GEN-LAST:event_jMenuItem5ActionPerformed

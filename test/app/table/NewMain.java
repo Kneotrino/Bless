@@ -5,12 +5,17 @@
  */
 package app.table;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+//import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+//import java.sql.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,6 +37,16 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Date t = new Date();
+                        String backupdirectory ="c:/mybackups/"
+                                + t.getDate()+"-"
+                                + (t.getMonth() + 1)+"-"
+                                + (t.getYear() + 1900)+
+                                "/sas";
+                        System.out.println("backupdirectory = " + backupdirectory);
+                        File f = new File(backupdirectory);
+                        f.mkdirs();
+
     List<String> properties = new ArrayList<String>();
 //    Class<?> cl = app.table.Saham.class;
         Class<?> cl = app.table.Barang.class;

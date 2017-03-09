@@ -106,11 +106,11 @@ public void Refresh()
 //    }
     ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
     this.bankList.clear();
-    this.bankList.add(null);    
+//    this.bankList.add(null);    
     this.bankList.addAll(bankQuery.getResultList());
     this.leasingList.add(null);    
-    this.PerjalananList.add(null);    
     this.leasingList.addAll(leasingQuery.getResultList());
+    this.PerjalananList.add(null);    
     this.PerjalananList.addAll(query.getResultList());
 }
     /**
@@ -272,8 +272,6 @@ public void Refresh()
         jButton10 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jComboBox8 = new javax.swing.JComboBox<>();
         jPanel13 = new javax.swing.JPanel();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
@@ -315,6 +313,7 @@ public void Refresh()
         jDateChooser9 = new com.toedter.calendar.JDateChooser();
         jLabel82 = new javax.swing.JLabel();
         jTextField35 = new javax.swing.JTextField();
+        jButton32 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         jPanel14 = new javax.swing.JPanel();
         jLabel54 = new javax.swing.JLabel();
@@ -324,6 +323,8 @@ public void Refresh()
         jLabel74 = new javax.swing.JLabel();
         jLabel76 = new javax.swing.JLabel();
         jFileChooser1 = new javax.swing.JFileChooser();
+        jComboBox7 = new javax.swing.JComboBox<>();
+        jComboBox8 = new javax.swing.JComboBox<>();
         jFileChooser2 = new javax.swing.JFileChooser();
         jFileChooser3 = new javax.swing.JFileChooser();
         jFileChooser4 = new javax.swing.JFileChooser();
@@ -349,7 +350,10 @@ public void Refresh()
         jDialog2 = new javax.swing.JDialog();
         jButton20 = new javax.swing.JButton();
         inputPanel2 = new app.utils.inputPanel(app.table.MobilPengeluaran.class);
+        jLabel81 = new javax.swing.JLabel();
         jComboBox6 = new javax.swing.JComboBox<>();
+        jLabel91 = new javax.swing.JLabel();
+        jComboBox13 = new javax.swing.JComboBox<>();
         bankQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jComboBox10 = new javax.swing.JComboBox<>();
@@ -1023,7 +1027,10 @@ public void Refresh()
         jTable4.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         jTable4.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable4.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
+        jTable4.setDefaultEditor(app.table.Bank.class, new javax.swing.DefaultCellEditor(jComboBox8));
+        jTable4.setDefaultEditor(app.table.Trips.class, new javax.swing.DefaultCellEditor(jComboBox7));
         jTable4.setAutoCreateRowSorter(true);
+        jTable4.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTable4.setColumnSelectionAllowed(true);
         jTable4.setRowHeight(22);
 
@@ -1049,10 +1056,9 @@ public void Refresh()
         columnBinding.setColumnName("Jenis");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId.namaBank}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
         columnBinding.setColumnName("Sumber");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(app.table.Bank.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tripsTripsId}"));
         columnBinding.setColumnName("Lap. Per");
         columnBinding.setColumnClass(app.table.Trips.class);
@@ -1065,6 +1071,12 @@ public void Refresh()
         });
         jScrollPane5.setViewportView(jTable4);
         jTable4.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTable4.getColumnModel().getColumnCount() > 0) {
+            jTable4.getColumnModel().getColumn(6).setMinWidth(400);
+            jTable4.getColumnModel().getColumn(6).setPreferredWidth(500);
+            jTable4.getColumnModel().getColumn(7).setMinWidth(400);
+            jTable4.getColumnModel().getColumn(7).setPreferredWidth(500);
+        }
 
         jPanel12.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
@@ -1125,30 +1137,6 @@ public void Refresh()
             }
         });
         jPanel18.add(jButton8);
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${perjalananList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox7);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable4, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tripsTripsId}"), jComboBox7, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable4, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox7, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        jPanel18.add(jComboBox7);
-
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox8);
-        bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable4, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.transaksi.bankId}"), jComboBox8, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable4, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox8, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        jPanel18.add(jComboBox8);
 
         jPanel12.add(jPanel18, java.awt.BorderLayout.PAGE_START);
 
@@ -1397,6 +1385,14 @@ public void Refresh()
 
         jPanel21.add(jTextField35);
 
+        jButton32.setText("SIMPAN");
+        jButton32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton32ActionPerformed(evt);
+            }
+        });
+        jPanel21.add(jButton32);
+
         jTabbedPane2.addTab("BPKB", jPanel21);
 
         jScrollPane6.setPreferredSize(new java.awt.Dimension(1862, 170));
@@ -1503,6 +1499,22 @@ public void Refresh()
             jFileChooser1ActionPerformed(evt);
         }
     });
+
+    jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${perjalananList}");
+    org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox7);
+    bindingGroup.addBinding(jComboBoxBinding);
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable4, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox7, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+    bindingGroup.addBinding(binding);
+
+    jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+    jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox8);
+    bindingGroup.addBinding(jComboBoxBinding);
+    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable4, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox8, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+    bindingGroup.addBinding(binding);
 
     jFileChooser2.setAcceptAllFileFilterUsed(false);
     jFileChooser2.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
@@ -1674,7 +1686,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         }
     });
     jDialog2.getContentPane().add(jButton20, java.awt.BorderLayout.PAGE_START);
-    jDialog2.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
+
+    jLabel81.setText("Bank");
+    inputPanel2.add(jLabel81);
 
     jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -1682,7 +1696,18 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox6);
     bindingGroup.addBinding(jComboBoxBinding);
 
-    jDialog2.getContentPane().add(jComboBox6, java.awt.BorderLayout.PAGE_END);
+    inputPanel2.add(jComboBox6);
+
+    jLabel91.setText("Laporan Perjalanan");
+    inputPanel2.add(jLabel91);
+
+    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${perjalananList}");
+    jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox13);
+    bindingGroup.addBinding(jComboBoxBinding);
+
+    inputPanel2.add(jComboBox13);
+
+    jDialog2.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
     jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "READY", "OPEN", "CLOSE", "SELESAI" }));
 
@@ -2491,7 +2516,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.jTextField59.setText(Rp.format(td.subtract(tk)) );
     ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
     this.bankList.clear();
-    this.bankList.add(null);    
+//    this.bankList.add(null);    
     this.bankList.addAll(bankQuery.getResultList());
 
     }
@@ -2525,7 +2550,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_jFileChooser7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        jButton13ActionPerformed(evt);
+        this.simpanButtonActionPerformed(evt);
+
+//        jButton13ActionPerformed(evt);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -2556,7 +2583,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.simpanButtonActionPerformed(evt);
         jButton22ActionPerformed(evt);
         this.editMobil.hide();
-        int row = jTable1.getSelectedRow();
+//        int row = jTable1.getSelectedRow();
 //        jTable1.setRowSelectionInterval(row, row);
 //        jTable1.scrollRectToVisible(jTable1.getCellRect(row, 0, true));
 
@@ -2642,9 +2669,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.hapus.getKeuanganMobils().add(dp);
         this.Hitung();
         this.jDialog1.hide();
+             simpanButtonActionPerformed(evt);
             ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
             this.bankList.clear();
-            this.bankList.add(null);    
+//            this.bankList.add(null);    
             this.bankList.addAll(bankQuery.getResultList());
 
     }//GEN-LAST:event_jButton19ActionPerformed
@@ -2655,16 +2683,19 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         ts.setBankId((Bank) this.jComboBox6.getSelectedItem());
         dp.setTransaksi(ts);
         dp.setMobils(hapus);
+        dp.setTripsTripsId((Trips) jComboBox13.getSelectedItem());
+//        dp.setPerjalananKe(PROPERTIES);
         boolean simpan = utilsPanel.simpan(blessingPUEntityManager, dp);
         if (simpan) {
             this.keuanganMobilList.add(dp);
             this.hapus.getKeuanganMobils().add(dp);            
             this.jDialog2.hide();
             this.Hitung();
+            simpanButtonActionPerformed(evt);
         }
             ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
             this.bankList.clear();
-            this.bankList.add(null);    
+//            this.bankList.add(null);    
             this.bankList.addAll(bankQuery.getResultList());
 
 //        this.persist(dp);
@@ -3117,6 +3148,11 @@ public void FileSave() throws IOException
         jTextField37.setText("");
         jTextField43.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
+        simpanButtonActionPerformed(evt);        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton32ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -3178,6 +3214,7 @@ public void FileSave() throws IOException
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton31;
+    private javax.swing.JButton jButton32;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -3186,6 +3223,7 @@ public void FileSave() throws IOException
     private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox11;
     private javax.swing.JComboBox<String> jComboBox12;
+    private javax.swing.JComboBox<String> jComboBox13;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -3299,6 +3337,7 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
+    private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
     private javax.swing.JLabel jLabel84;
@@ -3309,6 +3348,7 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel89;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel90;
+    private javax.swing.JLabel jLabel91;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;

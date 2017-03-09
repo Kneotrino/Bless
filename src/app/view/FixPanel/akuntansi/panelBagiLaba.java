@@ -522,11 +522,13 @@ public class panelBagiLaba extends JPanel {
         KelasList.add(app.table.Asset.class);
         KelasList.add(app.table.BayarPihutangBunga.class);
         KelasList.add(app.table.PerjalananPengeluaran.class);
+        KelasList.add(app.table.BayarPihutangBunga.class);
         Map nama = new LinkedHashMap();
         nama.put(app.table.Pengeluaran.class, "Operasional");
         nama.put(app.table.Asset.class, "Asset");
         nama.put(app.table.Pegawaigaji.class, "Gaji Pegawai");
         nama.put(app.table.PerjalananPengeluaran.class, "Biaya Perjalanan Dinas");
+        nama.put(app.table.BayarPihutangBunga.class, "Beban Bungan Bank Pinjaman");
         
         final SimpleDateFormat ff = new SimpleDateFormat("dd-MM-yyyy");
         for (Class class1 : KelasList) {

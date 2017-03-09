@@ -6,11 +6,17 @@
 package app.table;
 
 import java.math.BigInteger;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.eclipse.persistence.sessions.Session;
 
 /**
  *
@@ -82,8 +88,23 @@ public class Util {
         return temp;
     }
 
-
-    public Util() {
+public static void backUpDatabase()throws SQLException
+{
+                Date t = new Date();
+                                String backupdirectory ="c:/mybackups/"
+                                        + t.getDate()+"-"
+                                        + (t.getMonth() + 1)+"-"
+                                        + (t.getYear() + 1900)+
+                                        "/"+t.getHours()+"-"+t.getMinutes();
+                System.out.println("backupdirectory = " + backupdirectory);
+                java.sql.Connection conn = manager.unwrap(java.sql.Connection.class);
+                CallableStatement cs = conn.prepareCall("CALL SYSCS_UTIL.SYSCS_BACKUP_DATABASE(?)"); 
+                cs.setString(1, backupdirectory);
+                cs.execute(); 
+                cs.close();
+                System.out.println("backed up database to "+backupdirectory);
+}    
+public Util() {
     }
 
 }

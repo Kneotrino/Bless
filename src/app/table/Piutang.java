@@ -236,8 +236,12 @@ public class Piutang implements Serializable {
     public List<Bayarpihutang> getBayarpihutangList() {
         BigInteger temp = BigInteger.ZERO;
         for (Bayarpihutang lap : bayarpihutangList) {
-            temp = temp.add(lap.getPemasukan());
-            temp = temp.subtract(lap.getPengeluaran());
+            if (lap instanceof BayarPihutangPemasukan) {
+                    temp = temp.add(lap.getPemasukan());
+            }
+            else if (lap instanceof BayarPihutangPengeluaran) {
+            temp = temp.subtract(lap.getPengeluaran());                
+            }
 //            temp = temp.subtract(lap.getBunga());
             lap.setSaldo(temp);
         }

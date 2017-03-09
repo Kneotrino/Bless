@@ -510,8 +510,8 @@ public class panelPerjalanan extends JPanel {
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = ps.size() - 1;
-        detailTable.setRowSelectionInterval(row, row);
-        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+//        detailTable.setRowSelectionInterval(row, row);
+//        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newDetailButtonActionPerformed
     

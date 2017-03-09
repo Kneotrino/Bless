@@ -263,7 +263,7 @@ public class Bank implements Serializable {
      DecimalFormat nf = new DecimalFormat("IDR #,##0");
     @Override
     public String toString() {
-        return "[ Tujuan/Sumber ="+namaBank+";REF=" + bankId +"; Saldo : "+nf.format(getFoo())+ " ]";
+        return "[ T/S ="+namaBank+";REF=" + bankId +";\n Saldo : "+nf.format(getFoo())+ " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

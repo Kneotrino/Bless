@@ -468,8 +468,8 @@ public class panelInvestor extends JPanel {
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = ss.size() - 1;
-        detailTable.setRowSelectionInterval(row, row);
-        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+//        detailTable.setRowSelectionInterval(row, row);
+//        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
         saveButtonActionPerformed(evt);
     }//GEN-LAST:event_newDetailButtonActionPerformed
     public void Hitung()
