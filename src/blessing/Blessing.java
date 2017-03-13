@@ -11,8 +11,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.UIManager;
 
 /**
@@ -21,6 +25,28 @@ import javax.swing.UIManager;
  */
 public class Blessing {
 
+    public static boolean  password()
+    {
+        List<String> pass = new LinkedList<>();
+        pass.add("admin");
+        pass.add("blessing");
+        pass.add("alki");
+        JPasswordField pf = new JPasswordField();
+        int okCxl = JOptionPane.showConfirmDialog(null, pf, "Masukan password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (okCxl == JOptionPane.OK_OPTION) {
+              String password = new String(pf.getPassword());
+              System.err.println("You entered: " + password);
+              for (String pas : pass) {
+                    if (pas.equals(password)) {
+                        return true;
+                    }
+                }
+            }
+            else if (okCxl == JOptionPane.CANCEL_OPTION) {
+                System.exit(okCxl);
+        }
+            return false;
+    }
     /**
      * @param args the command line arguments
      */
@@ -52,6 +78,9 @@ public class Blessing {
            e.printStackTrace();
         }
         feel();        
+       while (!password()) {            
+            JOptionPane.showMessageDialog(null, "Password Salah");                        
+        }
         try {
         PanelBank panelBank = new PanelBank();
         panelBank = null;

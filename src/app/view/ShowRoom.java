@@ -72,7 +72,7 @@ public class ShowRoom extends javax.swing.JFrame {
                         JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (confirm == JOptionPane.YES_OPTION) {
                   try {
-                      hide();
+//                      hide();
                       app.table.Util.backUpDatabase();
                   } catch (SQLException ex) {
                       Logger.getLogger(ShowRoom.class.getName()).log(Level.SEVERE, null, ex);
@@ -586,13 +586,12 @@ public class ShowRoom extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         System.out.println("Exit");
-        this.hide();
+//        this.hide();
                   try {
                       app.table.Util.backUpDatabase();
                   } catch (SQLException ex) {
                       Logger.getLogger(ShowRoom.class.getName()).log(Level.SEVERE, null, ex);
                   }
-
         System.exit(0);
             
     }//GEN-LAST:event_jMenuItem5ActionPerformed

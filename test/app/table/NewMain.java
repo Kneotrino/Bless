@@ -18,12 +18,15 @@ import java.util.Date;
 //import java.sql.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 
 /**
@@ -31,12 +34,37 @@ import org.apache.commons.beanutils.PropertyUtilsBean;
  * @author SEED
  */
 public class NewMain {
+    public static boolean  password()
+    {
+        List<String> pass = new LinkedList<>();
+        pass.add("admin");
+        pass.add("blessing");
+        pass.add("alki");
+        JPasswordField pf = new JPasswordField();
+        int okCxl = JOptionPane.showConfirmDialog(null, pf, "Masukan password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (okCxl == JOptionPane.OK_OPTION) {
+              String password = new String(pf.getPassword());
+              System.err.println("You entered: " + password);
+              for (String pas : pass) {
+                    if (pas.equals(password)) {
+                        return true;
+                    }
+                }
+            }
+            else if (okCxl == JOptionPane.CANCEL_OPTION) {
+                System.exit(okCxl);
+        }
+            return false;
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        while (!password()) {            
+            JOptionPane.showMessageDialog(null, "Password Salah");                        
+        }
         Date t = new Date();
                         String backupdirectory ="c:/mybackups/"
                                 + t.getDate()+"-"
