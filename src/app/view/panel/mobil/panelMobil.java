@@ -13,11 +13,13 @@ import app.table.KeuanganMobil;
 import app.table.Leasing;
 import app.table.Listleasing;
 import app.table.Mobil;
+import app.table.MobilPemasukan;
+import app.table.MobilPengeluaran;
 import app.table.Perjalanan;
 import app.table.Saldo;
 import app.table.Trips;
 import static app.utils.ExcelConverter.ExcelConverter;
-import static app.utils.Printer.getDataList;
+//import static app.utils.Printer.getDataList;
 import app.view.FixPanel.panelLeasing;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
@@ -273,26 +275,30 @@ public void Refresh()
         jButton16 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
-        jLabel45 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
         jLabel46 = new javax.swing.JLabel();
-        jTextField40 = new javax.swing.JTextField();
-        jLabel47 = new javax.swing.JLabel();
-        jTextField41 = new javax.swing.JTextField();
-        jLabel48 = new javax.swing.JLabel();
-        jTextField42 = new javax.swing.JTextField();
-        jLabel49 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel53 = new javax.swing.JLabel();
+        jTextField46 = new javax.swing.JTextField();
+        jLabel47 = new javax.swing.JLabel();
+        jTextField45 = new javax.swing.JTextField();
+        jLabel48 = new javax.swing.JLabel();
+        jTextField41 = new javax.swing.JTextField();
+        jLabel49 = new javax.swing.JLabel();
+        jTextField42 = new javax.swing.JTextField();
         jLabel51 = new javax.swing.JLabel();
         jTextField44 = new javax.swing.JTextField();
-        jTextField45 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jTextField46 = new javax.swing.JTextField();
-        jLabel53 = new javax.swing.JLabel();
         jLabel68 = new javax.swing.JLabel();
         jTextField61 = new javax.swing.JTextField();
+        jLabel45 = new javax.swing.JLabel();
+        jTextField40 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
         jPanel21 = new javax.swing.JPanel();
         jLabel70 = new javax.swing.JLabel();
         jTextField24 = new javax.swing.JTextField();
+        jLabel92 = new javax.swing.JLabel();
+        jTextField62 = new javax.swing.JTextField();
         jLabel71 = new javax.swing.JLabel();
         jTextField26 = new javax.swing.JTextField();
         jLabel77 = new javax.swing.JLabel();
@@ -301,14 +307,14 @@ public void Refresh()
         jTextField29 = new javax.swing.JTextField();
         jLabel69 = new javax.swing.JLabel();
         jDateChooser10 = new com.toedter.calendar.JDateChooser();
-        jLabel14 = new javax.swing.JLabel();
-        jDateChooser5 = new com.toedter.calendar.JDateChooser();
-        jLabel32 = new javax.swing.JLabel();
-        jDateChooser6 = new com.toedter.calendar.JDateChooser();
         jLabel33 = new javax.swing.JLabel();
         jDateChooser7 = new com.toedter.calendar.JDateChooser();
         jLabel40 = new javax.swing.JLabel();
         jDateChooser8 = new com.toedter.calendar.JDateChooser();
+        jLabel14 = new javax.swing.JLabel();
+        jDateChooser5 = new com.toedter.calendar.JDateChooser();
+        jLabel32 = new javax.swing.JLabel();
+        jDateChooser6 = new com.toedter.calendar.JDateChooser();
         jLabel52 = new javax.swing.JLabel();
         jDateChooser9 = new com.toedter.calendar.JDateChooser();
         jLabel82 = new javax.swing.JLabel();
@@ -346,6 +352,7 @@ public void Refresh()
         jDialog1 = new javax.swing.JDialog();
         jButton19 = new javax.swing.JButton();
         inputPanel1 = new app.utils.inputPanel(app.table.MobilPemasukan.class);
+        jLabel93 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
         jDialog2 = new javax.swing.JDialog();
         jButton20 = new javax.swing.JButton();
@@ -1143,68 +1150,12 @@ public void Refresh()
         jTabbedPane2.addTab("KEUANGAN", jPanel12);
 
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
-        jPanel13.setLayout(new java.awt.GridBagLayout());
+        jPanel13.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel45.setText("FOTO KTP");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        jPanel13.add(jLabel45, gridBagConstraints);
+        jPanel10.setLayout(new java.awt.GridLayout());
 
         jLabel46.setText("FILE GAMBAR KTP");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        jPanel13.add(jLabel46, gridBagConstraints);
-
-        jTextField40.setEditable(false);
-        jTextField40.setMinimumSize(new java.awt.Dimension(400, 20));
-        jTextField40.setPreferredSize(new java.awt.Dimension(300, 25));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.scan}"), jTextField40, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jPanel13.add(jTextField40, gridBagConstraints);
-
-        jLabel47.setText("ALAMAT");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        jPanel13.add(jLabel47, gridBagConstraints);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.noHp}"), jTextField41, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jTextField41, gridBagConstraints);
-
-        jLabel48.setText("NOMOR HP");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        jPanel13.add(jLabel48, gridBagConstraints);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.noKtp}"), jTextField42, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jTextField42, gridBagConstraints);
-
-        jLabel49.setText("NOMOR IDENTITAS");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        jPanel13.add(jLabel49, gridBagConstraints);
+        jPanel10.add(jLabel46);
 
         jLabel50.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel50.setMinimumSize(new java.awt.Dimension(300, 150));
@@ -1218,36 +1169,73 @@ public void Refresh()
                 jLabel50MouseClicked(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 10;
-        jPanel13.add(jLabel50, gridBagConstraints);
+        jPanel10.add(jLabel50);
 
-        jLabel51.setText("NOMOR HP KE-2");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        jPanel13.add(jLabel51, gridBagConstraints);
+        jPanel13.add(jPanel10);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.pembayaran}"), jTextField44, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        jPanel19.setLayout(new java.awt.GridLayout(0, 2));
+
+        jLabel53.setText("NAMA");
+        jPanel19.add(jLabel53);
+
+        jTextField46.setMinimumSize(new java.awt.Dimension(400, 20));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.nama}"), jTextField46, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jTextField44, gridBagConstraints);
+        jPanel19.add(jTextField46);
+
+        jLabel47.setText("ALAMAT");
+        jPanel19.add(jLabel47);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.alamat}"), jTextField45, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jTextField45, gridBagConstraints);
+        jPanel19.add(jTextField45);
+
+        jLabel48.setText("NOMOR HP");
+        jPanel19.add(jLabel48);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.noHp}"), jTextField41, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel19.add(jTextField41);
+
+        jLabel49.setText("NOMOR IDENTITAS");
+        jPanel19.add(jLabel49);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.noKtp}"), jTextField42, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel19.add(jTextField42);
+
+        jLabel51.setText("NOMOR HP KE-2");
+        jPanel19.add(jLabel51);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.pembayaran}"), jTextField44, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel19.add(jTextField44);
+
+        jLabel68.setText("NAMA ORANG KE-2");
+        jPanel19.add(jLabel68);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.bank}"), jTextField61, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel19.add(jTextField61);
+
+        jLabel45.setText("FOTO KTP");
+        jPanel19.add(jLabel45);
+
+        jTextField40.setEditable(false);
+        jTextField40.setMinimumSize(new java.awt.Dimension(400, 20));
+        jTextField40.setPreferredSize(new java.awt.Dimension(300, 25));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.scan}"), jTextField40, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel19.add(jTextField40);
 
         jButton5.setText("SIMPAN");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -1255,55 +1243,29 @@ public void Refresh()
                 jButton5ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 3;
-        jPanel13.add(jButton5, gridBagConstraints);
+        jPanel19.add(jButton5);
 
-        jTextField46.setMinimumSize(new java.awt.Dimension(400, 20));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.nama}"), jTextField46, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jTextField46, gridBagConstraints);
-
-        jLabel53.setText("NAMA");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        jPanel13.add(jLabel53, gridBagConstraints);
-
-        jLabel68.setText("NAMA ORANG KE-2");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        jPanel13.add(jLabel68, gridBagConstraints);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.bank}"), jTextField61, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jTextField61, gridBagConstraints);
+        jPanel13.add(jPanel19);
 
         jTabbedPane2.addTab("DEBITUR", jPanel13);
 
         jPanel21.setLayout(new java.awt.GridLayout(0, 2));
 
-        jLabel70.setText("NO BPKB ");
+        jLabel70.setText("NO BPKB AKTIF");
         jPanel21.add(jLabel70);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.noBpkb}"), jTextField24, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         jPanel21.add(jTextField24);
+
+        jLabel92.setText("NO BPKB LAMA");
+        jPanel21.add(jLabel92);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.status}"), jTextField62, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jTextField62);
 
         jLabel71.setText("ATAS NAMA BPKB ");
         jPanel21.add(jLabel71);
@@ -1337,22 +1299,6 @@ public void Refresh()
 
         jPanel21.add(jDateChooser10);
 
-        jLabel14.setText("TANGGAL BBN");
-        jPanel21.add(jLabel14);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglBbn}"), jDateChooser5, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jPanel21.add(jDateChooser5);
-
-        jLabel32.setText("TANGGAL KEMBALI BBN");
-        jPanel21.add(jLabel32);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglKembaliBbn}"), jDateChooser6, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jPanel21.add(jDateChooser6);
-
         jLabel33.setText("TANGGAL CB");
         jPanel21.add(jLabel33);
 
@@ -1368,6 +1314,22 @@ public void Refresh()
         bindingGroup.addBinding(binding);
 
         jPanel21.add(jDateChooser8);
+
+        jLabel14.setText("TANGGAL BBN");
+        jPanel21.add(jLabel14);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglBbn}"), jDateChooser5, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser5);
+
+        jLabel32.setText("TANGGAL KEMBALI BBN");
+        jPanel21.add(jLabel32);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tglKembaliBbn}"), jDateChooser6, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser6);
 
         jLabel52.setText("TANGGAL LEASING");
         jPanel21.add(jLabel52);
@@ -1664,7 +1626,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         }
     });
     jDialog1.getContentPane().add(jButton19, java.awt.BorderLayout.PAGE_START);
-    jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
+
+    jLabel93.setText("Bank");
+    inputPanel1.add(jLabel93);
 
     jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -1672,7 +1636,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox5);
     bindingGroup.addBinding(jComboBoxBinding);
 
-    jDialog1.getContentPane().add(jComboBox5, java.awt.BorderLayout.PAGE_END);
+    inputPanel1.add(jComboBox5);
+
+    jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
     jDialog2.setTitle("Pengeluaran Mobil");
     jDialog2.setModal(true);
@@ -1970,7 +1936,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding.setColumnClass(Integer.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noBpkb}"));
-    columnBinding.setColumnName("No Bpkb");
+    columnBinding.setColumnName("No BPKB Aktif");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${status}"));
+    columnBinding.setColumnName("No BPKB Lama");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${anBpkb}"));
     columnBinding.setColumnName("An Bpkb");
@@ -2992,7 +2961,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                     
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton29ActionPerformed
-
+final static  DecimalFormat IDR = new DecimalFormat("###0");                            
     private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
         FilterDialog.hide();
         // TODO add your handling code here:
@@ -3047,8 +3016,75 @@ public void FileSave() throws IOException
                                     Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi),
                                     Tuple.of("Atas Nama BPKB","bpkb.anBpkb", fungsi)
                     ).dataList(a);
-              data.write();
-              ExcelConverter(cvs, chooser.getSelectedFile());
+            data.write();
+            
+            //mobil laporan
+            for (Mobil mobil : mobilList) {
+                    String mo = 
+                            mobil.getMobilId()+ "-" +
+                            mobil.getMerk() + "-" +
+                            mobil.getType()+ "-" +
+                            mobil.getJenis()+ "-" +
+                            mobil.getTahun()+ "-" +
+                            mobil.getWarna()+ "-" +
+                            mobil.getStatusMobil()+ "-" +
+                            mobil.getDebitur().getNama()+ ".CSV"
+                            ;
+                      File p = new File(chooser.getSelectedFile().getParentFile(), mo);
+                      cvs.add(p);
+                      List<KeuanganMobil> b = mobil.getKeuanganMobils();
+                      KeuanganMobil total1 = new MobilPemasukan();
+                      total1.setId(0l);
+                      total1.setKeterangan("Total Pemasukan");
+                      KeuanganMobil total2 = new MobilPengeluaran();
+                      total2.setId(0l);
+                      total2.setKeterangan("Total Pengeluaran");
+                      KeuanganMobil laba = new MobilPemasukan();
+                      laba.setKeterangan("Profit");
+                      BigInteger temp1 = BigInteger.ZERO;
+                      BigInteger temp2 = BigInteger.ZERO;
+                      Saldo saldo1 = new Saldo();
+                      Bank bank = new Bank();
+                      saldo1.setBankId(bank);                      
+                      for (KeuanganMobil m : b) {                          
+                          temp1 = temp1.add(m.getPemasukan());
+                          temp2 = temp2.add(m.getPengeluaran());
+                      }
+                      total1.setTransaksi(saldo1);
+                      total2.setTransaksi(saldo1);
+                      laba.setTransaksi(saldo1);
+                      total1.setJumlah(temp1);
+                      total2.setJumlah(temp2);
+                      BigInteger profit = BigInteger.ZERO;
+                      profit = profit.subtract(temp2);
+                      profit = profit.add(temp1);
+                      laba.setJumlah(profit);
+                      b.add(total1);
+                      b.add(total2);
+                      b.add(laba);
+                      List c = b;
+                      WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.KeuanganMobil.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Pemasukan", "pemasukan", d -> IDR.format(d) ),
+                                Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                ).dataList(c);
+                    try {
+                    dataList.write();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    return ;
+                } 
+
+        }
+            //end
+            ExcelConverter(cvs, chooser.getSelectedFile());
             System.out.println("\n File Berhasil Di Print");
             JOptionPane.showMessageDialog(this,"File Created.");
             Desktop.getDesktop().open(chooser.getSelectedFile());
@@ -3093,6 +3129,72 @@ public void FileSave() throws IOException
                                     Tuple.of("Atas Nama BPKB","bpkb.anBpkb", fungsi)
                     ).dataList(a);
               data.write();
+                          //mobil laporan
+            for (Mobil mobil : mobilList) {
+                    String mo = 
+                            mobil.getMobilId()+ "-" +
+                            mobil.getMerk() + "-" +
+                            mobil.getType()+ "-" +
+                            mobil.getJenis()+ "-" +
+                            mobil.getTahun()+ "-" +
+                            mobil.getWarna()+ "-" +
+                            mobil.getStatusMobil()+ "-" +
+                            mobil.getDebitur().getNama()+ ".CSV"
+                            ;
+                      File p = new File(chooser.getSelectedFile().getParentFile(), mo);
+                      cvs.add(p);
+                      List<KeuanganMobil> b = mobil.getKeuanganMobils();
+                      KeuanganMobil total1 = new MobilPemasukan();
+                      total1.setId(0l);
+                      total1.setKeterangan("Total Pemasukan");
+                      KeuanganMobil total2 = new MobilPengeluaran();
+                      total2.setId(0l);
+                      total2.setKeterangan("Total Pengeluaran");
+                      KeuanganMobil laba = new MobilPemasukan();
+                      laba.setKeterangan("Profit");
+                      BigInteger temp1 = BigInteger.ZERO;
+                      BigInteger temp2 = BigInteger.ZERO;
+                      Saldo saldo1 = new Saldo();
+                      Bank bank = new Bank();
+                      saldo1.setBankId(bank);                      
+                      for (KeuanganMobil m : b) {                          
+                          temp1 = temp1.add(m.getPemasukan());
+                          temp2 = temp2.add(m.getPengeluaran());
+                      }
+                      total1.setTransaksi(saldo1);
+                      total2.setTransaksi(saldo1);
+                      laba.setTransaksi(saldo1);
+                      total1.setJumlah(temp1);
+                      total2.setJumlah(temp2);
+                      BigInteger profit = BigInteger.ZERO;
+                      profit = profit.subtract(temp2);
+                      profit = profit.add(temp1);
+                      laba.setJumlah(profit);
+                      b.add(total1);
+                      b.add(total2);
+                      b.add(laba);
+                      List c = b;
+                      WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.KeuanganMobil.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Pemasukan", "pemasukan", d -> IDR.format(d) ),
+                                Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                ).dataList(c);
+                    try {
+                    dataList.write();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    return ;
+                } 
+
+        }
+            //end
               ExcelConverter(cvs, chooser.getSelectedFile());
             System.out.println("\n File Berhasil Di Print");
             JOptionPane.showMessageDialog(this,"File Created.");
@@ -3349,7 +3451,10 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel90;
     private javax.swing.JLabel jLabel91;
+    private javax.swing.JLabel jLabel92;
+    private javax.swing.JLabel jLabel93;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -3358,6 +3463,7 @@ public void FileSave() throws IOException
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
@@ -3439,6 +3545,7 @@ public void FileSave() throws IOException
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField60;
     private javax.swing.JTextField jTextField61;
+    private javax.swing.JTextField jTextField62;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;

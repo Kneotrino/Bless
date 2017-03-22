@@ -159,7 +159,7 @@ public class Printer {
                                 Tuple.of("Pengeluaran/Peminjaman", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Pemasukan/Pelunasan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),
-                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
                     ).dataList(a);
                 try {
                     dataList.write();
@@ -223,7 +223,7 @@ public class Printer {
                                 Tuple.of("Pelunasan/Pengeluaran", "pengeluaran2", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Bunga/Pengeluaran", "bunga", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
-                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
                     ).dataList(a);
                 try {
                     dataList.write();       
@@ -314,7 +314,7 @@ public class Printer {
                                 Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
                                 Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
                                 Tuple.of("Jenis", "jenis", d -> d),
-                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
                                 )
                         .dataList(as);
                     try {
@@ -403,7 +403,7 @@ public class Printer {
                         Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
                         Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
                         Tuple.of("Jenis", "jenis", d -> d),
-                        Tuple.of("Bank", "transaksi.bankId", d -> d)                                    
+                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)                                    
                     ).dataList(a);
                 try {
                     dataList.write();
@@ -544,7 +544,7 @@ public class Printer {
                         Tuple.of("hargaBarang","hargaBarang",d -> IDR.format(d)),
                         Tuple.of("Jumlah", "pengeluaran", d -> IDR.format(d) ),
                         Tuple.of("Jenis", "jenis", d -> d),
-                        Tuple.of("Bank", "transaksi.bankId", d -> d)
+                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
                     ).dataList(a);
                 try {
                     dataList.write();                    
@@ -591,7 +591,7 @@ public class Printer {
                                 Tuple.of("Pengeluaran", "laporan.pengeluaran", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Saldo", "laporan.saldo", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Jenis", "laporan.jenis", d -> d),
-                                Tuple.of("Bank", "bankId", d -> d)
+                                Tuple.of("Bank", "bankId.namaBank", d -> d==null?"":d)
                     ).dataList(a);
                 try {
                     dataList.write();
@@ -607,7 +607,7 @@ public class Printer {
          WriteStep dataList = CSVUtil.of(T)
               .type(app.table.Bank.class)
                             .properties(
-                                Tuple.of("Ref","bankId", d -> d==null?" ":d),
+//                                Tuple.of("Ref","bankId", d -> d==null?" ":d),
                                 Tuple.of("norek","norek", d -> d==null?" ":d),
                                 Tuple.of("namaBank","namaBank", d -> d==null?" ":d),
                                 Tuple.of("nama","nama", d -> d==null?" ":d),
@@ -669,7 +669,7 @@ public class Printer {
                                 Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
                                 Tuple.of("Keterangan", "keterangan", d -> d),
                                 Tuple.of("Nominal", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
-                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
                     ).dataList(a);
                 try {
                     dataList.write();            
@@ -717,7 +717,7 @@ public class Printer {
                         Tuple.of("Keterangan", "keterangan", d -> d),
                         Tuple.of("Jumlah", "jumlah", d -> IDR.format(d) ),
                         Tuple.of("Jenis", "jenis", d -> d),
-                        Tuple.of("Bank", "transaksi.bankId", d -> d)
+                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
                 )
                 .dataList(getList(kelas));
                     try {
@@ -950,7 +950,7 @@ public class Printer {
                                 Tuple.of("Keterangan", "keterangan", d -> d),
                                 Tuple.of("Pemasukan", "pemasukan", d -> IDR.format(d) ),
                                 Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
-                                Tuple.of("Bank", "transaksi.bankId", d -> d)
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
                 ).dataList(a);
                     try {
                     dataList.write();
