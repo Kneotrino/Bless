@@ -54,6 +54,8 @@ public class PanelBarang extends JPanel {
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         jDialog1 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Barang.class);
+        jLabel1 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         newButton = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
@@ -69,6 +71,12 @@ public class PanelBarang extends JPanel {
         jDialog1.setSize(400, 400);
         jDialog1.setLocationRelativeTo(null);
         jDialog1.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
+
+        jLabel1.setText("TANGGAL PEMBELIAN");
+        inputPanel1.add(jLabel1);
+
+        jDateChooser1.setDate(new Date());
+        inputPanel1.add(jDateChooser1);
 
         newButton.setText("Simpan");
         newButton.addActionListener(formListener);
@@ -163,11 +171,11 @@ public class PanelBarang extends JPanel {
             else if (evt.getSource() == saveButton) {
                 PanelBarang.this.saveButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton) {
-                PanelBarang.this.newButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == newButton2) {
                 PanelBarang.this.newButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton) {
+                PanelBarang.this.newButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -198,6 +206,7 @@ public class PanelBarang extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Barang b = (app.table.Barang) inputPanel1.getTarget();
+        b.setTanggal(jDateChooser1.getDate());
         entityManager.persist(b);
         list.add(b);
         int row = list.size() - 1;
@@ -280,7 +289,9 @@ public class PanelBarang extends JPanel {
     private javax.swing.JButton deleteButton;
     private javax.persistence.EntityManager entityManager;
     private app.utils.inputPanel inputPanel1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Barang> list;
     private javax.swing.JScrollPane masterScrollPane;

@@ -696,7 +696,8 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(null, "Email = Kneotrino@yahoo.com \nCopyrigth CLAY 13 @2016");
+        javax.swing.JOptionPane.showMessageDialog(null, "Email = Kneotrino@yahoo.com \nCopyrigth CLAY 13 @2016"
+                + "\nDi buat dengan java JDK 1.8 32bit dengan database derby embbededDriver dan IDE Netbeans 8.2");
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 

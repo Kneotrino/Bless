@@ -1671,6 +1671,16 @@
                     <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.bpkb.tglLeasing}" target="jDateChooser9" targetPath="date" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel100">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="TANGGAL EXP"/>
+                  </Properties>
+                </Component>
+                <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser15">
+                  <BindingProperties>
+                    <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.bpkb.tanggalExp}" target="jDateChooser15" targetPath="date" updateStrategy="0" immediately="false"/>
+                  </BindingProperties>
+                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel82">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="KETRANGAN"/>
@@ -2929,6 +2939,11 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                       </TableColumnModel>
                     </Property>
                     <Property name="rowHeight" type="int" value="24"/>
@@ -2982,6 +2997,10 @@
                       </Subbinding>
                       <Subbinding sourcePath="${tglLeasing}">
                         <BindingParameter name="NAME" value="Tgl Leasing"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${tanggalExp}">
+                        <BindingParameter name="NAME" value="TGL EXP"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${posisi}">

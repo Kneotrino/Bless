@@ -93,6 +93,32 @@ public class Bpkb implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "bpkb")
     private Mobil mobil;
 
+    @Column(name = "TGL_EXP")
+    @Temporal(TemporalType.DATE)
+    private Date tanggalExp;
+
+    public static final String PROP_TANGGALEXP = "tanggalExp";
+
+    /**
+     * Get the value of tanggalExp
+     *
+     * @return the value of tanggalExp
+     */
+    public Date getTanggalExp() {
+        return tanggalExp;
+    }
+
+    /**
+     * Set the value of tanggalExp
+     *
+     * @param tanggalExp new value of tanggalExp
+     */
+    public void setTanggalExp(Date tanggalExp) {
+        Date oldTanggalExp = this.tanggalExp;
+        this.tanggalExp = tanggalExp;
+        changeSupport.firePropertyChange(PROP_TANGGALEXP, oldTanggalExp, tanggalExp);
+    }
+
     public Mobil getMobil() {
         return mobil;
     }

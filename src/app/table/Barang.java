@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         , "stock"
         , "hargaunit"
         ,"keterangan"
-        , "Tanggal"
+//        , "Tanggal"
 })
 public class Barang implements Serializable {
 

@@ -334,6 +334,8 @@ public void Refresh()
         jDateChooser6 = new com.toedter.calendar.JDateChooser();
         jLabel52 = new javax.swing.JLabel();
         jDateChooser9 = new com.toedter.calendar.JDateChooser();
+        jLabel100 = new javax.swing.JLabel();
+        jDateChooser15 = new com.toedter.calendar.JDateChooser();
         jLabel82 = new javax.swing.JLabel();
         jTextField35 = new javax.swing.JTextField();
         jButton32 = new javax.swing.JButton();
@@ -1413,6 +1415,14 @@ public void Refresh()
 
         jPanel21.add(jDateChooser9);
 
+        jLabel100.setText("TANGGAL EXP");
+        jPanel21.add(jLabel100);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tanggalExp}"), jDateChooser15, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jDateChooser15);
+
         jLabel82.setText("KETRANGAN");
         jPanel21.add(jLabel82);
 
@@ -2042,6 +2052,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglLeasing}"));
     columnBinding.setColumnName("Tgl Leasing");
     columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalExp}"));
+    columnBinding.setColumnName("TGL EXP");
+    columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${posisi}"));
     columnBinding.setColumnName("Posisi BPKB");
     columnBinding.setColumnClass(String.class);
@@ -2566,7 +2579,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.jTextField38.setText(Rp.format(tk) );
         this.jTextField39.setText(Rp.format(td) );
         this.jTextField59.setText(Rp.format(td.subtract(tk)) );
-//    ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+    ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
     this.bankList.clear();
 //    this.bankList.add(null);    
     this.bankList.addAll(bankQuery.getResultList());
@@ -3464,6 +3477,7 @@ public void FileSave() throws IOException
     private com.toedter.calendar.JDateChooser jDateChooser12;
     private com.toedter.calendar.JDateChooser jDateChooser13;
     private com.toedter.calendar.JDateChooser jDateChooser14;
+    private com.toedter.calendar.JDateChooser jDateChooser15;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
@@ -3489,6 +3503,7 @@ public void FileSave() throws IOException
     private javax.swing.JFormattedTextField jFormattedTextField5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel100;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
