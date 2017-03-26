@@ -26,6 +26,7 @@ import app.view.utilsPanel;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.CardLayout;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -38,6 +39,7 @@ import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -53,6 +55,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -123,7 +126,6 @@ public void Refresh()
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         blessingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
@@ -138,59 +140,68 @@ public void Refresh()
         jTextField8 = new javax.swing.JTextField();
         addMobil = new javax.swing.JDialog();
         jPanel6 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jTextField17 = new javax.swing.JTextField();
-        jTextField18 = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel83 = new javax.swing.JLabel();
-        jLabel84 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel99 = new javax.swing.JLabel();
+        jTextField64 = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        jLabel26 = new javax.swing.JLabel();
         jYearChooser2 = new com.toedter.calendar.JYearChooser();
+        jLabel31 = new javax.swing.JLabel();
         jComboBox9 = new javax.swing.JComboBox<>();
+        jLabel27 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
         jTextField11 = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel83 = new javax.swing.JLabel();
         jTextField37 = new javax.swing.JTextField();
+        jLabel84 = new javax.swing.JLabel();
         jTextField43 = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
         jTextField15 = new javax.swing.JTextField();
+        jLabel97 = new javax.swing.JLabel();
+        jYearChooser3 = new com.toedter.calendar.JYearChooser();
+        jLabel98 = new javax.swing.JLabel();
+        jDateChooser14 = new com.toedter.calendar.JDateChooser();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton12 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField16 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField13 = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jButton33 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField14 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField17 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField18 = new javax.swing.JTextField();
         editMobil = new javax.swing.JDialog();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -244,6 +255,10 @@ public void Refresh()
         jTextField54 = new javax.swing.JTextField();
         jLabel86 = new javax.swing.JLabel();
         jTextField60 = new javax.swing.JTextField();
+        jLabel95 = new javax.swing.JLabel();
+        jFormattedTextField5 = new javax.swing.JFormattedTextField();
+        jLabel96 = new javax.swing.JLabel();
+        jDateChooser13 = new com.toedter.calendar.JDateChooser();
         jLabel18 = new javax.swing.JLabel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
         jLabel15 = new javax.swing.JLabel();
@@ -287,10 +302,10 @@ public void Refresh()
         jTextField41 = new javax.swing.JTextField();
         jLabel49 = new javax.swing.JLabel();
         jTextField42 = new javax.swing.JTextField();
-        jLabel51 = new javax.swing.JLabel();
-        jTextField44 = new javax.swing.JTextField();
         jLabel68 = new javax.swing.JLabel();
         jTextField61 = new javax.swing.JTextField();
+        jLabel51 = new javax.swing.JLabel();
+        jTextField44 = new javax.swing.JTextField();
         jLabel45 = new javax.swing.JLabel();
         jTextField40 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
@@ -299,6 +314,8 @@ public void Refresh()
         jTextField24 = new javax.swing.JTextField();
         jLabel92 = new javax.swing.JLabel();
         jTextField62 = new javax.swing.JTextField();
+        jLabel94 = new javax.swing.JLabel();
+        jTextField63 = new javax.swing.JTextField();
         jLabel71 = new javax.swing.JLabel();
         jTextField26 = new javax.swing.JTextField();
         jLabel77 = new javax.swing.JLabel();
@@ -418,139 +435,9 @@ public void Refresh()
         addMobil.setSize(new java.awt.Dimension(1000, 700));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
-        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel6.setLayout(new java.awt.CardLayout());
 
-        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jScrollPane4.setPreferredSize(new java.awt.Dimension(400, 713));
-
-        jPanel4.setLayout(new java.awt.GridBagLayout());
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
-        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Depan"));
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-        });
-        jPanel4.add(jLabel6, new java.awt.GridBagConstraints());
-
-        jTextField7.setText("jTextField7");
-        jTextField7.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel4.add(jTextField7, gridBagConstraints);
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
-        jLabel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Samping Kiri"));
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        jPanel4.add(jLabel5, gridBagConstraints);
-
-        jTextField13.setText("jTextField7");
-        jTextField13.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel4.add(jTextField13, gridBagConstraints);
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
-        jLabel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Samping Kanan"));
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        jPanel4.add(jLabel4, gridBagConstraints);
-
-        jTextField14.setText("jTextField7");
-        jTextField14.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel4.add(jTextField14, gridBagConstraints);
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
-        jLabel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Belakang"));
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        jPanel4.add(jLabel3, gridBagConstraints);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
-        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Interior II"));
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        jPanel4.add(jLabel1, gridBagConstraints);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
-        jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Interior I"));
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        jPanel4.add(jLabel2, gridBagConstraints);
-
-        jTextField16.setText("jTextField7");
-        jTextField16.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel4.add(jTextField16, gridBagConstraints);
-
-        jTextField17.setText("jTextField7");
-        jTextField17.setEnabled(false);
-        jTextField17.setFocusable(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel4.add(jTextField17, gridBagConstraints);
-
-        jTextField18.setText("jTextField7");
-        jTextField18.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel4.add(jTextField18, gridBagConstraints);
-
-        jScrollPane4.setViewportView(jPanel4);
-
-        jPanel6.add(jScrollPane4);
-
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
-
-        jPanel2.setLayout(new java.awt.GridLayout(0, 1, 10, 10));
+        jPanel2.setLayout(new java.awt.GridLayout(0, 4, 10, 10));
 
         jButton1.setText("SIMPAN");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -560,140 +447,301 @@ public void Refresh()
         });
         jPanel2.add(jButton1);
 
-        jLabel20.setText("NOMOR POLISI AKTIF");
-        jPanel2.add(jLabel20);
-
-        jLabel7.setText("PEMILIK SEBELUMNYA");
-        jPanel2.add(jLabel7);
-
-        jLabel21.setText("NOMOR BPKB");
-        jPanel2.add(jLabel21);
-
-        jLabel36.setText("TANGGAL TERIMA BPKB");
-        jPanel2.add(jLabel36);
-
-        jLabel22.setText("MERK");
-        jPanel2.add(jLabel22);
-
-        jLabel23.setText("TYPE");
-        jPanel2.add(jLabel23);
-
-        jLabel24.setText("JENIS");
-        jPanel2.add(jLabel24);
-
-        jLabel25.setText("TAHUN");
-        jPanel2.add(jLabel25);
-
-        jLabel26.setText("CC SILINDER");
-        jPanel2.add(jLabel26);
-
-        jLabel31.setText("WARNA");
-        jPanel2.add(jLabel31);
-
-        jLabel27.setText("NO RANGKA");
-        jPanel2.add(jLabel27);
-
-        jLabel28.setText("NO MESIN");
-        jPanel2.add(jLabel28);
-
-        jLabel29.setText("BAHAN BAKAR");
-        jPanel2.add(jLabel29);
-
-        jLabel34.setText("TANGGAL PEMBELIAN");
-        jPanel2.add(jLabel34);
-
-        jLabel83.setText("PENJUAL");
-        jPanel2.add(jLabel83);
-
-        jLabel84.setText("NOMOR HP PENJUAL");
-        jPanel2.add(jLabel84);
-
-        jLabel30.setText("KETERANGAN");
-        jPanel2.add(jLabel30);
-
-        jPanel1.add(jPanel2);
-
-        jPanel3.setLayout(new java.awt.GridLayout(0, 1, 10, 10));
-
         jButton2.setText("RESET");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2);
+        jPanel2.add(jButton2);
+
+        jButton9.setText("UPLOAD GAMBAR");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton9);
+
+        jButton4.setText("TUTUP");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton4);
+
+        jLabel20.setText("NOMOR POLISI AKTIF");
+        jPanel2.add(jLabel20);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField1);
-        jPanel3.add(jTextField6);
-        jPanel3.add(jTextField2);
+        jPanel2.add(jTextField1);
+
+        jLabel7.setText("PEMILIK SEBELUMNYA");
+        jPanel2.add(jLabel7);
+        jPanel2.add(jTextField6);
+
+        jLabel21.setText("NOMOR BPKB AKTIF");
+        jPanel2.add(jLabel21);
+        jPanel2.add(jTextField2);
+
+        jLabel36.setText("TANGGAL TERIMA BPKB");
+        jPanel2.add(jLabel36);
 
         jDateChooser1.setDate(new java.util.Date());
-        jPanel3.add(jDateChooser1);
-        jPanel3.add(jTextField3);
-        jPanel3.add(jTextField4);
-        jPanel3.add(jTextField5);
-        jPanel3.add(jYearChooser1);
+        jPanel2.add(jDateChooser1);
+
+        jLabel99.setText("NOMOR STNK AKTIF");
+        jPanel2.add(jLabel99);
+        jPanel2.add(jTextField64);
+
+        jLabel22.setText("MERK");
+        jPanel2.add(jLabel22);
+        jPanel2.add(jTextField3);
+
+        jLabel23.setText("TYPE");
+        jPanel2.add(jLabel23);
+        jPanel2.add(jTextField4);
+
+        jLabel24.setText("JENIS");
+        jPanel2.add(jLabel24);
+        jPanel2.add(jTextField5);
+
+        jLabel25.setText("TAHUN");
+        jPanel2.add(jLabel25);
+        jPanel2.add(jYearChooser1);
+
+        jLabel26.setText("CC SILINDER");
+        jPanel2.add(jLabel26);
 
         jYearChooser2.setYear(500);
-        jPanel3.add(jYearChooser2);
+        jPanel2.add(jYearChooser2);
+
+        jLabel31.setText("WARNA");
+        jPanel2.add(jLabel31);
 
         jComboBox9.setEditable(true);
         jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Abu-abu", "Biru", "Coklat", "Emas", "Hijau", "Hitam", "Kuning", "Magenta", "Merah", "Nila", "Oranye", "Perak", "Putih", "Ungu", "Violet" }));
-        jPanel3.add(jComboBox9);
+        jPanel2.add(jComboBox9);
+
+        jLabel27.setText("NO RANGKA");
+        jPanel2.add(jLabel27);
 
         jTextField9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField9ActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField9);
-        jPanel3.add(jTextField10);
+        jPanel2.add(jTextField9);
+
+        jLabel28.setText("NO MESIN");
+        jPanel2.add(jLabel28);
+        jPanel2.add(jTextField10);
+
+        jLabel29.setText("BAHAN BAKAR");
+        jPanel2.add(jLabel29);
 
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField11ActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField11);
+        jPanel2.add(jTextField11);
+
+        jLabel34.setText("TANGGAL PEMBELIAN");
+        jPanel2.add(jLabel34);
 
         jDateChooser2.setDate(new java.util.Date());
-        jPanel3.add(jDateChooser2);
+        jPanel2.add(jDateChooser2);
+
+        jLabel83.setText("PENJUAL");
+        jPanel2.add(jLabel83);
 
         jTextField37.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField37ActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField37);
+        jPanel2.add(jTextField37);
+
+        jLabel84.setText("NOMOR HP PENJUAL");
+        jPanel2.add(jLabel84);
 
         jTextField43.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField43ActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField43);
+        jPanel2.add(jTextField43);
+
+        jLabel30.setText("KETERANGAN");
+        jPanel2.add(jLabel30);
 
         jTextField15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField15ActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField15);
+        jPanel2.add(jTextField15);
 
-        jPanel1.add(jPanel3);
+        jLabel97.setText("LAP. PERJALANAN KE");
+        jPanel2.add(jLabel97);
 
-        jPanel6.add(jPanel1);
+        jYearChooser3.setEndYear(3000);
+        jYearChooser3.setMinimum(-1);
+        jYearChooser3.setYear(0);
+        jPanel2.add(jYearChooser3);
+
+        jLabel98.setText("TANGGAL UNIT SAMPAI");
+        jPanel2.add(jLabel98);
+
+        jDateChooser14.setDate(new java.util.Date());
+        jPanel2.add(jDateChooser14);
+
+        jPanel6.add(jPanel2, "card4");
+
+        jPanel4.setLayout(new java.awt.GridLayout());
+
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jButton12.setText("KEMBALI");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton12);
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
+        jLabel6.setText("1");
+        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Depan"));
+        jLabel6.setMaximumSize(new java.awt.Dimension(400, 200));
+        jLabel6.setPreferredSize(new java.awt.Dimension(400, 200));
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel6);
+
+        jTextField7.setText("1");
+        jTextField7.setEnabled(false);
+        jPanel1.add(jTextField7);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
+        jLabel3.setText("2");
+        jLabel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Belakang"));
+        jLabel3.setMaximumSize(new java.awt.Dimension(400, 200));
+        jLabel3.setPreferredSize(new java.awt.Dimension(400, 200));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel3);
+
+        jTextField16.setText("2");
+        jTextField16.setEnabled(false);
+        jPanel1.add(jTextField16);
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
+        jLabel5.setText("3");
+        jLabel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Samping Kiri"));
+        jLabel5.setMaximumSize(new java.awt.Dimension(400, 200));
+        jLabel5.setPreferredSize(new java.awt.Dimension(400, 200));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel5);
+
+        jTextField13.setText("3");
+        jTextField13.setEnabled(false);
+        jPanel1.add(jTextField13);
+
+        jPanel4.add(jPanel1);
+
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jButton33.setText("TUTUP");
+        jButton33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton33ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton33);
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
+        jLabel4.setText("4");
+        jLabel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tampilan Samping Kanan"));
+        jLabel4.setMaximumSize(new java.awt.Dimension(400, 200));
+        jLabel4.setPreferredSize(new java.awt.Dimension(400, 200));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel4);
+
+        jTextField14.setText("4");
+        jTextField14.setEnabled(false);
+        jTextField14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField14ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jTextField14);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
+        jLabel2.setText("5");
+        jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Interior I"));
+        jLabel2.setMaximumSize(new java.awt.Dimension(400, 200));
+        jLabel2.setPreferredSize(new java.awt.Dimension(400, 200));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel2);
+
+        jTextField17.setText("5");
+        jTextField17.setEnabled(false);
+        jTextField17.setFocusable(false);
+        jPanel3.add(jTextField17);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/view/panel/mobil/1.PNG"))); // NOI18N
+        jLabel1.setText("6");
+        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Interior II"));
+        jLabel1.setMaximumSize(new java.awt.Dimension(400, 200));
+        jLabel1.setPreferredSize(new java.awt.Dimension(400, 200));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel1);
+
+        jTextField18.setText("6");
+        jTextField18.setEnabled(false);
+        jPanel3.add(jTextField18);
+
+        jPanel4.add(jPanel3);
+
+        jPanel6.add(jPanel4, "card4");
 
         addMobil.getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
 
         editMobil.setTitle("DATA MOBIL");
         editMobil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         editMobil.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        editMobil.getContentPane().setLayout(new java.awt.GridLayout());
+        this.editMobil.setSize(1000, 600);
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
         jPanel15.setLayout(new java.awt.GridLayout(0, 2));
@@ -853,7 +901,7 @@ public void Refresh()
 
         jPanel15.add(jPanel17);
 
-        editMobil.getContentPane().add(jPanel15, java.awt.BorderLayout.WEST);
+        editMobil.getContentPane().add(jPanel15);
 
         jTabbedPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP));
 
@@ -945,6 +993,24 @@ public void Refresh()
             }
         });
         jPanel11.add(jTextField60);
+
+        jLabel95.setText("LAPORAN PERJALANAN KE");
+        jPanel11.add(jLabel95);
+
+        jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dpPertama}"), jFormattedTextField5, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
+        jPanel11.add(jFormattedTextField5);
+
+        jLabel96.setText("UNIT SAMPAI KUPANG");
+        jPanel11.add(jLabel96);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tangglPelunasanPembelian}"), jDateChooser13, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel11.add(jDateChooser13);
 
         jLabel18.setText("HARGA BELI");
         jPanel11.add(jLabel18);
@@ -1152,7 +1218,7 @@ public void Refresh()
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
         jPanel13.setLayout(new java.awt.GridLayout(2, 0));
 
-        jPanel10.setLayout(new java.awt.GridLayout());
+        jPanel10.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel46.setText("FILE GAMBAR KTP");
         jPanel10.add(jLabel46);
@@ -1209,14 +1275,6 @@ public void Refresh()
 
         jPanel19.add(jTextField42);
 
-        jLabel51.setText("NOMOR HP KE-2");
-        jPanel19.add(jLabel51);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.pembayaran}"), jTextField44, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jPanel19.add(jTextField44);
-
         jLabel68.setText("NAMA ORANG KE-2");
         jPanel19.add(jLabel68);
 
@@ -1224,6 +1282,14 @@ public void Refresh()
         bindingGroup.addBinding(binding);
 
         jPanel19.add(jTextField61);
+
+        jLabel51.setText("NOMOR HP KE-2");
+        jPanel19.add(jLabel51);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.pembayaran}"), jTextField44, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel19.add(jTextField44);
 
         jLabel45.setText("FOTO KTP");
         jPanel19.add(jLabel45);
@@ -1266,6 +1332,14 @@ public void Refresh()
         bindingGroup.addBinding(binding);
 
         jPanel21.add(jTextField62);
+
+        jLabel94.setText("NO STNK");
+        jPanel21.add(jLabel94);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.stnk}"), jTextField63, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel21.add(jTextField63);
 
         jLabel71.setText("ATAS NAMA BPKB ");
         jPanel21.add(jLabel71);
@@ -1444,7 +1518,7 @@ public void Refresh()
 
         jTabbedPane2.addTab("GAMBAR", jScrollPane6);
 
-        editMobil.getContentPane().add(jTabbedPane2, java.awt.BorderLayout.CENTER);
+        editMobil.getContentPane().add(jTabbedPane2);
 
         jFileChooser1.setAcceptAllFileFilterUsed(false);
         jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
@@ -1900,6 +1974,12 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${no_Hp_Penjual}"));
     columnBinding.setColumnName("NO HP Penjual");
     columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dpPertama}"));
+    columnBinding.setColumnName("Lap. Perjalanan");
+    columnBinding.setColumnClass(Long.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tangglPelunasanPembelian}"));
+    columnBinding.setColumnName("Tanggal Mobil Sampai");
+    columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
     columnBinding.setColumnName("Keterangan");
     columnBinding.setColumnClass(String.class);
@@ -2130,7 +2210,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         //isi data baru
         baru.setNoPolisiAktif(this.jTextField1.getText());
         baru.setPemilikLama(this.jTextField6.getText());
+        baru.setDpPertama(jYearChooser3.getYear());
+        baru.setTangglPelunasanPembelian(jDateChooser14.getDate());
         bpkb.setNoBpkb(this.jTextField2.getText());
+        bpkb.setStnk(this.jTextField64.getText());
         bpkb.setTglTerima(this.jDateChooser1.getDate());
 //        bpkb.setNoPolisiAktif(baru.getNoPolisiAktif());
         baru.setMerk(this.jTextField3.getText());
@@ -2483,7 +2566,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.jTextField38.setText(Rp.format(tk) );
         this.jTextField39.setText(Rp.format(td) );
         this.jTextField59.setText(Rp.format(td.subtract(tk)) );
-    ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+//    ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
     this.bankList.clear();
 //    this.bankList.add(null);    
     this.bankList.addAll(bankQuery.getResultList());
@@ -2491,7 +2574,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         this.Hitung();
-        this.editMobil.setSize(1000, 600);
         this.editMobil.setLocationRelativeTo(null);        
         this.editMobil.setVisible(true);
 
@@ -3237,24 +3319,62 @@ public void FileSave() throws IOException
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
-        jTextField5.setText("");
-        jTextField6.setText("");
-        jTextField9.setText("");
-        jTextField10.setText("");
-        jTextField11.setText("");
-        jTextField15.setText("");
-        jTextField37.setText("");
-        jTextField43.setText("");
+        List<JTextField> list = new LinkedList<>();
+        list.add(jTextField1);
+        list.add(jTextField2);
+        list.add(jTextField3);
+        list.add(jTextField4);
+        list.add(jTextField5);
+        list.add(jTextField6);
+        list.add(jTextField7);
+        list.add(jTextField9);
+        list.add(jTextField10);
+        list.add(jTextField11);
+        list.add(jTextField15);
+        list.add(jTextField37);
+        list.add(jTextField43);
+        list.add(jTextField64);
+        list.add(jTextField7);
+        list.add(jTextField16);
+        list.add(jTextField13);
+        list.add(jTextField14);
+        list.add(jTextField17);
+        list.add(jTextField18);        
+        list.forEach((te) -> {
+            te.setText(null);
+        });
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
         simpanButtonActionPerformed(evt);        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton32ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.addMobil.hide();
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        CardLayout cardLayout = (CardLayout) jPanel6.getLayout();
+        cardLayout.next(jPanel6);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        CardLayout cardLayout = (CardLayout) jPanel6.getLayout();
+        cardLayout.next(jPanel6);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
+        this.addMobil.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton33ActionPerformed
+
+    private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField14ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -3295,6 +3415,7 @@ public void FileSave() throws IOException
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
@@ -3317,10 +3438,13 @@ public void FileSave() throws IOException
     private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton32;
+    private javax.swing.JButton jButton33;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox11;
@@ -3338,6 +3462,8 @@ public void FileSave() throws IOException
     private com.toedter.calendar.JDateChooser jDateChooser10;
     private com.toedter.calendar.JDateChooser jDateChooser11;
     private com.toedter.calendar.JDateChooser jDateChooser12;
+    private com.toedter.calendar.JDateChooser jDateChooser13;
+    private com.toedter.calendar.JDateChooser jDateChooser14;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
@@ -3360,6 +3486,7 @@ public void FileSave() throws IOException
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
+    private javax.swing.JFormattedTextField jFormattedTextField5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3453,6 +3580,12 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel91;
     private javax.swing.JLabel jLabel92;
     private javax.swing.JLabel jLabel93;
+    private javax.swing.JLabel jLabel94;
+    private javax.swing.JLabel jLabel95;
+    private javax.swing.JLabel jLabel96;
+    private javax.swing.JLabel jLabel97;
+    private javax.swing.JLabel jLabel98;
+    private javax.swing.JLabel jLabel99;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -3477,7 +3610,6 @@ public void FileSave() throws IOException
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -3546,11 +3678,14 @@ public void FileSave() throws IOException
     private javax.swing.JTextField jTextField60;
     private javax.swing.JTextField jTextField61;
     private javax.swing.JTextField jTextField62;
+    private javax.swing.JTextField jTextField63;
+    private javax.swing.JTextField jTextField64;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private com.toedter.calendar.JYearChooser jYearChooser1;
     private com.toedter.calendar.JYearChooser jYearChooser2;
+    private com.toedter.calendar.JYearChooser jYearChooser3;
     private java.util.List<app.table.KeuanganMobil> keuanganMobilList;
     private javax.persistence.Query keuanganMobilQuery;
     private java.util.List<app.table.Leasing> leasingList;

@@ -53,19 +53,19 @@ public class Debitur implements Serializable {
     @GeneratedValue
     @Column(name = "DEBITUR_ID", nullable = false)
     private Integer debiturId;
-    @Column(name = "ALAMAT", length = 32)
+    @Column(name = "ALAMAT", length = 128)
     private String alamat;
-    @Column(name = "BANK", length = 32)
+    @Column(name = "BANK", length = 128)
     private String bank;
-    @Column(name = "NAMA", length = 64)
+    @Column(name = "NAMA", length = 128)
     private String nama;
-    @Column(name = "NO_HP", length = 32)
+    @Column(name = "NO_HP", length = 128)
     private String noHp;
-    @Column(name = "NO_KTP", length = 32)
+    @Column(name = "NO_KTP", length = 128)
     private String noKtp;
-    @Column(name = "NOREK", length = 32)
+    @Column(name = "NOREK", length = 128)
     private String norek;
-    @Column(name = "PEMBAYARAN", length = 16)
+    @Column(name = "PEMBAYARAN", length = 128)
     private String pembayaran;
     @Column(name = "SCAN", length = 256)
     private String scan;
