@@ -19,4 +19,9 @@ import javax.persistence.Id;
 @Entity
 @ListUrutan({"tanggal","keterangan","jumlah"})
 public class MobilPengeluaran extends KeuanganMobil implements Serializable {    
+    @Override
+    public String getJenis()
+    {
+        return "Table Mobil Keluar";
+    }    
 }

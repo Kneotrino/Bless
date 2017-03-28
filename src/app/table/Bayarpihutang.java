@@ -70,6 +70,11 @@ public class Bayarpihutang extends Laporan implements Serializable {
     }
 
 
+    @Override
+    public String getJenis()
+    {
+        return "Table Pinjaman";
+    }
 
     
 }

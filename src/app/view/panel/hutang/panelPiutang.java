@@ -57,9 +57,12 @@ public class panelPiutang extends JPanel {
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jDialog1 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Piutang.class);
+        jLabel7 = new javax.swing.JLabel();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
         newButton = new javax.swing.JButton();
+        newButton5 = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
         inputPanel2 = new app.utils.inputPanel(app.table.BayarPihutangPemasukan.class);
         jLabel1 = new javax.swing.JLabel();
@@ -107,6 +110,10 @@ public class panelPiutang extends JPanel {
         inputPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INPUT DATA PEMINJAMAN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
 
+        jLabel7.setText("Tanggal Transaksi");
+        inputPanel1.add(jLabel7);
+        inputPanel1.add(jDateChooser3);
+
         jLabel3.setText("Bank Tujuan");
         inputPanel1.add(jLabel3);
 
@@ -116,17 +123,21 @@ public class panelPiutang extends JPanel {
 
         inputPanel1.add(jComboBox5);
 
-        jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
-
         newButton.setText("Simpan");
         newButton.addActionListener(formListener);
-        jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
+        inputPanel1.add(newButton);
+
+        newButton5.setText("Tutup");
+        newButton5.addActionListener(formListener);
+        inputPanel1.add(newButton5);
+
+        jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
         jDialog2.setTitle("Pemasukan");
         jDialog2.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog2.setType(java.awt.Window.Type.POPUP);
 
-        jLabel1.setText("BANK TUJUAN");
+        jLabel1.setText("Bank Tujuan");
         inputPanel2.add(jLabel1);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
@@ -417,6 +428,9 @@ public class panelPiutang extends JPanel {
             else if (evt.getSource() == newDetailButton) {
                 panelPiutang.this.newDetailButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == newButton5) {
+                panelPiutang.this.newButton5ActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
 
@@ -494,10 +508,14 @@ public class panelPiutang extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         java.util.List<app.table.Piutang> data = query.getResultList();
+        Piutang temp = new Piutang();
         for (Piutang piutang : data) {
             entityManager.refresh(piutang);
         }
@@ -518,12 +536,15 @@ public class panelPiutang extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Piutang p = (app.table.Piutang) this.inputPanel1.getTarget();
+        p.setTglbyr(jDateChooser3.getDate());
         app.table.Bayarpihutang bP = new app.table.BayarPihutangPemasukan();
         Saldo ts = new Saldo();
         ts.setBankId((Bank) this.jComboBox5.getSelectedItem());
         bP.setTransaksi(ts);
         bP.setJumlah(p.getNominal());
         bP.setPihutangid(p);
+        bP.setKeterangan(p.getKeterangan());
+        bP.setTanggal(p.getTglbyr());
         List<app.table.Bayarpihutang> L;
         L = new ArrayList<>();
         L.add(bP);
@@ -615,6 +636,12 @@ public class panelPiutang extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton4ActionPerformed
 
+    private void newButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton5ActionPerformed
+        jDialog1.hide();
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton5ActionPerformed
+
     public List<Bank> getBankList() {
         return bankList;
     }
@@ -644,6 +671,7 @@ public class panelPiutang extends JPanel {
     private javax.swing.JComboBox<String> jComboBox8;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -654,6 +682,7 @@ public class panelPiutang extends JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Piutang> list;
@@ -664,6 +693,7 @@ public class panelPiutang extends JPanel {
     private javax.swing.JButton newButton2;
     private javax.swing.JButton newButton3;
     private javax.swing.JButton newButton4;
+    private javax.swing.JButton newButton5;
     private javax.swing.JButton newDetailButton;
     private javax.swing.JButton newDetailButton1;
     private javax.swing.JButton newDetailButton2;

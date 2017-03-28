@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Piutang.findByTglawal", query = "SELECT p FROM Piutang p WHERE p.tglawal = :tglawal")
     , @NamedQuery(name = "Piutang.findByTglakhir", query = "SELECT p FROM Piutang p WHERE p.tglakhir = :tglakhir")
     , @NamedQuery(name = "Piutang.findByNominal", query = "SELECT p FROM Piutang p WHERE p.nominal = :nominal")})
-@app.ListUrutan({"jaminan","nominal","keterangan","tglbyr" })
+@app.ListUrutan({"jaminan","nominal","keterangan" })
 public class Piutang implements Serializable {
 
     @Transient

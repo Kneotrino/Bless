@@ -62,15 +62,15 @@ public class panelHutang extends JPanel {
         jComboBox2 = new javax.swing.JComboBox<>();
         newDetailButton = new javax.swing.JButton();
         jDialog4 = new javax.swing.JDialog();
-        newButton2 = new javax.swing.JButton();
         inputPanel2 = new app.utils.inputPanel(app.table.BayarhutangPengeluaran.class);
         jLabel5 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
+        newButton2 = new javax.swing.JButton();
         jDialog5 = new javax.swing.JDialog();
-        newButton3 = new javax.swing.JButton();
         inputPanel5 = new app.utils.inputPanel(app.table.BayarhutangPemasukan.class);
         jLabel6 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
+        newButton3 = new javax.swing.JButton();
         jDialog1 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Hutang.class);
         jLabel3 = new javax.swing.JLabel();
@@ -82,6 +82,7 @@ public class panelHutang extends JPanel {
         jLabel2 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
         newButton = new javax.swing.JButton();
+        newButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -124,10 +125,6 @@ public class panelHutang extends JPanel {
         jDialog4.setTitle("HUTANG PENGELUARAN");
         jDialog4.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
-        newButton2.setText("Simpan");
-        newButton2.addActionListener(formListener);
-        jDialog4.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
-
         jLabel5.setText("Bank");
         inputPanel2.add(jLabel5);
 
@@ -137,14 +134,14 @@ public class panelHutang extends JPanel {
 
         inputPanel2.add(jComboBox3);
 
+        newButton2.setText("Simpan");
+        newButton2.addActionListener(formListener);
+        inputPanel2.add(newButton2);
+
         jDialog4.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
         jDialog5.setTitle("HUTANG PEMASUKAN");
         jDialog5.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-
-        newButton3.setText("Simpan");
-        newButton3.addActionListener(formListener);
-        jDialog5.getContentPane().add(newButton3, java.awt.BorderLayout.PAGE_START);
 
         jLabel6.setText("Bank");
         inputPanel5.add(jLabel6);
@@ -154,6 +151,10 @@ public class panelHutang extends JPanel {
         bindingGroup.addBinding(jComboBoxBinding);
 
         inputPanel5.add(jComboBox4);
+
+        newButton3.setText("Simpan");
+        newButton3.addActionListener(formListener);
+        inputPanel5.add(newButton3);
 
         jDialog5.getContentPane().add(inputPanel5, java.awt.BorderLayout.CENTER);
 
@@ -187,11 +188,15 @@ public class panelHutang extends JPanel {
 
         inputPanel1.add(jComboBox5);
 
-        jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
-
         newButton.setText("Simpan");
         newButton.addActionListener(formListener);
-        jDialog1.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_START);
+        inputPanel1.add(newButton);
+
+        newButton1.setText("Tutup");
+        newButton1.addActionListener(formListener);
+        inputPanel1.add(newButton1);
+
+        jDialog1.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SELESAI" }));
 
@@ -416,6 +421,9 @@ public class panelHutang extends JPanel {
             }
             else if (evt.getSource() == newButton) {
                 panelHutang.this.newButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton1) {
+                panelHutang.this.newButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -642,6 +650,11 @@ public class panelHutang extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_refreshButton1ActionPerformed
 
+    private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+        // TODO add your handling code here:
+        jDialog1.hide();
+    }//GEN-LAST:event_newButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -684,6 +697,7 @@ public class panelHutang extends JPanel {
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
+    private javax.swing.JButton newButton1;
     private javax.swing.JButton newButton2;
     private javax.swing.JButton newButton3;
     private javax.swing.JButton newDetailButton;
