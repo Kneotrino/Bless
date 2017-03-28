@@ -131,7 +131,7 @@ public class Printer {
                                 Tuple.of("Keterangan","keterangan", d -> d==null?" ":d),
                                 Tuple.of("Tanggal Lunas","tanggallunas", d -> d==null?" ":formator.format(d)),
                                 Tuple.of("Tanggal Pinjam","tanggalpinjam", d -> d==null?" ":formator.format(d)),
-                                Tuple.of("Tanggal Lunas","lunas", d -> d==null?" ":d)
+                                Tuple.of("Lunas","lunas", d -> d==null?" ":d)
                             ).dataList(getDataList(app.table.Hutang.class));
               try {
                     data.write();            
@@ -847,6 +847,8 @@ public class Printer {
                                     Tuple.of("tanggalJual","tanggalJual", d -> d == null? " ": formator.format(d)),
                                     Tuple.of("Penjual","penjual", fungsi),
                                     Tuple.of("no_Hp_Penjual","no_Hp_Penjual", fungsi),
+                                    Tuple.of("Perjalanan KE","dpPertama", fungsi),
+                                    Tuple.of("Unit Sampai Kupang","tangglPelunasanPembelian", fungsi),
                                     Tuple.of("keterangan","keterangan", fungsi),
                                     Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
                                     Tuple.of("Nama Pembeli","debitur.nama", fungsi),
@@ -878,7 +880,7 @@ public class Printer {
                                     Tuple.of("noBpkb","noBpkb", d -> d==null?" ":d),
                                     Tuple.of("Posisi BPKB","posisi", d -> d==null?" ":d),
                                     Tuple.of("Posisi Faktur","noPolisiAktif", d -> d==null?" ":d),
-                                    Tuple.of("status","status", d -> d==null?" ":d),
+                                    Tuple.of("noBPKBlama","status", d -> d==null?" ":d),
                                     Tuple.of("stnk","stnk", d -> d==null?" ":d),
                                     Tuple.of("tglBbn","tglBbn", d -> d==null?" ":formator.format(d)),
                                     Tuple.of("tglKembaliBbn","tglKembaliBbn", d -> d==null?" ":formator.format(d)),
@@ -886,6 +888,7 @@ public class Printer {
                                     Tuple.of("tglKembaliCb","tglKembaliCb", d -> d==null?" ":formator.format(d)),
                                     Tuple.of("tglLeasing","tglLeasing", d -> d==null?" ":formator.format(d)),
                                     Tuple.of("tglTerima","tglTerima", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tglTerima","tanggalExp", d -> d==null?" ":formator.format(d)),
                                     Tuple.of("mobil REF","mobil", d -> d==null?" ":d)
                     ).dataList(getDataList(app.table.Bpkb.class));
               try {
