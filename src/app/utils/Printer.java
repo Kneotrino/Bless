@@ -82,21 +82,21 @@ public class Printer {
                     File dir = rootdir;
                     File folder = new File(dir, "Laporan Semua "+ formator.format(p));
                     folder.mkdirs();                    
-//                    PrintHutang(folder);
-//                    PrintInvestor(folder);
-//                    PrintPiHutang(folder);
-//                    PrintLeasing(folder);
-//                    PrintRentalMobil(folder);
-//                    PrintAsset(folder);
-//                    PrintMobil(folder);
-//                    PrintJasa(folder);
-//                    PrintPerjalanan(folder);
-//                    PrintKas(folder);
-//                    PrintPegawai(folder);
+                    PrintHutang(folder);
+                    PrintInvestor(folder);
+                    PrintPiHutang(folder);
+                    PrintLeasing(folder);
+                    PrintRentalMobil(folder);
+                    PrintAsset(folder);
+                    PrintMobil(folder);
+                    PrintJasa(folder);
+                    PrintPerjalanan(folder);
+                    PrintKas(folder);
+                    PrintPegawai(folder);
                     PrintLaporan(folder, Laporan.class);
-//                    PrintLaporan(folder, Pemasukan.class);
-//                    PrintLaporan(folder, Pengeluaran.class);
-//                    PrintLaporan(folder, pembagianLaba.class);                    
+                    PrintLaporan(folder, Pemasukan.class);
+                    PrintLaporan(folder, Pengeluaran.class);
+                    PrintLaporan(folder, pembagianLaba.class);                    
                     PrintLaporan(folder, app.table.Bayarsewa.class);                    
                 try {
                     Desktop.getDesktop().open(folder);
@@ -143,8 +143,8 @@ public class Printer {
                 } 
               for (Hutang peg : resultList) {
                   String pe = peg.getHutangid()+"-"
-                          +peg.getNama()+"-"
-                          +peg.getKeterangan()+
+                          +peg.getNama()+
+//                          +peg.getKeterangan()+
                           ".CSV";
                   File p = new File(f, pe);
                   cvs.add(p);
@@ -902,8 +902,8 @@ public class Printer {
                     String mo = 
                             mobil.getMobilId()+ "-" +
                             mobil.getMerk() + "-" +
-                            mobil.getType()+ "-" +
-                            mobil.getJenis()+ "-" +
+                            mobil.getType().replace("/", " ")+ "-" +
+                            mobil.getJenis().replace("/", " ")+ "-" +
                             mobil.getTahun()+ "-" +
                             mobil.getWarna()+ "-" +
                             mobil.getStatusMobil()+ "-" +
