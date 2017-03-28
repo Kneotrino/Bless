@@ -7,6 +7,7 @@ package app.view.FixPanel.akuntansi;
 
 //import app.table.Akuntansi;
 import app.table.Bank;
+import app.table.BayarhutangPengeluaran;
 import app.table.Bpkbtitipan;
 import app.table.Hutang;
 import app.table.KeuanganMobil;
@@ -199,8 +200,15 @@ public class panelAkuntansi extends JPanel {
                 .setAkun("Beban Jasa")
                 .setPemasukan(sumAll(getList(app.table.BayarJasaPengeluaran.class)));
         Akun  bebanPeminjaman = new Akun()
-                .setAkun("Beban Peminjaman/Piutang")
-                .setPemasukan(sumAll(getList(app.table.BayarhutangPengeluaran.class)));
+                .setAkun("Beban Peminjaman/Piutang");
+//                .setPemasukan(sumAll(getList(app.table.Bayarhutang.class)));
+        List<app.table.BayarhutangPengeluaran> listhutang = entityManager.createQuery("SELECT h FROM BayarhutangPengeluaran h", app.table.BayarhutangPengeluaran.class).getResultList();       
+        BigInteger totalHutang = BigInteger.ZERO;
+        for (BayarhutangPengeluaran bayarhutangPengeluaran : listhutang) {
+                totalHutang = totalHutang.add(bayarhutangPengeluaran.getPengeluaran());
+        }
+        bebanPeminjaman.setPemasukan(totalHutang);
+
         Akun  Peminjaman = new Akun()
                 .setAkun("Pemasukan Peminjaman")
                 .setPengeluaran(sumAll(getList(app.table.BayarhutangPemasukan.class)));

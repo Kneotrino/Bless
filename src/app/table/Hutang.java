@@ -46,10 +46,10 @@ import javax.xml.bind.annotation.XmlRootElement;
         ,"nomorhp"
         ,"nomorktp"
         ,"jumlahpinjaman"
-        ,"sisapinjaman"
-        ,"keterangan"
+//        ,"sisapinjaman"
         ,"tanggalpinjam" 
-        ,"tanggallunas"
+//        ,"keterangan"
+//        ,"tanggallunas"
 })
 @NamedQueries({
     @NamedQuery(name = "Hutang.findAll", query = "SELECT h FROM Hutang h")
@@ -73,18 +73,18 @@ public class Hutang implements Serializable {
     @Column(name = "HUTANGID", nullable = false)
     private Integer hutangid;
     @Column(name = "ALAMAT", length = 255)
-    private String alamat = "input";
+    private String alamat = "";
     @Column(name = "JUMLAHPINJAMAN")
-    private BigInteger jumlahpinjaman = new BigInteger("100");
+    private BigInteger jumlahpinjaman = new BigInteger("0");
     @Lob
     @Column(name = "KETERANGAN")
-    private String keterangan ="input" ;
+    private String keterangan ="" ;
     @Column(name = "NAMA", length = 255)
-    private String nama = "input";
+    private String nama = " TOTAL";
     @Column(name = "NOMORHP", length = 255)
-    private String nomorhp = "input";
+    private String nomorhp = "";
     @Column(name = "NOMORKTP", length = 255)
-    private String nomorktp = "input";
+    private String nomorktp = "";
     
     @Column(name = "LABA", length = 255)
     private String LABA = "OPEN";
@@ -114,7 +114,7 @@ public class Hutang implements Serializable {
     }
 
     @Column(name = "SISAPINJAMAN")
-    private BigInteger sisapinjaman = new BigInteger("110");
+    private BigInteger sisapinjaman = new BigInteger("0");
     @Column(name = "TANGGALLUNAS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date tanggallunas = new Date();
