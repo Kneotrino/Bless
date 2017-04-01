@@ -611,7 +611,7 @@ public void Refresh(){
                         Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
                         Tuple.of("Saldo", "saldo", d -> IDR.format(d) ),
                         Tuple.of("Jenis", "jenis", d -> d ),
-                        Tuple.of("Bank", "transaksi.bankId", d -> d==null? "":d)
+                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null? "":d)
                 ).dataList(a);
         try {
                  List<File> cvs = new java.util.LinkedList<>();

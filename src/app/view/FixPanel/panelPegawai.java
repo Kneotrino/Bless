@@ -332,8 +332,8 @@ public class panelPegawai extends JPanel {
         masterTable.clearSelection();
         masterTable.setRowSelectionInterval(index, index);
         int row = ps.size() - 1;
-        detailTable.setRowSelectionInterval(row, row);
-        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
+//        detailTable.setRowSelectionInterval(row, row);
+//        detailTable.scrollRectToVisible(detailTable.getCellRect(row, 0, true));
         jDialog3.hide();
         saveButtonActionPerformed(evt);
         refreshButtonActionPerformed(evt);

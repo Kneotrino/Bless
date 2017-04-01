@@ -33,5 +33,10 @@ public class Bayarjasa extends Laporan implements Serializable {
     public void setBpkbtitipid(Bpkbtitipan bpkbtitipid) {
         this.bpkbtitipid = bpkbtitipid;
     }
+        @Override
+    public String getJenis()
+    {
+        return "Table Jasa";
+    }
 
 }

@@ -232,8 +232,8 @@ public class PanelInventaris extends JPanel {
         
 //        list.add(p);
         int row = list.size() - 1;
-        masterTable.setRowSelectionInterval(row, row);
-        masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
+//        masterTable.setRowSelectionInterval(row, row);
+//        masterTable.scrollRectToVisible(masterTable.getCellRect(row, 0, true));
         saveButtonActionPerformed(evt);
         jDialog1.hide();
         

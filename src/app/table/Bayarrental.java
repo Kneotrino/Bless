@@ -29,5 +29,10 @@ public class Bayarrental extends Laporan implements Serializable {
     public void setRentalId(Rental rentalId) {
         this.rentalId = rentalId;
     }
+        @Override
+    public String getJenis()
+    {
+        return "Table Rental";
+    }
 
 }
