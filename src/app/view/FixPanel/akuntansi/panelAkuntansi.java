@@ -202,7 +202,14 @@ public class panelAkuntansi extends JPanel {
         Akun  bebanPeminjaman = new Akun()
                 .setAkun("Beban Peminjaman/Piutang");
 //                .setPemasukan(sumAll(getList(app.table.Bayarhutang.class)));
-        List<app.table.BayarhutangPengeluaran> listhutang = entityManager.createQuery("SELECT h FROM BayarhutangPengeluaran h", app.table.BayarhutangPengeluaran.class).getResultList();       
+//"SELECT l FROM Laporan l where l.tanggal < :endDate")
+//                .setParameter("endDate", awalBulan, TemporalType.DATE)  
+//                
+
+        List<app.table.BayarhutangPengeluaran> listhutang = 
+                entityManager.createQuery("SELECT h FROM BayarhutangPengeluaran h where h.tanggal > :endDate", app.table.BayarhutangPengeluaran.class)
+                .setParameter("endDate", awalBulan, TemporalType.DATE)                          
+                        .getResultList();       
         BigInteger totalHutang = BigInteger.ZERO;
         for (BayarhutangPengeluaran bayarhutangPengeluaran : listhutang) {
                 totalHutang = totalHutang.add(bayarhutangPengeluaran.getPengeluaran());

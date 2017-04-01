@@ -31,7 +31,7 @@ public class Blessing {
         pass.add("admin");
         pass.add("blessing");
         pass.add("alki");
-        JPasswordField pf = new JPasswordField();
+        JPasswordField pf = new JPasswordField();        
         int okCxl = JOptionPane.showConfirmDialog(null, pf, "Masukan password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (okCxl == JOptionPane.OK_OPTION) {
               String password = new String(pf.getPassword());

@@ -178,6 +178,7 @@ public class Bank implements Serializable {
     public BigInteger getFoo() {
         BigInteger tPem = BigInteger.ZERO;
         BigInteger tPer = BigInteger.ZERO;
+        if (saldoList == null) {
         for (Saldo saldo : saldoList) {
                 java.math.BigInteger pem = new java.math.BigInteger("0");
                 java.math.BigInteger per = new java.math.BigInteger("0");
@@ -186,6 +187,8 @@ public class Bank implements Serializable {
                 tPem = tPem.add(pem);
                 tPer =tPer.add(per);
         }        
+            
+        }
 //       boolean minus = false;
 //       BigInteger temp = tPem.subtract(tPer);                
 //       minus = temp.min(BigInteger.ZERO).equals(BigInteger.ZERO);
