@@ -53,6 +53,10 @@ public class Bayarhutang extends Laporan implements Serializable {
     public void setHutangid(Hutang hutangid) {
         this.hutangid = hutangid;
     }
-
+    @Override
+    public String getJenis()
+    {
+        return "Table "+this.getHutangid();
+    }
     
 }

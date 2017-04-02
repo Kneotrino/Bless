@@ -282,7 +282,7 @@ public class Piutang implements Serializable {
 
     @Override
     public String toString() {
-        return "app.table.Piutang[ piutangid=" + piutangid + " ]";
+        return "REF Peminjaman = " + piutangid + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

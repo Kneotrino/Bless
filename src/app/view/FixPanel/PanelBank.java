@@ -18,6 +18,7 @@ import java.beans.Beans;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -100,6 +101,12 @@ public class PanelBank extends JPanel {
         jDialog3 = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -199,13 +206,28 @@ public class PanelBank extends JPanel {
         jButton3.setText("Tambah Pengeluaran");
 
         jDialog3.setSize(500, 350);
-        jDialog3.getContentPane().setLayout(new java.awt.GridLayout(4, 0));
+        jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
 
         jLabel1.setText("Nominal Transfer");
         jDialog3.getContentPane().add(jLabel1);
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         jDialog3.getContentPane().add(jFormattedTextField1);
+
+        jLabel5.setText("Keterangan Kirim");
+        jDialog3.getContentPane().add(jLabel5);
+        jDialog3.getContentPane().add(jTextField1);
+
+        jLabel6.setText("Keterangan Terima");
+        jDialog3.getContentPane().add(jLabel6);
+        jDialog3.getContentPane().add(jTextField2);
+
+        jLabel7.setText("Tanggal Transaksi");
+        jDialog3.getContentPane().add(jLabel7);
+
+        jDateChooser1.setDate(new Date()
+        );
+        jDialog3.getContentPane().add(jDateChooser1);
 
         jLabel2.setText("Sumber");
         jDialog3.getContentPane().add(jLabel2);
@@ -542,9 +564,13 @@ public class PanelBank extends JPanel {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         BigInteger nominal = BigInteger.valueOf((Long) jFormattedTextField1.getValue());
-        app.table.Kirim kirim = new Kirim();
-        app.table.Terima terima = new Terima();
+        app.table.Pengeluaran kirim = new Pengeluaran();
+        app.table.Pemasukan terima = new Pemasukan();
         kirim.setJumlah(nominal);
+        kirim.setKeterangan(jTextField1.getText());
+        terima.setKeterangan(jTextField2.getText());
+        kirim.setTanggal(jDateChooser1.getDate());
+        terima.setTanggal(jDateChooser1.getDate());
         terima.setJumlah(nominal);
         kirim.setTransaksi(new Saldo());
         terima.setTransaksi(new Saldo());
@@ -580,6 +606,7 @@ public class PanelBank extends JPanel {
     private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -589,7 +616,12 @@ public class PanelBank extends JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private java.util.List<app.table.Bank> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

@@ -180,4 +180,10 @@ public class Perjalanan extends Laporan implements Serializable {
         setTanggal(tanggal);
         
     }
+        @Override
+    public String getJenis()
+    {
+        return "Table "+this.getTripsTripsId();
+    }
+
 }

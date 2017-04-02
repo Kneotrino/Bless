@@ -32,7 +32,7 @@ public class Bayarrental extends Laporan implements Serializable {
         @Override
     public String getJenis()
     {
-        return "Table Rental";
+        return "Table "+ getRentalId();
     }
 
 }

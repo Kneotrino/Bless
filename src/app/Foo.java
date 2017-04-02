@@ -5,6 +5,7 @@
  */
 package app;
 
+import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -91,7 +92,7 @@ public class Foo {
                         label.setText(getName(meth));
                     }                    
                     else if (rt.equals(Calendar.class)) {
-                        comp = new JDateChooser();
+                        comp = new JCalendar();
                         label = new JLabel();
                         label.setText(getName(meth));
                     }                    

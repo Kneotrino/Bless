@@ -175,7 +175,7 @@ public void Restall()
         keteranganField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        saveButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -189,9 +189,9 @@ public void Restall()
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         refreshButton1 = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -253,9 +253,9 @@ public void Restall()
 
         jDialog1.getContentPane().add(jComboBox2);
 
-        saveButton.setText("Simpan");
-        saveButton.addActionListener(formListener);
-        jDialog1.getContentPane().add(saveButton);
+        jButton1.setText("Simpan");
+        jButton1.addActionListener(formListener);
+        jDialog1.getContentPane().add(jButton1);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
@@ -275,7 +275,6 @@ public void Restall()
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -333,10 +332,6 @@ public void Restall()
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
 
-        jButton1.setText("Simpan");
-        jButton1.addActionListener(formListener);
-        jPanel1.add(jButton1);
-
         refreshButton.setText("Tampilkan bulan ini");
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
@@ -344,6 +339,10 @@ public void Restall()
         refreshButton1.setText("Tampilkan semuanya");
         refreshButton1.addActionListener(formListener);
         jPanel1.add(refreshButton1);
+
+        saveButton.setText("Simpan");
+        saveButton.addActionListener(formListener);
+        jPanel1.add(saveButton);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -452,15 +451,6 @@ public void Restall()
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         this.jDialog1.setVisible(false);
-        if ( clazz == app.table.Pengeluaran.class) {
-            BigInteger value = (BigInteger) jFormattedTextField1.getValue();
-            Bank bank = (Bank) jComboBox2.getSelectedItem();
-            if (bank.getTotalSaldo().subtract(value).compareTo(BigInteger.ZERO) == -1 ) {
-                 javax.swing.JOptionPane.showMessageDialog(null,  
-                        "Saldo Minus \nNama Bank ="+ bank.getNamaBank()+"\nSaldo = " + bank.getTotalSaldo());
-                 this.refreshButtonActionPerformed(evt);
-            }
-        }
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
@@ -479,6 +469,15 @@ public void Restall()
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if ( clazz == app.table.Pengeluaran.class) {
+            BigInteger value = (BigInteger) jFormattedTextField1.getValue();
+            Bank bank = (Bank) jComboBox2.getSelectedItem();
+            if (bank.getTotalSaldo().subtract(value).compareTo(BigInteger.ZERO) == -1 ) {
+                 javax.swing.JOptionPane.showMessageDialog(null,  
+                        "Saldo Minus \nNama Bank ="+ bank.getNamaBank()+"\nSaldo = " + bank.getTotalSaldo());
+                 this.refreshButtonActionPerformed(evt);
+            }
+        }
         this.saveButtonActionPerformed(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
