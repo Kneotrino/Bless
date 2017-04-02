@@ -1456,18 +1456,6 @@
                         </BindingProperty>
                       </BindingProperties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel48">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="NOMOR HP"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField41">
-                      <BindingProperties>
-                        <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.debitur.noHp}" target="jTextField41" targetPath="text" updateStrategy="0" immediately="false">
-                          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                        </BindingProperty>
-                      </BindingProperties>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel49">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="NOMOR IDENTITAS"/>
@@ -1476,6 +1464,18 @@
                     <Component class="javax.swing.JTextField" name="jTextField42">
                       <BindingProperties>
                         <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.debitur.noKtp}" target="jTextField42" targetPath="text" updateStrategy="0" immediately="false">
+                          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                        </BindingProperty>
+                      </BindingProperties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel48">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="NOMOR HP"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="jTextField41">
+                      <BindingProperties>
+                        <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.debitur.noHp}" target="jTextField41" targetPath="text" updateStrategy="0" immediately="false">
                           <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                         </BindingProperty>
                       </BindingProperties>
@@ -1673,7 +1673,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel100">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="TANGGAL EXP"/>
+                    <Property name="text" type="java.lang.String" value="TANGGAL EXP PAJAK"/>
                   </Properties>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser15">

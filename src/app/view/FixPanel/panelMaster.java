@@ -452,6 +452,15 @@ public void Restall()
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         this.jDialog1.setVisible(false);
+        if ( clazz == app.table.Pengeluaran.class) {
+            BigInteger value = (BigInteger) jFormattedTextField1.getValue();
+            Bank bank = (Bank) jComboBox2.getSelectedItem();
+            if (bank.getTotalSaldo().subtract(value).compareTo(BigInteger.ZERO) == -1 ) {
+                 javax.swing.JOptionPane.showMessageDialog(null,  
+                        "Saldo Minus \nNama Bank ="+ bank.getNamaBank()+"\nSaldo = " + bank.getTotalSaldo());
+                 this.refreshButtonActionPerformed(evt);
+            }
+        }
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
@@ -559,7 +568,7 @@ public void Restall()
             public void run() {
                 JFrame frame = new JFrame();
 //                frame.setContentPane(new panelMaster(1));
-                frame.setContentPane(new panelMaster(app.table.Pemasukan.class));
+                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

@@ -806,12 +806,14 @@ public class Printer {
      cvs.add(0, file);
     ExcelConverter(cvs, new File(place,"Laporan Perjalanan.xls"));
     }
+              final static  SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              static Function fungsi = d -> d==null?" ":d.toString().replace(",", ".");
+              static Function tanggal = d -> d==null?" ":formator.format(d);
     public static void PrintMobil(File place)
     {
               File f = new File(place, "Data");
               f.mkdirs();
               System.out.println("f = " + f);
-              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               TypedQuery createQuery = EM.createQuery(
                       "SELECT m FROM Mobil m order by m desc", app.table.Mobil.class);   
               List<Mobil> resultList = createQuery.getResultList();
@@ -820,8 +822,6 @@ public class Printer {
               }
               System.out.println("resultList = " + resultList.size());
               List c = resultList;
-              Function fungsi = d -> d==null?" ":d;
-              Function tanggal = d -> d==null?" ":formator.format(d);
               List<File> cvs = new java.util.LinkedList<>();
               cvs.add(new File(f, "Daftar Mobil.CSV"));
               WriteStep data = CSVUtil.of(new File(f, "Daftar Mobil.CSV"))

@@ -298,10 +298,10 @@ public void Refresh()
         jTextField46 = new javax.swing.JTextField();
         jLabel47 = new javax.swing.JLabel();
         jTextField45 = new javax.swing.JTextField();
-        jLabel48 = new javax.swing.JLabel();
-        jTextField41 = new javax.swing.JTextField();
         jLabel49 = new javax.swing.JLabel();
         jTextField42 = new javax.swing.JTextField();
+        jLabel48 = new javax.swing.JLabel();
+        jTextField41 = new javax.swing.JTextField();
         jLabel68 = new javax.swing.JLabel();
         jTextField61 = new javax.swing.JTextField();
         jLabel51 = new javax.swing.JLabel();
@@ -606,7 +606,7 @@ public void Refresh()
 
         jPanel6.add(jPanel2, "card4");
 
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -742,7 +742,7 @@ public void Refresh()
         editMobil.setTitle("DATA MOBIL");
         editMobil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         editMobil.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        editMobil.getContentPane().setLayout(new java.awt.GridLayout());
+        editMobil.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
         this.editMobil.setSize(1000, 600);
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("DATA MOBIL"));
@@ -1261,14 +1261,6 @@ public void Refresh()
 
         jPanel19.add(jTextField45);
 
-        jLabel48.setText("NOMOR HP");
-        jPanel19.add(jLabel48);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.noHp}"), jTextField41, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jPanel19.add(jTextField41);
-
         jLabel49.setText("NOMOR IDENTITAS");
         jPanel19.add(jLabel49);
 
@@ -1276,6 +1268,14 @@ public void Refresh()
         bindingGroup.addBinding(binding);
 
         jPanel19.add(jTextField42);
+
+        jLabel48.setText("NOMOR HP");
+        jPanel19.add(jLabel48);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.noHp}"), jTextField41, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel19.add(jTextField41);
 
         jLabel68.setText("NAMA ORANG KE-2");
         jPanel19.add(jLabel68);
@@ -1415,7 +1415,7 @@ public void Refresh()
 
         jPanel21.add(jDateChooser9);
 
-        jLabel100.setText("TANGGAL EXP");
+        jLabel100.setText("TANGGAL EXP PAJAK");
         jPanel21.add(jLabel100);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bpkb.tanggalExp}"), jDateChooser15, org.jdesktop.beansbinding.BeanProperty.create("date"));
