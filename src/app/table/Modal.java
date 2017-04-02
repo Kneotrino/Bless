@@ -91,5 +91,10 @@ public class Modal extends Laporan implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
+    @Override
+    public String getJenis()
+    {
+        return "Table modal "+this.getSaham().getInvestorId().getNama();
+    }
     
 }
