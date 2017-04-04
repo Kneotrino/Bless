@@ -11,6 +11,7 @@ import app.table.Saldo;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
+import com.toedter.calendar.JYearChooser;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -174,6 +175,8 @@ public void Restall()
         keteranganLabel = new javax.swing.JLabel();
         keteranganField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
@@ -181,6 +184,7 @@ public void Restall()
         jComboBox1 = new javax.swing.JComboBox<>();
         jDialog2 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel();
+        jComboBox4 = new javax.swing.JComboBox<>();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -189,6 +193,8 @@ public void Restall()
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
+        jYearChooser1 = new com.toedter.calendar.JYearChooser();
         refreshButton = new javax.swing.JButton();
         refreshButton1 = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -235,15 +241,26 @@ public void Restall()
         jDialog1.getContentPane().add(keteranganLabel);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keterangan}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        binding.setSourceUnreadableValue("null");
         bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         jDialog1.getContentPane().add(keteranganField);
 
-        jLabel1.setText("Bank Tujuan");
+        jLabel1.setText("Status");
         jDialog1.getContentPane().add(jLabel1);
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE" }));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tipe}"), jComboBox3, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jDialog1.getContentPane().add(jComboBox3);
+
+        jLabel4.setText("Bank Tujuan");
+        jDialog1.getContentPane().add(jLabel4);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
@@ -267,6 +284,8 @@ public void Restall()
 
         inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
         jDialog2.getContentPane().add(inputPanel1, java.awt.BorderLayout.CENTER);
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE" }));
 
         setLayout(new java.awt.BorderLayout());
 
@@ -307,6 +326,7 @@ public void Restall()
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox1));
         }
+        masterTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox4));
 
         add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
@@ -332,7 +352,12 @@ public void Restall()
         deleteButton.addActionListener(formListener);
         jPanel1.add(deleteButton);
 
-        refreshButton.setText("Tampilkan bulan ini");
+        jMonthChooser1.setMonth(new Date().getMonth());
+        jMonthChooser1.setYearChooser(getjYearChooser1());
+        jPanel1.add(jMonthChooser1);
+        jPanel1.add(jYearChooser1);
+
+        refreshButton.setText("Tampilkan bulan");
         refreshButton.addActionListener(formListener);
         jPanel1.add(refreshButton);
 
@@ -360,9 +385,6 @@ public void Restall()
             else if (evt.getSource() == deleteButton) {
                 panelMaster.this.deleteButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton1) {
-                panelMaster.this.jButton1ActionPerformed(evt);
-            }
             else if (evt.getSource() == refreshButton) {
                 panelMaster.this.refreshButtonActionPerformed(evt);
             }
@@ -372,6 +394,9 @@ public void Restall()
             else if (evt.getSource() == saveButton) {
                 panelMaster.this.saveButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton1) {
+                panelMaster.this.jButton1ActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
             Calendar cal = Calendar.getInstance();
@@ -380,8 +405,18 @@ public void Restall()
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
-        entityManager.getTransaction().begin();     
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        entityManager.getTransaction().begin();
+        cal.set(Calendar.MONTH, jMonthChooser1.getMonth());
+        cal.set(Calendar.YEAR, jYearChooser1.getYear());
+        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+        akhirBulan = cal.getTime();        
+        awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
+        System.out.println("awalBulan = " + awalBulan);
+        System.out.println("akhirBulan = " + akhirBulan);
+//        SELECT customer, transaction, paymentdate, amount
+//    FROM paymenttable
+//    WHERE YEAR(paymentdate) = 2012;
+//        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         this.bankList.clear();
         this.bankList.addAll(bankQuery.getResultList());
          if (temp != -1) {            
@@ -391,11 +426,12 @@ public void Restall()
         else {        
         System.out.println("Kelas name = " + clazz.getSimpleName());    
         String clzName = this.clazz.getSimpleName();
-        String que = "SELECT en FROM " + clzName + " en "
-                + "where en.tanggal BETWEEN :startDate AND :endDate"
-                ;
+//        String que = "SELECT en FROM " + clzName + " en "
+//                + "where en.tanggal BETWEEN :startDate AND :endDate"
+//                ;
         TypedQuery<? extends Laporan> createQuery = 
-                entityManager.createQuery(que, clazz)
+                entityManager.createQuery("SELECT en FROM " + clzName + " en "
+                + "where en.tanggal BETWEEN :startDate AND :endDate", clazz)
                 .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
                 .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 ;
@@ -412,6 +448,10 @@ public void Restall()
         }        
          jFormattedTextField2.setValue(temp);
     }//GEN-LAST:event_refreshButtonActionPerformed
+
+    public JYearChooser getjYearChooser1() {
+        return jYearChooser1;
+    }
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int[] selected = masterTable.getSelectedRows();
@@ -515,6 +555,8 @@ public void Restall()
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -523,7 +565,10 @@ public void Restall()
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
+    private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JLabel jumlahLabel;
     private javax.swing.JTextField keteranganField;
     private javax.swing.JLabel keteranganLabel;

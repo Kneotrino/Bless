@@ -89,14 +89,33 @@
         </Component>
         <Component class="javax.swing.JTextField" name="keteranganField">
           <BindingProperties>
-            <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.keterangan}" target="keteranganField" targetPath="text" updateStrategy="0" immediately="false">
-              <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-              <Property name="incompletePathValue" type="java.lang.String" value="null"/>
-            </BindingProperty>
-            <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="keteranganField" targetPath="enabled" updateStrategy="1" immediately="false"/>
+            <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.keterangan}" target="keteranganField" targetPath="text" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="keteranganField" targetPath="enabled" updateStrategy="0" immediately="false"/>
           </BindingProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Status"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox3">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="2">
+                <StringItem index="0" value="OPEN"/>
+                <StringItem index="1" value="CLOSE"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <BindingProperties>
+            <BindingProperty name="selectedItem" source="masterTable" sourcePath="${selectedElement.tipe}" target="jComboBox3" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
+            <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="jComboBox3" targetPath="enabled" updateStrategy="0" immediately="false"/>
+          </BindingProperties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="text" type="java.lang.String" value="Bank Tujuan"/>
           </Properties>
@@ -181,6 +200,19 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JComboBox" name="jComboBox4">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="OPEN"/>
+            <StringItem index="1" value="CLOSE"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -212,7 +244,7 @@
         <Component class="javax.swing.JTable" name="masterTable">
           <Properties>
             <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="masterTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(jComboBox4));">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
@@ -354,9 +386,21 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
           </AuxValues>
         </Component>
+        <Component class="com.toedter.calendar.JMonthChooser" name="jMonthChooser1">
+          <Properties>
+            <Property name="month" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new Date().getMonth()" type="code"/>
+            </Property>
+            <Property name="yearChooser" type="com.toedter.calendar.JYearChooser" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="getjYearChooser1()" type="code"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
+        </Component>
         <Component class="javax.swing.JButton" name="refreshButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tampilkan bulan ini"/>
+            <Property name="text" type="java.lang.String" value="Tampilkan bulan"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshButtonActionPerformed"/>

@@ -296,14 +296,17 @@ public class panelBagiLaba extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == refreshButton) {
-                panelBagiLaba.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton) {
+            if (evt.getSource() == saveButton) {
                 panelBagiLaba.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == saveButton1) {
                 panelBagiLaba.this.saveButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton) {
+                panelBagiLaba.this.refreshButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton2) {
+                panelBagiLaba.this.saveButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == newButton) {
                 panelBagiLaba.this.newButtonActionPerformed(evt);
@@ -313,9 +316,6 @@ public class panelBagiLaba extends JPanel {
             }
             else if (evt.getSource() == jButton4) {
                 panelBagiLaba.this.jButton4ActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton2) {
-                panelBagiLaba.this.saveButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
