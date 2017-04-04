@@ -222,6 +222,7 @@ public class panelLaporan extends JPanel {
         jMonthChooser1.setMonth(10);
         jMonthChooser1.setMonth(new java.util.Date().getMonth());
         jMonthChooser1.setPreferredSize(new java.awt.Dimension(120, 40));
+        jMonthChooser1.setYearChooser(jYearChooser1);
         jMonthChooser1.addPropertyChangeListener(formListener);
         jPanel3.add(jMonthChooser1);
 

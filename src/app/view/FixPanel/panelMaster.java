@@ -168,6 +168,7 @@ public void Restall()
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         jDialog1 = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
         tanggalLabel = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jumlahLabel = new javax.swing.JLabel();
@@ -215,18 +216,21 @@ public void Restall()
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel2.setLayout(new java.awt.GridLayout(0, 2));
+
         tanggalLabel.setText("Tanggal:");
-        jDialog1.getContentPane().add(tanggalLabel);
+        jPanel2.add(tanggalLabel);
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tanggal}"), jDateChooser1, org.jdesktop.beansbinding.BeanProperty.create("date"));
         bindingGroup.addBinding(binding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jDateChooser1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        jDialog1.getContentPane().add(jDateChooser1);
+        jPanel2.add(jDateChooser1);
 
         jumlahLabel.setText("Jumlah (IDR):");
-        jDialog1.getContentPane().add(jumlahLabel);
+        jPanel2.add(jumlahLabel);
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
@@ -235,20 +239,20 @@ public void Restall()
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jFormattedTextField1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        jDialog1.getContentPane().add(jFormattedTextField1);
+        jPanel2.add(jFormattedTextField1);
 
         keteranganLabel.setText("Keterangan:");
-        jDialog1.getContentPane().add(keteranganLabel);
+        jPanel2.add(keteranganLabel);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keterangan}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), keteranganField, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        jDialog1.getContentPane().add(keteranganField);
+        jPanel2.add(keteranganField);
 
         jLabel1.setText("Status");
-        jDialog1.getContentPane().add(jLabel1);
+        jPanel2.add(jLabel1);
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE" }));
 
@@ -257,10 +261,10 @@ public void Restall()
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox3, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        jDialog1.getContentPane().add(jComboBox3);
+        jPanel2.add(jComboBox3);
 
         jLabel4.setText("Bank Tujuan");
-        jDialog1.getContentPane().add(jLabel4);
+        jPanel2.add(jLabel4);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
@@ -268,11 +272,13 @@ public void Restall()
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.transaksi.bankId}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jDialog1.getContentPane().add(jComboBox2);
+        jPanel2.add(jComboBox2);
 
         jButton1.setText("Simpan");
         jButton1.addActionListener(formListener);
-        jDialog1.getContentPane().add(jButton1);
+        jPanel2.add(jButton1);
+
+        jDialog1.getContentPane().add(jPanel2);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
@@ -416,7 +422,7 @@ public void Restall()
 //        SELECT customer, transaction, paymentdate, amount
 //    FROM paymenttable
 //    WHERE YEAR(paymentdate) = 2012;
-//        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         this.bankList.clear();
         this.bankList.addAll(bankQuery.getResultList());
          if (temp != -1) {            
@@ -568,6 +574,7 @@ public void Restall()
     private javax.swing.JLabel jLabel4;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JLabel jumlahLabel;
     private javax.swing.JTextField keteranganField;
