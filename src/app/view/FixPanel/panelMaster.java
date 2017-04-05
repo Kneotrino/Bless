@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -186,6 +187,13 @@ public void Restall()
         jDialog2 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel();
         jComboBox4 = new javax.swing.JComboBox<>();
+        jDialog3 = new javax.swing.JDialog();
+        jLabel5 = new javax.swing.JLabel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel6 = new javax.swing.JLabel();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -198,6 +206,7 @@ public void Restall()
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
         refreshButton = new javax.swing.JButton();
         refreshButton1 = new javax.swing.JButton();
+        refreshButton2 = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
@@ -293,6 +302,30 @@ public void Restall()
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE" }));
 
+        jDialog3.setPreferredSize(new java.awt.Dimension(450, 250));
+        jDialog3.setSize(450, 250);
+        jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
+
+        jLabel5.setText("Tanggal Awal");
+        jDialog3.getContentPane().add(jLabel5);
+
+        jDateChooser2.setDate(new Date());
+        jDialog3.getContentPane().add(jDateChooser2);
+
+        jLabel6.setText("Tanggal Akhir");
+        jDialog3.getContentPane().add(jLabel6);
+
+        jDateChooser3.setDate(new Date());
+        jDialog3.getContentPane().add(jDateChooser3);
+
+        jButton2.setText("Filter");
+        jButton2.addActionListener(formListener);
+        jDialog3.getContentPane().add(jButton2);
+
+        jButton3.setText("Tutup");
+        jButton3.addActionListener(formListener);
+        jDialog3.getContentPane().add(jButton3);
+
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
@@ -371,6 +404,10 @@ public void Restall()
         refreshButton1.addActionListener(formListener);
         jPanel1.add(refreshButton1);
 
+        refreshButton2.setText("Filter");
+        refreshButton2.addActionListener(formListener);
+        jPanel1.add(refreshButton2);
+
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
@@ -403,6 +440,15 @@ public void Restall()
             else if (evt.getSource() == jButton1) {
                 panelMaster.this.jButton1ActionPerformed(evt);
             }
+            else if (evt.getSource() == refreshButton2) {
+                panelMaster.this.refreshButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton2) {
+                panelMaster.this.jButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton3) {
+                panelMaster.this.jButton3ActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
             Calendar cal = Calendar.getInstance();
@@ -419,9 +465,6 @@ public void Restall()
         awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
         System.out.println("awalBulan = " + awalBulan);
         System.out.println("akhirBulan = " + akhirBulan);
-//        SELECT customer, transaction, paymentdate, amount
-//    FROM paymenttable
-//    WHERE YEAR(paymentdate) = 2012;
         ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
         this.bankList.clear();
         this.bankList.addAll(bankQuery.getResultList());
@@ -551,6 +594,64 @@ public void Restall()
          jFormattedTextField2.setValue(temp);
     }//GEN-LAST:event_refreshButton1ActionPerformed
 
+    private void refreshButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton2ActionPerformed
+    
+        jDialog3.setLocationRelativeTo(null);
+        jDialog3.show();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refreshButton2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();
+        awalBulan = jDateChooser2.getDate();
+        akhirBulan = jDateChooser3.getDate();        
+        System.out.println("awalBulan = " + awalBulan);
+        System.out.println("akhirBulan = " + akhirBulan);
+        try {
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();                       
+        } catch (Exception e) {
+        }
+        this.bankList.clear();
+        this.bankList.addAll(bankQuery.getResultList());
+         if (temp != -1) {            
+            System.out.println("Laporan = " + m1.get(temp));
+            Rest();
+        }
+        else {        
+        System.out.println("Kelas name = " + clazz.getSimpleName());    
+        String clzName = this.clazz.getSimpleName();
+//        String que = "SELECT en FROM " + clzName + " en "
+//                + "where en.tanggal BETWEEN :startDate AND :endDate"
+//                ;
+        TypedQuery<? extends Laporan> createQuery = 
+                entityManager.createQuery("SELECT en FROM " + clzName + " en "
+                + "where en.tanggal BETWEEN :startDate AND :endDate", clazz)
+                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+                ;
+        List<? extends Laporan> res = createQuery.getResultList();           
+            for (Laporan re : res) {
+                entityManager.refresh(re);
+            }
+        list.clear();
+        list.addAll((Collection<? extends Laporan>) res);
+         }
+         BigInteger temp = BigInteger.ZERO; 
+         for (Laporan laporan : list) {
+            temp = temp.add(laporan.getJumlah());
+        }        
+         jFormattedTextField2.setValue(temp);
+         jDialog3.hide();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        jDialog3.hide();
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -559,19 +660,26 @@ public void Restall()
     private javax.persistence.EntityManager entityManager;
     private app.utils.inputPanel inputPanel1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -586,6 +694,7 @@ public void Restall()
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton refreshButton1;
+    private javax.swing.JButton refreshButton2;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel tanggalLabel;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
