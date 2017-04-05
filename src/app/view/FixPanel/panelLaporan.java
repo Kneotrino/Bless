@@ -88,6 +88,13 @@ public class panelLaporan extends JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jFileChooser1 = new javax.swing.JFileChooser();
+        jDialog3 = new javax.swing.JDialog();
+        jLabel8 = new javax.swing.JLabel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel9 = new javax.swing.JLabel();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -98,6 +105,7 @@ public class panelLaporan extends JPanel {
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
         refreshButton = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        refreshButton2 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
 
@@ -199,6 +207,30 @@ public class panelLaporan extends JPanel {
         jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         jFileChooser1.addActionListener(formListener);
 
+        jDialog3.setPreferredSize(new java.awt.Dimension(450, 250));
+        jDialog3.setSize(450, 250);
+        jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
+
+        jLabel8.setText("Tanggal Awal");
+        jDialog3.getContentPane().add(jLabel8);
+
+        jDateChooser2.setDate(new Date());
+        jDialog3.getContentPane().add(jDateChooser2);
+
+        jLabel9.setText("Tanggal Akhir");
+        jDialog3.getContentPane().add(jLabel9);
+
+        jDateChooser3.setDate(new Date());
+        jDialog3.getContentPane().add(jDateChooser3);
+
+        jButton5.setText("Filter");
+        jButton5.addActionListener(formListener);
+        jDialog3.getContentPane().add(jButton5);
+
+        jButton6.setText("Tutup");
+        jButton6.addActionListener(formListener);
+        jDialog3.getContentPane().add(jButton6);
+
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel2.setLayout(new java.awt.BorderLayout());
@@ -214,7 +246,7 @@ public class panelLaporan extends JPanel {
         jButton2.addActionListener(formListener);
         jPanel3.add(jButton2);
 
-        jButton1.setText("Filter");
+        jButton1.setText("Tampilkan Bulan");
         jButton1.addActionListener(formListener);
         jPanel3.add(jButton1);
 
@@ -238,6 +270,10 @@ public class panelLaporan extends JPanel {
         jButton4.setText("Tampilkan Semua laporan");
         jButton4.addActionListener(formListener);
         jPanel3.add(jButton4);
+
+        refreshButton2.setText("Filter Tanggal");
+        refreshButton2.addActionListener(formListener);
+        jPanel3.add(refreshButton2);
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
@@ -329,6 +365,15 @@ public class panelLaporan extends JPanel {
             }
             else if (evt.getSource() == jFileChooser1) {
                 panelLaporan.this.jFileChooser1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton2) {
+                panelLaporan.this.refreshButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton5) {
+                panelLaporan.this.jButton5ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton6) {
+                panelLaporan.this.jButton6ActionPerformed(evt);
             }
         }
 
@@ -644,6 +689,68 @@ public void Refresh(){
         // TODO add your handling code here:
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
+    private void refreshButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton2ActionPerformed
+
+        jDialog3.setLocationRelativeTo(null);
+        jDialog3.show();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refreshButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();
+            Date awal = jDateChooser2.getDate();
+            Date akhir = jDateChooser3.getDate();
+            query = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate order by l.tanggal asc")
+                .setParameter("startDate", awal, TemporalType.DATE)
+                .setParameter("endDate", akhir, TemporalType.DATE);  
+            java.util.List<app.table.Laporan> data = query.getResultList();
+            app.table.Util.RefreshLaporan();
+            java.math.BigInteger saldo = new java.math.BigInteger("0");               
+            BigInteger temp = BigInteger.ZERO;
+            BigInteger temp1 = BigInteger.ZERO;  
+            List<Laporan> rangkuman = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal < :endDate")
+                .setParameter("endDate", awal, TemporalType.DATE)  
+                .getResultList();
+            for (Laporan laporan : rangkuman) {
+                    temp = temp.add(laporan.getPemasukan());
+                    temp1 = temp1.add(laporan.getPengeluaran());
+            }
+            Laporan Pengeluaran = new Pengeluaran();
+            Laporan Pemasukan = new Pemasukan();
+            Pengeluaran.setJumlah(temp1);
+            Pemasukan.setJumlah(temp);
+            Pemasukan.setKeterangan("R. Pemasukan bulan sebelumnya");
+            Pengeluaran.setKeterangan("R. Pengeluaran bulan sebelumnya");
+            Saldo saldo1 = new Saldo();
+            Bank bank = new Bank();
+            saldo1.setBankId(bank);
+            Pemasukan.setTransaksi(saldo1);
+            Pengeluaran.setTransaksi(saldo1);
+            list.clear();
+            this.list.add(Pemasukan);
+            this.list.add(Pengeluaran);        
+            list.addAll(data);
+            for (Laporan laporan : list) {
+            saldo = saldo.subtract(laporan.getPengeluaran());
+            saldo = saldo.add(laporan.getPemasukan());
+            laporan.setSaldo(saldo);
+            if (laporan.getSaldo() == null) {
+                System.out.println("null di + "+laporan.toString());
+            }
+        }
+        jDialog3.hide();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        jDialog3.hide();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -652,7 +759,12 @@ public void Refresh(){
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -661,6 +773,8 @@ public void Refresh(){
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -680,6 +794,7 @@ public void Refresh(){
     private javax.swing.JButton newButton;
     private javax.persistence.Query query;
     javax.swing.JButton refreshButton;
+    private javax.swing.JButton refreshButton2;
     private javax.swing.JButton saveButton;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
