@@ -63,8 +63,9 @@ public class panelPegawai extends JPanel {
         inputPanel1 = new app.utils.inputPanel(app.table.Pegawai.class);
         newButton = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
-        inputPanel2 = new app.utils.inputPanel(app.table.Pegawaigaji.class);
         newDetailButton = new javax.swing.JButton();
+        inputPanel2 = new app.utils.inputPanel(app.table.Pegawaigaji.class);
+        jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
@@ -90,11 +91,10 @@ public class panelPegawai extends JPanel {
 
         newButton.setText("Tambah");
         newButton.addActionListener(formListener);
-        jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.PAGE_END);
+        jDialog2.getContentPane().add(newButton, java.awt.BorderLayout.NORTH);
 
         jDialog3.setTitle("Input Data");
         jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
         newDetailButton.setText("Tambah");
 
@@ -102,13 +102,18 @@ public class panelPegawai extends JPanel {
         bindingGroup.addBinding(binding);
 
         newDetailButton.addActionListener(formListener);
-        jDialog3.getContentPane().add(newDetailButton, java.awt.BorderLayout.PAGE_START);
+        jDialog3.getContentPane().add(newDetailButton, java.awt.BorderLayout.NORTH);
+
+        jLabel1.setText("Bank");
+        inputPanel2.add(jLabel1);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox1);
         bindingGroup.addBinding(jComboBoxBinding);
 
-        jDialog3.getContentPane().add(jComboBox1, java.awt.BorderLayout.PAGE_END);
+        inputPanel2.add(jComboBox1);
+
+        jDialog3.getContentPane().add(inputPanel2, java.awt.BorderLayout.CENTER);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -350,7 +355,10 @@ public class panelPegawai extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
         java.util.List Res = this.bankQuery.getResultList();
         this.bankList.clear();
         this.bankList.addAll(Res);
@@ -442,6 +450,7 @@ public class panelPegawai extends JPanel {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private java.util.List<app.table.Pegawai> list;
     private javax.swing.JScrollPane masterScrollPane;
