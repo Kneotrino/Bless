@@ -93,8 +93,12 @@ public class panelLaporan extends JPanel {
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jLabel11 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -223,6 +227,12 @@ public class panelLaporan extends JPanel {
         jDateChooser3.setDate(new Date());
         jDialog3.getContentPane().add(jDateChooser3);
 
+        jLabel11.setText("Status");
+        jDialog3.getContentPane().add(jLabel11);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SEMUA" }));
+        jDialog3.getContentPane().add(jComboBox1);
+
         jButton5.setText("Filter");
         jButton5.addActionListener(formListener);
         jDialog3.getContentPane().add(jButton5);
@@ -230,6 +240,10 @@ public class panelLaporan extends JPanel {
         jButton6.setText("Tutup");
         jButton6.addActionListener(formListener);
         jDialog3.getContentPane().add(jButton6);
+
+        jLabel10.setText("jLabel10");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE" }));
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -319,6 +333,7 @@ public class panelLaporan extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipe}"));
         columnBinding.setColumnName("Status");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(formListener);
@@ -326,6 +341,7 @@ public class panelLaporan extends JPanel {
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(0).setMaxWidth(75);
         }
+        masterTable.getColumnModel().getColumn(8).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2));
 
         jPanel2.add(masterScrollPane, java.awt.BorderLayout.CENTER);
 
@@ -354,6 +370,9 @@ public class panelLaporan extends JPanel {
             else if (evt.getSource() == jButton4) {
                 panelLaporan.this.jButton4ActionPerformed(evt);
             }
+            else if (evt.getSource() == refreshButton2) {
+                panelLaporan.this.refreshButton2ActionPerformed(evt);
+            }
             else if (evt.getSource() == saveButton) {
                 panelLaporan.this.saveButtonActionPerformed(evt);
             }
@@ -365,9 +384,6 @@ public class panelLaporan extends JPanel {
             }
             else if (evt.getSource() == jFileChooser1) {
                 panelLaporan.this.jFileChooser1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton2) {
-                panelLaporan.this.refreshButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton5) {
                 panelLaporan.this.jButton5ActionPerformed(evt);
@@ -700,12 +716,20 @@ public void Refresh(){
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        String cari = jComboBox1.getSelectedItem().toString();
+        String cari1 = "AND l.tipe = '"+cari+"'";
+            if (cari.equals("SEMUA")) {
+            cari1 = "";
+        }
+            System.out.println("cari = " + cari);
             Date awal = jDateChooser2.getDate();
             Date akhir = jDateChooser3.getDate();
             query = entityManager.createQuery(
-                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate order by l.tanggal asc")
+                "SELECT l FROM Laporan l where l.tanggal BETWEEN :startDate AND :endDate "+cari1+"order by l.tanggal asc")
                 .setParameter("startDate", awal, TemporalType.DATE)
-                .setParameter("endDate", akhir, TemporalType.DATE);  
+                .setParameter("endDate", akhir, TemporalType.DATE)
+//                    .setParameter("cari1", cari)
+                    ;  
             java.util.List<app.table.Laporan> data = query.getResultList();
             app.table.Util.RefreshLaporan();
             java.math.BigInteger saldo = new java.math.BigInteger("0");               
@@ -761,12 +785,16 @@ public void Refresh(){
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog3;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

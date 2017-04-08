@@ -422,15 +422,12 @@ public class PanelBank extends JPanel {
     }//GEN-LAST:event_newDetailButtonActionPerformed
     public void Reset()
     {
-        try {           
         Query query = entityManager.createQuery("SELECT l FROM Laporan l");
         java.util.List<app.table.Laporan> ALL = query.getResultList();
         ALL.forEach((laporan) -> {
                  entityManager.refresh(laporan);
             });        
         this.refreshButtonActionPerformed(null);
-        } catch (Exception e) {
-        }
     }
     @SuppressWarnings("unchecked")
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed

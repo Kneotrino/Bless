@@ -192,6 +192,8 @@ public void Restall()
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jLabel11 = new javax.swing.JLabel();
+        jComboBox5 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
@@ -302,6 +304,7 @@ public void Restall()
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE" }));
 
+        jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         jDialog3.setPreferredSize(new java.awt.Dimension(450, 250));
         jDialog3.setSize(450, 250);
         jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
@@ -317,6 +320,12 @@ public void Restall()
 
         jDateChooser3.setDate(new Date());
         jDialog3.getContentPane().add(jDateChooser3);
+
+        jLabel11.setText("Status");
+        jDialog3.getContentPane().add(jLabel11);
+
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SEMUA" }));
+        jDialog3.getContentPane().add(jComboBox5);
 
         jButton2.setText("Filter");
         jButton2.addActionListener(formListener);
@@ -434,14 +443,14 @@ public void Restall()
             else if (evt.getSource() == refreshButton1) {
                 panelMaster.this.refreshButton1ActionPerformed(evt);
             }
+            else if (evt.getSource() == refreshButton2) {
+                panelMaster.this.refreshButton2ActionPerformed(evt);
+            }
             else if (evt.getSource() == saveButton) {
                 panelMaster.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == jButton1) {
                 panelMaster.this.jButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == refreshButton2) {
-                panelMaster.this.refreshButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton2) {
                 panelMaster.this.jButton2ActionPerformed(evt);
@@ -465,7 +474,10 @@ public void Restall()
         awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
         System.out.println("awalBulan = " + awalBulan);
         System.out.println("akhirBulan = " + akhirBulan);
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();          
+        } catch (NullPointerException e) {
+        }
         this.bankList.clear();
         this.bankList.addAll(bankQuery.getResultList());
          if (temp != -1) {            
@@ -615,19 +627,47 @@ public void Restall()
         }
         this.bankList.clear();
         this.bankList.addAll(bankQuery.getResultList());
-         if (temp != -1) {            
-            System.out.println("Laporan = " + m1.get(temp));
-            Rest();
+        String cari = jComboBox5.getSelectedItem().toString();
+        String cari1 = " AND en.tipe = '"+cari+"'";
+            if (cari.equals("SEMUA")) {
+            cari1 = "";
         }
-        else {        
-        System.out.println("Kelas name = " + clazz.getSimpleName());    
+
+        if (temp != -1) {            
+            System.out.println("Laporan = " + m1.get(temp));
+                    String bool = "";
+            if (m1.get(temp).equals("Pemasukan")) {
+                    bool = "true";
+                }
+            else
+                {
+                    bool = "false";
+                }
+            
+        Query setParameter = entityManager.createQuery("SELECT en FROM Laporan en"
+                    + " where en.tanggal BETWEEN :startDate AND :endDate"
+                    + " AND en.name = " +bool 
+                    + cari1
+                    + " ORDER BY en.tanggal")
+                    .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                    .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP);
+       List<? extends Laporan> res = setParameter.getResultList();           
+            for (Laporan re : res) {
+                entityManager.refresh(re);
+            }
+        list.clear();
+        list.addAll((Collection<? extends Laporan>) res);
+
+        }
+        else {      
         String clzName = this.clazz.getSimpleName();
+        System.out.println("Kelas name = " + clazz.getSimpleName());    
 //        String que = "SELECT en FROM " + clzName + " en "
 //                + "where en.tanggal BETWEEN :startDate AND :endDate"
 //                ;
         TypedQuery<? extends Laporan> createQuery = 
                 entityManager.createQuery("SELECT en FROM " + clzName + " en "
-                + "where en.tanggal BETWEEN :startDate AND :endDate", clazz)
+                + "where en.tanggal BETWEEN :startDate AND :endDate "+cari1+" order by en.tanggal asc", clazz)
                 .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
                 .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 ;
@@ -666,6 +706,7 @@ public void Restall()
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
@@ -675,6 +716,7 @@ public void Restall()
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -728,7 +770,7 @@ public void Restall()
             public void run() {
                 JFrame frame = new JFrame();
 //                frame.setContentPane(new panelMaster(1));
-                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
+                frame.setContentPane(new panelMaster(0));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

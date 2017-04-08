@@ -69,6 +69,7 @@ public class panelPegawai extends JPanel {
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(bankQuery.getResultList());
         jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         detailScrollPane = new javax.swing.JScrollPane();
@@ -116,6 +117,8 @@ public class panelPegawai extends JPanel {
         bindingGroup.addBinding(jComboBoxBinding);
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.transaksi.bankId}"), jComboBox2, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE" }));
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -190,6 +193,9 @@ public class panelPegawai extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
         columnBinding.setColumnName("Sumber");
         columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipe}"));
+        columnBinding.setColumnName("Status");
+        columnBinding.setColumnClass(String.class);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -200,6 +206,7 @@ public class panelPegawai extends JPanel {
             detailTable.getColumnModel().getColumn(1).setPreferredWidth(150);
             detailTable.getColumnModel().getColumn(4).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox2));
         }
+        detailTable.getColumnModel().getColumn(5).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox3));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -432,6 +439,7 @@ public class panelPegawai extends JPanel {
     private app.utils.inputPanel inputPanel2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
     private javax.swing.JPanel jPanel1;
