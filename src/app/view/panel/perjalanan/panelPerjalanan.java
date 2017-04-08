@@ -6,6 +6,8 @@
 package app.view.panel.perjalanan;
 
 import app.table.Bank;
+import app.table.KeuanganMobil;
+import app.table.Mobil;
 import app.table.Pemasukan;
 import app.table.Pengeluaran;
 import app.table.Perjalanan;
@@ -92,8 +94,15 @@ public class panelPerjalanan extends JPanel {
         inputPanel4 = new app.utils.inputPanel(app.table.PerjalananPengeluaran.class);
         jLabel3 = new javax.swing.JLabel();
         newButton4 = new javax.swing.JButton();
+        jDialog5 = new javax.swing.JDialog();
+        inputPanel5 = new app.utils.inputPanel(app.table.MobilPengeluaran.class);
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox5 = new javax.swing.JComboBox<>();
+        newButton5 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox4 = new javax.swing.JComboBox<>();
+        mobilQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM Mobil m");
+        mobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilQuery.getResultList());
         jPanel1 = new javax.swing.JPanel();
         newButton1 = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -104,6 +113,7 @@ public class panelPerjalanan extends JPanel {
         jPanel2 = new javax.swing.JPanel();
         newDetailButton1 = new javax.swing.JButton();
         newDetailButton2 = new javax.swing.JButton();
+        newDetailButton4 = new javax.swing.JButton();
         newDetailButton3 = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
@@ -186,6 +196,23 @@ public class panelPerjalanan extends JPanel {
         inputPanel4.add(newButton4);
 
         jDialog4.getContentPane().add(inputPanel4, java.awt.BorderLayout.CENTER);
+
+        jDialog5.setTitle("Input Data Pakai");
+        jDialog5.setModal(true);
+
+        jLabel5.setText("Mobil");
+        inputPanel5.add(jLabel5);
+
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mobilList, jComboBox5);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        inputPanel5.add(jComboBox5);
+
+        newButton5.setText("Simpan");
+        newButton5.addActionListener(formListener);
+        inputPanel5.add(newButton5);
+
+        jDialog5.getContentPane().add(inputPanel5, java.awt.BorderLayout.CENTER);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -279,6 +306,14 @@ public class panelPerjalanan extends JPanel {
 
         newDetailButton2.addActionListener(formListener);
         jPanel2.add(newDetailButton2);
+
+        newDetailButton4.setText("Pengeluaran Belanja Mobil");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), newDetailButton4, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        newDetailButton4.addActionListener(formListener);
+        jPanel2.add(newDetailButton4);
 
         newDetailButton3.setText("Pengeluaran Perjalanan");
 
@@ -423,6 +458,12 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == newButton4) {
                 panelPerjalanan.this.newButton4ActionPerformed(evt);
             }
+            else if (evt.getSource() == newDetailButton4) {
+                panelPerjalanan.this.newDetailButton4ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton5) {
+                panelPerjalanan.this.newButton5ActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
 
@@ -502,6 +543,18 @@ public class panelPerjalanan extends JPanel {
                 boolean simpan = utilsPanel.simpan(entityManager, p);
                     if (simpan) {  ps.add(p); }   
             }
+            else if (evt.getSource() == newButton5) {
+                System.out.println("Belanja Mobil");
+                KeuanganMobil A = (KeuanganMobil) this.inputPanel5.getTarget();
+                ts.setBankId(Peter);
+                A.setTransaksi(ts);
+                A.setMobils((Mobil) jComboBox5.getSelectedItem());
+                A.setTripsTripsId(t);
+                A.setKeterangan(A.getKeterangan()+ A.getJenis());
+//                System.out.println(A.getTransaksi().getBankId() == null);
+                boolean simpan = utilsPanel.simpan(entityManager, A);
+//                    if (simpan) {  ps.add(); }   
+            }
 //        p.setTransaksi(ts);
         p.setTripsTripsId(t);
 //        entityManager.persist(p);
@@ -521,9 +574,14 @@ public class panelPerjalanan extends JPanel {
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         java.util.Collection data = query.getResultList();
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
+        mobilList.clear();
+        mobilList.addAll(mobilQuery.getResultList());
         Peter = this.entityManager.find(app.table.Bank.class, -2);
         bankList.remove(Peter);
         for (Object entity : data) {
@@ -639,6 +697,18 @@ public class panelPerjalanan extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
+    private void newDetailButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newDetailButton4ActionPerformed
+        this.jDialog5.setSize(500, 400);
+        this.jDialog5.setLocationRelativeTo(null);
+        this.jDialog5.show();        // TODO add your handling code here:
+    }//GEN-LAST:event_newDetailButton4ActionPerformed
+
+    private void newButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton5ActionPerformed
+        this.newDetailButtonActionPerformed(evt);
+        jDialog5.hide();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -652,31 +722,39 @@ public class panelPerjalanan extends JPanel {
     private app.utils.inputPanel inputPanel2;
     private app.utils.inputPanel inputPanel3;
     private app.utils.inputPanel inputPanel4;
+    private app.utils.inputPanel inputPanel5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
     private javax.swing.JDialog jDialog4;
+    private javax.swing.JDialog jDialog5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Trips> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
+    private java.util.List<app.table.Mobil> mobilList;
+    private javax.persistence.Query mobilQuery;
     private javax.swing.JButton newButton;
     private javax.swing.JButton newButton1;
     private javax.swing.JButton newButton2;
     private javax.swing.JButton newButton3;
     private javax.swing.JButton newButton4;
+    private javax.swing.JButton newButton5;
     private javax.swing.JButton newDetailButton;
     private javax.swing.JButton newDetailButton1;
     private javax.swing.JButton newDetailButton2;
     private javax.swing.JButton newDetailButton3;
+    private javax.swing.JButton newDetailButton4;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton refreshButton1;
