@@ -18,6 +18,7 @@ import java.beans.Beans;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -169,6 +170,10 @@ public class PanelBank extends JPanel {
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.saldo}"));
+        columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.dtype}"));
@@ -434,20 +439,27 @@ public class PanelBank extends JPanel {
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         java.util.List<Bank> data = query.getResultList();
+//        data.sort((o1,o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
         data.stream().map((entity) -> {
             entityManager.refresh(entity);
             return entity;
         }).map((entity) -> (Bank) entity).forEachOrdered((Bank b) -> {
             java.math.BigInteger TPem = new java.math.BigInteger("0");
             java.math.BigInteger TPer = new java.math.BigInteger("0");
+            java.math.BigInteger Saldo = new java.math.BigInteger("0");
             List<Saldo> SL = b.getSaldoList();
-            for (Saldo trans : SL) {
+            SL.sort((o1,o2) -> {
+                return o1.getLaporan().getTanggal().compareTo(o2.getLaporan().getTanggal());
+            });
+            for (Saldo trans : SL) {                
                  java.math.BigInteger pem = new java.math.BigInteger("0");
                  java.math.BigInteger per = new java.math.BigInteger("0");
-                pem = trans.getLaporan() ==null?BigInteger.ZERO:trans.getLaporan().getPemasukan() ;
-                per = trans.getLaporan() ==null?BigInteger.ZERO:trans.getLaporan().getPengeluaran();
-                TPem = TPem.add(pem);
-                TPer =TPer.add(per);
+                 pem = trans.getLaporan() ==null?BigInteger.ZERO:trans.getLaporan().getPemasukan() ;
+                 per = trans.getLaporan() ==null?BigInteger.ZERO:trans.getLaporan().getPengeluaran();
+                 Saldo = Saldo.add(pem).subtract(per);
+                 trans.getLaporan().setSaldo(Saldo);
+                 TPem = TPem.add(pem);
+                 TPer =TPer.add(per);
             }
             b.setTotalDebit(TPem);
             b.setTotalKredit(TPer);

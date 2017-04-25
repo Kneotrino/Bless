@@ -195,6 +195,8 @@ public class Laporan implements Serializable {
     }
 
     public Date getTanggal() {
+        if (tanggal == null)
+            return new Date(0, 0, 0);
         return tanggal;
     }
 

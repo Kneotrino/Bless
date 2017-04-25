@@ -96,7 +96,7 @@ public void Refresh()
 //    jButton22ActionPerformed(null);
     this.leasingList.clear();
     this.PerjalananList.clear();
-//    app.table.Util.RefreshBank();
+    app.table.Util.RefreshBank();
     List L = leasingQuery.getResultList();
     for (Object object : L) {
         blessingPUEntityManager.refresh(object);
