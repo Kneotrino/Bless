@@ -188,6 +188,8 @@ public void Restall()
         inputPanel1 = new app.utils.inputPanel();
         jComboBox4 = new javax.swing.JComboBox<>();
         jDialog3 = new javax.swing.JDialog();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
@@ -210,6 +212,7 @@ public void Restall()
         refreshButton1 = new javax.swing.JButton();
         refreshButton2 = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        newButton1 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -308,6 +311,10 @@ public void Restall()
         jDialog3.setPreferredSize(new java.awt.Dimension(450, 250));
         jDialog3.setSize(450, 250);
         jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
+
+        jLabel7.setText("Cari");
+        jDialog3.getContentPane().add(jLabel7);
+        jDialog3.getContentPane().add(jTextField1);
 
         jLabel5.setText("Tanggal Awal");
         jDialog3.getContentPane().add(jLabel5);
@@ -421,6 +428,10 @@ public void Restall()
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
+        newButton1.setText("Print X");
+        newButton1.addActionListener(formListener);
+        jPanel1.add(newButton1);
+
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         bindingGroup.bind();
@@ -458,6 +469,9 @@ public void Restall()
             else if (evt.getSource() == jButton3) {
                 panelMaster.this.jButton3ActionPerformed(evt);
             }
+            else if (evt.getSource() == newButton1) {
+                panelMaster.this.newButton1ActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
             Calendar cal = Calendar.getInstance();
@@ -470,10 +484,13 @@ public void Restall()
         cal.set(Calendar.MONTH, jMonthChooser1.getMonth());
         cal.set(Calendar.YEAR, jYearChooser1.getYear());
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+        cal.set(Calendar.HOUR, cal.getActualMaximum(Calendar.HOUR));
+        cal.set(Calendar.MINUTE, cal.getActualMaximum(Calendar.MINUTE));
         akhirBulan = cal.getTime();        
         awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
-        System.out.println("awalBulan = " + awalBulan);
+        awalBulan.setMinutes(1);
         System.out.println("akhirBulan = " + akhirBulan);
+        System.out.println("awalBulan = " + awalBulan);
         try {
             ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();          
         } catch (NullPointerException e) {
@@ -523,7 +540,13 @@ public void Restall()
             entityManager.remove(l);
         }
         list.removeAll(toRemove);
-        this.saveButtonActionPerformed(evt);
+        int jawab = javax.swing.JOptionPane.showConfirmDialog(null,  "Pastikan Sebelum Anda Ingin Menghapus Transaksi\nApakah anda ingin menghapus transaksi ini?");
+        if (jawab == javax.swing.JOptionPane.OK_OPTION) {
+            this.saveButtonActionPerformed(evt);            
+        }
+        else {
+            this.refreshButtonActionPerformed(evt);
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
         public  void Refresh()
         {
@@ -618,9 +641,17 @@ public void Restall()
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         awalBulan = jDateChooser2.getDate();
-        akhirBulan = jDateChooser3.getDate();        
+        akhirBulan = jDateChooser3.getDate();
+        awalBulan.setHours(0);
+        awalBulan.setMinutes(1);
+        akhirBulan.setHours(23);
+        akhirBulan.setMinutes(58);
         System.out.println("awalBulan = " + awalBulan);
         System.out.println("akhirBulan = " + akhirBulan);
+                String huruf = "%";
+        huruf += this.jTextField1.getText();
+        huruf += "%";   
+        System.out.println("huruf = " + huruf);
         try {
         ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();                       
         } catch (Exception e) {
@@ -643,14 +674,14 @@ public void Restall()
                 {
                     bool = "false";
                 }
-            
         Query setParameter = entityManager.createQuery("SELECT en FROM Laporan en"
-                    + " where en.tanggal BETWEEN :startDate AND :endDate"
+                    + " where en.keterangan LIKE :carian AND en.tanggal BETWEEN :startDate AND :endDate"
                     + " AND en.name = " +bool 
                     + cari1
                     + " ORDER BY en.tanggal")
                     .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
-                    .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP);
+                    .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)
+                .setParameter("carian", huruf);
        List<? extends Laporan> res = setParameter.getResultList();           
             for (Laporan re : res) {
                 entityManager.refresh(re);
@@ -667,10 +698,10 @@ public void Restall()
 //                ;
         TypedQuery<? extends Laporan> createQuery = 
                 entityManager.createQuery("SELECT en FROM " + clzName + " en "
-                + "where en.tanggal BETWEEN :startDate AND :endDate "+cari1+" order by en.tanggal asc", clazz)
+                + "where en.keterangan LIKE :carian AND en.tanggal BETWEEN :startDate AND :endDate "+cari1+" order by en.tanggal asc", clazz)
                 .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
-                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
-                ;
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP) 
+                .setParameter("carian", huruf);
         List<? extends Laporan> res = createQuery.getResultList();           
             for (Laporan re : res) {
                 entityManager.refresh(re);
@@ -691,6 +722,11 @@ public void Restall()
         
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+        System.out.println("app.view.FixPanel.panelMaster.newButton1ActionPerformed()");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -722,9 +758,11 @@ public void Restall()
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
     private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JLabel jumlahLabel;
     private javax.swing.JTextField keteranganField;
@@ -733,6 +771,7 @@ public void Restall()
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
+    private javax.swing.JButton newButton1;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton refreshButton1;
@@ -770,7 +809,7 @@ public void Restall()
             public void run() {
                 JFrame frame = new JFrame();
 //                frame.setContentPane(new panelMaster(1));
-                frame.setContentPane(new panelMaster(0));
+                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

@@ -211,7 +211,6 @@ public class panelLaporan extends JPanel {
         jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         jFileChooser1.addActionListener(formListener);
 
-        jDialog3.setPreferredSize(new java.awt.Dimension(450, 250));
         jDialog3.setSize(450, 250);
         jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
 

@@ -99,5 +99,9 @@ public class Pengeluaran extends Laporan implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+    @Override
+        public String getJenis()
+    {
+        return "Operasional";
+    }
 }
