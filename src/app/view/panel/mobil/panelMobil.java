@@ -1913,8 +1913,17 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding.setColumnName("Ref");
     columnBinding.setColumnClass(Integer.class);
     columnBinding.setEditable(false);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${statusMobil}"));
-    columnBinding.setColumnName("Status");
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${merk}"));
+    columnBinding.setColumnName("Merk");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${type}"));
+    columnBinding.setColumnName("Type");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tahun}"));
+    columnBinding.setColumnName("Tahun");
+    columnBinding.setColumnClass(Integer.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${warna}"));
+    columnBinding.setColumnName("Warna");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiAktif}"));
     columnBinding.setColumnName("No Polisi Aktif");
@@ -1922,26 +1931,21 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiLama}"));
     columnBinding.setColumnName("No Polisi Lama");
     columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debitur.nama}"));
+    columnBinding.setColumnName("Debitur");
+    columnBinding.setColumnClass(String.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${statusMobil}"));
+    columnBinding.setColumnName("Status");
+    columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemilikBaru}"));
     columnBinding.setColumnName("Pemilik Baru");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemilikLama}"));
     columnBinding.setColumnName("Pemilik Lama");
     columnBinding.setColumnClass(String.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${merk}"));
-    columnBinding.setColumnName("Merk");
-    columnBinding.setColumnClass(String.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${type}"));
-    columnBinding.setColumnName("Type");
-    columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
     columnBinding.setColumnName("Jenis");
-    columnBinding.setColumnClass(String.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tahun}"));
-    columnBinding.setColumnName("Tahun");
-    columnBinding.setColumnClass(Integer.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${warna}"));
-    columnBinding.setColumnName("Warna");
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${silinder}"));
     columnBinding.setColumnName("Silinder");
@@ -1957,10 +1961,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bpkb.noBpkb}"));
     columnBinding.setColumnName("Bpkb");
-    columnBinding.setColumnClass(String.class);
-    columnBinding.setEditable(false);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${debitur.nama}"));
-    columnBinding.setColumnName("Debitur");
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
@@ -1999,7 +1999,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jScrollPane1.setViewportView(jTable1);
     if (jTable1.getColumnModel().getColumnCount() > 0) {
-        jTable1.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(jComboBox10)
+        jTable1.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(jComboBox10)
         );
     }
 
@@ -2804,7 +2804,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        mobilList.clear();
         String cari = "%";
         cari += this.jTextField32.getText();
         cari += "%";
@@ -2830,6 +2829,12 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                 .setParameter("cari1", cari)
                 ;
         System.out.println("createQuery = " + createQuery.getResultList().size());
+        if (createQuery.getResultList().isEmpty()) {
+                    javax.swing.JOptionPane.showMessageDialog(null,  "Pencarian kosong");                                    
+        }
+        else    {
+        mobilList.clear();        
+        }
         mobilList.addAll(createQuery.getResultList());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton23ActionPerformed

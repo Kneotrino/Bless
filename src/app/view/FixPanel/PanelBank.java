@@ -578,6 +578,8 @@ public class PanelBank extends JPanel {
         BigInteger nominal = BigInteger.valueOf((Long) jFormattedTextField1.getValue());
         app.table.Pengeluaran kirim = new Pengeluaran();
         app.table.Pemasukan terima = new Pemasukan();
+        kirim.setTipe("CLOSE");
+        terima.setTipe("CLOSE");
         kirim.setJumlah(nominal);
         kirim.setKeterangan(jTextField1.getText());
         terima.setKeterangan(jTextField2.getText());
