@@ -658,6 +658,11 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton21ActionPerformed"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel17">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="DEBITUR"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel55">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="NOMOR POLISI AKTIF"/>
@@ -745,6 +750,17 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton13ActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextField27">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
+                  <BindingProperties>
+                    <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.debitur.nama}" target="jTextField27" targetPath="text" updateStrategy="0" immediately="false">
+                      <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                    </BindingProperty>
+                  </BindingProperties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextField47">
                   <BindingProperties>
@@ -1023,16 +1039,6 @@
                         <BindingProperty name="value" source="jTable1" sourcePath="${selectedElement.dpPertama}" target="jFormattedTextField5" targetPath="value" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel96">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="UNIT SAMPAI KUPANG"/>
-                      </Properties>
-                    </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser13">
-                      <BindingProperties>
-                        <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.tangglPelunasanPembelian}" target="jDateChooser13" targetPath="date" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel18">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="HARGA BELI"/>
@@ -1046,32 +1052,6 @@
                       </Properties>
                       <BindingProperties>
                         <BindingProperty name="value" source="jTable1" sourcePath="${selectedElement.hargaPembelian}" target="jFormattedTextField2" targetPath="value" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel15">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="TANGGAL BELI"/>
-                      </Properties>
-                    </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser3">
-                      <BindingProperties>
-                        <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.tanggalBeli}" target="jDateChooser3" targetPath="date" updateStrategy="0" immediately="false"/>
-                      </BindingProperties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel17">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="DEBITUR"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField27">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="enabled" type="boolean" value="false"/>
-                      </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="text" source="jTable1" sourcePath="${selectedElement.debitur.nama}" target="jTextField27" targetPath="text" updateStrategy="0" immediately="false">
-                          <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                        </BindingProperty>
                       </BindingProperties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel19">
@@ -1089,14 +1069,44 @@
                         <BindingProperty name="value" source="jTable1" sourcePath="${selectedElement.hargaJual}" target="jFormattedTextField3" targetPath="value" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                     </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel96">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="UNIT SAMPAI KUPANG"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser13">
+                      <BindingProperties>
+                        <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.tanggalSampaiKupang}" target="jDateChooser13" targetPath="date" updateStrategy="0" immediately="false"/>
+                      </BindingProperties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel15">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="TANGGAL BELI/READY"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser3">
+                      <BindingProperties>
+                        <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.tanggalBeli}" target="jDateChooser3" targetPath="date" updateStrategy="0" immediately="false"/>
+                      </BindingProperties>
+                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel35">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="TANGGAL JUAL"/>
+                        <Property name="text" type="java.lang.String" value="TANGGAL JUAL/OPEN"/>
                       </Properties>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser4">
                       <BindingProperties>
                         <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.tanggalJual}" target="jDateChooser4" targetPath="date" updateStrategy="0" immediately="false"/>
+                      </BindingProperties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel101">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="TANGGAL PELUNASAN/CLOSE"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser16">
+                      <BindingProperties>
+                        <BindingProperty name="date" source="jTable1" sourcePath="${selectedElement.tangglPelunasanPembelian}" target="jDateChooser16" targetPath="date" updateStrategy="0" immediately="false"/>
                       </BindingProperties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel38">
@@ -2333,9 +2343,11 @@
         <Component class="javax.swing.JComboBox" name="jComboBox11">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
+              <StringArray count="4">
                 <StringItem index="0" value="TANGGAL MOBIL BELI"/>
                 <StringItem index="1" value="TANGGAL MOBIL JUAL"/>
+                <StringItem index="2" value="TANGGAL MOBIL SAMPAI"/>
+                <StringItem index="3" value="TANGGAL MOBIL LUNAS"/>
               </StringArray>
             </Property>
           </Properties>
@@ -2694,6 +2706,11 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                       </TableColumnModel>
                     </Property>
                     <Property name="rowHeight" type="int" value="24"/>
@@ -2785,16 +2802,24 @@
                         <BindingParameter name="NAME" value="Harga Beli"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Long.class"/>
                       </Subbinding>
-                      <Subbinding sourcePath="${tanggalBeli}">
-                        <BindingParameter name="NAME" value="Tanggal Beli"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
-                      </Subbinding>
                       <Subbinding sourcePath="${hargaJual}">
                         <BindingParameter name="NAME" value="Harga Jual"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Long.class"/>
                       </Subbinding>
+                      <Subbinding sourcePath="${tanggalBeli}">
+                        <BindingParameter name="NAME" value="Tanggal Beli"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+                      </Subbinding>
                       <Subbinding sourcePath="${tanggalJual}">
                         <BindingParameter name="NAME" value="Tanggal Jual"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${tangglPelunasanPembelian}">
+                        <BindingParameter name="NAME" value="Tanggal Mobil Sampai"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${tangglPelunasanPembelian}">
+                        <BindingParameter name="NAME" value="Tanggal Pelunasan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${penjual}">
@@ -2808,10 +2833,6 @@
                       <Subbinding sourcePath="${dpPertama}">
                         <BindingParameter name="NAME" value="Lap. Perjalanan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Long.class"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${tangglPelunasanPembelian}">
-                        <BindingParameter name="NAME" value="Tanggal Mobil Sampai"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${keterangan}">
                         <BindingParameter name="NAME" value="Keterangan"/>

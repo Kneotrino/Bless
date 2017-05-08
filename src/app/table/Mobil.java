@@ -137,6 +137,31 @@ public class Mobil implements Serializable {
     @Column(name = "TANGGL_PELUNASAN_PEMBELIAN")
     @Temporal(TemporalType.DATE)
     private Date tangglPelunasanPembelian;
+    @Column(name = "TANGGL_SAMPAI")
+    @Temporal(TemporalType.DATE)
+    private Date tanggalSampaiKupang;
+
+    public static final String PROP_TANGGALSAMPAIKUPANG = "tanggalSampaiKupang";
+
+    /**
+     * Get the value of tanggalSampaiKupang
+     *
+     * @return the value of tanggalSampaiKupang
+     */
+    public Date getTanggalSampaiKupang() {
+        return tanggalSampaiKupang;
+    }
+
+    /**
+     * Set the value of tanggalSampaiKupang
+     *
+     * @param tanggalSampaiKupang new value of tanggalSampaiKupang
+     */
+    public void setTanggalSampaiKupang(Date tanggalSampaiKupang) {
+        Date oldTanggalSampaiKupang = this.tanggalSampaiKupang;
+        this.tanggalSampaiKupang = tanggalSampaiKupang;
+        changeSupport.firePropertyChange(PROP_TANGGALSAMPAIKUPANG, oldTanggalSampaiKupang, tanggalSampaiKupang);
+    }
     @Column(name = "TYPE", length = 32)
     private String type;
     @Column(name = "WARNA", length = 32)

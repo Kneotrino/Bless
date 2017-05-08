@@ -55,7 +55,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Bpkbtitipan.findByTglLeasing", query = "SELECT b FROM Bpkbtitipan b WHERE b.tglLeasing = :tglLeasing")
     , @NamedQuery(name = "Bpkbtitipan.findByTglTerima", query = "SELECT b FROM Bpkbtitipan b WHERE b.tglTerima = :tglTerima")})
 //@ListUrutan({"anBpkb", "posisi", "tglBbn"})
- @ListUrutan({"anBpkb","ket","noBpkb","noPolisiAktif","posisi","status","stnk","tglTerima"})
+ @ListUrutan({"anBpkb","ket","noBpkb","noPolisiAktif","posisi","status","stnk","Faktur","tglTerima"})
 
 public class Bpkbtitipan implements Serializable {
 
@@ -82,6 +82,31 @@ public class Bpkbtitipan implements Serializable {
     private String status;
     @Column(name = "STNK", length = 64)
     private String stnk;
+
+    @Column(name = "FAKTUR", length = 64)
+    private String Faktur;
+    public static final String PROP_FAKTUR = "Faktur";
+
+    /**
+     * Get the value of Faktur
+     *
+     * @return the value of Faktur
+     */
+    public String getFaktur() {
+        return Faktur;
+    }
+
+    /**
+     * Set the value of Faktur
+     *
+     * @param Faktur new value of Faktur
+     */
+    public void setFaktur(String Faktur) {
+        String oldFaktur = this.Faktur;
+        this.Faktur = Faktur;
+        changeSupport.firePropertyChange(PROP_FAKTUR, oldFaktur, Faktur);
+    }
+
     @Column(name = "TGL_BBN")
     @Temporal(TemporalType.DATE)
     private Date tglBbn;

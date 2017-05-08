@@ -206,6 +206,7 @@ public void Refresh()
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jButton21 = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
@@ -222,6 +223,7 @@ public void Refresh()
         jLabel37 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         jButton13 = new javax.swing.JButton();
+        jTextField27 = new javax.swing.JTextField();
         jTextField47 = new javax.swing.JTextField();
         jTextField48 = new javax.swing.JTextField();
         jTextField49 = new javax.swing.JTextField();
@@ -257,18 +259,18 @@ public void Refresh()
         jTextField60 = new javax.swing.JTextField();
         jLabel95 = new javax.swing.JLabel();
         jFormattedTextField5 = new javax.swing.JFormattedTextField();
-        jLabel96 = new javax.swing.JLabel();
-        jDateChooser13 = new com.toedter.calendar.JDateChooser();
         jLabel18 = new javax.swing.JLabel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField27 = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        jLabel96 = new javax.swing.JLabel();
+        jDateChooser13 = new com.toedter.calendar.JDateChooser();
+        jLabel15 = new javax.swing.JLabel();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
         jLabel35 = new javax.swing.JLabel();
         jDateChooser4 = new com.toedter.calendar.JDateChooser();
+        jLabel101 = new javax.swing.JLabel();
+        jDateChooser16 = new com.toedter.calendar.JDateChooser();
         jLabel38 = new javax.swing.JLabel();
         jTextField33 = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
@@ -758,6 +760,9 @@ public void Refresh()
         });
         jPanel16.add(jButton21);
 
+        jLabel17.setText("DEBITUR");
+        jPanel16.add(jLabel17);
+
         jLabel55.setText("NOMOR POLISI AKTIF");
         jPanel16.add(jLabel55);
 
@@ -811,6 +816,14 @@ public void Refresh()
             }
         });
         jPanel17.add(jButton13);
+
+        jTextField27.setEditable(false);
+        jTextField27.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.nama}"), jTextField27, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jPanel17.add(jTextField27);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.noPolisiAktif}"), jTextField47, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
@@ -1006,14 +1019,6 @@ public void Refresh()
 
         jPanel11.add(jFormattedTextField5);
 
-        jLabel96.setText("UNIT SAMPAI KUPANG");
-        jPanel11.add(jLabel96);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tangglPelunasanPembelian}"), jDateChooser13, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jPanel11.add(jDateChooser13);
-
         jLabel18.setText("HARGA BELI");
         jPanel11.add(jLabel18);
 
@@ -1023,25 +1028,6 @@ public void Refresh()
         bindingGroup.addBinding(binding);
 
         jPanel11.add(jFormattedTextField2);
-
-        jLabel15.setText("TANGGAL BELI");
-        jPanel11.add(jLabel15);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tanggalBeli}"), jDateChooser3, org.jdesktop.beansbinding.BeanProperty.create("date"));
-        bindingGroup.addBinding(binding);
-
-        jPanel11.add(jDateChooser3);
-
-        jLabel17.setText("DEBITUR");
-        jPanel11.add(jLabel17);
-
-        jTextField27.setEditable(false);
-        jTextField27.setEnabled(false);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.debitur.nama}"), jTextField27, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jPanel11.add(jTextField27);
 
         jLabel19.setText("HARGA JUAL");
         jPanel11.add(jLabel19);
@@ -1053,13 +1039,37 @@ public void Refresh()
 
         jPanel11.add(jFormattedTextField3);
 
-        jLabel35.setText("TANGGAL JUAL");
+        jLabel96.setText("UNIT SAMPAI KUPANG");
+        jPanel11.add(jLabel96);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tanggalSampaiKupang}"), jDateChooser13, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel11.add(jDateChooser13);
+
+        jLabel15.setText("TANGGAL BELI/READY");
+        jPanel11.add(jLabel15);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tanggalBeli}"), jDateChooser3, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel11.add(jDateChooser3);
+
+        jLabel35.setText("TANGGAL JUAL/OPEN");
         jPanel11.add(jLabel35);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tanggalJual}"), jDateChooser4, org.jdesktop.beansbinding.BeanProperty.create("date"));
         bindingGroup.addBinding(binding);
 
         jPanel11.add(jDateChooser4);
+
+        jLabel101.setText("TANGGAL PELUNASAN/CLOSE");
+        jPanel11.add(jLabel101);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.tangglPelunasanPembelian}"), jDateChooser16, org.jdesktop.beansbinding.BeanProperty.create("date"));
+        bindingGroup.addBinding(binding);
+
+        jPanel11.add(jDateChooser16);
 
         jLabel38.setText("TOTAL PEMASUKAN");
         jPanel11.add(jLabel38);
@@ -1773,7 +1783,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jLabel88.setText("PILIHAN");
     FilterDialog.getContentPane().add(jLabel88);
 
-    jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TANGGAL MOBIL BELI", "TANGGAL MOBIL JUAL" }));
+    jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TANGGAL MOBIL BELI", "TANGGAL MOBIL JUAL", "TANGGAL MOBIL SAMPAI", "TANGGAL MOBIL LUNAS" }));
     FilterDialog.getContentPane().add(jComboBox11);
 
     jLabel90.setText("TANGGAL AWAL");
@@ -1969,14 +1979,20 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaPembelian}"));
     columnBinding.setColumnName("Harga Beli");
     columnBinding.setColumnClass(Long.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalBeli}"));
-    columnBinding.setColumnName("Tanggal Beli");
-    columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaJual}"));
     columnBinding.setColumnName("Harga Jual");
     columnBinding.setColumnClass(Long.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalBeli}"));
+    columnBinding.setColumnName("Tanggal Beli");
+    columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalJual}"));
     columnBinding.setColumnName("Tanggal Jual");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tangglPelunasanPembelian}"));
+    columnBinding.setColumnName("Tanggal Mobil Sampai");
+    columnBinding.setColumnClass(java.util.Date.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tangglPelunasanPembelian}"));
+    columnBinding.setColumnName("Tanggal Pelunasan");
     columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${penjual}"));
     columnBinding.setColumnName("Penjual");
@@ -1987,9 +2003,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dpPertama}"));
     columnBinding.setColumnName("Lap. Perjalanan");
     columnBinding.setColumnClass(Long.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tangglPelunasanPembelian}"));
-    columnBinding.setColumnName("Tanggal Mobil Sampai");
-    columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
     columnBinding.setColumnName("Keterangan");
     columnBinding.setColumnClass(String.class);
@@ -2579,7 +2592,11 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.jTextField38.setText(Rp.format(tk) );
         this.jTextField39.setText(Rp.format(td) );
         this.jTextField59.setText(Rp.format(td.subtract(tk)) );
-    ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+    
+        try {
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
     this.bankList.clear();
 //    this.bankList.add(null);    
     this.bankList.addAll(bankQuery.getResultList());
@@ -3014,14 +3031,30 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
             que += " WHERE ";
         }
         
-        if (this.jComboBox11.getSelectedIndex() == 0) {
-             que +=" m.tanggalBeli BETWEEN :startDate AND :endDate";
+        int x = this.jComboBox11.getSelectedIndex();
+        switch (x) {
+            case 0:                
+               que +=" m.tanggalBeli BETWEEN :startDate AND :endDate";
+                break;
+            case 1:                
+               que +=" m.tanggalJual BETWEEN :startDate AND :endDate";
+                break;
+            case 2:                
+               que +=" m.tangglPelunasanPembelian BETWEEN :startDate AND :endDate";
+                break;
+            case 3:                
+               que +=" m.tanggalSampaiKupang BETWEEN :startDate AND :endDate";
+                break;
+            default:
+                throw new AssertionError();
         }
-        else    
-            {
-              que += " m.tanggalJual BETWEEN :startDate AND :endDate";
-
-        }
+//        if (this.jComboBox11.getSelectedIndex() == 0) {
+//             que +=" m.tanggalBeli BETWEEN :startDate AND :endDate";
+//        }
+//        else    
+//            {
+//              que += " m.tanggalJual BETWEEN :startDate AND :endDate";
+//        }
         System.out.println("que = " + que);        
 //        mobilQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT m FROM Mobil m WHERE  ");
         TypedQuery createQuery = blessingPUEntityManager
@@ -3483,6 +3516,7 @@ public void FileSave() throws IOException
     private com.toedter.calendar.JDateChooser jDateChooser13;
     private com.toedter.calendar.JDateChooser jDateChooser14;
     private com.toedter.calendar.JDateChooser jDateChooser15;
+    private com.toedter.calendar.JDateChooser jDateChooser16;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
@@ -3509,6 +3543,7 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
+    private javax.swing.JLabel jLabel101;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
