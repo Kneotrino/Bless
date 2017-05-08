@@ -258,6 +258,7 @@ public class Laporan implements Serializable {
         try {
             Message("Berhasil Menyimpan");
         } catch (Exception e) {
+            e.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(null,"Gagal Menyimpan \n");
         }
             

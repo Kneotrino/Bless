@@ -440,6 +440,7 @@ public class panelInvestor extends JPanel {
         app.table.Saham s = new app.table.Saham();
         if (evt.getSource() == jButton1) {
                 app.table.Modal m = (app.table.Modal) inputPanel1.getTarget();
+                m.setSaham(s);
                 app.table.Saldo s1 = new Saldo();
                 s1.setBankId((Bank) jComboBox1.getSelectedItem());
                 m.setTransaksi(s1);
@@ -514,7 +515,10 @@ public class panelInvestor extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
         java.util.List Res = this.bankQuery.getResultList();
         this.bankList.clear();
         this.bankList.addAll(Res);
