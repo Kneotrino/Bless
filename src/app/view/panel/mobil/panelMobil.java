@@ -57,6 +57,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
  *
@@ -1988,7 +1992,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalJual}"));
     columnBinding.setColumnName("Tanggal Jual");
     columnBinding.setColumnClass(java.util.Date.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tangglPelunasanPembelian}"));
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalSampaiKupang}"));
     columnBinding.setColumnName("Tanggal Mobil Sampai");
     columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tangglPelunasanPembelian}"));
@@ -2237,7 +2241,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         baru.setNoPolisiAktif(this.jTextField1.getText());
         baru.setPemilikLama(this.jTextField6.getText());
         baru.setDpPertama(jYearChooser3.getYear());
-        baru.setTangglPelunasanPembelian(jDateChooser14.getDate());
+        baru.setTanggalSampaiKupang(jDateChooser14.getDate());
         bpkb.setNoBpkb(this.jTextField2.getText());
         bpkb.setStnk(this.jTextField64.getText());
         bpkb.setTglTerima(this.jDateChooser1.getDate());
@@ -3368,6 +3372,12 @@ public void FileSave() throws IOException
         }
     }//GEN-LAST:event_jButton31ActionPerformed
 
+    private void FileExcel()
+    {
+        HSSFWorkbook hwb = new HSSFWorkbook();
+        HSSFSheet sheet = hwb.createSheet("Data Mobil");
+
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         List<JTextField> list = new LinkedList<>();

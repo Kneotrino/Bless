@@ -209,6 +209,9 @@ public class panelJasa extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${stnk}"));
         columnBinding.setColumnName("Stnk");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${faktur}"));
+        columnBinding.setColumnName("Faktur");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglCb}"));
         columnBinding.setColumnName("Tgl Cb");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -237,7 +240,7 @@ public class panelJasa extends JPanel {
         masterScrollPane.setViewportView(masterTable);
         masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(14).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
+            masterTable.getColumnModel().getColumn(15).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox4));
         }
 
         add(masterScrollPane);

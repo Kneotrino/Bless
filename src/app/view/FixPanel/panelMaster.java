@@ -506,10 +506,13 @@ public void Restall()
         String clzName = this.clazz.getSimpleName();
 //        String que = "SELECT en FROM " + clzName + " en "
 //                + "where en.tanggal BETWEEN :startDate AND :endDate"
-//                ;
+//                ;SELECT * FROM BLESSING.LAPORAN 
+//WHERE MONTH(LAPORAN.TANGGAL) = 1 
+
+
         TypedQuery<? extends Laporan> createQuery = 
                 entityManager.createQuery("SELECT en FROM " + clzName + " en "
-                + "where en.tanggal BETWEEN :startDate AND :endDate", clazz)
+                + "where Month(en.tanggal) = :startDate", clazz)
                 .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
                 .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 ;

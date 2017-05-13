@@ -412,6 +412,11 @@
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
                   <Editor editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                     <Connection code="new javax.swing.DefaultCellEditor(jComboBox4)" type="code"/>
                   </Editor>
@@ -457,6 +462,10 @@
               </Subbinding>
               <Subbinding sourcePath="${stnk}">
                 <BindingParameter name="NAME" value="Stnk"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${faktur}">
+                <BindingParameter name="NAME" value="Faktur"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${tglCb}">

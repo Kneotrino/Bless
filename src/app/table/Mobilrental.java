@@ -194,6 +194,7 @@ public class Mobilrental implements Serializable {
                 + " " + noPolisiAktif
                 + " " + merk
                 + " " + type
+                + " " + keterangan
                 +"";
     }
 
