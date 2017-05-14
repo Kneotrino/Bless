@@ -142,6 +142,30 @@ public class Mobil implements Serializable {
     private Date tanggalSampaiKupang;
 
     public static final String PROP_TANGGALSAMPAIKUPANG = "tanggalSampaiKupang";
+    @Transient
+    private int Nomor;
+
+    public static final String PROP_NOMOR = "Nomor";
+
+    /**
+     * Get the value of Nomor
+     *
+     * @return the value of Nomor
+     */
+    public int getNomor() {
+        return Nomor;
+    }
+
+    /**
+     * Set the value of Nomor
+     *
+     * @param Nomor new value of Nomor
+     */
+    public void setNomor(int Nomor) {
+        int oldNomor = this.Nomor;
+        this.Nomor = Nomor;
+        changeSupport.firePropertyChange(PROP_NOMOR, oldNomor, Nomor);
+    }
 
     /**
      * Get the value of tanggalSampaiKupang
