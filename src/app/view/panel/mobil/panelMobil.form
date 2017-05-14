@@ -214,6 +214,26 @@
                     </Property>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel102">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="POSISI BPKB"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextField65">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField65ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel103">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="POSISI FAKTUR"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextField66">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField66ActionPerformed"/>
+                  </Events>
+                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel99">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="NOMOR STNK AKTIF"/>

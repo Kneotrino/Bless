@@ -157,6 +157,10 @@ public void Refresh()
         jTextField2 = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel102 = new javax.swing.JLabel();
+        jTextField65 = new javax.swing.JTextField();
+        jLabel103 = new javax.swing.JLabel();
+        jTextField66 = new javax.swing.JTextField();
         jLabel99 = new javax.swing.JLabel();
         jTextField64 = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
@@ -502,6 +506,26 @@ public void Refresh()
 
         jDateChooser1.setDate(new java.util.Date());
         jPanel2.add(jDateChooser1);
+
+        jLabel102.setText("POSISI BPKB");
+        jPanel2.add(jLabel102);
+
+        jTextField65.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField65ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextField65);
+
+        jLabel103.setText("POSISI FAKTUR");
+        jPanel2.add(jLabel103);
+
+        jTextField66.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField66ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextField66);
 
         jLabel99.setText("NOMOR STNK AKTIF");
         jPanel2.add(jLabel99);
@@ -2245,6 +2269,8 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         bpkb.setNoBpkb(this.jTextField2.getText());
         bpkb.setStnk(this.jTextField64.getText());
         bpkb.setTglTerima(this.jDateChooser1.getDate());
+        bpkb.setPosisi(this.jTextField65.getText());
+        bpkb.setNoPolisiAktif(this.jTextField66.getText());
 //        bpkb.setNoPolisiAktif(baru.getNoPolisiAktif());
         baru.setMerk(this.jTextField3.getText());
         baru.setType(this.jTextField4.getText());
@@ -3382,6 +3408,8 @@ public void FileSave() throws IOException
         // TODO add your handling code here:
         List<JTextField> list = new LinkedList<>();
         list.add(jTextField1);
+        list.add(jTextField65);
+        list.add(jTextField66);
         list.add(jTextField2);
         list.add(jTextField3);
         list.add(jTextField4);
@@ -3436,6 +3464,14 @@ public void FileSave() throws IOException
     private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField14ActionPerformed
+
+    private void jTextField65ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField65ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField65ActionPerformed
+
+    private void jTextField66ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField66ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField66ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -3554,6 +3590,8 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
     private javax.swing.JLabel jLabel101;
+    private javax.swing.JLabel jLabel102;
+    private javax.swing.JLabel jLabel103;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -3745,6 +3783,8 @@ public void FileSave() throws IOException
     private javax.swing.JTextField jTextField62;
     private javax.swing.JTextField jTextField63;
     private javax.swing.JTextField jTextField64;
+    private javax.swing.JTextField jTextField65;
+    private javax.swing.JTextField jTextField66;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;

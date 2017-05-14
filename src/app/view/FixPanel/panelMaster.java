@@ -510,9 +510,7 @@ public void Restall()
 //WHERE MONTH(LAPORAN.TANGGAL) = 1 
 
 
-         System.out.println("startDate = "+ awalBulan);
-//         entityManager.createNativeQuery("SELECT * FROM Laporan WHERE MONTH(tangga)l = " + , clazz)
-//    entityManager.createNativeQuery("SELECT * FROM Laporan WHERE MONTH(tanggal) = ", clazz)
+        System.out.println("startDate = "+ awalBulan);
         TypedQuery<? extends Laporan> createQuery = 
                 entityManager.createQuery("SELECT en FROM " + clzName + " en " + "where FUNC('MONTH', en.tanggal) = :startDate "
                         + "AND FUNC('YEAR', en.tanggal) = :endDate", clazz)
@@ -557,7 +555,12 @@ public void Restall()
         {
                 this.refreshButtonActionPerformed(null);
         }
+        public void Input(java.awt.event.ActionEvent evt)
+        {
+            newButtonActionPerformed(evt);
+        }
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        masterTable.clearSelection();        
         Laporan nw = null;
         try {
             Constructor<? extends Laporan> cons = clazz.getConstructor();
