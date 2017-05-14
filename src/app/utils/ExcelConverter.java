@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 /**
@@ -93,10 +94,18 @@ public class ExcelConverter {
                    {
                        HSSFCell cell = row.createCell((short) p);
                        Object dot = ardata.get(p);
-                       String data = dot.toString();                       
+                       String data = dot.toString(); 
+                       data=data.replaceAll("\"", "");
+                       if (isNumeric(data)) {
+                           try {
+                                Long a = Long.valueOf(data);
+                                cell.setCellValue(a);                               
+                           } catch (Exception e) {                               
+                           }
+                       }
 //                       cell.setCellStyle(style);
 //                       cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-                       if(data.startsWith("=")){
+                       else if(data.startsWith("=")){
                            data=data.replaceAll("\"", "");
                            data=data.replaceAll("=", "");
                            cell.setCellValue(data);
@@ -135,12 +144,23 @@ public class ExcelConverter {
         
        } //main method ends        
     }
-    
+    public static boolean isNumeric(String str)
+{
+  NumberFormat formatter = NumberFormat.getInstance();
+  ParsePosition pos = new ParsePosition(0);
+  formatter.parse(str, pos);
+  return str.length() == pos.getIndex();
+}
     public static void main(String args[]) throws IOException
     {
-            List<File> cvs = new java.util.LinkedList<>();
-            cvs.add(new File("D:\\Test.csv"));
-            ExcelConverter(cvs, new File("Test.xls"));
+//            List<File> cvs = new java.util.LinkedList<>();
+//            cvs.add(new File("D:\\Test.csv"));
+//            ExcelConverter(cvs, new File("Test.xls"));
+        System.out.println(isNumeric("2433"));
+        System.out.println("300");
+        String data = "400";
+        System.out.println("data = " + data);
+
 }
 }
     
