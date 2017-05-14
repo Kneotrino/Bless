@@ -20,6 +20,7 @@ import app.table.Saldo;
 import app.table.Trips;
 import static app.utils.ExcelConverter.ExcelConverter;
 import app.view.FixPanel.akuntansi.Akun;
+import static app.view.FixPanel.panelLaporan.toTableModel;
 //import static app.utils.Printer.getDataList;
 import app.view.FixPanel.panelLeasing;
 import app.view.ShowRoom;
@@ -42,11 +43,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javaslang.Tuple;
 import javax.imageio.ImageIO;
 import javax.persistence.TemporalType;
@@ -58,6 +62,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -407,12 +413,8 @@ public void Refresh()
         jButton30 = new javax.swing.JButton();
         jFileChooser8 = new javax.swing.JFileChooser();
         InformasiDialog = new javax.swing.JDialog();
-        jPanel22 = new javax.swing.JPanel();
-        jTextField67 = new javax.swing.JTextField();
-        jTextField68 = new javax.swing.JTextField();
-        jTextField69 = new javax.swing.JTextField();
-        jTextField70 = new javax.swing.JTextField();
-        jPanel23 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable6 = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
         akunMobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList( new LinkedList<Akun>() );
@@ -1861,27 +1863,20 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     InformasiDialog.setSize(900, 500);
     InformasiDialog.getContentPane().setLayout(new java.awt.GridLayout(2, 0));
 
-    jPanel22.setLayout(new java.awt.GridLayout(2, 0));
+    jTable6.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null},
+            {null, null, null, null}
+        },
+        new String [] {
+            "Title 1", "Title 2", "Title 3", "Title 4"
+        }
+    ));
+    jScrollPane8.setViewportView(jTable6);
 
-    jTextField67.setEditable(false);
-    jTextField67.setBorder(javax.swing.BorderFactory.createTitledBorder("TOTAL MOBIL"));
-    jPanel22.add(jTextField67);
-
-    jTextField68.setEditable(false);
-    jTextField68.setBorder(javax.swing.BorderFactory.createTitledBorder("TOTAL MOBIL OPEN"));
-    jPanel22.add(jTextField68);
-
-    jTextField69.setEditable(false);
-    jTextField69.setBorder(javax.swing.BorderFactory.createTitledBorder("TOTAL MOBIL CLOSE"));
-    jPanel22.add(jTextField69);
-
-    jTextField70.setEditable(false);
-    jTextField70.setBorder(javax.swing.BorderFactory.createTitledBorder("TOTAL MOBIL SELESAI"));
-    jPanel22.add(jTextField70);
-
-    InformasiDialog.getContentPane().add(jPanel22);
-
-    jPanel23.setLayout(new java.awt.GridLayout());
+    InformasiDialog.getContentPane().add(jScrollPane8);
 
     jTable5.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
     jTable5.setAutoCreateRowSorter(true);
@@ -1912,9 +1907,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         jTable5.getColumnModel().getColumn(0).setMaxWidth(50);
     }
 
-    jPanel23.add(jScrollPane4);
-
-    InformasiDialog.getContentPane().add(jPanel23);
+    InformasiDialog.getContentPane().add(jScrollPane4);
 
     setLayout(new java.awt.BorderLayout());
 
@@ -3566,18 +3559,39 @@ public void FileSave() throws IOException
     private void jTextField66ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField66ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField66ActionPerformed
-
+    public static TableModel toTableModel(Map<?,?> map) {
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[] { "Mobil", "Jumlah" }, 0
+        );
+        for (Map.Entry<?,?> entry : map.entrySet()) {
+            model.addRow(new Object[] { entry.getKey(), entry.getValue() });
+        }
+        return model;
+    }
     private void jButton34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton34ActionPerformed
         this.InformasiDialog.setLocationRelativeTo(null);        
         this.InformasiDialog.show();
-        
-        jTextField67.setText( Integer.toString(mobilList.size()));
+//        Long t = mobilList.size();
+        long total = jTable1.getRowCount();
+//        jTextField67.setText( Integer.toString(mobilList.size()));
 //        jTextField1.setText(TOOL_TIP_TEXT_KEY);
 //        jTextField1.setText(TOOL_TIP_TEXT_KEY);
 //        jTextField1.setText(TOOL_TIP_TEXT_KEY);
         // TODO add your handling code here:
+        Map<String, Long> collect = 
+                mobilList.stream()
+                        .collect(Collectors.groupingBy(l  -> l.getStatusMobil(), Collectors.counting())); 
+        collect.put("Total Mobil", total);
+//        collect.putAll(
+//                mobilList.stream()
+//                        .collect(Collectors.groupingBy(l  -> l.getMerk(), Collectors.counting()))        
+//        );        
+//        Map<String, Long> sort = new TreeMap<>(collect);
+
         java.util.List<Akun> temp = new LinkedList<>();
         int i = 0;
+        BigInteger totalMasuk = BigInteger.ZERO;
+        BigInteger totalKeluar = BigInteger.ZERO;
         for (Mobil mobil : mobilList) {
             i++;
             BigInteger pemasukan = BigInteger.ZERO;
@@ -3586,6 +3600,8 @@ public void FileSave() throws IOException
             for (KeuanganMobil k : KM) {
                 pemasukan = pemasukan.add(k.getPemasukan());
                 pengeluaran = pengeluaran.add(k.getPengeluaran());
+                totalMasuk = totalMasuk.add(k.getPemasukan());
+                totalKeluar = totalKeluar.add(k.getPengeluaran());
             }
             Akun veh = new Akun(i)
                     .setAkun(
@@ -3603,7 +3619,17 @@ public void FileSave() throws IOException
             temp.add(veh);
         }
         akunMobilList.clear();
+        Akun Hasil = new Akun()
+                .setAkun("Total")
+                .setPemasukan(totalMasuk)
+                .setPengeluaran(totalKeluar)
+//                .setProfit(totalMasuk.subtract(totalKeluar))
+                ;
+        Hasil.setProfit(totalMasuk.subtract(totalKeluar));
+        
+        akunMobilList.add(Hasil);
         akunMobilList.addAll(temp);
+        this.jTable6.setModel(toTableModel(new TreeMap<>(collect)));
     }//GEN-LAST:event_jButton34ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
@@ -3840,8 +3866,6 @@ public void FileSave() throws IOException
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -3856,6 +3880,7 @@ public void FileSave() throws IOException
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
@@ -3863,6 +3888,7 @@ public void FileSave() throws IOException
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
+    private javax.swing.JTable jTable6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
@@ -3926,11 +3952,7 @@ public void FileSave() throws IOException
     private javax.swing.JTextField jTextField64;
     private javax.swing.JTextField jTextField65;
     private javax.swing.JTextField jTextField66;
-    private javax.swing.JTextField jTextField67;
-    private javax.swing.JTextField jTextField68;
-    private javax.swing.JTextField jTextField69;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField70;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private com.toedter.calendar.JYearChooser jYearChooser1;
