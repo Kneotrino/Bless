@@ -510,12 +510,14 @@ public void Restall()
 //WHERE MONTH(LAPORAN.TANGGAL) = 1 
 
 
+         System.out.println("startDate = "+ awalBulan);
+//         entityManager.createNativeQuery("SELECT * FROM Laporan WHERE MONTH(tangga)l = " + , clazz)
+//    entityManager.createNativeQuery("SELECT * FROM Laporan WHERE MONTH(tanggal) = ", clazz)
         TypedQuery<? extends Laporan> createQuery = 
-                entityManager.createQuery("SELECT en FROM " + clzName + " en "
-                + "where Month(en.tanggal) = :startDate", clazz)
-                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
-                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
-                ;
+                entityManager.createQuery("SELECT en FROM " + clzName + " en " + "where FUNC('MONTH', en.tanggal) = :startDate "
+                        + "AND FUNC('YEAR', en.tanggal) = :endDate", clazz)
+                .setParameter("startDate", jMonthChooser1.getMonth()+1)
+                .setParameter("endDate", jYearChooser1.getYear() );
         List<? extends Laporan> res = createQuery.getResultList();           
             for (Laporan re : res) {
                 entityManager.refresh(re);
