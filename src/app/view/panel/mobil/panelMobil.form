@@ -2541,9 +2541,6 @@
     </Container>
     <Component class="java.util.List" name="akunMobilList">
       <Properties>
-        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="default"/>
-        </Property>
         <Property name="observable" type="boolean" value="true"/>
       </Properties>
       <AuxValues>

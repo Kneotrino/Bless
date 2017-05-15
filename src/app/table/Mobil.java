@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -667,5 +668,30 @@ public class Mobil implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+    public BigInteger getTotalPemasukan()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (KeuanganMobil KM : keuanganMobils) {
+            temp = temp.add(KM.getPemasukan());
+        }
+        Masuk = temp;
+        return temp;
+    }
+    public BigInteger getTotalPengeluaran()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (KeuanganMobil KM : keuanganMobils) {
+            temp = temp.add(KM.getPengeluaran());
+        }
+        Keluar = temp;
+        return temp;
+    }
+    @Transient
+    BigInteger Masuk = BigInteger.ZERO;
+    @Transient
+    BigInteger Keluar = BigInteger.ZERO;
+    public BigInteger getTotalProfit()
+    {
+           return Masuk.subtract(Keluar);
+    }
 }

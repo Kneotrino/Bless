@@ -3241,29 +3241,36 @@ public void FileSave() throws IOException
               WriteStep data = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"))
                         .type(app.table.Mobil.class)
                             .properties(
-                                    Tuple.of("mobilId","mobilId", d-> d),
-                                    Tuple.of("noPolisiAktif","noPolisiAktif", fungsi),
-                                    Tuple.of("noPolisiLama","noPolisiLama", fungsi),
-                                    Tuple.of("jenis","jenis", fungsi),
-                                    Tuple.of("type","type", fungsi),
-                                    Tuple.of("merk","merk", fungsi),
-                                    Tuple.of("bahanBakar","bahanBakar", fungsi),
-                                    Tuple.of("noMesin","noMesin", fungsi),
-                                    Tuple.of("noRangka","noRangka", fungsi),
-                                    Tuple.of("pemilikBaru","pemilikBaru", fungsi),
-                                    Tuple.of("pemilikLama","pemilikLama", fungsi),
-                                    Tuple.of("silinder","silinder", fungsi),
-                                    Tuple.of("statusMobil","statusMobil", fungsi),
-                                    Tuple.of("tahun","tahun", fungsi),
-                                    Tuple.of("warna","warna", fungsi),
-                                    Tuple.of("tanggalBeli","tanggalBeli", d -> d == null? " ": formator.format(d)),
-                                    Tuple.of("tanggalJual","tanggalJual", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("REF/No","nomor", d-> d),
+                                    Tuple.of("Status Mobil","statusMobil", fungsi),
+                                    Tuple.of("Harga Pembelian","hargaPembelian", fungsi),
+                                    Tuple.of("Harga Pembelian","hargaJual", fungsi),
+                                    Tuple.of("Tanggal Beli","tanggalBeli", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Tanggal Smp Kupang","tanggalSampaiKupang", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Tanggal Jual","tanggalJual", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Tanggal Pelunas","tangglPelunasanPembelian", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("No Polisi Aktif","noPolisiAktif", fungsi),
+                                    Tuple.of("No Polisi Lama","noPolisiLama", fungsi),
+                                    Tuple.of("Merk","merk", fungsi),
+                                    Tuple.of("Type","type", fungsi),
+                                    Tuple.of("Tahun","tahun", fungsi),
+                                    Tuple.of("Warna","warna", fungsi),
+                                    Tuple.of("Jenis","jenis", fungsi),
+                                    Tuple.of("BBM","bahanBakar", fungsi),
+                                    Tuple.of("No Mesin","noMesin", fungsi),
+                                    Tuple.of("No Rangka","noRangka", fungsi),
+                                    Tuple.of("Pemilik Baru","pemilikBaru", fungsi),
+                                    Tuple.of("Pemilik Lama","pemilikLama", fungsi),
+                                    Tuple.of("Silinder","silinder", fungsi),
                                     Tuple.of("Penjual","penjual", fungsi),
-                                    Tuple.of("no_Hp_Penjual","no_Hp_Penjual", fungsi),
-                                    Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
-                                    Tuple.of("Nama Pembeli","debitur.nama", fungsi),
+                                    Tuple.of("Hp Penjual","no_Hp_Penjual", fungsi),
                                     Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi),
                                     Tuple.of("Atas Nama BPKB","bpkb.anBpkb", fungsi),
+                                    Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
+                                    Tuple.of("Nama Pembeli","debitur.nama", fungsi),
+                                    Tuple.of("Total Pemasukan","totalPemasukan", fungsi),
+                                    Tuple.of("Total Pengeluaran","totalPengeluaran", fungsi),
+                                    Tuple.of("Total Profit","totalProfit", fungsi),
                                     Tuple.of("keterangan","keterangan", fungsi)
                     ).dataList(a);
               data.write();
@@ -3280,7 +3287,9 @@ public void FileSave() throws IOException
                             mobil.getStatusMobil()+ "-" +
                             mobil.getDebitur().getNama()+ ".CSV"
                             ;
-                      File p = new File(chooser.getSelectedFile().getParentFile(), mo);
+                      File Folder =new File(chooser.getSelectedFile().getParentFile(), "Data Mobil");
+                      Folder.mkdirs();
+                      File p = new File(Folder, mo);
                       cvs.add(p);
                       List<KeuanganMobil> b = mobil.getKeuanganMobils();
                       KeuanganMobil total1 = new MobilPemasukan();
