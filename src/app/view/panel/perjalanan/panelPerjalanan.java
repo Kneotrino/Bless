@@ -19,6 +19,7 @@ import app.table.Util;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.math.BigInteger;
@@ -30,6 +31,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.RollbackException;
+import javax.persistence.TypedQuery;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -97,6 +99,8 @@ public class panelPerjalanan extends JPanel {
         jDialog5 = new javax.swing.JDialog();
         inputPanel5 = new app.utils.inputPanel(app.table.MobilPengeluaran.class);
         jLabel5 = new javax.swing.JLabel();
+        newButton6 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         jComboBox5 = new javax.swing.JComboBox<>();
         newButton5 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -202,6 +206,14 @@ public class panelPerjalanan extends JPanel {
 
         jLabel5.setText("Mobil");
         inputPanel5.add(jLabel5);
+
+        newButton6.setText("Cari");
+        newButton6.addActionListener(formListener);
+        inputPanel5.add(newButton6);
+
+        jTextField1.setLayout(new BorderLayout());
+        jTextField1.add(newButton6, BorderLayout.LINE_END);
+        inputPanel5.add(jTextField1);
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mobilList, jComboBox5);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -428,6 +440,9 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == newDetailButton2) {
                 panelPerjalanan.this.newDetailButton2ActionPerformed(evt);
             }
+            else if (evt.getSource() == newDetailButton4) {
+                panelPerjalanan.this.newDetailButton4ActionPerformed(evt);
+            }
             else if (evt.getSource() == newDetailButton3) {
                 panelPerjalanan.this.newDetailButton3ActionPerformed(evt);
             }
@@ -458,11 +473,11 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == newButton4) {
                 panelPerjalanan.this.newButton4ActionPerformed(evt);
             }
-            else if (evt.getSource() == newDetailButton4) {
-                panelPerjalanan.this.newDetailButton4ActionPerformed(evt);
-            }
             else if (evt.getSource() == newButton5) {
                 panelPerjalanan.this.newButton5ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton6) {
+                panelPerjalanan.this.newButton6ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -524,6 +539,7 @@ public class panelPerjalanan extends JPanel {
                 p = (Perjalanan) this.inputPanel3.getTarget();
                 ts.setBankId((Bank) this.jComboBox3.getSelectedItem());
                 Pemasukan p1 = new Pemasukan();
+                p1.setTipe("CLOSE");
                 p1.setJumlah(p.getJumlah());
                 p1.setKeterangan(p.getKeterangan());
                 p1.setTanggal(p.getTanggal());
@@ -709,6 +725,18 @@ public class panelPerjalanan extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton5ActionPerformed
 
+    private void newButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton6ActionPerformed
+        String cari = "%";
+        cari += this.jTextField1.getText();
+        cari += "%"; 
+        TypedQuery<Mobil> createQuery = entityManager.createQuery(" SELECT b from Mobil b WHERE "
+                + "b.noPolisiAktif LIKE :cari1 "+
+                 " OR b.noPolisiLama LIKE :cari1",Mobil.class)
+            .setParameter("cari1", cari);
+        mobilList.clear();
+        mobilList.addAll(createQuery.getResultList());        // TODO add your handling code here:
+    }//GEN-LAST:event_newButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -739,6 +767,7 @@ public class panelPerjalanan extends JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
     private java.util.List<app.table.Trips> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
@@ -750,6 +779,7 @@ public class panelPerjalanan extends JPanel {
     private javax.swing.JButton newButton3;
     private javax.swing.JButton newButton4;
     private javax.swing.JButton newButton5;
+    private javax.swing.JButton newButton6;
     private javax.swing.JButton newDetailButton;
     private javax.swing.JButton newDetailButton1;
     private javax.swing.JButton newDetailButton2;

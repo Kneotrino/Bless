@@ -13,6 +13,7 @@ import app.table.Hutang;
 import app.table.KeuanganMobil;
 import app.table.Laporan;
 import app.table.Mobil;
+import app.table.Pengeluaran;
 import app.table.Rental;
 import static app.utils.ExcelConverter.ExcelConverter;
 import com.joobar.csvbless.CSVUtil;
@@ -30,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -103,6 +105,8 @@ public class panelAkuntansi extends JPanel {
     }
     public List getList(Class kelas)
     {
+//        System.out.println("awalBulan = " + awalBulan);
+//        System.out.println("akhirBulan = " + akhirBulan);
         String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
                 + "where en.tanggal BETWEEN :startDate AND :endDate"
                 ;
@@ -110,6 +114,12 @@ public class panelAkuntansi extends JPanel {
                 .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
                 .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 ;
+//                Date temp = new Date();
+//                TypedQuery<? extends Laporan> createQuery = 
+//                entityManager.createQuery("SELECT en FROM " + kelas.getSimpleName() + " en " + "where FUNC('MONTH', en.tanggal) = :startDate "
+//                        + "AND FUNC('YEAR', en.tanggal) = :endDate", kelas)
+//                .setParameter("startDate", temp.getMonth()-1)
+//                .setParameter("endDate", temp.getYear() + 1900);
         return createQuery.getResultList();
     }
     private BigInteger sumAll(List<? extends Laporan> laporanList)
@@ -133,7 +143,11 @@ public class panelAkuntansi extends JPanel {
                  result.forEach(a -> entityManager.refresh(a));
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));            
         akhirBulan = cal.getTime();
-        awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
+        akhirBulan.setHours(23);
+        cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));            
+        awalBulan = cal.getTime();
+        awalBulan.setHours(0);
+        awalBulan.setMinutes(0);
         System.out.println("awalBulan = " + awalBulan);
         System.out.println("akhirBulan = " + akhirBulan);
         Akun total = new Akun().setAkun("Neraca Total");
@@ -167,9 +181,19 @@ public class panelAkuntansi extends JPanel {
          Akun Hutang = new Akun(X++)
                  .setAkun("Hutang")
                  .setPengeluaran(sumAll(getList(app.table.BayarPihutangPemasukan.class)));
+         Predicate<Laporan> OPEN = p-> p.getTipe().equals("OPEN");
+         Predicate<Laporan> CLOSE = p-> p.getTipe().equals("CLOSE");
+        List list1 = getList(app.table.Pengeluaran.class);
+        List list2 = getList(app.table.Pengeluaran.class);
+        list1.removeIf(CLOSE);
+        list2.removeIf(OPEN);
          Akun Operasional = new Akun(X++)
-                 .setAkun("Beban Operasional")
-                 .setPemasukan(sumAll(getList(app.table.Pengeluaran.class)))
+                 .setAkun("Beban Operasional OPEN")
+                 .setPemasukan(sumAll(list1))
+                 ;
+         Akun OperasionalClose = new Akun(X++)
+                 .setAkun("Beban Operasional CLOSE")
+                 .setPemasukan(sumAll(list2))
                  ;
          Akun Pegawai = new Akun(X++)
                  .setAkun("Beban Gaji Pegawai")
@@ -177,9 +201,18 @@ public class panelAkuntansi extends JPanel {
          Akun Asset = new Akun(X++)
                  .setAkun("Beban Biaya Asset")
                  .setPemasukan(sumAll(getList(app.table.Asset.class)));                  
-        Akun Pemasukan = new Akun(X++)
-                 .setAkun("Pemasukan Lainnya")
-                .setPengeluaran(sumAll(getList(app.table.Pemasukan.class)))
+        List list3 = getList(app.table.Pemasukan.class);
+        List list4 = getList(app.table.Pemasukan.class);
+        list3.removeIf(CLOSE);
+        list4.removeIf(OPEN);
+         Akun Pemasukan = new Akun(X++)
+                 .setAkun("Pemasukan OPEN")
+                .setPengeluaran(sumAll(list3))
+//                .subPengeluaran(sumAll(getList(app.table.PerjalananKembalikan.class)))
+                ;
+         Akun PemasukanCLOSE = new Akun(X++)
+                 .setAkun("Pemasukan CLOSE")
+                .setPengeluaran(sumAll(list4))
                 .subPengeluaran(sumAll(getList(app.table.PerjalananKembalikan.class)))
                 ;
         Akun Perjalanan = new Akun(X++)
@@ -262,12 +295,14 @@ public class panelAkuntansi extends JPanel {
         AkuntansiList.add(Rental);        
         AkuntansiList.add(Jasa);        
         AkuntansiList.add(Pemasukan);        
+        AkuntansiList.add(PemasukanCLOSE);        
         AkuntansiList.add(Peminjaman);        
         LabaList.add(ModalDitahan);
         LabaList.add(Mobil);
         LabaList.add(Rental);
         LabaList.add(Jasa);
         LabaList.add(Pemasukan);
+//        LabaList.add(PemasukanCLOSE );
         LabaList.add(Peminjaman);
         //Akun Pengeluaran        
         AkuntansiList.add(sisaHutang);
@@ -278,6 +313,7 @@ public class panelAkuntansi extends JPanel {
         AkuntansiList.add(bebanJasa);
         AkuntansiList.add(Perjalanan);
         AkuntansiList.add(Operasional);
+        AkuntansiList.add(OperasionalClose);
         AkuntansiList.add(Pegawai);                    
         AkuntansiList.add(Asset);
         AkuntansiList.add(Bayasewa);
@@ -289,6 +325,7 @@ public class panelAkuntansi extends JPanel {
         LabaList.add(bebanJasa);
         LabaList.add(Perjalanan);
         LabaList.add(Operasional);
+//        LabaList.add(OperasionalClose);
         LabaList.add(Pegawai);                    
         LabaList.add(Asset);
         LabaList.add(Bayasewa);
@@ -357,7 +394,7 @@ public class panelAkuntansi extends JPanel {
 //        BigInteger totalProfit = BigInteger.ZERO;
         Akun totalProfit = new Akun()
                 .setAkun("Total " + Calendar.getInstance().get(Calendar.YEAR));
-        for (int i = 1; i < 13; i++) {
+        for (int i = 2; i < 14; i++) {
             Akun temp = new Akun(i);
             LaporanPenyesuaian.add( ProfitBulanan(temp) );
             totalProfit.addPemasukan( temp.getPemasukan());
@@ -477,11 +514,11 @@ public class panelAkuntansi extends JPanel {
         initComponents();
     }
     public String getMonth(int month) {
-    return new DateFormatSymbols().getMonths()[month-1];
+    return new DateFormatSymbols().getMonths()[month-2];
 }
     public Akun ProfitBulanan(Akun profit)
     {
-      profit.setAkun("Bulan "+profit.getNomor() 
+      profit.setAkun("Bulan "
               + " "+getMonth(profit.getNomor()) + " " + Calendar.getInstance().get(Calendar.YEAR));
       BigInteger pemasukan = BigInteger.ZERO;
       BigInteger pengeluaran = BigInteger.ZERO;
@@ -534,16 +571,15 @@ public class panelAkuntansi extends JPanel {
     
     public List getMonthList(Class kelas,int Month)
     {
-        String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
-                + "where en.tanggal BETWEEN :startDate AND :endDate"
-                ;
        Date bulanAwal = new Date(akhirBulan.getYear(), Month-1, 0);
        Date bulanAkhir = new Date(akhirBulan.getYear(), Month, 0);
-       TypedQuery createQuery = entityManager.createQuery(que, kelas)
-                .setParameter("startDate", bulanAwal, TemporalType.TIMESTAMP)
-                .setParameter("endDate", bulanAkhir, TemporalType.TIMESTAMP)  
-                ;
-        return createQuery.getResultList();
+        TypedQuery<? extends Laporan> createQuery = 
+                entityManager.createQuery("SELECT en FROM " + kelas.getSimpleName() + " en " + "where FUNC('MONTH', en.tanggal) = :startDate "
+                        + "AND FUNC('YEAR', en.tanggal) = :endDate", kelas)
+                .setParameter("startDate", Month-1)
+                .setParameter("endDate", akhirBulan.getYear() + 1900);
+//        System.out.println("createQuery = " + createQuery);
+       return createQuery.getResultList();
     }
     public List getYearList(Class kelas)
     {
