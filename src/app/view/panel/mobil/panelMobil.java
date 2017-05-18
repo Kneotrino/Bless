@@ -3279,12 +3279,12 @@ public void FileSave() throws IOException
                             .properties(
                                     Tuple.of("debitur REF","debitur.debiturId", d -> d==null?" ":d),
                                     Tuple.of("Nama","debitur.nama", d -> d==null?" ":d),
-                                    Tuple.of("Alamat","debitur.alamat", d -> d==null?" ":d ),
                                     Tuple.of("Nomot HP","debitur.noHp", d -> d==null?" ":d),
                                     Tuple.of("Nomor Identitas","debitur.noKtp", d -> d==null?" ":d),
 //                                    Tuple.of("norek","norek", d -> d==null?" ":d),
                                     Tuple.of("Nama ke-2","debitur.bank", d -> d==null?" ":d),
-                                    Tuple.of("Nomor HP ke-2","debitur.pembayaran", d -> d==null?" ":d)
+                                    Tuple.of("Nomor HP ke-2","debitur.pembayaran", d -> d==null?" ":d),
+                                    Tuple.of("Alamat","debitur.alamat", d -> d==null?" ":d )
 //                                    Tuple.of("scan","scan", d -> d==null?" ":d),
 //                                    Tuple.of("mobil REF","mobil", d -> d==null?" ":d)
                     ).dataList(a);

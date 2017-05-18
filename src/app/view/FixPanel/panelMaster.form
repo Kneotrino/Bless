@@ -547,7 +547,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="newButton1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Print X"/>
+            <Property name="text" type="java.lang.String" value="Print"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButton1ActionPerformed"/>

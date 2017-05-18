@@ -438,7 +438,7 @@ public void Restall()
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
-        newButton1.setText("Print X");
+        newButton1.setText("Print");
         newButton1.addActionListener(formListener);
         jPanel1.add(newButton1);
 
@@ -760,16 +760,16 @@ public void Restall()
     }
        File file1 = chooser.getSelectedFile();
               List a = list;
-              WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CVS"))
+              WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CSV"))
                 .type(clazz)
                 .properties(
                         Tuple.of("Ref", "id", d -> d==null?"":d),
                         Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
-                        Tuple.of("Keterangan", "keterangan", d -> d==null?"":d),
                         Tuple.of("Jumlah", "jumlah", d -> d==null?"":d ),
                         Tuple.of("Status", "tipe", d -> d==null?"":d),
                         Tuple.of("Tipe", "jenis", d -> d==null?"":d),
-                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d),
+                        Tuple.of("Keterangan", "keterangan", d -> d==null?"":d)
                 )
                 .dataList(a);
                     try {
