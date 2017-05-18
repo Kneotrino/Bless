@@ -8,17 +8,25 @@ package app.view.FixPanel;
 import app.table.Bank;
 import app.table.Laporan;
 import app.table.Saldo;
+import static app.utils.ExcelConverter.ExcelConverter;
 import app.view.ShowRoom;
+import javaslang.Tuple;
 import app.view.utilsPanel;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
 import com.toedter.calendar.JYearChooser;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.Beans;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -39,8 +47,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -308,7 +319,6 @@ public void Restall()
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE" }));
 
         jDialog3.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog3.setPreferredSize(new java.awt.Dimension(450, 250));
         jDialog3.setSize(450, 250);
         jDialog3.getContentPane().setLayout(new java.awt.GridLayout(0, 2));
 
@@ -460,6 +470,9 @@ public void Restall()
             else if (evt.getSource() == saveButton) {
                 panelMaster.this.saveButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == newButton1) {
+                panelMaster.this.newButton1ActionPerformed(evt);
+            }
             else if (evt.getSource() == jButton1) {
                 panelMaster.this.jButton1ActionPerformed(evt);
             }
@@ -468,9 +481,6 @@ public void Restall()
             }
             else if (evt.getSource() == jButton3) {
                 panelMaster.this.jButton3ActionPerformed(evt);
-            }
-            else if (evt.getSource() == newButton1) {
-                panelMaster.this.newButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -733,8 +743,55 @@ public void Restall()
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
         System.out.println("app.view.FixPanel.panelMaster.newButton1ActionPerformed()");
+           JFileChooser chooser=new JFileChooser(".");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+            chooser.addChoosableFileFilter(filter);
+            chooser.setFileFilter(filter);
+            chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+            chooser.setDialogTitle("Save File");
+//        Date date = new Date();
+            File filetemp = new File( System.getProperties().getProperty("user.home"), 
+           "Data Laporan "+clazz.getSimpleName() +".xls");
+   chooser.setSelectedFile(filetemp);
+//   int returnVal1=chooser.showSaveDialog(this);
+    while ( chooser.getSelectedFile().exists()) {
+        JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+        chooser.showSaveDialog(this);        
+    }
+       File file1 = chooser.getSelectedFile();
+              List a = list;
+              WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CVS"))
+                .type(clazz)
+                .properties(
+                        Tuple.of("Ref", "id", d -> d==null?"":d),
+                        Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                        Tuple.of("Keterangan", "keterangan", d -> d==null?"":d),
+                        Tuple.of("Jumlah", "jumlah", d -> d==null?"":d ),
+                        Tuple.of("Status", "tipe", d -> d==null?"":d),
+                        Tuple.of("Tipe", "jenis", d -> d==null?"":d),
+                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                )
+                .dataList(a);
+                    try {
+                    dataList.write();
+                    List<File> cvs = new java.util.LinkedList<>();
+                    cvs.add(new File(file1.getParentFile(), "Data Laporan.CVS"));
+                    ExcelConverter(cvs, file1);
+                    Desktop.getDesktop().open(file1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
+                    return ;
+                } 
+                    finally {
+                        JOptionPane.showMessageDialog(this,"File Created. \n"+ file1);
+                    }
+
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
+                    final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
