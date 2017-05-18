@@ -2075,9 +2075,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding.setColumnName("Bpkb");
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
-    columnBinding.setColumnName("Keterangan");
-    columnBinding.setColumnClass(String.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${hargaPembelian}"));
     columnBinding.setColumnName("Harga Beli");
     columnBinding.setColumnClass(Long.class);
@@ -2177,10 +2174,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${noPolisiAktif}"));
     columnBinding.setColumnName("Posisi Faktur");
     columnBinding.setColumnClass(String.class);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
-    columnBinding.setColumnName("Mobil Ref");
-    columnBinding.setColumnClass(Integer.class);
-    columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${stnk}"));
     columnBinding.setColumnName("No STNK");
     columnBinding.setColumnClass(String.class);
@@ -3224,7 +3217,13 @@ public void FileSave() throws IOException
    chooser.setFileFilter(filter);
    chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
    chooser.setDialogTitle("Save File");
-   File filetemp = new File( System.getProperties().getProperty("user.home"), "Data Mobil.xls");
+//        Date date = new Date();
+   File filetemp = new File( System.getProperties().getProperty("user.home"), 
+           "Data Mobil"+
+//                   date.getDay()+"-" +
+//                   date.getMonth()+"-" +
+//                   (date.getYear() - 100)+"-" +
+                   ".xls");
    chooser.setSelectedFile(filetemp);
 //   int returnVal1=chooser.showSaveDialog(this);
     while ( chooser.getSelectedFile().exists()) {
@@ -3274,19 +3273,59 @@ public void FileSave() throws IOException
                                     Tuple.of("keterangan","keterangan", fungsi)
                     ).dataList(a);
               data.write();
+              cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Debitur.CSV"));
+              WriteStep debitur = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar debitur.CSV"))
+                        .type(app.table.Debitur.class)
+                            .properties(
+                                    Tuple.of("debitur REF","debitur.debiturId", d -> d==null?" ":d),
+                                    Tuple.of("Nama","debitur.nama", d -> d==null?" ":d),
+                                    Tuple.of("Alamat","debitur.alamat", d -> d==null?" ":d ),
+                                    Tuple.of("Nomot HP","debitur.noHp", d -> d==null?" ":d),
+                                    Tuple.of("Nomor Identitas","debitur.noKtp", d -> d==null?" ":d),
+//                                    Tuple.of("norek","norek", d -> d==null?" ":d),
+                                    Tuple.of("Nama ke-2","debitur.bank", d -> d==null?" ":d),
+                                    Tuple.of("Nomor HP ke-2","debitur.pembayaran", d -> d==null?" ":d)
+//                                    Tuple.of("scan","scan", d -> d==null?" ":d),
+//                                    Tuple.of("mobil REF","mobil", d -> d==null?" ":d)
+                    ).dataList(a);
+              debitur.write();
+              cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar BPKB.CSV"));
+              WriteStep bpkb = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar BPKB.CSV"))
+                        .type(app.table.Bpkb.class)
+                            .properties(
+                                    Tuple.of("REF","bpkb.bpkbId", d -> d==null?" ":d),
+                                    Tuple.of("Keterangan","bpkb.ket", d -> d==null?" ":d),
+                                    Tuple.of("Atas Nama BPKB","bpkb.anBpkb", d -> d==null?" ":d),
+                                    Tuple.of("No BPKB","bpkb.noBpkb", d -> d==null?" ":d),
+                                    Tuple.of("No BPKB Lama","bpkb.status", d -> d==null?" ":d),
+                                    Tuple.of("Posisi BPKB","bpkb.posisi", d -> d==null?" ":d),
+                                    Tuple.of("Posisi Faktur","bpkb.noPolisiAktif", d -> d==null?" ":d),
+                                    Tuple.of("STNK","bpkb.stnk", d -> d==null?" ":d),
+                                    Tuple.of("tgl Bbn","bpkb.tglBbn", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Kembali Bbn","bpkb.tglKembaliBbn", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Cb","bpkb.tglCb", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Kembali Cb","bpkb.tglKembaliCb", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Leasing","bpkb.tglLeasing", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Terima","bpkb.tglTerima", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Pajak EXP","bpkb.tanggalExp", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("mobil REF","bpkb.mobil", d -> d==null?" ":d)
+                    ).dataList(a);
+              bpkb.write();
+              
+
                           //mobil laporan
             for (Mobil mobil : mobilList) {
                     String mo = 
-                            mobil.getMobilId()+ "-" +
                             mobil.getNoPolisiAktif()+ "-" +
-                            mobil.getMerk() + "-" +
+//                            mobil.getMerk() + "-" +
                             mobil.getType().replace("/", " ")+ "-" +
-                            mobil.getJenis().replace("/", " ")+ "-" +
-                            mobil.getTahun()+ "-" +
-                            mobil.getWarna()+ "-" +
-                            mobil.getStatusMobil()+ "-" +
-                            mobil.getDebitur().getNama()+ ".CSV"
-                            ;
+//                            mobil.getJenis().replace("/", " ")+ "-" +
+//                            mobil.getTahun()+ "-" +
+//                            mobil.getWarna()+ "-" +
+//                            mobil.getStatusMobil()+ "-" +
+                            mobil.getDebitur().getNama() +
+                            mobil.getMobilId()+".CSV" ;
+//                      mo = st.replaceAll("\\s+","");
                       File Folder =new File(chooser.getSelectedFile().getParentFile(), "Data Mobil");
                       Folder.mkdirs();
                       File p = new File(Folder, mo);

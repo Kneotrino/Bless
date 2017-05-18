@@ -20,14 +20,17 @@ public class test {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        EntityManager entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
-//        List<app.table.Hutang> list = entityManager.createQuery("SELECT h FROM Hutang h", app.table.Hutang.class).getResultList();       
-        List<app.table.BayarhutangPengeluaran> list = entityManager.createQuery("SELECT h FROM BayarhutangPengeluaran h", app.table.BayarhutangPengeluaran.class).getResultList();       
-        BigInteger totalHutang = BigInteger.ZERO;
-        for (BayarhutangPengeluaran bayarhutangPengeluaran : list) {
-                totalHutang = totalHutang.add(bayarhutangPengeluaran.getPengeluaran());
-        }
-        System.out.println("totalHutang = " + totalHutang);
+        String Mob = "mdd ,ddd, dd,";
+        Mob = Mob.replace(",", "");
+        System.out.println("Mob = " + Mob);
+//        EntityManager entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
+////        List<app.table.Hutang> list = entityManager.createQuery("SELECT h FROM Hutang h", app.table.Hutang.class).getResultList();       
+//        List<app.table.BayarhutangPengeluaran> list = entityManager.createQuery("SELECT h FROM BayarhutangPengeluaran h", app.table.BayarhutangPengeluaran.class).getResultList();       
+//        BigInteger totalHutang = BigInteger.ZERO;
+//        for (BayarhutangPengeluaran bayarhutangPengeluaran : list) {
+//                totalHutang = totalHutang.add(bayarhutangPengeluaran.getPengeluaran());
+//        }
+//        System.out.println("totalHutang = " + totalHutang);
     }
     
 }
