@@ -470,7 +470,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem17);
 
-        jMenuItem9.setText("Keuangan");
+        jMenuItem9.setText("Keuangan/BANK");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem9ActionPerformed(evt);
@@ -663,8 +663,10 @@ public class ShowRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-            this.chandePanel("Mobil");
+            this.panelPerjalanan1.ResetPerjalan();
             ( (app.view.panel.mobil.panelMobil )(this.jPanel6)).Refresh();
+            this.chandePanel("Mobil");
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 

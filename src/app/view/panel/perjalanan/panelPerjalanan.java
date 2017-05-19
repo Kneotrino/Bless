@@ -609,6 +609,20 @@ public class panelPerjalanan extends JPanel {
 
     }//GEN-LAST:event_refreshButtonActionPerformed
 
+    public void ResetPerjalan()
+    {
+        System.out.println("app.view.panel.perjalanan.panelPerjalanan.ResetPerjalan()");
+        try {
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().begin();
+        bankList.clear();
+        bankList.addAll(bankQuery.getResultList());
+        mobilList.clear();
+        mobilList.addAll(mobilQuery.getResultList());            
+        } catch (Exception e) {
+        }
+    
+    }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int[] selected = masterTable.getSelectedRows();
         List<app.table.Trips> toRemove = new ArrayList<app.table.Trips>(selected.length);
