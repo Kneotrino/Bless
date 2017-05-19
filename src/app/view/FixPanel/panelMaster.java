@@ -661,9 +661,11 @@ public void Restall()
         awalBulan = jDateChooser2.getDate();
         akhirBulan = jDateChooser3.getDate();
         awalBulan.setHours(0);
-        awalBulan.setMinutes(1);
+        awalBulan.setMinutes(0);
+        awalBulan.setSeconds(0);
+        
         akhirBulan.setHours(23);
-        akhirBulan.setMinutes(58);
+        akhirBulan.setMinutes(59);
         System.out.println("awalBulan = " + awalBulan);
         System.out.println("akhirBulan = " + akhirBulan);
                 String huruf = "%";
