@@ -2999,7 +2999,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                                 + " OR d.noHp LIKE :cari1" 
                                 + " OR d.alamat LIKE :cari1"
                                 + " OR d.noKtp LIKE :cari1"                               
-                                + " OR d..mobil.noPolisiAktif LIKE :cari1"                               
+                                + " OR d.mobil.noPolisiAktif LIKE :cari1"                               
                                 + " OR d.pembayaran LIKE :cari1"
                                 ,app.table.Debitur.class)
                 .setParameter("cari1", cari)
