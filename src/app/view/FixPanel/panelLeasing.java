@@ -141,21 +141,19 @@ public class panelLeasing extends JPanel {
         columnBinding.setColumnName("Listleasing Id");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglDp}"));
-        columnBinding.setColumnName("Tgl Dp");
-        columnBinding.setColumnClass(java.util.Date.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nominal}"));
         columnBinding.setColumnName("Nominal");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${TERPENUHI}"));
         columnBinding.setColumnName("Terpenuhi");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tglOk}"));
-        columnBinding.setColumnName("Tgl Ok");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.tanggalJual}"));
+        columnBinding.setColumnName("Tgl Dp Open");
         columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
-        columnBinding.setColumnName("REF MOBIL");
-        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.tangglPelunasanPembelian}"));
+        columnBinding.setColumnName("Tgl Ok Close");
+        columnBinding.setColumnClass(java.util.Date.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.noPolisiAktif}"));
         columnBinding.setColumnName("Nopol");
@@ -176,6 +174,14 @@ public class panelLeasing extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.warna}"));
         columnBinding.setColumnName("Warna");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.debitur.nama}"));
+        columnBinding.setColumnName("Debitur");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${mobil.mobilId}"));
+        columnBinding.setColumnName("REF MOBIL");
+        columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
         jTableBinding.setSourceUnreadableValue(java.util.Collections.emptyList());
         bindingGroup.addBinding(jTableBinding);
@@ -218,14 +224,14 @@ public class panelLeasing extends JPanel {
             if (evt.getSource() == newButton1) {
                 panelLeasing.this.newButton1ActionPerformed(evt);
             }
+            else if (evt.getSource() == deleteButton) {
+                panelLeasing.this.deleteButtonActionPerformed(evt);
+            }
             else if (evt.getSource() == saveButton) {
                 panelLeasing.this.saveButtonActionPerformed(evt);
             }
             else if (evt.getSource() == refreshButton) {
                 panelLeasing.this.refreshButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == deleteDetailButton) {
-                panelLeasing.this.deleteDetailButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton) {
                 panelLeasing.this.newButtonActionPerformed(evt);
@@ -236,8 +242,8 @@ public class panelLeasing extends JPanel {
             else if (evt.getSource() == newDetailButton1) {
                 panelLeasing.this.newDetailButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == deleteButton) {
-                panelLeasing.this.deleteButtonActionPerformed(evt);
+            else if (evt.getSource() == deleteDetailButton) {
+                panelLeasing.this.deleteDetailButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

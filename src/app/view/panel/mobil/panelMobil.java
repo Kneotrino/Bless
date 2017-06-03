@@ -2975,6 +2975,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                                         " OR b.noPolisiAktif LIKE :cari1\n" +
                                         " OR b.posisi LIKE :cari1\n" +
                                         " OR b.status LIKE :cari1\n" +
+                                        " OR b.mobil.noPolisiAktif LIKE :cari1\n" +
                                         " OR b.stnk LIKE :cari1 "
                                 + " order by b desc"
                                 ,app.table.Bpkb.class)
@@ -2998,10 +2999,13 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                                 + " OR d.noHp LIKE :cari1" 
                                 + " OR d.alamat LIKE :cari1"
                                 + " OR d.noKtp LIKE :cari1"                               
+                                + " OR d..mobil.noPolisiAktif LIKE :cari1"                               
                                 + " OR d.pembayaran LIKE :cari1"
                                 ,app.table.Debitur.class)
                 .setParameter("cari1", cari)
                 ;
+//                                                " OR b.mobil.noPolisiAktif LIKE :cari1\n" +
+
         System.out.println("createQuery = " + createQuery.getResultList().size());
         debiturList1.addAll(createQuery.getResultList());
         // TODO add your handling code here:

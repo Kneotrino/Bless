@@ -327,6 +327,11 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
               </TableColumnModel>
             </Property>
             <Property name="rowHeight" type="int" value="25"/>
@@ -344,10 +349,6 @@
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
-              <Subbinding sourcePath="${tglDp}">
-                <BindingParameter name="NAME" value="Tgl Dp"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
-              </Subbinding>
               <Subbinding sourcePath="${nominal}">
                 <BindingParameter name="NAME" value="Nominal"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
@@ -356,13 +357,14 @@
                 <BindingParameter name="NAME" value="Terpenuhi"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${tglOk}">
-                <BindingParameter name="NAME" value="Tgl Ok"/>
+              <Subbinding sourcePath="${mobil.tanggalJual}">
+                <BindingParameter name="NAME" value="Tgl Dp Open"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
-              <Subbinding sourcePath="${mobil.mobilId}">
-                <BindingParameter name="NAME" value="REF MOBIL"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
+              <Subbinding sourcePath="${mobil.tangglPelunasanPembelian}">
+                <BindingParameter name="NAME" value="Tgl Ok Close"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${mobil.noPolisiAktif}">
@@ -388,6 +390,16 @@
               <Subbinding sourcePath="${mobil.warna}">
                 <BindingParameter name="NAME" value="Warna"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+              </Subbinding>
+              <Subbinding sourcePath="${mobil.debitur.nama}">
+                <BindingParameter name="NAME" value="Debitur"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+              </Subbinding>
+              <Subbinding sourcePath="${mobil.mobilId}">
+                <BindingParameter name="NAME" value="REF MOBIL"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
             </BindingProperty>

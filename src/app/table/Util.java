@@ -91,7 +91,7 @@ public class Util {
 public static void backUpDatabase()throws SQLException
 {
                 Date t = new Date();
-                                String backupdirectory ="c:/mybackups/"
+                                String backupdirectory ="d:/mybackups/"
                                         + t.getDate()+"-"
                                         + (t.getMonth() + 1)+"-"
                                         + (t.getYear() + 1900)+
