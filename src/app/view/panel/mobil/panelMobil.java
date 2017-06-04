@@ -53,6 +53,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javaslang.Tuple;
 import javax.imageio.ImageIO;
+import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
@@ -64,6 +65,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import static org.apache.commons.collections.CollectionUtils.collect;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -140,7 +142,7 @@ public void Refresh()
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         blessingPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
-        mobilQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT m FROM Mobil m order by m desc");
+        mobilQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT m FROM Mobil m order by m.tangglPelunasanPembelian asc ");
         mobilList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(mobilQuery.getResultList());
         debiturQuery1 = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT d FROM Debitur d order by d desc");
         debiturList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(debiturQuery1.getResultList());
@@ -1883,7 +1885,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, akunMobilList, jTable5);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
-    columnBinding.setColumnName("Nomor");
+    columnBinding.setColumnName("Arsip");
     columnBinding.setColumnClass(Integer.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
     columnBinding.setColumnName("Akun");
@@ -2893,13 +2895,26 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.LeasingMobil.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton21ActionPerformed
-
+                Map<String, Long> sort = new TreeMap<>();
+    private void hitungArsip()
+        {
+                sort = new TreeMap<>();
+                Query createNativeQuery = blessingPUEntityManager.createNativeQuery("SELECT NO_POLISI_AKTIF FROM BLESSING.MOBIL WHERE TANGGL_PELUNASAN_PEMBELIAN IS NOT NULL ORDER BY TANGGL_PELUNASAN_PEMBELIAN");
+                List resultList = createNativeQuery.getResultList();
+                long i = 0;
+                for (Object object : resultList) {
+                    i++;
+                    sort.put(object.toString(), i);
+            }
+//                System.out.println("sort = " + sort);
+        }
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         System.out.println("app.view.panel.mobil.panelMobil.jButton22ActionPerformed()");
         if (!this.blessingPUEntityManager.getTransaction().isActive()) 
             blessingPUEntityManager.getTransaction().begin(); 
             blessingPUEntityManager.getTransaction().rollback();
 //        java.util.Collection mob =
+        hitungArsip();
         List<Mobil> resultList = mobilQuery.getResultList();
         int a = 1;
         for (Mobil mobil : resultList) {
@@ -3504,11 +3519,11 @@ public void FileSave() throws IOException
 //        Map<String, Long> sort = new TreeMap<>(collect);
 
         java.util.List<Akun> temp = new LinkedList<>();
-        int i = 0;
+//        long i = 0;
         BigInteger totalMasuk = BigInteger.ZERO;
         BigInteger totalKeluar = BigInteger.ZERO;
         for (Mobil mobil : mobilList) {
-            i++;
+//            i++;
             BigInteger pemasukan = BigInteger.ZERO;
             BigInteger pengeluaran = BigInteger.ZERO;
             List<KeuanganMobil> KM = mobil.getKeuanganMobil2();
@@ -3517,6 +3532,14 @@ public void FileSave() throws IOException
                 pengeluaran = pengeluaran.add(k.getPengeluaran());
                 totalMasuk = totalMasuk.add(k.getPemasukan());
                 totalKeluar = totalKeluar.add(k.getPengeluaran());
+            }
+            int i = 0;
+            if (sort.get(mobil.getNoPolisiAktif()) != null) {
+                long l =  sort.get(mobil.getNoPolisiAktif());                
+                i = Long.valueOf(l).intValue();
+                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 100;
+                System.out.println("year = " + year);
+                i+= year;
             }
             Akun veh = new Akun(i)
                     .setAkun(

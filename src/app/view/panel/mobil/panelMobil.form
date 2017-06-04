@@ -9,7 +9,7 @@
     </Component>
     <Component class="javax.persistence.Query" name="mobilQuery">
       <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT m FROM Mobil m order by m desc"/>
+        <Property name="query" type="java.lang.String" value="SELECT m FROM Mobil m order by m.tangglPelunasanPembelian asc "/>
         <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
           <ComponentRef name="blessingPUEntityManager"/>
         </Property>
@@ -2506,7 +2506,7 @@
               <BindingProperties>
                 <BindingProperty name="elements" source="akunMobilList" target="jTable5" targetPath="elements" updateStrategy="0" immediately="true">
                   <Subbinding sourcePath="${nomor}">
-                    <BindingParameter name="NAME" value="Nomor"/>
+                    <BindingParameter name="NAME" value="Arsip"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                   </Subbinding>
                   <Subbinding sourcePath="${akun}">
