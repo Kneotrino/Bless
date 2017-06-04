@@ -663,7 +663,11 @@ public void Restall()
         awalBulan.setHours(0);
         awalBulan.setMinutes(0);
         awalBulan.setSeconds(0);
-        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(awalBulan);
+        cal.add(Calendar.MINUTE, -1);
+        awalBulan = cal.getTime();
+//        cal.set
         akhirBulan.setHours(23);
         akhirBulan.setMinutes(59);
         System.out.println("awalBulan = " + awalBulan);
@@ -702,6 +706,7 @@ public void Restall()
                     .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
                     .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)
                 .setParameter("carian", huruf);
+            System.out.println("setParameter = " + setParameter);
        List<? extends Laporan> res = setParameter.getResultList();           
             for (Laporan re : res) {
                 entityManager.refresh(re);
@@ -722,6 +727,7 @@ public void Restall()
                 .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
                 .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP) 
                 .setParameter("carian", huruf);
+            System.out.println("createQuery = " + createQuery);
         List<? extends Laporan> res = createQuery.getResultList();           
             for (Laporan re : res) {
                 entityManager.refresh(re);
