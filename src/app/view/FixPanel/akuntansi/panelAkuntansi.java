@@ -144,6 +144,392 @@ public class panelAkuntansi extends JPanel {
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));            
         akhirBulan = cal.getTime();
         akhirBulan.setHours(23);
+        cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));        
+        cal.set(Calendar.HOUR, 0);        
+        cal.set(Calendar.MINUTE, 0);        
+        cal.add(Calendar.MINUTE, -1);
+//        cal.set
+        awalBulan = cal.getTime();
+//        awalBulan.setHours(0);
+//        awalBulan.setMinutes(0);
+        System.out.println("awalBulan = " + awalBulan);
+        System.out.println("akhirBulan = " + akhirBulan);
+        Akun total = new Akun().setAkun("Neraca Total");
+        int X =1;
+        List<app.table.Bank> list = entityManager.createQuery("SELECT en FROM Bank en", app.table.Bank.class).getResultList();       
+        Akun Kas = new Akun(X++)
+                .setAkun("Gabungan Kas");                
+        list.forEach((bank) -> {
+            Kas.addPemasukan(bank.getFoo());
+        });
+        AkuntansiList.add(Kas);            
+         Akun Modal = new Akun(X++)
+                 .setAkun("Modal")
+                 .setPengeluaran(sumAll(getList(app.table.Modal.class)));
+         BigInteger mod = BigInteger.ZERO;
+         List<Laporan> rangkuman = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal < :endDate")
+                .setParameter("endDate", awalBulan, TemporalType.DATE)  
+                .getResultList();
+         for (Laporan laporan : rangkuman) {
+             mod = mod.add(laporan.getPemasukan());
+             mod = mod.subtract(laporan.getPengeluaran());
+        }
+         Akun ModalSebelumnya = new Akun(X++)
+                 .setAkun("Modal Sebelumnya")
+                 .setPengeluaran(mod)
+                 ;
+         Akun Prive = new Akun(X++)
+                 .setAkun("Penarikan Modal/Prive")
+                 .setPemasukan(sumAll(getList(app.table.Prive.class)));
+         Akun Hutang = new Akun(X++)
+                 .setAkun("Hutang")
+                 .setPengeluaran(sumAll(getList(app.table.BayarPihutangPemasukan.class)));
+         Predicate<Laporan> OPEN = p-> p.getTipe().equals("OPEN");
+         Predicate<Laporan> CLOSE = p-> p.getTipe().equals("CLOSE");
+        List list1 = getList(app.table.Pengeluaran.class);
+        List list2 = getList(app.table.Pengeluaran.class);
+        list1.removeIf(CLOSE);
+        list2.removeIf(OPEN);
+         Akun Operasional = new Akun(X++)
+                 .setAkun("Beban Operasional OPEN")
+                 .setPemasukan(sumAll(list1))
+                 ;
+         Akun OperasionalClose = new Akun(X++)
+                 .setAkun("Beban Operasional CLOSE")
+                 .setPemasukan(sumAll(list2))
+                 ;
+         Akun Pegawai = new Akun(X++)
+                 .setAkun("Beban Gaji Pegawai")
+                 .setPemasukan(sumAll(getList(app.table.Pegawaigaji.class)));
+         Akun Asset = new Akun(X++)
+                 .setAkun("Beban Biaya Asset")
+                 .setPemasukan(sumAll(getList(app.table.Asset.class)));                  
+        List list3 = getList(app.table.Pemasukan.class);
+        List list4 = getList(app.table.Pemasukan.class);
+        list3.removeIf(CLOSE);
+        list4.removeIf(OPEN);
+         Akun Pemasukan = new Akun(X++)
+                 .setAkun("Pemasukan OPEN")
+                .setPengeluaran(sumAll(list3))
+//                .subPengeluaran(sumAll(getList(app.table.PerjalananKembalikan.class)))
+                ;
+         Akun PemasukanCLOSE = new Akun(X++)
+                 .setAkun("Pemasukan CLOSE")
+                .setPengeluaran(sumAll(list4))
+                .subPengeluaran(sumAll(getList(app.table.PerjalananKembalikan.class)))
+                ;
+        Akun Perjalanan = new Akun(X++)
+                .setAkun("Beban Perjalanan")
+                .setPemasukan(sumAll(getList(app.table.PerjalananPengeluaran.class)));
+                ;
+        Akun Rental = new Akun(X++)
+                .setAkun("Pemasukan Rental")
+                .setPengeluaran(sumAll(getList(app.table.BayarRentalPemasukan.class)))
+                ;
+        Akun pengeluaranRental = new Akun(X++)
+                .setAkun("Beban Rental")
+                .setPemasukan(sumAll(getList(app.table.BayarRentalPenngeluaran.class)));        
+        Akun Jasa = new Akun()
+                .setAkun("Pemasukan Jasa")
+                .setPengeluaran(sumAll(getList(app.table.BayarJasaPemasukan.class)));
+        Akun  bebanJasa = new Akun()
+                .setAkun("Beban Jasa")
+                .setPemasukan(sumAll(getList(app.table.BayarJasaPengeluaran.class)));
+        Akun  bebanPeminjaman = new Akun()
+                .setAkun("Beban Peminjaman/Piutang");
+//                .setPemasukan(sumAll(getList(app.table.Bayarhutang.class)));
+//"SELECT l FROM Laporan l where l.tanggal < :endDate")
+//                .setParameter("endDate", awalBulan, TemporalType.DATE)  
+//                
+
+        List<app.table.BayarhutangPengeluaran> listhutang = 
+                entityManager.createQuery("SELECT h FROM BayarhutangPengeluaran h where h.tanggal > :endDate", app.table.BayarhutangPengeluaran.class)
+                .setParameter("endDate", awalBulan, TemporalType.DATE)                          
+                        .getResultList();       
+        BigInteger totalHutang = BigInteger.ZERO;
+        for (BayarhutangPengeluaran bayarhutangPengeluaran : listhutang) {
+                totalHutang = totalHutang.add(bayarhutangPengeluaran.getPengeluaran());
+        }
+        bebanPeminjaman.setPemasukan(totalHutang);
+
+        Akun  Peminjaman = new Akun()
+                .setAkun("Pemasukan Peminjaman")
+                .setPengeluaran(sumAll(getList(app.table.BayarhutangPemasukan.class)));
+        Akun  bebanHutang = new Akun()
+                .setAkun("Pelunasan Hutang ")
+                .setPemasukan(sumAll(getList(app.table.BayarPihutangPengeluaran.class)));
+        Akun  sisaHutang = new Akun()
+                .setAkun("Beban Hutang ")                
+                ;
+        Akun Mobil = new Akun()
+                .setAkun("Pemasukan Mobil")
+                .setPengeluaran(sumAll(getList(app.table.MobilPemasukan.class)));
+        Akun bebanMobil = new Akun()
+                .setAkun("Beban Mobil")
+                .setPemasukan(sumAll(getList(app.table.MobilPengeluaran.class)));
+        Akun bebanBunga = new Akun()
+                .setAkun("Beban Bunga")
+                .setPemasukan(sumAll(getList(app.table.BayarPihutangBunga.class)));
+        Akun PembagianLaba = new Akun()
+                .setAkun("Pembagian Laba")
+                .setPemasukan(sumAll(getList(app.table.pembagianLaba.class)));
+        BigInteger bayarhutang = bebanHutang.getPemasukan();
+        BigInteger jumlahhutang = Hutang.getPengeluaran();
+        int res = jumlahhutang.compareTo(bayarhutang);
+        if (res == 0) {
+        } else if (res==-1) {
+            bayarhutang = bayarhutang.subtract(jumlahhutang);
+            sisaHutang.setPemasukan(bayarhutang);
+        } else if (res == 1) {
+            jumlahhutang = jumlahhutang.subtract(bayarhutang);
+            sisaHutang.setPengeluaran(jumlahhutang);
+        }
+        Akun Bayasewa = new Akun()
+                .setAkun("Beban Sewa Ruko")
+                .setPemasukan(sumAll(getList(app.table.BayarSewaKeluar.class)));
+        Akun ModalDitahan = new Akun()
+                .setAkun("Modal Di Tahan")
+                .setPengeluaran(sumAll(getList(app.table.BayarSewaMasuk.class)));
+        AkuntansiList.add(ModalSebelumnya);
+        AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
+        AkuntansiList.add(ModalDitahan);
+        AkuntansiList.add(PembagianLaba);
+        AkuntansiList.add(Mobil);        
+        AkuntansiList.add(Rental);        
+        AkuntansiList.add(Jasa);        
+        AkuntansiList.add(Pemasukan);        
+        AkuntansiList.add(PemasukanCLOSE);        
+        AkuntansiList.add(Peminjaman);        
+        LabaList.add(ModalDitahan);
+        LabaList.add(Mobil);
+        LabaList.add(Rental);
+        LabaList.add(Jasa);
+        LabaList.add(Pemasukan);
+//        LabaList.add(PemasukanCLOSE );
+        LabaList.add(Peminjaman);
+        //Akun Pengeluaran        
+        AkuntansiList.add(sisaHutang);
+        AkuntansiList.add(bebanBunga);
+        AkuntansiList.add(bebanMobil);
+        AkuntansiList.add(bebanPeminjaman);
+        AkuntansiList.add(pengeluaranRental);
+        AkuntansiList.add(bebanJasa);
+        AkuntansiList.add(Perjalanan);
+        AkuntansiList.add(Operasional);
+        AkuntansiList.add(OperasionalClose);
+        AkuntansiList.add(Pegawai);                    
+        AkuntansiList.add(Asset);
+        AkuntansiList.add(Bayasewa);
+        LabaList.add(bebanBunga);
+        LabaList.add(sisaHutang);
+        LabaList.add(bebanMobil);
+        LabaList.add(bebanPeminjaman);
+        LabaList.add(pengeluaranRental);
+        LabaList.add(bebanJasa);
+        LabaList.add(Perjalanan);
+        LabaList.add(Operasional);
+//        LabaList.add(OperasionalClose);
+        LabaList.add(Pegawai);                    
+        LabaList.add(Asset);
+        LabaList.add(Bayasewa);
+
+        X = 1;
+        total.setPemasukan(BigInteger.ZERO);
+        total.setPengeluaran(BigInteger.ZERO);
+        for (Akun akun : AkuntansiList) {
+            akun.setNomor(X++);
+            total.addPengeluaran(akun.getPengeluaran());
+            total.addPemasukan(akun.getPemasukan());
+        }
+        
+        Akun laba = new Akun()
+                .setAkun("Total");
+        for (Akun akun : LabaList) {
+            laba.addPemasukan(akun.getPemasukan());
+            laba.addPengeluaran(akun.getPengeluaran());
+        }
+        LabaList.add(laba);
+        Akun kosong = new Akun()
+                .setAkun("")
+                .setPengeluaran(null)
+                .setPemasukan(null);
+        LabaList.add( kosong );
+        LabaList.add(
+                new Akun()
+                .setAkun("Total Pemasukan")
+                .setPengeluaran(laba.getPengeluaran())
+        );
+        LabaList.add(
+                new Akun()
+                .setAkun("Total Pengeluaran")
+                .setPemasukan(laba.getPemasukan())
+        );
+        LabaList.add( kosong );
+        Akun Profit = new Akun()
+                .setAkun("Profit")
+                .setPengeluaran(laba.getPengeluaran())
+                .subPengeluaran(laba.getPemasukan());
+        Akun ProfitBersih = new Akun()
+                .setAkun("Profit Bersih")
+                .setPengeluaran(laba.getPengeluaran())
+                .subPengeluaran(laba.getPemasukan());
+        Akun LabaTahan = new Akun()
+                .setAkun("25% Laba yang di tahan")
+                .setPengeluaran(laba.getPengeluaran())
+                .subPengeluaran(laba.getPemasukan())
+                .DividePengeluaran();
+//        ProfitBersih.subPengeluaran(LabaTahan.getPengeluaran());
+        ProfitBersih.subPengeluaran(PembagianLaba.getPemasukan());
+//        LabaList.add(
+//                Profit
+//        );
+        LabaList.add(
+                PembagianLaba
+        );
+//        LabaList.add(
+//              LabaTahan   
+//        );        
+        LabaList.add(
+              ProfitBersih   
+        );        
+        AkuntansiList.add(total);
+        //Penyesuaian
+//        BigInteger totalProfit = BigInteger.ZERO;
+        Akun totalProfit = new Akun()
+                .setAkun("Total " + Calendar.getInstance().get(Calendar.YEAR));
+        for (int i = 2; i < 14; i++) {
+            Akun temp = new Akun(i);
+            LaporanPenyesuaian.add( ProfitBulanan(temp) );
+            totalProfit.addPemasukan( temp.getPemasukan());
+            totalProfit.addPengeluaran(temp.getPengeluaran());
+        }
+        LaporanPenyesuaian.add(totalProfit);
+        TypedQuery createQuery = entityManager.createQuery("SELECT m FROM Mobil m", app.table.Mobil.class);
+        TypedQuery createQuery1 = entityManager.createQuery("SELECT m FROM Bpkbtitipan m", app.table.Bpkbtitipan.class);
+        TypedQuery createQuery2 = entityManager.createQuery("SELECT m FROM Rental m", app.table.Rental.class);
+        TypedQuery createQuery3 = entityManager.createQuery("SELECT m FROM Hutang m", app.table.Hutang.class);
+        List<Mobil> mobilList = createQuery.getResultList();
+        List<Bpkbtitipan> bpkb = createQuery1.getResultList();
+        List<Rental> rental = createQuery2.getResultList();
+        List<Hutang> HutangList = createQuery3.getResultList();
+        
+        int i = 0;
+        Akun TotalMobil = new Akun()
+                .setAkun("Total Profit Mobil");
+        TotalMobil.setKeterangan("----");
+        for (Mobil mobil : mobilList) {
+            i++;
+            BigInteger pemasukan = BigInteger.ZERO;
+            BigInteger pengeluaran = BigInteger.ZERO;
+            List<KeuanganMobil> KM = mobil.getKeuanganMobil2();
+            for (KeuanganMobil k : KM) {
+                pemasukan = pemasukan.add(k.getPemasukan());
+                pengeluaran = pengeluaran.add(k.getPengeluaran());
+            }
+            Akun veh = new Akun(i)
+                    .setAkun(
+                            mobil+ " " +
+                            mobil.getMerk()+ " " +
+                            mobil.getType()+ " " +
+                            mobil.getWarna()+ " " +
+                            mobil.getTahun()+ " " 
+                    )
+                    .setPemasukan(pemasukan)
+                    .setPengeluaran(pengeluaran)
+                    ;
+            veh.setKeterangan(mobil.getStatusMobil());
+            TotalMobil.addPemasukan(pemasukan)
+                    .addPengeluaran(pengeluaran);
+            ProfitMobil.add(veh);
+        }
+            ProfitMobil.add(TotalMobil);
+            Closed.addAll(ProfitMobil);
+            String op = "OPEN";
+            String cl = "CLOSE";
+            for (Bpkbtitipan b : bpkb) {
+            Akun temp = new Akun()
+                    .setAkun(b.toString());
+            temp.setKeterangan(b.getLaba());
+            temp.setPemasukan(b.gettotalPemasukan());
+            temp.setPengeluaran(b.gettotalPengeluaran());
+            ProfitJasa.add(temp);
+        }
+            for (Rental r : rental) {
+            Akun temp = new Akun()
+                    .setAkun(r.toString());
+            temp.setKeterangan(r.getLABA());
+            temp.setPemasukan(r.gettotalPemasukan());
+            temp.setPengeluaran(r.gettotalPengeluaran());
+            ProfitJasa.add(temp);            
+        }
+            for (Hutang r : HutangList) {
+            Akun temp = new Akun()
+                    .setAkun(r.toString());
+            temp.setKeterangan(r.getLABA());
+            temp.setPemasukan(r.gettotalPemasukan());
+            temp.setPengeluaran(r.gettotalPengeluaran());
+            ProfitJasa.add(temp);            
+        }
+            Akun ProfitJasaTotal = new Akun()
+                    .setAkun("Profit Jasa Total");
+                    ProfitJasaTotal.setKeterangan("");
+            for (Akun akun : ProfitJasa) {
+            ProfitJasaTotal.addPemasukan(akun.getPemasukan());
+            ProfitJasaTotal.addPengeluaran(akun.getPengeluaran());
+        }
+            ProfitJasa.add(ProfitJasaTotal);
+            Closed.addAll(ProfitJasa);
+            Closed.removeIf(a -> !a.getKeterangan().equals(cl));
+            Open.addAll(ProfitMobil);
+            Open.addAll(ProfitJasa);
+            Open.removeIf(a -> !a.getKeterangan().equals(op));
+            Akun TO = new Akun();
+                TO.setAkun("Total Open ");
+                for (Akun akun : Open) {
+                    TO.addPemasukan(akun.getPemasukan());
+                    TO.addPengeluaran(akun.getPengeluaran());
+                }
+            Akun TC = new Akun();
+                TC.setAkun("Total Close ");
+                for (Akun akun : Closed) {
+                    TC.addPemasukan(akun.getPemasukan());
+                    TC.addPengeluaran(akun.getPengeluaran());
+        }
+            Open.add(TO);
+            Closed.add(TC);
+            Akun LabaMobilTahan = new Akun()
+                    .setPemasukan(
+                            TC.getProfit()
+                            .divide(new BigInteger("100"))
+                            .multiply(new BigInteger(Value))
+                    
+                    )
+                    ;
+            LabaMobilTahan.setAkun("Laba di tahan "+Value+"%");
+//            Closed.add(new Akun());
+            Closed.add(LabaMobilTahan);
+//            Closed.add(BayarRuko);
+            Closed.add(new Akun()
+                    .setAkun("Sisa Laba Di tahan " + Calendar.getInstance().get(Calendar.YEAR))
+                    .setPemasukan(TC.getProfit().subtract(LabaMobilTahan.getProfit()))
+            );
+        panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba(Value);
+        initComponents();
+    }
+    
+    public panelAkuntansi(String Value, Date awal) {
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
+                 Query query = entityManager.createQuery("SELECT l FROM Laporan l");
+                 java.util.List<app.table.Laporan> data = query.getResultList();
+                 data.forEach((laporan) -> { entityManager.refresh(laporan);});
+                 Query bankQ = entityManager.createQuery("SELECT b From Bank b ORDER BY b");
+                 List<Bank> result = bankQ.getResultList();
+                 result.forEach(a -> entityManager.refresh(a));
+                 cal.set(Calendar.MONTH, awal.getMonth());
+        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));            
+        akhirBulan = cal.getTime();
+        akhirBulan.setHours(23);
         cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));            
         awalBulan = cal.getTime();
         awalBulan.setHours(0);
@@ -572,7 +958,13 @@ public class panelAkuntansi extends JPanel {
     public List getMonthList(Class kelas,int Month)
     {
        Date bulanAwal = new Date(akhirBulan.getYear(), Month-1, 0);
+       Calendar cal = Calendar.getInstance();
+       cal.setTime(bulanAwal);
+       cal.add(Calendar.MINUTE, -1);
+       bulanAwal = cal.getTime();
+//        System.out.println(" getMonthList bulanAwal = " + bulanAwal);
        Date bulanAkhir = new Date(akhirBulan.getYear(), Month, 0);
+//        System.out.println(" getMonthList bulanAkhir = " + bulanAkhir);
         TypedQuery<? extends Laporan> createQuery = 
                 entityManager.createQuery("SELECT en FROM " + kelas.getSimpleName() + " en " + "where FUNC('MONTH', en.tanggal) = :startDate "
                         + "AND FUNC('YEAR', en.tanggal) = :endDate", kelas)

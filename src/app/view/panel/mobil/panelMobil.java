@@ -3537,7 +3537,7 @@ public void FileSave() throws IOException
             if (sort.get(mobil.getNoPolisiAktif()) != null) {
                 long l =  sort.get(mobil.getNoPolisiAktif());                
                 i = Long.valueOf(l).intValue();
-                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 100;
+                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
                 System.out.println("year = " + year);
                 i+= year;
             }
