@@ -2895,13 +2895,14 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.LeasingMobil.show();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton21ActionPerformed
-                Map<String, Long> sort = new TreeMap<>();
+                Map<String, Integer> sort = new TreeMap<>();
+                Map<Integer, Integer> tahun = new TreeMap<>();
     private void hitungArsip()
         {
                 sort = new TreeMap<>();
                 Query createNativeQuery = blessingPUEntityManager.createNativeQuery("SELECT NO_POLISI_AKTIF FROM BLESSING.MOBIL WHERE TANGGL_PELUNASAN_PEMBELIAN IS NOT NULL ORDER BY TANGGL_PELUNASAN_PEMBELIAN");
                 List resultList = createNativeQuery.getResultList();
-                long i = 0;
+                int i = 0;
                 for (Object object : resultList) {
                     i++;
                     sort.put(object.toString(), i);
@@ -3522,6 +3523,7 @@ public void FileSave() throws IOException
 //        long i = 0;
         BigInteger totalMasuk = BigInteger.ZERO;
         BigInteger totalKeluar = BigInteger.ZERO;
+
         for (Mobil mobil : mobilList) {
 //            i++;
             BigInteger pemasukan = BigInteger.ZERO;
@@ -3535,11 +3537,16 @@ public void FileSave() throws IOException
             }
             int i = 0;
             if (sort.get(mobil.getNoPolisiAktif()) != null) {
-                long l =  sort.get(mobil.getNoPolisiAktif());                
-                i = Long.valueOf(l).intValue();
+                i =  sort.get(mobil.getNoPolisiAktif());                
                 int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
-                System.out.println("year = " + year);
-                i+= year;
+                Integer val = tahun.get(year);
+                if (val != null) {
+                    tahun.put(year, val+1);
+                }
+                else                {
+                    tahun.put(year, 1);
+                    }
+                i = year + tahun.get(year);
             }
             Akun veh = new Akun(i)
                     .setAkun(
