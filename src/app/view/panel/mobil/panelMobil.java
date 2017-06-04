@@ -2900,6 +2900,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private void hitungArsip()
         {
                 sort = new TreeMap<>();
+                tahun = new TreeMap<>();
                 Query createNativeQuery = blessingPUEntityManager.createNativeQuery("SELECT NO_POLISI_AKTIF FROM BLESSING.MOBIL WHERE TANGGL_PELUNASAN_PEMBELIAN IS NOT NULL ORDER BY TANGGL_PELUNASAN_PEMBELIAN");
                 List resultList = createNativeQuery.getResultList();
                 int i = 0;
@@ -2907,6 +2908,18 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                     i++;
                     sort.put(object.toString(), i);
             }
+//                            if (sort.get(mobil.getNoPolisiAktif()) != null) {
+//                i =  sort.get(mobil.getNoPolisiAktif());                
+//                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
+//                Integer val = tahun.get(year);
+//                if (val != null) {
+//                    tahun.put(year, val+1);
+//                }
+//                else                {
+//                    tahun.put(year, 1);
+//                    }
+//                i = year + tahun.get(year);
+//            }
 //                System.out.println("sort = " + sort);
         }
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
@@ -2918,10 +2931,24 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         hitungArsip();
         List<Mobil> resultList = mobilQuery.getResultList();
         int a = 1;
+        int i = 0;
         for (Mobil mobil : resultList) {
             blessingPUEntityManager.refresh(mobil); 
             mobil.setNomor(a);
             a++;
+            if (sort.get(mobil.getNoPolisiAktif()) != null) {
+//                i =  sort.get(mobil.getNoPolisiAktif());                
+                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
+                Integer val = tahun.get(year);
+                if (val != null) {
+                    tahun.put(year, val+1);
+                }
+                else                {
+                    tahun.put(year, 1);
+                    }
+                i = year + tahun.get(year);
+                sort.put(mobil.getNoPolisiAktif(), i);
+            }
         }
         
         this.mobilList.clear();
@@ -3538,15 +3565,15 @@ public void FileSave() throws IOException
             int i = 0;
             if (sort.get(mobil.getNoPolisiAktif()) != null) {
                 i =  sort.get(mobil.getNoPolisiAktif());                
-                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
-                Integer val = tahun.get(year);
-                if (val != null) {
-                    tahun.put(year, val+1);
-                }
-                else                {
-                    tahun.put(year, 1);
-                    }
-                i = year + tahun.get(year);
+//                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
+//                Integer val = tahun.get(year);
+//                if (val != null) {
+//                    tahun.put(year, val+1);
+//                }
+//                else                {
+//                    tahun.put(year, 1);
+//                    }
+//                i = year + tahun.get(year);
             }
             Akun veh = new Akun(i)
                     .setAkun(
