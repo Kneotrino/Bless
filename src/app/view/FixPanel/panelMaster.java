@@ -878,16 +878,17 @@ public void Restall()
         //</editor-fold>
 
         /* Create and display the form */
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JFrame frame = new JFrame();
-//                frame.setContentPane(new panelMaster(1));
-                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
+//        EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                JFrame frame = new JFrame();
+////                frame.setContentPane(new panelMaster(1));
+//                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.pack();
+//                frame.setVisible(true);
+//            }
+//        });
+    LaporanPengeluaran();
     }
     public static void LaporanPemasukan()
     {

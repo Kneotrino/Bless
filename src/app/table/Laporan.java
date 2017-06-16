@@ -137,6 +137,10 @@ public class Laporan implements Serializable {
     public BigInteger getPemasukan() {
         return name? jumlah :BigInteger.ZERO ;
     }
+//    public Long getLongPemasukan() {
+//        Long temp = ju
+//        return name? jumlah :BigInteger.ZERO ;
+//    }
     
     public BigInteger getPengeluaran() {
         return name? BigInteger.ZERO : jumlah;

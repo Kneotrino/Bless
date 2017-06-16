@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -105,22 +106,31 @@ public class panelAkuntansi extends JPanel {
     }
     public List getList(Class kelas)
     {
-//        System.out.println("awalBulan = " + awalBulan);
-//        System.out.println("akhirBulan = " + akhirBulan);
-        String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
-                + "where en.tanggal BETWEEN :startDate AND :endDate"
-                ;
-        TypedQuery createQuery = entityManager.createQuery(que, kelas)
-                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
-                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
-                ;
-//                Date temp = new Date();
-//                TypedQuery<? extends Laporan> createQuery = 
-//                entityManager.createQuery("SELECT en FROM " + kelas.getSimpleName() + " en " + "where FUNC('MONTH', en.tanggal) = :startDate "
-//                        + "AND FUNC('YEAR', en.tanggal) = :endDate", kelas)
-//                .setParameter("startDate", temp.getMonth()-1)
-//                .setParameter("endDate", temp.getYear() + 1900);
+//        System.out.println("getlist "+kelas.getSimpleName() + " awalBulan = " + awalBulan);
+//        System.out.println("getlist "+kelas.getSimpleName() + " akhirBulan = " + akhirBulan);
+//        String que = "SELECT en FROM " + kelas.getSimpleName() + " en "
+//                + "where en.tanggal BETWEEN :startDate AND :endDate"
+//                ;
+//        TypedQuery createQuery = entityManager.createQuery(que, kelas)
+//                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+//                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+//                ;
+                Date temp = new Date();
+                TypedQuery<? extends Laporan> createQuery = 
+                entityManager.createQuery("SELECT en FROM " + kelas.getSimpleName() + " en " + "where FUNC('MONTH', en.tanggal) = :startDate "
+                        + "AND FUNC('YEAR', en.tanggal) = :endDate", kelas)
+                .setParameter("startDate", akhirBulan.getMonth()-1)
+                .setParameter("endDate", akhirBulan.getYear() + 1900);
         return createQuery.getResultList();
+    }
+    private BigInteger summingAll(List<? extends Laporan> laporanList)
+    {
+        BigInteger temp = new BigInteger("0");
+        for (Laporan list : laporanList) {
+            temp = temp.add(list.getPemasukan());
+            temp = temp.subtract(list.getPengeluaran());
+        }
+        return temp;
     }
     private BigInteger sumAll(List<? extends Laporan> laporanList)
     {
@@ -147,7 +157,7 @@ public class panelAkuntansi extends JPanel {
         cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));        
         cal.set(Calendar.HOUR, 0);        
         cal.set(Calendar.MINUTE, 0);        
-        cal.add(Calendar.MINUTE, -1);
+        cal.add(Calendar.MINUTE, -2);
 //        cal.set
         awalBulan = cal.getTime();
 //        awalBulan.setHours(0);
@@ -162,7 +172,7 @@ public class panelAkuntansi extends JPanel {
         list.forEach((bank) -> {
             Kas.addPemasukan(bank.getFoo());
         });
-        AkuntansiList.add(Kas);            
+         AkuntansiList.add(Kas);            
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
                  .setPengeluaran(sumAll(getList(app.table.Modal.class)));
@@ -517,8 +527,102 @@ public class panelAkuntansi extends JPanel {
         panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba(Value);
         initComponents();
     }
-    
+    public panelAkuntansi(String Value, int month, int year)
+    {
+                Date hitung =new Date(year, month, 1);
+                System.out.println("hitung = " + hitung);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(hitung);
+                Date awalBulan = cal.getTime();
+                System.out.println("awalBulan = " + awalBulan);
+                cal.add(Calendar.MONTH, 1);
+                Date akhirBulan = cal.getTime();
+                System.out.println("akhirBulan = " + akhirBulan);
+                entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
+                List<Laporan> rangkumanBank = entityManager.createQuery(
+                           "SELECT l FROM Laporan l where l.tanggal < :endDate")
+                           .setParameter("endDate", akhirBulan, TemporalType.DATE)  
+                           .getResultList();
+                     Akun Kas = new Akun()
+                             .setAkun("Gabungan Kas ");
+                             for (Laporan laporan : rangkumanBank) {
+                                Kas.addPemasukan(laporan.getPemasukan());
+                                Kas.subPemasukan(laporan.getPengeluaran());
+        }
+                             AkuntansiList.add(Kas);
+                BigInteger mod = BigInteger.ZERO;
+
+                List<Laporan> rangkuman = entityManager.createQuery(
+                    "SELECT l FROM Laporan l where l.tanggal < :endDate")
+                        .setParameter("endDate", awalBulan, TemporalType.DATE)  
+                        .getResultList();
+                 for (Laporan laporan : rangkuman) {
+                        mod = mod.add(laporan.getPemasukan());
+                        mod = mod.subtract(laporan.getPengeluaran());
+                   }
+                 Akun ModalSebelumnya = new Akun()
+                         .setAkun("Modal Sebelumnya")
+                         .setPengeluaran(mod)
+                 ;
+                 AkuntansiList.add(ModalSebelumnya);
+                 
+                cal.setTime(hitung);
+                cal.add(Calendar.MINUTE, -1);
+                awalBulan = cal.getTime();
+                cal.setTime(hitung);
+                System.out.println("awalBulan = " + awalBulan);
+                cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+                cal.set(Calendar.HOUR_OF_DAY, cal.getActualMaximum(Calendar.HOUR_OF_DAY));
+                cal.set(Calendar.MINUTE, cal.getActualMaximum(Calendar.MINUTE));                
+                akhirBulan = cal.getTime();
+                System.out.println("akhirBulan = " + akhirBulan);
+                List<Laporan> listPemasukan = 
+                    entityManager.createQuery("SELECT l FROM Laporan l"
+                        + " where l.tanggal BETWEEN :startDate AND :endDate"
+                        + " AND l.name = true "
+                        + "ORDER BY l.tanggal")
+                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+                .getResultList();
+                Map<String, Long> collectPemasukan = listPemasukan .stream().collect(Collectors.groupingBy(l  -> l.getDtype(), Collectors.summingLong( a -> a.getPemasukan().longValue())));  
+                List<Laporan> listPengeluaran = 
+                    entityManager.createQuery("SELECT l FROM Laporan l"
+                        + " where l.tanggal BETWEEN :startDate AND :endDate"
+                        + " AND l.name = false "
+                        + "ORDER BY l.tanggal")
+                .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
+                .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
+                .getResultList();
+                Map<String, Long> collectPengeluaran = listPengeluaran .stream().collect(Collectors.groupingBy(l  -> l.getDtype(), Collectors.summingLong( a -> a.getPengeluaran().longValue())));  
+               
+                 
+                for (Map.Entry<String,Long> entry : collectPemasukan.entrySet()) {
+                    Akun akun = new Akun()
+                            .setAkun(entry.getKey())
+                            .setPengeluaran(BigInteger.valueOf(entry.getValue()));
+                    AkuntansiList.add(akun);
+                }
+                for (Map.Entry<String,Long> entry : collectPengeluaran.entrySet()) {
+                    Akun akun = new Akun()
+                            .setAkun(entry.getKey())
+                            .setPemasukan(BigInteger.valueOf(entry.getValue()));
+                    AkuntansiList.add(akun);
+                }
+        Akun total = new Akun()
+                .setAkun("Total");
+        total.setPemasukan(BigInteger.ZERO);
+        total.setPengeluaran(BigInteger.ZERO);
+        int X = 1;
+        for (Akun akun : AkuntansiList) {
+            akun.setNomor(X++);
+            total.addPengeluaran(akun.getPengeluaran());
+            total.addPemasukan(akun.getPemasukan());
+        }
+        AkuntansiList.add(total);
+        initComponents();
+    }
     public panelAkuntansi(String Value, Date awal) {
+        System.out.println("awal = " + awal);
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
                  Query query = entityManager.createQuery("SELECT l FROM Laporan l");
                  java.util.List<app.table.Laporan> data = query.getResultList();
@@ -526,24 +630,34 @@ public class panelAkuntansi extends JPanel {
                  Query bankQ = entityManager.createQuery("SELECT b From Bank b ORDER BY b");
                  List<Bank> result = bankQ.getResultList();
                  result.forEach(a -> entityManager.refresh(a));
-                 cal.set(Calendar.MONTH, awal.getMonth());
+        cal.set(Calendar.MONTH, awal.getMonth());
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));            
+        cal.set(Calendar.HOUR, cal.getActualMaximum(Calendar.HOUR));            
+        cal.set(Calendar.MINUTE, cal.getActualMaximum(Calendar.MINUTE));            
         akhirBulan = cal.getTime();
-        akhirBulan.setHours(23);
+//        akhirBulan.setHours(23);
         cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));            
+        cal.add(Calendar.MINUTE, -2);
+        cal.setTime(awal);
+        cal.add(Calendar.MINUTE, -1);
         awalBulan = cal.getTime();
-        awalBulan.setHours(0);
-        awalBulan.setMinutes(0);
+//        awalBulan.setHours(0);
+//        awalBulan.setMinutes(0);
         System.out.println("awalBulan = " + awalBulan);
         System.out.println("akhirBulan = " + akhirBulan);
         Akun total = new Akun().setAkun("Neraca Total");
         int X =1;
-        List<app.table.Bank> list = entityManager.createQuery("SELECT en FROM Bank en", app.table.Bank.class).getResultList();       
+//        List<app.table.Bank> list = entityManager.createQuery("SELECT en FROM Bank en", app.table.Bank.class).getResultList();       
+         List<Laporan> rangkumanBank = entityManager.createQuery(
+                "SELECT l FROM Laporan l where l.tanggal < :endDate")
+                .setParameter("endDate", akhirBulan, TemporalType.DATE)  
+                .getResultList();
         Akun Kas = new Akun(X++)
-                .setAkun("Gabungan Kas");                
-        list.forEach((bank) -> {
-            Kas.addPemasukan(bank.getFoo());
-        });
+                .setAkun("Gabungan Kas ");
+        for (Laporan laporan : rangkumanBank) {
+            Kas.addPemasukan(laporan.getPemasukan());
+            Kas.subPemasukan(laporan.getPengeluaran());
+        }
         AkuntansiList.add(Kas);            
          Akun Modal = new Akun(X++)
                  .setAkun("Modal")
@@ -551,8 +665,9 @@ public class panelAkuntansi extends JPanel {
          BigInteger mod = BigInteger.ZERO;
          List<Laporan> rangkuman = entityManager.createQuery(
                 "SELECT l FROM Laporan l where l.tanggal < :endDate")
-                .setParameter("endDate", awalBulan, TemporalType.DATE)  
+                .setParameter("endDate", awal, TemporalType.DATE)  
                 .getResultList();
+         System.out.println("rangkuman = " + rangkuman.size());
          for (Laporan laporan : rangkuman) {
              mod = mod.add(laporan.getPemasukan());
              mod = mod.subtract(laporan.getPengeluaran());
@@ -674,7 +789,9 @@ public class panelAkuntansi extends JPanel {
                 .setAkun("Modal Di Tahan")
                 .setPengeluaran(sumAll(getList(app.table.BayarSewaMasuk.class)));
         AkuntansiList.add(ModalSebelumnya);
-        AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
+//        AkuntansiList.add(Modal.subPengeluaran(Prive.getPemasukan()));
+        AkuntansiList.add(Modal);
+        AkuntansiList.add(Prive);
         AkuntansiList.add(ModalDitahan);
         AkuntansiList.add(PembagianLaba);
         AkuntansiList.add(Mobil);        
@@ -1525,7 +1642,8 @@ public class panelAkuntansi extends JPanel {
                 try {
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
-                jDialog1.getContentPane().add(new panelAkuntansi("25"));
+//                jDialog1.getContentPane().add(new panelAkuntansi("25",new Date(117, 0, 1)));
+                jDialog1.getContentPane().add(new panelAkuntansi("25",11,117));
                 jDialog1.show();
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {
