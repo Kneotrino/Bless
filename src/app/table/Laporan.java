@@ -147,7 +147,10 @@ public class Laporan implements Serializable {
     }
     
 
-
+    public String getKelas()
+    {
+        return this.getClass().getSimpleName();
+    }
     public void setPemasukan(BigInteger jumlah) {
 //        BigInteger oldJumlah = this.jumlah;
         if (name) {

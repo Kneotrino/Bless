@@ -85,6 +85,10 @@ public class Pemasukan extends Laporan implements Serializable {
     public String toString() {
         return "app.table.Pemasukan[ id=" + id + " ]";
     }
+    @Override
+    public String getKelas() {
+        return this.getClass().getSimpleName() + " " + getTipe();
+    }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.addPropertyChangeListener(listener);

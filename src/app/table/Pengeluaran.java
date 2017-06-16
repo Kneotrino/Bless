@@ -86,7 +86,10 @@ public class Pengeluaran extends Laporan implements Serializable {
         }
         return true;
     }
-
+    @Override
+    public String getKelas() {
+        return this.getClass().getSimpleName() + " Operasional " + getTipe();
+    }
     @Override
     public String toString() {
         return "app.table.Pengeluaran[ id=" + id + " ]";

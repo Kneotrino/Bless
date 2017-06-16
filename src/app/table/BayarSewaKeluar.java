@@ -19,4 +19,8 @@ import javax.persistence.Id;
 @Entity
 @ListUrutan({"tanggal","keterangan","jumlah"})
 public class BayarSewaKeluar extends Bayarsewa implements Serializable {    
+    @Override
+    public String getKelas() {
+        return "Pengeluaran Modal Di Tahan";
+    }
 }

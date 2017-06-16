@@ -95,4 +95,9 @@ public class Pegawaigaji extends Laporan implements Serializable {
     {
         return "Table Pegawai Gaji";
     }    
+    @Override
+    public String getKelas() {
+        return "Pengeluaran Gaji Pegawai";
+    }
+
 }

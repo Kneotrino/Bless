@@ -139,6 +139,8 @@ public class ShowRoom extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         jTextField1 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
         jMenuItem32 = new javax.swing.JMenuItem();
         panelPegawai1 = new app.view.FixPanel.panelPegawai();
@@ -281,6 +283,12 @@ public class ShowRoom extends javax.swing.JFrame {
         bindingGroup.addBinding(binding);
 
         jDialog3.getContentPane().add(jTextField1);
+
+        jLabel5.setText("Tanggal");
+        jDialog3.getContentPane().add(jLabel5);
+
+        jDateChooser1.setDate(new Date());
+        jDialog3.getContentPane().add(jDateChooser1);
 
         jButton2.setText("Simpan");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -727,7 +735,10 @@ public class ShowRoom extends javax.swing.JFrame {
         jDialog3.setSize(300, 300);
         jDialog3.setLocationRelativeTo(null);
         jDialog3.show();
-        app.view.FixPanel.akuntansi.panelAkuntansi.Neraca(this.jTextField1.getText());
+        app.view.FixPanel.akuntansi.panelAkuntansi.Neraca(this.jTextField1.getText()
+                , jDateChooser1.getDate().getMonth()
+                , jDateChooser1.getDate().getYear()
+        );
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
@@ -883,6 +894,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -892,6 +904,7 @@ public class ShowRoom extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

@@ -24,5 +24,8 @@ public class MobilPemasukan extends KeuanganMobil implements Serializable {
     {
         return "Table "+this.getMobils();
     }    
-    
+    @Override
+    public String getKelas() {
+        return "Pemasukan Mobil";
+    }        
 }

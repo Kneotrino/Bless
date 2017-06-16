@@ -13,5 +13,8 @@ import javax.persistence.Entity;
 @Entity
 @ListUrutan({"tanggal","keterangan","jumlah"})
 public class BayarPihutangPengeluaran extends Bayarpihutang implements Serializable {
-
+    @Override
+    public String getKelas() {
+        return "Pengeluaran Hutang";
+    }        
 }

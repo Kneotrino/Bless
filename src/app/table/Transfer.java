@@ -31,5 +31,4 @@ public class Transfer extends Laporan implements Serializable {
     public void setPerjalanan(Perjalanan perjalanan) {
         this.perjalanan = perjalanan;
     }
-
 }

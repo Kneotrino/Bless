@@ -42,7 +42,10 @@ public class Modal extends Laporan implements Serializable {
     public void setSaham(Saham saham) {
         this.saham = saham;
     }
-
+    @Override
+    public String getKelas() {
+        return "Pemasukan Modal";
+    }    
     /**
      * Get the value of Persen
      *

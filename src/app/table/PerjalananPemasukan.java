@@ -19,5 +19,8 @@ import javax.persistence.Id;
 @Entity
 @app.ListUrutan({"tanggal","keterangan","jumlah"})
 public class PerjalananPemasukan extends Perjalanan  implements Serializable {
-    
+    @Override
+    public String getKelas() {
+        return "Transfer Belanja Mobil";
+    }    
 }

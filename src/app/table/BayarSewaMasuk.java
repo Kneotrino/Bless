@@ -32,4 +32,9 @@ public class BayarSewaMasuk extends Bayarsewa implements Serializable {
     public void setLaporanlaba(Laporanlaba laporanlaba) {
         this.laporanlaba = laporanlaba;
     }
+    @Override
+    public String getKelas() {
+        return "Pemasukan Modal Di Tahan";
+    }
+
 }

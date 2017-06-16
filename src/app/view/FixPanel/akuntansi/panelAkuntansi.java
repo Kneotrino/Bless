@@ -536,7 +536,7 @@ public class panelAkuntansi extends JPanel {
                 Date awalBulan = cal.getTime();
                 System.out.println("awalBulan = " + awalBulan);
                 cal.add(Calendar.MONTH, 1);
-                Date akhirBulan = cal.getTime();
+                akhirBulan = cal.getTime();
                 System.out.println("akhirBulan = " + akhirBulan);
                 entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();        
                 List<Laporan> rangkumanBank = entityManager.createQuery(
@@ -584,7 +584,6 @@ public class panelAkuntansi extends JPanel {
                 .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
                 .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 .getResultList();
-                Map<String, Long> collectPemasukan = listPemasukan .stream().collect(Collectors.groupingBy(l  -> l.getDtype(), Collectors.summingLong( a -> a.getPemasukan().longValue())));  
                 List<Laporan> listPengeluaran = 
                     entityManager.createQuery("SELECT l FROM Laporan l"
                         + " where l.tanggal BETWEEN :startDate AND :endDate"
@@ -593,7 +592,8 @@ public class panelAkuntansi extends JPanel {
                 .setParameter("startDate", awalBulan, TemporalType.TIMESTAMP)
                 .setParameter("endDate", akhirBulan, TemporalType.TIMESTAMP)  
                 .getResultList();
-                Map<String, Long> collectPengeluaran = listPengeluaran .stream().collect(Collectors.groupingBy(l  -> l.getDtype(), Collectors.summingLong( a -> a.getPengeluaran().longValue())));  
+                Map<String, Long> collectPemasukan = listPemasukan .stream().collect(Collectors.groupingBy(l  -> l.getKelas(), Collectors.summingLong( a -> a.getPemasukan().longValue())));  
+                Map<String, Long> collectPengeluaran = listPengeluaran .stream().collect(Collectors.groupingBy(l  -> l.getKelas(), Collectors.summingLong( a -> a.getPengeluaran().longValue())));  
                
                  
                 for (Map.Entry<String,Long> entry : collectPemasukan.entrySet()) {
@@ -601,12 +601,14 @@ public class panelAkuntansi extends JPanel {
                             .setAkun(entry.getKey())
                             .setPengeluaran(BigInteger.valueOf(entry.getValue()));
                     AkuntansiList.add(akun);
+                    LabaList.add(akun);
                 }
                 for (Map.Entry<String,Long> entry : collectPengeluaran.entrySet()) {
                     Akun akun = new Akun()
                             .setAkun(entry.getKey())
                             .setPemasukan(BigInteger.valueOf(entry.getValue()));
                     AkuntansiList.add(akun);
+                    LabaList.add(akun);                    
                 }
         Akun total = new Akun()
                 .setAkun("Total");
@@ -618,7 +620,144 @@ public class panelAkuntansi extends JPanel {
             total.addPengeluaran(akun.getPengeluaran());
             total.addPemasukan(akun.getPemasukan());
         }
+        X = 1;
+        Akun Laba = new Akun()
+                .setAkun("Total");
+        Akun Profit = new Akun()
+                .setAkun("Total Profit");
+        for (Akun akun : LabaList) {
+//            akun.setNomor(X++);
+            Laba.addPengeluaran(akun.getPengeluaran());
+            Laba.addPemasukan(akun.getPemasukan());
+        }
+        Profit
+                .subPengeluaran(Laba.getPemasukan())
+                .addPengeluaran(Laba.getPengeluaran())
+                ;
+//                .subPemasukan(Laba.getPengeluaran());
+        LabaList.add(Laba);
+        LabaList.add(Profit);
         AkuntansiList.add(total);
+        Akun totalProfit = new Akun()
+                .setAkun("Total " + Calendar.getInstance().get(Calendar.YEAR));
+        for (int i = 2; i < 14; i++) {
+            Akun temp = new Akun(i);
+            LaporanPenyesuaian.add( ProfitBulanan(temp) );
+            totalProfit.addPemasukan( temp.getPemasukan());
+            totalProfit.addPengeluaran(temp.getPengeluaran());
+        }
+        LaporanPenyesuaian.add(totalProfit);
+        TypedQuery createQuery = entityManager.createQuery("SELECT m FROM Mobil m", app.table.Mobil.class);
+        TypedQuery createQuery1 = entityManager.createQuery("SELECT m FROM Bpkbtitipan m", app.table.Bpkbtitipan.class);
+        TypedQuery createQuery2 = entityManager.createQuery("SELECT m FROM Rental m", app.table.Rental.class);
+        TypedQuery createQuery3 = entityManager.createQuery("SELECT m FROM Hutang m", app.table.Hutang.class);
+        List<Mobil> mobilList = createQuery.getResultList();
+        List<Bpkbtitipan> bpkb = createQuery1.getResultList();
+        List<Rental> rental = createQuery2.getResultList();
+        List<Hutang> HutangList = createQuery3.getResultList();
+        
+        int i = 0;
+        Akun TotalMobil = new Akun()
+                .setAkun("Total Profit Mobil");
+        TotalMobil.setKeterangan("----");
+        for (Mobil mobil : mobilList) {
+            i++;
+            BigInteger pemasukan = BigInteger.ZERO;
+            BigInteger pengeluaran = BigInteger.ZERO;
+            List<KeuanganMobil> KM = mobil.getKeuanganMobil2();
+            for (KeuanganMobil k : KM) {
+                pemasukan = pemasukan.add(k.getPemasukan());
+                pengeluaran = pengeluaran.add(k.getPengeluaran());
+            }
+            Akun veh = new Akun(i)
+                    .setAkun(
+                            mobil+ " " +
+                            mobil.getMerk()+ " " +
+                            mobil.getType()+ " " +
+                            mobil.getWarna()+ " " +
+                            mobil.getTahun()+ " " 
+                    )
+                    .setPemasukan(pemasukan)
+                    .setPengeluaran(pengeluaran)
+                    ;
+            veh.setKeterangan(mobil.getStatusMobil());
+            TotalMobil.addPemasukan(pemasukan)
+                    .addPengeluaran(pengeluaran);
+            ProfitMobil.add(veh);
+        }
+            ProfitMobil.add(TotalMobil);
+            Closed.addAll(ProfitMobil);
+            String op = "OPEN";
+            String cl = "CLOSE";
+            for (Bpkbtitipan b : bpkb) {
+            Akun temp = new Akun()
+                    .setAkun(b.toString());
+            temp.setKeterangan(b.getLaba());
+            temp.setPemasukan(b.gettotalPemasukan());
+            temp.setPengeluaran(b.gettotalPengeluaran());
+            ProfitJasa.add(temp);
+        }
+            for (Rental r : rental) {
+            Akun temp = new Akun()
+                    .setAkun(r.toString());
+            temp.setKeterangan(r.getLABA());
+            temp.setPemasukan(r.gettotalPemasukan());
+            temp.setPengeluaran(r.gettotalPengeluaran());
+            ProfitJasa.add(temp);            
+        }
+            for (Hutang r : HutangList) {
+            Akun temp = new Akun()
+                    .setAkun(r.toString());
+            temp.setKeterangan(r.getLABA());
+            temp.setPemasukan(r.gettotalPemasukan());
+            temp.setPengeluaran(r.gettotalPengeluaran());
+            ProfitJasa.add(temp);            
+        }
+            Akun ProfitJasaTotal = new Akun()
+                    .setAkun("Profit Jasa Total");
+                    ProfitJasaTotal.setKeterangan("");
+            for (Akun akun : ProfitJasa) {
+            ProfitJasaTotal.addPemasukan(akun.getPemasukan());
+            ProfitJasaTotal.addPengeluaran(akun.getPengeluaran());
+        }
+            ProfitJasa.add(ProfitJasaTotal);
+            Closed.addAll(ProfitJasa);
+            Closed.removeIf(a -> !a.getKeterangan().equals(cl));
+            Open.addAll(ProfitMobil);
+            Open.addAll(ProfitJasa);
+            Open.removeIf(a -> !a.getKeterangan().equals(op));
+            Akun TO = new Akun();
+                TO.setAkun("Total Open ");
+                for (Akun akun : Open) {
+                    TO.addPemasukan(akun.getPemasukan());
+                    TO.addPengeluaran(akun.getPengeluaran());
+                }
+            Akun TC = new Akun();
+                TC.setAkun("Total Close ");
+                for (Akun akun : Closed) {
+                    TC.addPemasukan(akun.getPemasukan());
+                    TC.addPengeluaran(akun.getPengeluaran());
+        }
+            Open.add(TO);
+            Closed.add(TC);
+            Akun LabaMobilTahan = new Akun()
+                    .setPemasukan(
+                            TC.getProfit()
+                            .divide(new BigInteger("100"))
+                            .multiply(new BigInteger(Value))
+                    
+                    )
+                    ;
+            LabaMobilTahan.setAkun("Laba di tahan "+Value+"%");
+//            Closed.add(new Akun());
+            Closed.add(LabaMobilTahan);
+//            Closed.add(BayarRuko);
+            Closed.add(new Akun()
+                    .setAkun("Sisa Laba Di tahan " + Calendar.getInstance().get(Calendar.YEAR))
+                    .setPemasukan(TC.getProfit().subtract(LabaMobilTahan.getProfit()))
+            );
+        panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba(Value);
+        
         initComponents();
     }
     public panelAkuntansi(String Value, Date awal) {
@@ -635,19 +774,15 @@ public class panelAkuntansi extends JPanel {
         cal.set(Calendar.HOUR, cal.getActualMaximum(Calendar.HOUR));            
         cal.set(Calendar.MINUTE, cal.getActualMaximum(Calendar.MINUTE));            
         akhirBulan = cal.getTime();
-//        akhirBulan.setHours(23);
         cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));            
         cal.add(Calendar.MINUTE, -2);
         cal.setTime(awal);
         cal.add(Calendar.MINUTE, -1);
         awalBulan = cal.getTime();
-//        awalBulan.setHours(0);
-//        awalBulan.setMinutes(0);
         System.out.println("awalBulan = " + awalBulan);
         System.out.println("akhirBulan = " + akhirBulan);
         Akun total = new Akun().setAkun("Neraca Total");
         int X =1;
-//        List<app.table.Bank> list = entityManager.createQuery("SELECT en FROM Bank en", app.table.Bank.class).getResultList();       
          List<Laporan> rangkumanBank = entityManager.createQuery(
                 "SELECT l FROM Laporan l where l.tanggal < :endDate")
                 .setParameter("endDate", akhirBulan, TemporalType.DATE)  
@@ -1181,7 +1316,7 @@ public class panelAkuntansi extends JPanel {
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(317, 400));
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(467, 800));
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NERACA SALDO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable1.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable1.setAutoCreateRowSorter(true);
@@ -1214,7 +1349,7 @@ public class panelAkuntansi extends JPanel {
 
         jTabbedPane1.addTab("NERACA SALDO BULAN INI", jScrollPane1);
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI BULAN INI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TABEL LABA/RUGI", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
         jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         jTable2.setAutoCreateRowSorter(true);
@@ -1643,7 +1778,7 @@ public class panelAkuntansi extends JPanel {
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
 //                jDialog1.getContentPane().add(new panelAkuntansi("25",new Date(117, 0, 1)));
-                jDialog1.getContentPane().add(new panelAkuntansi("25",11,117));
+                jDialog1.getContentPane().add(new panelAkuntansi("25",1,117));
                 jDialog1.show();
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {
@@ -1654,7 +1789,7 @@ public class panelAkuntansi extends JPanel {
             }
         });
     }
-    public static void Neraca(String value)
+    public static void Neraca(String value, int month, int year)
     {
         EventQueue.invokeLater(() -> {
                 System.out.println("app.view.FixPanel.akuntansi.panelAkuntansi.main()");
@@ -1662,7 +1797,7 @@ public class panelAkuntansi extends JPanel {
                 try {
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
-                jDialog1.getContentPane().add(new panelAkuntansi(value));
+                jDialog1.getContentPane().add(new panelAkuntansi(value, month, year));
                 jDialog1.show();
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {
