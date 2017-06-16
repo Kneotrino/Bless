@@ -15,6 +15,6 @@ import javax.persistence.Entity;
 public class BayarPihutangPengeluaran extends Bayarpihutang implements Serializable {
     @Override
     public String getKelas() {
-        return "Pengeluaran Hutang";
+        return "Pengeluaran Pinjaman/Hutang";
     }        
 }
