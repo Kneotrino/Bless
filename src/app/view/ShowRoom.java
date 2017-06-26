@@ -445,7 +445,7 @@ public class ShowRoom extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem12);
 
-        jMenuItem13.setText("Kredit Leasing y");
+        jMenuItem13.setText("Kredit Leasing");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem13ActionPerformed(evt);

@@ -122,7 +122,11 @@ public void Refresh()
 //    for (Object object : B) {
 //        blessingPUEntityManager.refresh(object);                
 //    }
+    try {
     ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        
+    } catch (Exception e) {
+    }
     this.bankList.clear();
 //    this.bankList.add(null);    
     this.bankList.addAll(bankQuery.getResultList());
@@ -1163,10 +1167,9 @@ public void Refresh()
         jTable4.setColumnSelectionAllowed(true);
         jTable4.setRowHeight(22);
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keuanganMobils}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, eLProperty, jTable4);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, keuanganMobilList, jTable4);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
-        columnBinding.setColumnName("Laporan REF");
+        columnBinding.setColumnName("Id");
         columnBinding.setColumnClass(Long.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
@@ -1181,15 +1184,11 @@ public void Refresh()
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
-        columnBinding.setColumnName("Jenis");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
         columnBinding.setColumnName("Sumber");
         columnBinding.setColumnClass(app.table.Bank.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tripsTripsId}"));
-        columnBinding.setColumnName("Lap. Per");
+        columnBinding.setColumnName("Perjalanan");
         columnBinding.setColumnClass(app.table.Trips.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -1201,10 +1200,9 @@ public void Refresh()
         jScrollPane5.setViewportView(jTable4);
         jTable4.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(6).setMinWidth(400);
-            jTable4.getColumnModel().getColumn(6).setPreferredWidth(500);
-            jTable4.getColumnModel().getColumn(7).setMinWidth(400);
-            jTable4.getColumnModel().getColumn(7).setPreferredWidth(500);
+            jTable4.getColumnModel().getColumn(5).setMinWidth(200);
+            jTable4.getColumnModel().getColumn(5).setPreferredWidth(300);
+            jTable4.getColumnModel().getColumn(6).setPreferredWidth(200);
         }
 
         jPanel12.add(jScrollPane5, java.awt.BorderLayout.CENTER);
@@ -1602,7 +1600,7 @@ public void Refresh()
 
     jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${perjalananList}");
+    org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${perjalananList}");
     org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox7);
     bindingGroup.addBinding(jComboBoxBinding);
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable4, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox7, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -2016,7 +2014,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     jTable1.setAutoCreateRowSorter(true);
     jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     jTable1.setRowHeight(24);
-    jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
     eLProperty = org.jdesktop.beansbinding.ELProperty.create("${mobilList}");
     jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
@@ -2681,7 +2678,17 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     private void Hitung()
     {
         System.out.println("app.view.panel.mobil.panelMobil.Hitung()");
+        String title = "Data Mobil " 
+                + this.hapus.getType() + ";"
+                + this.hapus.getTahun() + ";"
+                + this.hapus.getWarna()+ ";"
+                +this. hapus.getNoPolisiAktif() + ";"
+                +this. hapus.getNoPolisiLama() + ";"
+                ;
+        this.editMobil.setTitle(title);
         List<KeuanganMobil> Km = this.hapus.getKeuanganMobils();
+        keuanganMobilList.clear();
+        keuanganMobilList.addAll(Km);
         BigInteger p = BigInteger.ZERO;
         BigInteger tk = BigInteger.ZERO;
         BigInteger td = BigInteger.ZERO;
@@ -2698,8 +2705,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         } catch (Exception e) {
         }
     this.bankList.clear();
-//    this.bankList.add(null);    
     this.bankList.addAll(bankQuery.getResultList());
+    this.PerjalananList.clear();
+    this.PerjalananList.add(null);    
+    this.PerjalananList.addAll(query.getResultList());
 
     }
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
@@ -2851,7 +2860,10 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         this.Hitung();
         this.jDialog1.hide();
              simpanButtonActionPerformed(evt);
-            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+             try {
+            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
             this.bankList.clear();
 //            this.bankList.add(null);    
             this.bankList.addAll(bankQuery.getResultList());
@@ -2874,9 +2886,11 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
             this.Hitung();
             simpanButtonActionPerformed(evt);
         }
-            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
             this.bankList.clear();
-//            this.bankList.add(null);    
             this.bankList.addAll(bankQuery.getResultList());
 
 //        this.persist(dp);
@@ -2971,6 +2985,12 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         cari += this.jTextField32.getText();
         cari += "%";
         System.out.println("cari = " + cari);
+//                                + " d.nama LIKE :cari1 "
+//                                + " OR d.bank LIKE :cari1" 
+//                                + " OR d.noHp LIKE :cari1" 
+//                                + " OR d.alamat LIKE :cari1"
+//                                + " OR d.noKtp LIKE :cari1"                               
+
         TypedQuery<Mobil> createQuery = 
                 blessingPUEntityManager
                         .createQuery(
@@ -2987,6 +3007,11 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                                 " OR b.pemilikLama LIKE :cari1" +
                                 " OR b.penjual LIKE :cari1" +
                                 " OR b.type LIKE :cari1" +
+                                " OR b.debitur.nama LIKE :cari1" +
+                                " OR b.debitur.bank LIKE :cari1" +
+                                " OR b.debitur.noKtp LIKE :cari1" +
+                                " OR b.debitur.alamat LIKE :cari1" +
+                                " OR b.debitur.noHp LIKE :cari1" +
                                 " OR b.warna LIKE :cari1"
                                 ,app.table.Mobil.class)
                 .setParameter("cari1", cari)

@@ -120,8 +120,8 @@ public class panelPerjalanan extends JPanel {
         newDetailButton4 = new javax.swing.JButton();
         newDetailButton3 = new javax.swing.JButton();
         deleteDetailButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
         detailScrollPane = new javax.swing.JScrollPane();
         detailTable = new javax.swing.JTable();
 
@@ -343,13 +343,13 @@ public class panelPerjalanan extends JPanel {
         deleteDetailButton.addActionListener(formListener);
         jPanel2.add(deleteDetailButton);
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(formListener);
-        jPanel2.add(refreshButton);
-
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel2.add(saveButton);
+
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(formListener);
+        jPanel2.add(refreshButton);
 
         add(jPanel2);
 
@@ -473,11 +473,11 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == newButton4) {
                 panelPerjalanan.this.newButton4ActionPerformed(evt);
             }
-            else if (evt.getSource() == newButton5) {
-                panelPerjalanan.this.newButton5ActionPerformed(evt);
-            }
             else if (evt.getSource() == newButton6) {
                 panelPerjalanan.this.newButton6ActionPerformed(evt);
+            }
+            else if (evt.getSource() == newButton5) {
+                panelPerjalanan.this.newButton5ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -648,7 +648,14 @@ public class panelPerjalanan extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
-            refreshButtonActionPerformed(evt);
+                        try {
+            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();        
+            } catch (Exception e) {
+            }
+                bankList.clear();
+                bankList.addAll(bankQuery.getResultList());
+
+//            refreshButtonActionPerformed(evt);
 //            Util.RefreshLaporan();
 
         } catch (RollbackException rex) {

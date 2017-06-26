@@ -1778,7 +1778,7 @@ public class panelAkuntansi extends JPanel {
                 jDialog1.setSize(1200, 700);
                 jDialog1.setLocationRelativeTo(null);
 //                jDialog1.getContentPane().add(new panelAkuntansi("25",new Date(117, 0, 1)));
-                jDialog1.getContentPane().add(new panelAkuntansi("25",1,117));
+                jDialog1.getContentPane().add(new panelAkuntansi("25",5,117));
                 jDialog1.show();
                 jDialog1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } catch (Exception e) {

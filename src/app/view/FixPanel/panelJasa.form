@@ -444,6 +444,10 @@
                 <BindingParameter name="NAME" value="Ket"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
+              <Subbinding sourcePath="${status}">
+                <BindingParameter name="NAME" value="Tipe"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
               <Subbinding sourcePath="${noBpkb}">
                 <BindingParameter name="NAME" value="No Bpkb"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
@@ -454,10 +458,6 @@
               </Subbinding>
               <Subbinding sourcePath="${posisi}">
                 <BindingParameter name="NAME" value="Posisi"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${status}">
-                <BindingParameter name="NAME" value="Status"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${stnk}">
