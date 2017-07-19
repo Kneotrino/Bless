@@ -5,6 +5,7 @@
  */
 package app;
 
+import app.utils.MyTextField;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import java.lang.reflect.Field;
@@ -28,6 +29,9 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.undo.UndoManager;
 
 /**
  *
@@ -133,10 +137,8 @@ public class Foo {
             }
             else 
             {
-                    comp = new javax.swing.JTextField("");                                                         
-            }
-  
-            
+                    comp = new MyTextField();
+            }              
             result = result.append(Tuple.of(fieldType, label, comp, str));
         }
         

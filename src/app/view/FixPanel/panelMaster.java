@@ -430,7 +430,7 @@ public void Restall()
         refreshButton1.addActionListener(formListener);
         jPanel1.add(refreshButton1);
 
-        refreshButton2.setText("Filter");
+        refreshButton2.setText("Pencarian");
         refreshButton2.addActionListener(formListener);
         jPanel1.add(refreshButton2);
 

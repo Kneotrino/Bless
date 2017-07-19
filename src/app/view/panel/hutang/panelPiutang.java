@@ -239,7 +239,7 @@ public class panelPiutang extends JPanel {
         add(jPanel1);
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -274,7 +274,6 @@ public class panelPiutang extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
-        masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         add(masterScrollPane);
 
@@ -329,7 +328,6 @@ public class panelPiutang extends JPanel {
         detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setColumnSelectionAllowed(true);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.bayarpihutangList}");
@@ -368,7 +366,6 @@ public class panelPiutang extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
-        detailTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
             detailTable.getColumnModel().getColumn(8).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1));
         }
@@ -416,6 +413,9 @@ public class panelPiutang extends JPanel {
             else if (evt.getSource() == newButton) {
                 panelPiutang.this.newButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == newButton5) {
+                panelPiutang.this.newButton5ActionPerformed(evt);
+            }
             else if (evt.getSource() == newButton2) {
                 panelPiutang.this.newButton2ActionPerformed(evt);
             }
@@ -427,9 +427,6 @@ public class panelPiutang extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelPiutang.this.newDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == newButton5) {
-                panelPiutang.this.newButton5ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

@@ -212,7 +212,8 @@ public class panelInvestor extends JPanel {
 
         jPanel3.add(jPanel2);
 
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setAutoCreateRowSorter(true);
+        masterTable.setColumnSelectionAllowed(false);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
@@ -248,7 +249,6 @@ public class panelInvestor extends JPanel {
         bindingGroup.addBinding(binding);
 
         masterScrollPane.setViewportView(masterTable);
-        masterTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jPanel3.add(masterScrollPane);
 
@@ -301,7 +301,7 @@ public class panelInvestor extends JPanel {
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setCellSelectionEnabled(true);
+        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.sahamList}");
@@ -332,7 +332,6 @@ public class panelInvestor extends JPanel {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         detailScrollPane.setViewportView(detailTable);
-        detailTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (detailTable.getColumnModel().getColumnCount() > 0) {
             detailTable.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox3));
         }

@@ -648,14 +648,14 @@ public class panelPerjalanan extends JPanel {
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
-                        try {
-            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();        
-            } catch (Exception e) {
-            }
-                bankList.clear();
-                bankList.addAll(bankQuery.getResultList());
+//                        try {
+//            ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();        
+//            } catch (Exception e) {
+//            }
+//                bankList.clear();
+//                bankList.addAll(bankQuery.getResultList());
 
-//            refreshButtonActionPerformed(evt);
+            refreshButtonActionPerformed(evt);
 //            Util.RefreshLaporan();
 
         } catch (RollbackException rex) {
