@@ -186,7 +186,7 @@ public void Restall()
         jumlahLabel = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         keteranganLabel = new javax.swing.JLabel();
-        keteranganField = new javax.swing.JTextField();
+        keteranganField = new app.utils.MyTextField();
         jLabel1 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -200,7 +200,7 @@ public void Restall()
         jComboBox4 = new javax.swing.JComboBox<>();
         jDialog3 = new javax.swing.JDialog();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextField1 = new app.utils.MyTextField();
         jLabel5 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
@@ -878,17 +878,17 @@ public void Restall()
         //</editor-fold>
 
         /* Create and display the form */
-//        EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                JFrame frame = new JFrame();
-////                frame.setContentPane(new panelMaster(1));
-//                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                frame.pack();
-//                frame.setVisible(true);
-//            }
-//        });
-    LaporanPengeluaran();
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                JFrame frame = new JFrame();
+//                frame.setContentPane(new panelMaster(1));
+                frame.setContentPane(new panelMaster(app.table.Pengeluaran.class));
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+//    LaporanPemasukan();
     }
     public static void LaporanPemasukan()
     {

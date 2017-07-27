@@ -106,6 +106,9 @@
                 <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.keterangan}" target="keteranganField" targetPath="text" updateStrategy="0" immediately="false"/>
                 <BindingProperty name="enabled" source="masterTable" sourcePath="${selectedElement != null}" target="keteranganField" targetPath="enabled" updateStrategy="0" immediately="false"/>
               </BindingProperties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new app.utils.MyTextField()"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
@@ -250,6 +253,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new app.utils.MyTextField()"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>

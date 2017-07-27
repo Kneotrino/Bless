@@ -118,7 +118,7 @@ public class Printer {
               File T = new File(f, "Daftar Peminjam.CSV");
               cvs.add(T);
               System.out.println("resultList = " + resultList.size());    
-               WriteStep data = CSVUtil.of(T)
+              WriteStep data = CSVUtil.of(T)
                         .type(app.table.Hutang.class)
                             .properties(
                                 Tuple.of("REF","hutangid", d -> d==null?" ":d),
