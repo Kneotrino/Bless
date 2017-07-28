@@ -675,7 +675,8 @@ public class panelAkuntansi extends JPanel {
                             mobil.getMerk()+ " " +
                             mobil.getType()+ " " +
                             mobil.getWarna()+ " " +
-                            mobil.getTahun()+ " " 
+                            mobil.getTahun()+ " " +
+                            mobil.getDebitur().getNama() 
                     )
                     .setPemasukan(pemasukan)
                     .setPengeluaran(pengeluaran)
