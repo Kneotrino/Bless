@@ -3304,7 +3304,6 @@ public void FileSave() throws IOException
    chooser.setFileFilter(filter);
    chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
    chooser.setDialogTitle("Save File");
-//        Date date = new Date();
    File filetemp = new File( System.getProperties().getProperty("user.home"), 
            "Data Mobil"+
 //                   date.getDay()+"-" +
@@ -3315,12 +3314,17 @@ public void FileSave() throws IOException
 //   int returnVal1=chooser.showSaveDialog(this);
     while ( chooser.getSelectedFile().exists()) {
         JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
-        chooser.showSaveDialog(this);        
+        int result = chooser.showSaveDialog(this);
+        if (result == JFileChooser.CANCEL_OPTION)
+        {
+            System.out.println("Cancel was selected");
+            return;
+        }
     }
    File file1 = chooser.getSelectedFile();
               List a = mobilList;
-              SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               Function fungsi = d -> d==null?"":d;         
+              SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               Function tanggal = d -> d==null?" ":formator.format(d);
               List<File> cvs = new java.util.LinkedList<>(); 
               cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"));

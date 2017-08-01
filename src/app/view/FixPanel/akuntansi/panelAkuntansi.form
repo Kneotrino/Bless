@@ -505,6 +505,11 @@
                           <Editor/>
                           <Renderer/>
                         </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                       </TableColumnModel>
                     </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -514,27 +519,24 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="Form" sourcePath="${profitMobil}" target="jTable6" targetPath="elements" updateStrategy="0" immediately="true">
                       <Subbinding sourcePath="${nomor}">
-                        <BindingParameter name="NAME" value="Nomor"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${akun}">
-                        <BindingParameter name="NAME" value="Mobil"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${keterangan}">
-                        <BindingParameter name="NAME" value="Keterangan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
+                      <Subbinding sourcePath="${tanggalClose}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+                      </Subbinding>
                       <Subbinding sourcePath="${profit}">
-                        <BindingParameter name="NAME" value="Profit"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${pengeluaran}">
-                        <BindingParameter name="NAME" value="Pengeluaran"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${pemasukan}">
-                        <BindingParameter name="NAME" value="Pemasukan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                     </BindingProperty>
@@ -817,27 +819,24 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="Form" sourcePath="${closed}" target="jTable8" targetPath="elements" updateStrategy="0" immediately="true">
                       <Subbinding sourcePath="${nomor}">
-                        <BindingParameter name="NAME" value="No"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${akun}">
-                        <BindingParameter name="NAME" value="Mobil"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${keterangan}">
-                        <BindingParameter name="NAME" value="Keterangan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
+                      <Subbinding sourcePath="${tanggalClose}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
+                      </Subbinding>
                       <Subbinding sourcePath="${profit}">
-                        <BindingParameter name="NAME" value="Profit"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${pengeluaran}">
-                        <BindingParameter name="NAME" value="Pengeluaran"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${pemasukan}">
-                        <BindingParameter name="NAME" value="Pemasukan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                     </BindingProperty>

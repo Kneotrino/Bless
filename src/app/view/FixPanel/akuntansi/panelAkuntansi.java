@@ -682,6 +682,7 @@ public class panelAkuntansi extends JPanel {
                     .setPengeluaran(pengeluaran)
                     ;
             veh.setKeterangan(mobil.getStatusMobil());
+            veh.setTanggalClose(mobil.getTangglPelunasanPembelian());
             TotalMobil.addPemasukan(pemasukan)
                     .addPengeluaran(pengeluaran);
             ProfitMobil.add(veh);
@@ -1411,11 +1412,14 @@ public class panelAkuntansi extends JPanel {
         columnBinding.setColumnName("Nomor");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
-        columnBinding.setColumnName("Mobil");
+        columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalClose}"));
+        columnBinding.setColumnName("Tanggal Close");
+        columnBinding.setColumnClass(java.util.Date.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
         columnBinding.setColumnName("Profit");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -1513,14 +1517,17 @@ public class panelAkuntansi extends JPanel {
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${closed}");
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable8);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
-        columnBinding.setColumnName("No");
+        columnBinding.setColumnName("Nomor");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
-        columnBinding.setColumnName("Mobil");
+        columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalClose}"));
+        columnBinding.setColumnName("Tanggal Close");
+        columnBinding.setColumnClass(java.util.Date.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
         columnBinding.setColumnName("Profit");
         columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -1598,6 +1605,9 @@ public class panelAkuntansi extends JPanel {
         List j = ProfitJasa;
         final DecimalFormat IDR = new DecimalFormat("###0");              
         Function f = d -> d==null?"0":IDR.format(d);
+        SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
+        Function tanggal = d -> d==null?" ":form.format(d);
+
         WriteStep AkunPrinter = CSVUtil.of(akun)
                 .type(app.view.FixPanel.akuntansi.Akun.class)
                 .properties(
@@ -1632,6 +1642,7 @@ public class panelAkuntansi extends JPanel {
                         Tuple.of("No", "nomor", null),
                         Tuple.of("Mobil", "akun", null),
                         Tuple.of("Status", "keterangan", null),
+                        Tuple.of("Tanggal Lunas", "tanggalClose", tanggal),
                         Tuple.of("Pengeluaran", "pengeluaran", f),
                         Tuple.of("Pengeluaran", "pemasukan", f),
                         Tuple.of("Profit", "profit", f)
@@ -1655,6 +1666,7 @@ public class panelAkuntansi extends JPanel {
                         Tuple.of("No", "nomor", null),
                         Tuple.of("Mobil", "akun", null),
                         Tuple.of("Status", "keterangan", null),
+                        Tuple.of("Tanggal Lunas", "tanggalClose", tanggal),
                         Tuple.of("Pengeluaran", "pengeluaran", f),
                         Tuple.of("Pengeluaran", "pemasukan", f),
                         Tuple.of("Profit", "profit", f)
