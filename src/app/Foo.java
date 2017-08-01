@@ -5,6 +5,7 @@
  */
 package app;
 
+import app.utils.MyFormattedTextField;
 import app.utils.MyTextField;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
@@ -130,7 +131,7 @@ public class Foo {
             else if ( Number.class.isAssignableFrom(fieldType)) {
                 try {
                     ob = org.apache.commons.beanutils.ConstructorUtils.invokeConstructor(fieldType, "0");
-                    comp = new javax.swing.JFormattedTextField(ob);                                             
+                    comp = new MyFormattedTextField(ob);                                             
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ex) {
                     Logger.getLogger(Foo.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Date;
 
 /**
  *
@@ -32,6 +33,30 @@ public class Akun implements Serializable
      */
     public BigInteger getProfit() {
         return Profit = Pemasukan.subtract(Pengeluaran);
+    }
+
+    private Date tanggalClose;
+
+    public static final String PROP_TANGGALCLOSE = "tanggalClose";
+
+    /**
+     * Get the value of tanggalClose
+     *
+     * @return the value of tanggalClose
+     */
+    public Date getTanggalClose() {
+        return tanggalClose;
+    }
+
+    /**
+     * Set the value of tanggalClose
+     *
+     * @param tanggalClose new value of tanggalClose
+     */
+    public void setTanggalClose(Date tanggalClose) {
+        Date oldTanggalClose = this.tanggalClose;
+        this.tanggalClose = tanggalClose;
+        propertyChangeSupport.firePropertyChange(PROP_TANGGALCLOSE, oldTanggalClose, tanggalClose);
     }
 
     private String Keterangan;

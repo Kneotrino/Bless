@@ -152,6 +152,12 @@ public class Listleasing implements Serializable {
     }
 
     public Leasing getLeasingLeasingId() {
+        if (leasingLeasingId== null) {
+            System.out.println("app.table.Listleasing.getLeasingLeasingId() is null");
+            Leasing temp = new Leasing();
+            temp.setNama(" ");
+            return temp;
+        }
         return leasingLeasingId;
     }
 

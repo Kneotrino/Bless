@@ -1888,6 +1888,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
     columnBinding.setColumnName("Akun");
     columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalClose}"));
+    columnBinding.setColumnName("Tanggal Close");
+    columnBinding.setColumnClass(java.util.Date.class);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
     columnBinding.setColumnName("Pemasukan");
     columnBinding.setColumnClass(java.math.BigInteger.class);
@@ -3317,7 +3320,7 @@ public void FileSave() throws IOException
    File file1 = chooser.getSelectedFile();
               List a = mobilList;
               SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
-              Function fungsi = d -> d==null?" ":d;         
+              Function fungsi = d -> d==null?"":d;         
               Function tanggal = d -> d==null?" ":formator.format(d);
               List<File> cvs = new java.util.LinkedList<>(); 
               cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"));
@@ -3354,6 +3357,7 @@ public void FileSave() throws IOException
                                     Tuple.of("Total Pemasukan","totalPemasukan", fungsi),
                                     Tuple.of("Total Pengeluaran","totalPengeluaran", fungsi),
                                     Tuple.of("Total Profit","totalProfit", fungsi),
+                                    Tuple.of("Leasing","listleasing.leasingLeasingId.nama", fungsi),
                                     Tuple.of("keterangan","keterangan", fungsi)
                     ).dataList(a);
               data.write();
@@ -3362,6 +3366,10 @@ public void FileSave() throws IOException
                         .type(app.table.Debitur.class)
                             .properties(
                                     Tuple.of("debitur REF","debitur.debiturId", d -> d==null?" ":d),
+                                    Tuple.of("No Polisi Aktif","noPolisiAktif", fungsi),
+                                    Tuple.of("No Polisi Lama","noPolisiLama", fungsi),
+                                    Tuple.of("Merk","merk", fungsi),
+                                    Tuple.of("Type","type", fungsi),
                                     Tuple.of("Nama","debitur.nama", d -> d==null?" ":d),
                                     Tuple.of("Nomot HP","debitur.noHp", d -> d==null?" ":d),
                                     Tuple.of("Nomor Identitas","debitur.noKtp", d -> d==null?" ":d),
@@ -3378,7 +3386,10 @@ public void FileSave() throws IOException
                         .type(app.table.Bpkb.class)
                             .properties(
                                     Tuple.of("REF","bpkb.bpkbId", d -> d==null?" ":d),
-                                    Tuple.of("Keterangan","bpkb.ket", d -> d==null?" ":d),
+                                    Tuple.of("No Polisi Aktif","noPolisiAktif", fungsi),
+                                    Tuple.of("No Polisi Lama","noPolisiLama", fungsi),
+                                    Tuple.of("Merk","merk", fungsi),
+                                    Tuple.of("Type","type", fungsi),                                    
                                     Tuple.of("Atas Nama BPKB","bpkb.anBpkb", d -> d==null?" ":d),
                                     Tuple.of("No BPKB","bpkb.noBpkb", d -> d==null?" ":d),
                                     Tuple.of("No BPKB Lama","bpkb.status", d -> d==null?" ":d),
@@ -3392,6 +3403,7 @@ public void FileSave() throws IOException
                                     Tuple.of("tgl Leasing","bpkb.tglLeasing", d -> d==null?" ":formator.format(d)),
                                     Tuple.of("tgl Terima","bpkb.tglTerima", d -> d==null?" ":formator.format(d)),
                                     Tuple.of("tgl Pajak EXP","bpkb.tanggalExp", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("Keterangan","bpkb.ket", d -> d==null?" ":d),
                                     Tuple.of("mobil REF","bpkb.mobil", d -> d==null?" ":d)
                     ).dataList(a);
               bpkb.write();
@@ -3625,6 +3637,7 @@ public void FileSave() throws IOException
                     .setPengeluaran(pengeluaran)
                     ;
             veh.setKeterangan(mobil.getStatusMobil());
+            veh.setTanggalClose(mobil.getTangglPelunasanPembelian());
             temp.add(veh);
         }
         akunMobilList.clear();

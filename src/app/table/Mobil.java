@@ -224,6 +224,9 @@ public class Mobil implements Serializable {
 
 
     public Listleasing getListleasing() {
+        if (listleasing==null) {
+            System.out.println("app.table.Mobil.getListleasing() is null");
+        }
         return listleasing;
     }
 
@@ -658,7 +661,10 @@ public class Mobil implements Serializable {
 
     @Override
     public String toString() {
-        return "Mobil [" + noPolisiAktif + ";"+""+noPolisiLama+" ]";
+        return "Mobil [" + noPolisiAktif 
+                + ";"+""+noPolisiLama
+                + ";"+""+ type
+                +" ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
