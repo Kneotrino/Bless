@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         ,"alamat"
         ,"nomorhp"
         ,"nomorktp"
-        ,"jumlahpinjaman"
+//        ,"jumlahpinjaman"
 //        ,"sisapinjaman"
         ,"tanggalpinjam" 
 //        ,"keterangan"
@@ -137,6 +137,7 @@ public class Hutang implements Serializable {
     public BigInteger getBunga() {
         return bunga;
     }
+    
 
     /**
      * Set the value of bunga
@@ -146,9 +147,10 @@ public class Hutang implements Serializable {
     public void setBunga(BigInteger bunga) {
         BigInteger oldBunga = this.bunga;
         this.bunga = bunga;
-        Hitung();
+//        Hitung();
         changeSupport.firePropertyChange(PROP_BUNGA, oldBunga, bunga);
     }
+    
 
     public List<Bayarhutang> getBayarhutangs() {
         return (List<Bayarhutang>) app.table.Util.hitungSaldo(bayarhutangs);
@@ -193,6 +195,24 @@ public  BigInteger gettotalPemasukan()
     public BigInteger getJumlahpinjaman() {
         return jumlahpinjaman;
     }
+    public BigInteger getJumlahKeluar() {
+                BigInteger temp = BigInteger.ZERO;
+        for (Bayarhutang bayars : bayarhutangs) {
+            temp = temp.add(bayars.getPengeluaran());
+        }
+        return temp;
+    }
+    public BigInteger getJumlahKembali() {
+                BigInteger temp = BigInteger.ZERO;
+        for (Bayarhutang bayars : bayarhutangs) {
+            temp = temp.add(bayars.getPemasukan());
+        }
+        return temp;
+    }
+    public BigInteger getJumlahTotal() {        
+        return getJumlahKeluar().subtract(getJumlahKembali());
+    }
+    
 
     public void setJumlahpinjaman(BigInteger jumlahpinjaman) {
         BigInteger oldJumlahpinjaman = this.jumlahpinjaman;
@@ -206,7 +226,9 @@ public  BigInteger gettotalPemasukan()
     public String getLunas()
     {
         if (sisapinjaman != null) {
-        int res = this.sisapinjaman.compareTo(BigInteger.ZERO);                
+        int res = this.getJumlahKeluar()
+                .subtract(getJumlahKembali())
+                .compareTo(BigInteger.ZERO);                
         String temp =  (res <= 0)?"[Lunas]":"[Belum Lunas]";
         return temp;
         }
@@ -260,14 +282,15 @@ public  BigInteger gettotalPemasukan()
     @PostPersist
     public void Hitung()
     {
-        BigInteger temp = BigInteger.ZERO;
-        for (Bayarhutang bayars : bayarhutangs) {
-            temp = temp.add(bayars.getPengeluaran());
-            temp = temp.subtract(bayars.getPemasukan());            
-        }
-        temp = temp.add(bunga);
-        setSisapinjaman(temp);
+//        BigInteger temp = BigInteger.ZERO;
+//        for (Bayarhutang bayars : bayarhutangs) {
+//            temp = temp.add(bayars.getPengeluaran());
+//            temp = temp.subtract(bayars.getPemasukan());            
+//        }
+//        temp = temp.add(bunga);
+//        setSisapinjaman(temp);
     }
+    
 
     public Date getTanggallunas() {
         return tanggallunas;

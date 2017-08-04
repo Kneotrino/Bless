@@ -73,14 +73,6 @@ public class panelHutang extends JPanel {
         newButton3 = new javax.swing.JButton();
         jDialog1 = new javax.swing.JDialog();
         inputPanel1 = new app.utils.inputPanel(app.table.Hutang.class);
-        jLabel3 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
         newButton = new javax.swing.JButton();
         newButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -164,30 +156,6 @@ public class panelHutang extends JPanel {
         inputPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INPUT DATA PEMINJAM", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         inputPanel1.setLayout(new java.awt.GridLayout(0, 2));
 
-        jLabel3.setText("Jumlah yang harus di bayarkan");
-        inputPanel1.add(jLabel3);
-
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jFormattedTextField1.setValue(0l);
-        inputPanel1.add(jFormattedTextField1);
-
-        jLabel1.setText("Tanggal Batas Bayar");
-        inputPanel1.add(jLabel1);
-        inputPanel1.add(jDateChooser1);
-
-        jLabel4.setText("Keterangan");
-        inputPanel1.add(jLabel4);
-        inputPanel1.add(jTextField1);
-
-        jLabel2.setText("Bank");
-        inputPanel1.add(jLabel2);
-
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox5);
-        bindingGroup.addBinding(jComboBoxBinding);
-
-        inputPanel1.add(jComboBox5);
-
         newButton.setText("Simpan");
         newButton.addActionListener(formListener);
         inputPanel1.add(newButton);
@@ -250,15 +218,26 @@ public class panelHutang extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahpinjaman}"));
-        columnBinding.setColumnName("Jumlah Pinjaman");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahKeluar}"));
+        columnBinding.setColumnName("T.Keluar");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${sisapinjaman}"));
-        columnBinding.setColumnName("Jumlah Sisa");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahKembali}"));
+        columnBinding.setColumnName("T.Kembali");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahKeluar-jumlahKembali}"));
+        columnBinding.setColumnName("Total");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bunga}"));
         columnBinding.setColumnName("Bunga");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahKeluar-jumlahKembali-bunga}"));
+        columnBinding.setColumnName("Total + Bunga");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalpinjam}"));
         columnBinding.setColumnName("Tanggalpinjam");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -276,7 +255,7 @@ public class panelHutang extends JPanel {
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(12).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1)
+            masterTable.getColumnModel().getColumn(14).setCellEditor(new javax.swing.DefaultCellEditor(jComboBox1)
             );
         }
 
@@ -289,6 +268,7 @@ public class panelHutang extends JPanel {
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        masterTable.setDefaultRenderer(long.class, new app.utils.NominalRender());
         masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
@@ -495,7 +475,11 @@ public class panelHutang extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        try {
+            
         ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        } catch (Exception e) {
+        }
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         java.util.Collection<Hutang> data = query.getResultList();
@@ -544,30 +528,30 @@ public class panelHutang extends JPanel {
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         app.table.Hutang h = (app.table.Hutang) this.inputPanel1.getTarget();
-        long temp = (long) jFormattedTextField1.getValue();
-        BigInteger sisa = BigInteger.valueOf(temp);
-        h.setSisapinjaman(sisa);
-        h.setTanggallunas(jDateChooser1.getDate());
-        h.setKeterangan(jTextField1.getText());
-        BagiLaba BL = new BagiLaba();
-        BL.setH(h);
+//        long temp = (long) jFormattedTextField1.getValue();
+//        BigInteger sisa = BigInteger.valueOf(temp);
+//        h.setSisapinjaman(sisa);
+//        h.setTanggallunas(jDateChooser1.getDate());
+//        h.setKeterangan(jTextField1.getText());
+//        BagiLaba BL = new BagiLaba();
+//        BL.setH(h);
         System.out.println("bayarpinjaman = " + h.getSisapinjaman());
-        BayarhutangPengeluaran bp = new app.table.BayarhutangPengeluaran();
-            Saldo ts = new app.table.Saldo();
-            ts.setBankId((Bank) jComboBox5.getSelectedItem());
-            bp.setTransaksi(ts);
-            bp.setJumlah(h.getJumlahpinjaman());
-            bp.setHutangid(h);       
-            bp.setKeterangan(h.getKeterangan());
-            bp.setTanggal(h.getTanggalpinjam());
-        List<app.table.Bayarhutang> bh = h.getBayarhutangs();
-            bh.add((app.table.Bayarhutang)bp);
-            h.setBayarhutangs(bh);
-        BigInteger subtract = h.getSisapinjaman().subtract(h.getJumlahpinjaman());
-        h.setBunga(subtract);
-        entityManager.persist(bp);
+//        BayarhutangPengeluaran bp = new app.table.BayarhutangPengeluaran();
+//            Saldo ts = new app.table.Saldo();
+//            ts.setBankId((Bank) jComboBox5.getSelectedItem());
+//            bp.setTransaksi(ts);
+//            bp.setJumlah(h.getJumlahpinjaman());
+//            bp.setHutangid(h);       
+//            bp.setKeterangan(h.getKeterangan());
+//            bp.setTanggal(h.getTanggalpinjam());
+//        List<app.table.Bayarhutang> bh = h.getBayarhutangs();
+//            bh.add((app.table.Bayarhutang)bp);
+//            h.setBayarhutangs(bh);
+//        BigInteger subtract = h.getSisapinjaman().subtract(h.getJumlahpinjaman());
+//        h.setBunga(subtract);
+//        entityManager.persist(bp);
         entityManager.persist(h);
-        entityManager.persist(BL);
+//        entityManager.persist(BL);
         list.add(h);
         int row = list.size() - 1;
         masterTable.setRowSelectionInterval(row, row);
@@ -676,23 +660,15 @@ public class panelHutang extends JPanel {
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog4;
     private javax.swing.JDialog jDialog5;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
     private java.util.List<app.table.Hutang> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

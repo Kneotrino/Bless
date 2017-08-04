@@ -1164,8 +1164,9 @@ public void Refresh()
         jTable4.setDefaultEditor(app.table.Trips.class, new javax.swing.DefaultCellEditor(jComboBox7));
         jTable4.setAutoCreateRowSorter(true);
         jTable4.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        jTable4.setColumnSelectionAllowed(true);
+        jTable4.setCellSelectionEnabled(false);
         jTable4.setRowHeight(22);
+        jTable4.setRowSelectionAllowed(true);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, keuanganMobilList, jTable4);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
@@ -1198,7 +1199,6 @@ public void Refresh()
             }
         });
         jScrollPane5.setViewportView(jTable4);
-        jTable4.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTable4.getColumnModel().getColumnCount() > 0) {
             jTable4.getColumnModel().getColumn(5).setMinWidth(200);
             jTable4.getColumnModel().getColumn(5).setPreferredWidth(300);

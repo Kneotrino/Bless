@@ -239,48 +239,6 @@
             <Property name="rows" type="int" value="0"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Jumlah yang harus di bayarkan"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
-              <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format subtype="1" type="0"/>
-                </Property>
-                <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="0l" type="code"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Tanggal Batas Bayar"/>
-              </Properties>
-            </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Keterangan"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Bank"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox5">
-              <BindingProperties>
-                <BindingProperty name="elements" source="Form" sourcePath="${bankList}" target="jComboBox5" targetPath="elements" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
             <Component class="javax.swing.JButton" name="newButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Simpan"/>
@@ -479,6 +437,16 @@
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
                       <Editor editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                         <Connection code="new javax.swing.DefaultCellEditor(jComboBox1)&#xd;&#xa;" type="code"/>
                       </Editor>
@@ -517,18 +485,31 @@
                   <Subbinding sourcePath="${keterangan}">
                     <BindingParameter name="NAME" value="Keterangan"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
-                  <Subbinding sourcePath="${jumlahpinjaman}">
-                    <BindingParameter name="NAME" value="Jumlah Pinjaman"/>
+                  <Subbinding sourcePath="${jumlahKeluar}">
+                    <BindingParameter name="NAME" value="T.Keluar"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
-                  <Subbinding sourcePath="${sisapinjaman}">
-                    <BindingParameter name="NAME" value="Jumlah Sisa"/>
+                  <Subbinding sourcePath="${jumlahKembali}">
+                    <BindingParameter name="NAME" value="T.Kembali"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${jumlahKeluar-jumlahKembali}">
+                    <BindingParameter name="NAME" value="Total"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                   <Subbinding sourcePath="${bunga}">
                     <BindingParameter name="NAME" value="Bunga"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${jumlahKeluar-jumlahKembali-bunga}">
+                    <BindingParameter name="NAME" value="Total + Bunga"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                   <Subbinding sourcePath="${tanggalpinjam}">
                     <BindingParameter name="NAME" value="Tanggalpinjam"/>
@@ -671,7 +652,7 @@
                 </BindingProperty>
               </BindingProperties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());&#xa;masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());&#xa;masterTable.setDefaultRenderer(long.class, new app.utils.NominalRender());&#xa;masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());"/>
                 <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
               </AuxValues>
