@@ -227,14 +227,14 @@ public class panelHutang extends JPanel {
         columnBinding.setColumnName("T.Kembali");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahKeluar-jumlahKembali}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahKembali-jumlahKeluar}"));
         columnBinding.setColumnName("Total");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${bunga}"));
         columnBinding.setColumnName("Bunga");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahKeluar-jumlahKembali-bunga}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahKembali-jumlahKeluar-bunga}"));
         columnBinding.setColumnName("Total + Bunga");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);

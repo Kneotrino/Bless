@@ -226,10 +226,10 @@ public  BigInteger gettotalPemasukan()
     public String getLunas()
     {
         if (sisapinjaman != null) {
-        int res = this.getJumlahKeluar()
-                .subtract(getJumlahKembali())
+        int res = this.getJumlahKembali()
+                .subtract(getJumlahKeluar())
                 .compareTo(BigInteger.ZERO);                
-        String temp =  (res <= 0)?"[Lunas]":"[Belum Lunas]";
+        String temp =  (res >= 0)?"[Lunas]":"[Belum Lunas]";
         return temp;
         }
         return "Null";

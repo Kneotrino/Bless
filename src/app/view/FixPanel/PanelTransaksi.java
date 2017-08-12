@@ -59,6 +59,10 @@ private Date getMeYesterday(){
         jLabel1 = new javax.swing.JLabel();
         saveButton1 = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
 
         FormListener formListener = new FormListener();
 
@@ -81,9 +85,9 @@ private Date getMeYesterday(){
         masterTable.setAutoCreateRowSorter(true);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${saldoId}"));
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.id}"));
         columnBinding.setColumnName("Transaksi REF");
-        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setColumnClass(Long.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laporan.tanggal}"));
         columnBinding.setColumnName("Tanggal");
@@ -122,9 +126,25 @@ private Date getMeYesterday(){
         saveButton1.addActionListener(formListener);
         jPanel2.add(saveButton1);
 
-        refreshButton.setText("Tampilkan Transaksi hari ini");
+        refreshButton.setText("Pencarian");
         refreshButton.addActionListener(formListener);
         jPanel2.add(refreshButton);
+
+        jLabel2.setText("Awal");
+        jPanel2.add(jLabel2);
+
+        jFormattedTextField1.setMinimumSize(new java.awt.Dimension(100, 20));
+        jFormattedTextField1.setPreferredSize(new java.awt.Dimension(100, 30));
+        jFormattedTextField1.setValue(1000l);
+        jPanel2.add(jFormattedTextField1);
+
+        jLabel3.setText("Akhir");
+        jPanel2.add(jLabel3);
+
+        jFormattedTextField2.setMinimumSize(new java.awt.Dimension(100, 20));
+        jFormattedTextField2.setPreferredSize(new java.awt.Dimension(100, 30));
+        jFormattedTextField2.setValue(100000l);
+        jPanel2.add(jFormattedTextField2);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
@@ -197,7 +217,14 @@ private Date getMeYesterday(){
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        long awal = (long) jFormattedTextField1.getValue();
+        System.out.println("awal = " + awal);
+        long akhir = (long) jFormattedTextField2.getValue();
+        System.out.println("akhir = " + akhir);
+        try {
+       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
         today = getMeYesterday();
         System.out.println("Today start = " + today);        
         endDay = new Date();
@@ -205,17 +232,22 @@ private Date getMeYesterday(){
         System.out.println("today = " + today);
         System.out.println("endDay = " + endDay);
 
-        java.util.Collection data = query.getResultList();                
+        java.util.Collection data = entityManager
+                .createQuery("SELECT s FROM Saldo s where s.Laporan.id BETWEEN :startDate AND :endDate")
+                .setParameter("startDate",awal)
+                .setParameter("endDate",akhir)
+        .getResultList();
+//        java.util.Collection data = endDay       
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
         list.clear();
         list.addAll(data);
-        list.removeIf((Saldo a) -> {
-            boolean x = a.getLaporan().getTanggal().before(today);
-            boolean y = a.getLaporan().getTanggal().after(endDay);            
-            return (x || y);
-        });
+//        list.removeIf((Saldo a) -> {
+//            boolean x = a.getLaporan().getTanggal().before(today);
+//            boolean y = a.getLaporan().getTanggal().after(endDay);            
+//            return (x || y);
+//        });
 //        Date today = getMeYesterday();
 //        System.out.println("today = " + today);        
 //        list.removeIf( a -> a.getLaporan().getTanggal().after(getMeYesterday()));
@@ -233,7 +265,11 @@ private Date getMeYesterday(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
     private javax.persistence.EntityManager entityManager;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private java.util.List<app.table.Saldo> list;
     private javax.swing.JScrollPane masterScrollPane;
