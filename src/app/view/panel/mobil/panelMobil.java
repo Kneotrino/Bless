@@ -155,6 +155,7 @@ public void Refresh()
         query = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT t FROM Trips t");
         PerjalananList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         jTextField8 = new javax.swing.JTextField();
+        jButton21 = new javax.swing.JButton();
         addMobil = new javax.swing.JDialog();
         jPanel6 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -226,8 +227,8 @@ public void Refresh()
         editMobil = new javax.swing.JDialog();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
-        jButton21 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        jLabel107 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
@@ -242,6 +243,9 @@ public void Refresh()
         jLabel66 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
+        jLabel104 = new javax.swing.JLabel();
+        jLabel105 = new javax.swing.JLabel();
+        jLabel106 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         jButton13 = new javax.swing.JButton();
         jTextField27 = new javax.swing.JTextField();
@@ -258,7 +262,10 @@ public void Refresh()
         jTextField57 = new javax.swing.JTextField();
         jTextField58 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField25 = new javax.swing.JTextField();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jFormattedTextField6 = new javax.swing.JFormattedTextField();
+        jFormattedTextField7 = new javax.swing.JFormattedTextField();
+        jFormattedTextField8 = new javax.swing.JFormattedTextField();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jScrollPane7 = new javax.swing.JScrollPane();
         jPanel11 = new javax.swing.JPanel();
@@ -387,7 +394,6 @@ public void Refresh()
         jLabel79 = new javax.swing.JLabel();
         jFormattedTextField4 = new javax.swing.JFormattedTextField();
         jLabel80 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
         jButton17 = new javax.swing.JButton();
         leasingQuery = java.beans.Beans.isDesignTime() ? null : blessingPUEntityManager.createQuery("SELECT l FROM Leasing l");
         leasingList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(leasingQuery.getResultList());
@@ -460,6 +466,13 @@ public void Refresh()
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jComboBox9, org.jdesktop.beansbinding.ELProperty.create("${selectedItem}"), jTextField8, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
+
+        jButton21.setText("SET LEASING");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
 
         addMobil.setTitle("Mobil Baru");
         addMobil.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -799,17 +812,10 @@ public void Refresh()
         jPanel15.setLayout(new java.awt.GridLayout(0, 2));
 
         jPanel16.setLayout(new java.awt.GridLayout(0, 1, 0, 1));
-
-        jButton21.setText("SET LEASING");
-        jButton21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton21ActionPerformed(evt);
-            }
-        });
-        jPanel16.add(jButton21);
-
-        jLabel17.setText("DEBITUR");
         jPanel16.add(jLabel17);
+
+        jLabel107.setText("DEBITUR");
+        jPanel16.add(jLabel107);
 
         jLabel55.setText("NOMOR POLISI AKTIF");
         jPanel16.add(jLabel55);
@@ -852,6 +858,15 @@ public void Refresh()
 
         jLabel37.setText("LEASING");
         jPanel16.add(jLabel37);
+
+        jLabel104.setText("NOMINAL LEASING (IDR)");
+        jPanel16.add(jLabel104);
+
+        jLabel105.setText("TERPENUHI (IDR)");
+        jPanel16.add(jLabel105);
+
+        jLabel106.setText("SISA");
+        jPanel16.add(jLabel106);
 
         jPanel15.add(jPanel16);
 
@@ -953,14 +968,30 @@ public void Refresh()
 
         jPanel17.add(jComboBox2);
 
-        jTextField25.setEditable(false);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.leasingLeasingId.nama}"), jTextField25, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        binding.setSourceNullValue("\"No Leasing\"");
-        binding.setSourceUnreadableValue("\"No Leasing\"");
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${leasingList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox4);
+        bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.leasingLeasingId}"), jComboBox4, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        jPanel17.add(jTextField25);
+        jPanel17.add(jComboBox4);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.nominal}"), jFormattedTextField6, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
+        jPanel17.add(jFormattedTextField6);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.TERPENUHI}"), jFormattedTextField7, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
+        jPanel17.add(jFormattedTextField7);
+
+        jFormattedTextField8.setEditable(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.TERPENUHI-selectedElement.listleasing.nominal}"), jFormattedTextField8, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        bindingGroup.addBinding(binding);
+
+        jPanel17.add(jFormattedTextField8);
 
         jPanel15.add(jPanel17);
 
@@ -1164,9 +1195,7 @@ public void Refresh()
         jTable4.setDefaultEditor(app.table.Trips.class, new javax.swing.DefaultCellEditor(jComboBox7));
         jTable4.setAutoCreateRowSorter(true);
         jTable4.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        jTable4.setCellSelectionEnabled(false);
         jTable4.setRowHeight(22);
-        jTable4.setRowSelectionAllowed(true);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, keuanganMobilList, jTable4);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
@@ -1600,8 +1629,8 @@ public void Refresh()
 
     jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-    org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${perjalananList}");
-    org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox7);
+    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${perjalananList}");
+    jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox7);
     bindingGroup.addBinding(jComboBoxBinding);
     binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable4, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jComboBox7, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
     bindingGroup.addBinding(binding);
@@ -1733,14 +1762,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
 
     jLabel80.setText("LEASING");
     LeasingMobil.getContentPane().add(jLabel80);
-
-    eLProperty = org.jdesktop.beansbinding.ELProperty.create("${leasingList}");
-    jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox4);
-    bindingGroup.addBinding(jComboBoxBinding);
-    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.listleasing.leasingLeasingId}"), jComboBox4, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
-    bindingGroup.addBinding(binding);
-
-    LeasingMobil.getContentPane().add(jComboBox4);
 
     jButton17.setText("SET LEASING");
     jButton17.addActionListener(new java.awt.event.ActionListener() {
@@ -3775,12 +3796,19 @@ public void FileSave() throws IOException
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
     private javax.swing.JFormattedTextField jFormattedTextField5;
+    private javax.swing.JFormattedTextField jFormattedTextField6;
+    private javax.swing.JFormattedTextField jFormattedTextField7;
+    private javax.swing.JFormattedTextField jFormattedTextField8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
     private javax.swing.JLabel jLabel101;
     private javax.swing.JLabel jLabel102;
     private javax.swing.JLabel jLabel103;
+    private javax.swing.JLabel jLabel104;
+    private javax.swing.JLabel jLabel105;
+    private javax.swing.JLabel jLabel106;
+    private javax.swing.JLabel jLabel107;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -3932,7 +3960,6 @@ public void FileSave() throws IOException
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField24;
-    private javax.swing.JTextField jTextField25;
     private javax.swing.JTextField jTextField26;
     private javax.swing.JTextField jTextField27;
     private javax.swing.JTextField jTextField28;
