@@ -20,6 +20,7 @@ import app.table.Laporan;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +34,7 @@ public class laporanEntityListener {
             try {
                 String temp = "C:/LogBlessing-"+
                         date.getDate()+"."+
-                        (date.getMonth()+1)+"-"+
+                        (date.getMonth()+1)+"."+
                         (date.getYear()+1900)+"-"+
                         date.getHours()+"."+
                         date.getMinutes()+
@@ -72,13 +73,14 @@ public class laporanEntityListener {
 	@PreUpdate
 	public void methodInvokedBeforeUpdate(Laporan emp) {
             String temp = emp.isName()?"Pemasukan":"Pengeluaran";
-            logger.info("Mengubah sebelumnya laporan "+temp+" Ref= " 
-                        + emp.getId()+"\tTanggal ="
-                        + emp.getTanggal()+"\tKeterangan ="
-                        + emp.getKeterangan()+"\tNominal = "
-                        + emp.getJumlah()+"\tTable ="
-                        + emp.getKelas()+"\tBank ="
-                        + emp.getTransaksi().getBankId().getNamaBank()+"\t"
+            Map<String, Object> oldValue = emp.getOldValue();
+            logger.info("Mengubah laporan sebelumnya "+temp+" Ref= " 
+                        + emp.getId()+"\tTanggal ="+ oldValue.get("tanggal")
+                    +"\tKeterangan ="                        + oldValue.get("keterangan")
+                    +"\tNominal = "                        + oldValue.get("jumlah")
+                    +"\tStatus ="                        + oldValue.get("tipe")
+                    +"\tTable ="                        + emp.getKelas()
+                    +"\tBank ="                        + oldValue.get("bank")+"\t"
                 );
 	}
  
@@ -89,7 +91,8 @@ public class laporanEntityListener {
                         + emp.getId()+"\tTanggal ="
                         + emp.getTanggal()+"\tKeterangan ="
                         + emp.getKeterangan()+"\tNominal = "
-                        + emp.getJumlah()+"\tTable ="
+                        + emp.getJumlah()+"\tStatus ="
+                        + emp.getTipe()+"\tTable ="
                         + emp.getKelas()+"\tBank ="
                         + emp.getTransaksi().getBankId().getNamaBank()+"\t"
                 );

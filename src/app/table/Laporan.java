@@ -12,6 +12,9 @@ import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,6 +29,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.PostUpdate;
@@ -78,6 +82,22 @@ public class Laporan implements Serializable {
     private String tipe = "OPEN";
     @OneToOne(cascade = {CascadeType.ALL})
     private Saldo Transaksi;
+    @Transient
+    Map<String,Object> oldValue = new HashMap<>();
+    @PostLoad
+    void savesState()
+    {
+        oldValue.put("tanggal", tanggal);
+        oldValue.put("keterangan", keterangan);
+        oldValue.put("jumlah", jumlah);
+        oldValue.put("tipe", tipe);
+        oldValue.put("bank", Transaksi.getBankId().getNamaBank());
+        
+    }
+
+    public Map<String, Object> getOldValue() {
+        return oldValue;
+    }
 
     public Saldo getTransaksi() {
         return Transaksi;
@@ -214,7 +234,7 @@ public class Laporan implements Serializable {
         this.tanggal = tanggal;
         changeSupport.firePropertyChange("tanggal", oldTanggal, tanggal);
         if (Transaksi!= null) {
-        this.Transaksi.setTanggal(tanggal);            
+            this.Transaksi.setTanggal(tanggal);            
         }
     }
 

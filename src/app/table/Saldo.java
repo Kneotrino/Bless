@@ -173,6 +173,8 @@ public class Saldo implements Serializable {
         Bank oldBankId = this.bankId;
         this.bankId = bankId;
         changeSupport.firePropertyChange("bankId", oldBankId, bankId);
+        String temp = Laporan.getKeterangan()+" ";
+        Laporan.setKeterangan(temp);
     }
 
     @Override
