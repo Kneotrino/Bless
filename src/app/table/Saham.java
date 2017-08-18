@@ -171,6 +171,10 @@ public class Saham implements Serializable {
         {
             return prive.getTanggal();
         }
+        else if (Laba != null)
+        {
+            return Laba.getTanggal();
+        }
         return Tanggal;
     }
 
@@ -188,6 +192,10 @@ public class Saham implements Serializable {
         else if (prive != null)
         {
             prive.setTanggal(Tanggal);
+        }
+        else if (Laba != null)
+        {
+            Laba.setTanggal(Tanggal);
         }
         changeSupport.firePropertyChange(PROP_TANGGAL, oldTanggal, Tanggal);
     }
