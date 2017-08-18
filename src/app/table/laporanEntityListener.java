@@ -74,7 +74,7 @@ public class laporanEntityListener {
 	public void methodInvokedBeforeUpdate(Laporan emp) {
             String temp = emp.isName()?"Pemasukan":"Pengeluaran";
             Map<String, Object> oldValue = emp.getOldValue();
-            logger.info("Mengubah laporan sebelumnya "+temp+" Ref= " 
+            logger.info("Mengubah laporan "+temp+" sebelumnya Ref= " 
                         + emp.getId()+"\tTanggal ="+ oldValue.get("tanggal")
                     +"\tKeterangan ="                        + oldValue.get("keterangan")
                     +"\tNominal = "                        + oldValue.get("jumlah")
@@ -87,7 +87,7 @@ public class laporanEntityListener {
 	@PostUpdate
 	public void methodInvokedAfterUpdate(Laporan emp) {
             String temp = emp.isName()?"Pemasukan":"Pengeluaran";
-            logger.info("Berhasil Mengubah sesudahnya laporan "+temp+" Ref= " 
+            logger.info("Berhasil Mengubah laporan "+temp+" Sesudahnya Ref= " 
                         + emp.getId()+"\tTanggal ="
                         + emp.getTanggal()+"\tKeterangan ="
                         + emp.getKeterangan()+"\tNominal = "
