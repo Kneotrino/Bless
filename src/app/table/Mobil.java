@@ -146,6 +146,31 @@ public class Mobil implements Serializable {
     @Transient
     private int Nomor;
 
+    @Transient
+    private int arsip;
+
+    public static final String PROP_ARSIP = "arsip";
+
+    /**
+     * Get the value of arsip
+     *
+     * @return the value of arsip
+     */
+    public int getArsip() {
+        return arsip;
+    }
+
+    /**
+     * Set the value of arsip
+     *
+     * @param arsip new value of arsip
+     */
+    public void setArsip(int arsip) {
+        int oldArsip = this.arsip;
+        this.arsip = arsip;
+        changeSupport.firePropertyChange(PROP_ARSIP, oldArsip, arsip);
+    }
+
     public static final String PROP_NOMOR = "Nomor";
 
     /**

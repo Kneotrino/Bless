@@ -271,6 +271,8 @@ public void Refresh()
         jPanel11 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jTextField19 = new javax.swing.JTextField();
+        jLabel108 = new javax.swing.JLabel();
+        jTextField25 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jTextField20 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -1016,6 +1018,21 @@ public void Refresh()
             }
         });
         jPanel11.add(jTextField19);
+
+        jLabel108.setText("ARSIP");
+        jPanel11.add(jLabel108);
+
+        jTextField25.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTable1, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.arsip}"), jTextField25, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jTextField25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField25ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jTextField25);
 
         jLabel9.setText("NO BPKB ");
         jPanel11.add(jLabel9);
@@ -2128,6 +2145,9 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
     columnBinding.setColumnName("Keterangan");
     columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${arsip}"));
+    columnBinding.setColumnName("Arsip");
+    columnBinding.setColumnClass(Integer.class);
     bindingGroup.addBinding(jTableBinding);
     jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${hapus}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
     bindingGroup.addBinding(binding);
@@ -2946,19 +2966,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                     i++;
                     sort.put(object.toString(), i);
             }
-//                            if (sort.get(mobil.getNoPolisiAktif()) != null) {
-//                i =  sort.get(mobil.getNoPolisiAktif());                
-//                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
-//                Integer val = tahun.get(year);
-//                if (val != null) {
-//                    tahun.put(year, val+1);
-//                }
-//                else                {
-//                    tahun.put(year, 1);
-//                    }
-//                i = year + tahun.get(year);
-//            }
-//                System.out.println("sort = " + sort);
         }
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         System.out.println("app.view.panel.mobil.panelMobil.jButton22ActionPerformed()");
@@ -2975,7 +2982,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
             mobil.setNomor(a);
             a++;
             if (sort.get(mobil.getNoPolisiAktif()) != null) {
-//                i =  sort.get(mobil.getNoPolisiAktif());                
                 int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
                 Integer val = tahun.get(year);
                 if (val != null) {
@@ -2986,6 +2992,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
                     }
                 i = year + tahun.get(year);
                 sort.put(mobil.getNoPolisiAktif(), i);
+                mobil.setArsip(i);
             }
         }
         
@@ -3126,90 +3133,6 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         bpkbList1.addAll(bpkbQuery1.getResultList());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton27ActionPerformed
-
-    private void jLabel54MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel54MouseClicked
-        int returnVal = this.jFileChooser7.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                this.getHapus().setTampilanDepan(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel54MouseClicked
-
-    private void jLabel74MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel74MouseClicked
-        int returnVal = this.jFileChooser7.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                this.getHapus().setTampilanSmpKanan(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel74MouseClicked
-
-    private void jLabel72MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel72MouseClicked
-        int returnVal = this.jFileChooser7.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                this.getHapus().setTampilanSmpKanan(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel72MouseClicked
-
-    private void jLabel75MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel75MouseClicked
-        int returnVal = this.jFileChooser7.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                this.getHapus().setInteriorI(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel75MouseClicked
-
-    private void jLabel73MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel73MouseClicked
-        int returnVal = this.jFileChooser7.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                this.getHapus().setTampilanSmpKiri(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel73MouseClicked
-
-    private void jLabel76MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel76MouseClicked
-        int returnVal = this.jFileChooser7.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                this.getHapus().setInteriorIi(this.jFileChooser7.getSelectedFile().getCanonicalPath());                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel76MouseClicked
 
     private void jTextField37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField37ActionPerformed
         // TODO add your handling code here:
@@ -3603,25 +3526,13 @@ public void FileSave() throws IOException
     private void jButton34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton34ActionPerformed
         this.InformasiDialog.setLocationRelativeTo(null);        
         this.InformasiDialog.show();
-//        Long t = mobilList.size();
         long total = jTable1.getRowCount();
-//        jTextField67.setText( Integer.toString(mobilList.size()));
-//        jTextField1.setText(TOOL_TIP_TEXT_KEY);
-//        jTextField1.setText(TOOL_TIP_TEXT_KEY);
-//        jTextField1.setText(TOOL_TIP_TEXT_KEY);
-        // TODO add your handling code here:
         Map<String, Long> collect = 
                 mobilList.stream()
                         .collect(Collectors.groupingBy(l  -> l.getStatusMobil(), Collectors.counting())); 
         collect.put("Total Mobil", total);
-//        collect.putAll(
-//                mobilList.stream()
-//                        .collect(Collectors.groupingBy(l  -> l.getMerk(), Collectors.counting()))        
-//        );        
-//        Map<String, Long> sort = new TreeMap<>(collect);
 
         java.util.List<Akun> temp = new LinkedList<>();
-//        long i = 0;
         BigInteger totalMasuk = BigInteger.ZERO;
         BigInteger totalKeluar = BigInteger.ZERO;
 
@@ -3639,15 +3550,6 @@ public void FileSave() throws IOException
             int i = 0;
             if (sort.get(mobil.getNoPolisiAktif()) != null) {
                 i =  sort.get(mobil.getNoPolisiAktif());                
-//                int year = (mobil.getTangglPelunasanPembelian().getYear()-100) * 1000;
-//                Integer val = tahun.get(year);
-//                if (val != null) {
-//                    tahun.put(year, val+1);
-//                }
-//                else                {
-//                    tahun.put(year, 1);
-//                    }
-//                i = year + tahun.get(year);
             }
             Akun veh = new Akun(i)
                     .setAkun(
@@ -3678,6 +3580,94 @@ public void FileSave() throws IOException
         akunMobilList.addAll(temp);
         this.jTable6.setModel(toTableModel(new TreeMap<>(collect)));
     }//GEN-LAST:event_jButton34ActionPerformed
+
+    private void jLabel76MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel76MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setInteriorIi(this.jFileChooser7.getSelectedFile().getCanonicalPath());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel76MouseClicked
+
+    private void jLabel74MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel74MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setTampilanSmpKanan(this.jFileChooser7.getSelectedFile().getCanonicalPath());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel74MouseClicked
+
+    private void jLabel72MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel72MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setTampilanSmpKanan(this.jFileChooser7.getSelectedFile().getCanonicalPath());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel72MouseClicked
+
+    private void jLabel75MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel75MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setInteriorI(this.jFileChooser7.getSelectedFile().getCanonicalPath());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel75MouseClicked
+
+    private void jLabel73MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel73MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setTampilanSmpKiri(this.jFileChooser7.getSelectedFile().getCanonicalPath());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel73MouseClicked
+
+    private void jLabel54MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel54MouseClicked
+        int returnVal = this.jFileChooser7.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                this.getHapus().setTampilanDepan(this.jFileChooser7.getSelectedFile().getCanonicalPath());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel54MouseClicked
+
+    private void jTextField25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField25ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField25ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -3809,6 +3799,7 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel105;
     private javax.swing.JLabel jLabel106;
     private javax.swing.JLabel jLabel107;
+    private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -3960,6 +3951,7 @@ public void FileSave() throws IOException
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField24;
+    private javax.swing.JTextField jTextField25;
     private javax.swing.JTextField jTextField26;
     private javax.swing.JTextField jTextField27;
     private javax.swing.JTextField jTextField28;
