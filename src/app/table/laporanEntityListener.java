@@ -20,6 +20,7 @@ import app.table.Laporan;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -74,6 +75,13 @@ public class laporanEntityListener {
 	public void methodInvokedBeforeUpdate(Laporan emp) {
             String temp = emp.isName()?"Pemasukan":"Pengeluaran";
             Map<String, Object> oldValue = emp.getOldValue();
+            Map<String, Object> newValue = new HashMap<>();
+            newValue.put("tanggal", emp.getTanggal());
+            newValue.put("keterangan", emp.getKeterangan());
+            newValue.put("jumlah", emp.getJumlah());
+            newValue.put("tipe", emp.getTipe());
+            newValue.put("bank", emp.getTransaksi().getBankId().getNamaBank());
+            if (!oldValue.equals(newValue)) {
             logger.info("Mengubah laporan "+temp+" sebelumnya Ref= " 
                         + emp.getId()+"\tTanggal ="+ oldValue.get("tanggal")
                     +"\tKeterangan ="                        + oldValue.get("keterangan")
@@ -81,12 +89,21 @@ public class laporanEntityListener {
                     +"\tStatus ="                        + oldValue.get("tipe")
                     +"\tTable ="                        + emp.getKelas()
                     +"\tBank ="                        + oldValue.get("bank")+"\t"
-                );
+                );                
+            }
 	}
  
 	@PostUpdate
 	public void methodInvokedAfterUpdate(Laporan emp) {
             String temp = emp.isName()?"Pemasukan":"Pengeluaran";
+            Map<String, Object> oldValue = emp.getOldValue();
+            Map<String, Object> newValue = new HashMap<>();
+            newValue.put("tanggal", emp.getTanggal());
+            newValue.put("keterangan", emp.getKeterangan());
+            newValue.put("jumlah", emp.getJumlah());
+            newValue.put("tipe", emp.getTipe());
+            newValue.put("bank", emp.getTransaksi().getBankId().getNamaBank());
+            if (!oldValue.equals(newValue)) {
             logger.info("Berhasil Mengubah laporan "+temp+" Sesudahnya Ref= " 
                         + emp.getId()+"\tTanggal ="
                         + emp.getTanggal()+"\tKeterangan ="
@@ -95,7 +112,8 @@ public class laporanEntityListener {
                         + emp.getTipe()+"\tTable ="
                         + emp.getKelas()+"\tBank ="
                         + emp.getTransaksi().getBankId().getNamaBank()+"\t"
-                );
+                );                
+            }
 	}
  
 	@PreRemove

@@ -196,31 +196,33 @@ public String getLaba()
     public BigInteger getProfit() {
        if (m != null) {
            List<KeuanganMobil> keuanganMobil2 = m.getKeuanganMobil2();
-           fungsi(keuanganMobil2);
+           return fungsi(keuanganMobil2);
         }
         else if ( h != null)
         {
            List<Bayarhutang> bayarhutangs = h.getBayarhutangs();
-           fungsi(bayarhutangs);
+           return fungsi(bayarhutangs);
         }
         else if ( r!= null)
         {
            List<Bayarrental> bayarrentalList = r.getBayarrentalList();
-            fungsi(bayarrentalList);
+            return fungsi(bayarrentalList);
         }
         else if ( b != null)
         {
            List<Bayarjasa> bayarjasaList = b.getBayarjasaList();
-           fungsi(bayarjasaList);           
+           return fungsi(bayarjasaList);           
         }
         return Profit;
     }
-    public void fungsi(List<? extends Laporan> LaporanList)
+    public BigInteger fungsi(List<? extends Laporan> LaporanList)
     {
+        BigInteger temp = BigInteger.ZERO;
         for (Laporan laporan : LaporanList) {
-                Profit =Profit.add(laporan.getPemasukan());
-                Profit =Profit.subtract(laporan.getPengeluaran());
+                temp =temp.add(laporan.getPemasukan());
+                temp =temp.subtract(laporan.getPengeluaran());
         }
+        return temp;
     }
 
     /**

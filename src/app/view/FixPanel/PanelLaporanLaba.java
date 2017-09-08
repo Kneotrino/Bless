@@ -465,7 +465,10 @@ public class PanelLaporanLaba extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
         bankList.clear();
         bankList.addAll(bankQuery.getResultList());
         java.util.Collection data = query.getResultList();

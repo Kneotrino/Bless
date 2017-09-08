@@ -342,6 +342,7 @@ public void Restall()
         jDialog3.getContentPane().add(jLabel11);
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SEMUA" }));
+        jComboBox5.addActionListener(formListener);
         jDialog3.getContentPane().add(jComboBox5);
 
         jButton2.setText("Filter");
@@ -481,6 +482,9 @@ public void Restall()
             }
             else if (evt.getSource() == jButton3) {
                 panelMaster.this.jButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jComboBox5) {
+                panelMaster.this.jComboBox5ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -799,6 +803,10 @@ public void Restall()
 
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
+
+    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox5ActionPerformed
                     final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
 
 

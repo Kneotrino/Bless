@@ -2959,7 +2959,7 @@ jFileChooser7.addActionListener(new java.awt.event.ActionListener() {
         {
                 sort = new TreeMap<>();
                 tahun = new TreeMap<>();
-                Query createNativeQuery = blessingPUEntityManager.createNativeQuery("SELECT NO_POLISI_AKTIF FROM BLESSING.MOBIL WHERE TANGGL_PELUNASAN_PEMBELIAN IS NOT NULL ORDER BY TANGGL_PELUNASAN_PEMBELIAN");
+                Query createNativeQuery = blessingPUEntityManager.createNativeQuery("SELECT NO_POLISI_AKTIF FROM BLESSING.MOBIL WHERE TANGGL_PELUNASAN_PEMBELIAN IS NOT NULL AND STATUS_MOBIL = 'CLOSE' ORDER BY TANGGL_PELUNASAN_PEMBELIAN");
                 List resultList = createNativeQuery.getResultList();
                 int i = 0;
                 for (Object object : resultList) {
@@ -3558,7 +3558,8 @@ public void FileSave() throws IOException
                             mobil.getType()+ " " +
                             mobil.getTahun()+ " " +
                             mobil.getWarna()+ " " +
-                            mobil.getNoPolisiAktif()
+                            mobil.getNoPolisiAktif()+" "+
+                                    mobil.getDebitur().getNama()
                     )
                     .setPemasukan(pemasukan)
                     .setPengeluaran(pengeluaran)
