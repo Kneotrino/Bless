@@ -389,11 +389,11 @@ public class PanelLaporanLaba extends JPanel {
             else if (evt.getSource() == saveButton1) {
                 PanelLaporanLaba.this.saveButton1ActionPerformed(evt);
             }
-            else if (evt.getSource() == refreshButton) {
-                PanelLaporanLaba.this.refreshButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == saveButton) {
                 PanelLaporanLaba.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton) {
+                PanelLaporanLaba.this.refreshButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newDetailButton) {
                 PanelLaporanLaba.this.newDetailButtonActionPerformed(evt);

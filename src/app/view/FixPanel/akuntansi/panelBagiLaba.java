@@ -17,6 +17,7 @@ import app.table.Laba;
 import app.table.Laporan;
 import app.table.Laporanlaba;
 import app.table.Saldo;
+import app.table.Transfer;
 import app.view.ShowRoom;
 import java.awt.EventQueue;
 import java.beans.Beans;
@@ -86,8 +87,8 @@ public class panelBagiLaba extends JPanel {
         idField = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         deleteButton = new javax.swing.JButton();
-        jDialog1 = new javax.swing.JDialog();
         jButton4 = new javax.swing.JButton();
+        jDialog1 = new javax.swing.JDialog();
         jPanel5 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -116,8 +117,6 @@ public class panelBagiLaba extends JPanel {
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
         list1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         saveButton6 = new javax.swing.JButton();
-        jDialog2 = new javax.swing.JDialog();
-        panelLaporanLaba1 = new app.view.FixPanel.PanelLaporanLaba();
         jPanel1 = new javax.swing.JPanel();
         saveButton = new javax.swing.JButton();
         saveButton1 = new javax.swing.JButton();
@@ -164,17 +163,16 @@ public class panelBagiLaba extends JPanel {
 
         deleteButton.addActionListener(formListener);
 
+        jButton4.setText("SIMPAN LAMA");
+        jButton4.addActionListener(formListener);
+
         jDialog1.setSize(1000, 700);
         jDialog1.setTitle("Data Baru");
         jDialog1.setAlwaysOnTop(true);
         jDialog1.setModalityType(null);
         jDialog1.setType(java.awt.Window.Type.POPUP);
 
-        jButton4.setText("SIMPAN LAMA");
-        jButton4.addActionListener(formListener);
-        jDialog1.getContentPane().add(jButton4, java.awt.BorderLayout.SOUTH);
-
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("LAPORAN PEMBAGIAN LABA"));
         jPanel3.setLayout(new java.awt.GridLayout(0, 2));
@@ -260,8 +258,6 @@ public class panelBagiLaba extends JPanel {
         saveButton6.setText("HAPUS DUPLIKAT");
         saveButton6.addActionListener(formListener);
 
-        jDialog2.getContentPane().add(panelLaporanLaba1, java.awt.BorderLayout.CENTER);
-
         setLayout(new java.awt.BorderLayout());
 
         saveButton.setText("Simpan");
@@ -298,7 +294,7 @@ public class panelBagiLaba extends JPanel {
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         masterScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("SEMUA"));
 
@@ -385,6 +381,15 @@ public class panelBagiLaba extends JPanel {
             else if (evt.getSource() == saveButton2) {
                 panelBagiLaba.this.saveButton2ActionPerformed(evt);
             }
+            else if (evt.getSource() == saveButton3) {
+                panelBagiLaba.this.saveButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton5) {
+                panelBagiLaba.this.saveButton5ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton4) {
+                panelBagiLaba.this.saveButton4ActionPerformed(evt);
+            }
             else if (evt.getSource() == newButton) {
                 panelBagiLaba.this.newButtonActionPerformed(evt);
             }
@@ -394,20 +399,11 @@ public class panelBagiLaba extends JPanel {
             else if (evt.getSource() == jButton4) {
                 panelBagiLaba.this.jButton4ActionPerformed(evt);
             }
-            else if (evt.getSource() == saveButton3) {
-                panelBagiLaba.this.saveButton3ActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton4) {
-                panelBagiLaba.this.saveButton4ActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton5) {
-                panelBagiLaba.this.saveButton5ActionPerformed(evt);
+            else if (evt.getSource() == jButton5) {
+                panelBagiLaba.this.jButton5ActionPerformed(evt);
             }
             else if (evt.getSource() == saveButton6) {
                 panelBagiLaba.this.saveButton6ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton5) {
-                panelBagiLaba.this.jButton5ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -752,7 +748,7 @@ public class panelBagiLaba extends JPanel {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
         this.jDialog1.hide();
-        this.jDialog2.show();
+//        this.jDialog2.show();
         Laporanlaba laporanlaba = new Laporanlaba();
         Long foo = (Long) jFormattedTextField2.getValue();
         Integer correctButComplicated = Integer.valueOf(foo.intValue());
@@ -831,6 +827,30 @@ public class panelBagiLaba extends JPanel {
                 }
             }
         }
+        BayarSewaMasuk asset = new BayarSewaMasuk();
+        Transfer transfer = new Transfer();
+        long v = (long) jFormattedTextField1.getValue();
+        BigInteger ml = BigInteger.valueOf(v);
+        asset.setPemasukan(ml);
+        asset.setKeterangan(jTextField3.getText());
+        Saldo saldo = new Saldo();
+        saldo.setBankId((Bank) this.jComboBox2.getSelectedItem());
+        Saldo saldo2 = new Saldo();
+        saldo2.setBankId((Bank) this.jComboBox2.getSelectedItem());
+        asset.setTanggal(jDateChooser4.getDate());
+        asset.setTransaksi(saldo);
+        asset.setLaporanlaba(laporanlaba);
+        laporanlaba.setModalTahan(asset);
+
+        transfer.setJumlah(ml);
+        transfer.setKeterangan(jTextField3.getText());
+        transfer.setTanggal(jDateChooser4.getDate());
+        transfer.setTransaksi(saldo2);
+        asset.setTransfer(transfer);
+
+        entityManager.persist(laporanlaba);
+        entityManager.persist(asset);        
+        entityManager.persist(transfer);
         saveButtonActionPerformed(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -853,7 +873,6 @@ public class panelBagiLaba extends JPanel {
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JDialog jDialog1;
-    private javax.swing.JDialog jDialog2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
@@ -884,7 +903,6 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
-    private app.view.FixPanel.PanelLaporanLaba panelLaporanLaba1;
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;

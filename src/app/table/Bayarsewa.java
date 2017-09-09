@@ -9,12 +9,16 @@ import app.ListUrutan;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,23 +43,52 @@ public class Bayarsewa extends Laporan  implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "BAYAR")
     private Boolean bayar;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Transfer transfer;
 
-    public Bayarsewa() {
+    public Transfer getTransfer() {
+        return transfer;
     }
 
-//    public Bayarsewa(Integer id) {
-//        this.id = id;
-//    }
-//
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        Integer oldId = this.id;
-//        this.id = id;
-//        changeSupport.firePropertyChange("id", oldId, id);
-//    }
+    public void setTransfer(Transfer transfer) {
+        this.transfer = transfer;
+    }
+    
+    public void setTanggalSync(Date Tanggal)
+    {
+        this.setTanggal(Tanggal);
+        if (transfer != null) {
+            transfer.setTanggal(Tanggal);
+        }
+    }
+    public Date getTanggalSync()
+    {
+        return this.getTanggal();
+    }
+    public void setKeteranganSync(String keterangan)
+    {
+        this.setKeterangan(keterangan);
+        if (transfer != null) {
+            transfer.setKeterangan(keterangan);
+        }
+    }
+    public String getKeteranganSync()
+    {
+        return this.getKeterangan();
+    }
+    @Override
+    public void setPemasukan(BigInteger jumlah) {
+        if (name) {
+            setJumlah(jumlah);
+            if (transfer != null) {
+                transfer.setJumlah(jumlah);
+            }
+        }
+        else 
+            javax.swing.JOptionPane.showMessageDialog(null,  "Pemasukan tidak bisa di edit dari pengeluaran");
+    }
+    public Bayarsewa() {
+    }
 
     public Boolean getBayar() {
         return bayar;

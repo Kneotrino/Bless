@@ -24,7 +24,6 @@ public class BayarSewaMasuk extends Bayarsewa implements Serializable {
 
     @OneToOne(mappedBy = "ModalTahan",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Laporanlaba laporanlaba;
-
     public Laporanlaba getLaporanlaba() {
         return laporanlaba;
     }
