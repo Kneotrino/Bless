@@ -729,7 +729,14 @@ public class panelBagiLaba extends JPanel {
     }//GEN-LAST:event_saveButton4ActionPerformed
 
     private void saveButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton5ActionPerformed
-        // TODO add your handling code here:
+        int[] selected = jTable1.getSelectedRows();
+        List<app.table.BagiLaba> toRemove = new ArrayList<app.table.BagiLaba>(selected.length);
+        for (int idx = 0; idx < selected.length; idx++) {
+            app.table.BagiLaba b = list1.get(masterTable.convertRowIndexToModel(selected[idx]));
+            toRemove.add(b);
+//            entityManager.remove(b);
+        }
+        list1.removeAll(toRemove);         // TODO add your handling code here:
     }//GEN-LAST:event_saveButton5ActionPerformed
 
     private void saveButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton6ActionPerformed

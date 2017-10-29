@@ -412,6 +412,7 @@ public void Restall()
         jPanel1.add(jFormattedTextField2);
 
         newButton.setText("Baru");
+        newButton.setEnabled(false);
         newButton.addActionListener(formListener);
         jPanel1.add(newButton);
 
@@ -441,6 +442,7 @@ public void Restall()
         jPanel1.add(refreshButton2);
 
         saveButton.setText("Simpan");
+        saveButton.setEnabled(false);
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 

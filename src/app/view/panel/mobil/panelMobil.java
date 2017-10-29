@@ -3249,11 +3249,9 @@ public void FileSave() throws IOException
    chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
    chooser.setDialogTitle("Save File");
    File filetemp = new File( System.getProperties().getProperty("user.home"), 
-           "Data Mobil"+
-//                   date.getDay()+"-" +
-//                   date.getMonth()+"-" +
-//                   (date.getYear() - 100)+"-" +
-                   ".xls");
+           "Data Mobil "+
+                   new Date().toString().replace(":", "-")                   
+                   +".xls");
    chooser.setSelectedFile(filetemp);
 //   int returnVal1=chooser.showSaveDialog(this);
     while ( chooser.getSelectedFile().exists()) {
@@ -3364,10 +3362,10 @@ public void FileSave() throws IOException
 //                            mobil.getMerk() + "-" +
                             mobil.getType().replace("/", " ")+ "-" +
 //                            mobil.getJenis().replace("/", " ")+ "-" +
-//                            mobil.getTahun()+ "-" +
-//                            mobil.getWarna()+ "-" +
-//                            mobil.getStatusMobil()+ "-" +
-                            mobil.getDebitur().getNama() +
+                            mobil.getTahun()+ "-" +
+                            mobil.getWarna()+ "-" +
+                            mobil.getStatusMobil()+ "-" +
+                            mobil.getDebitur().getNama() + "-"+
                             mobil.getMobilId()+".CSV" ;
 //                      mo = st.replaceAll("\\s+","");
                       File Folder =new File(chooser.getSelectedFile().getParentFile(), "Data Mobil");

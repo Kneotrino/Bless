@@ -49,7 +49,7 @@ public class ExcelConverter {
             FileInputStream input = new FileInputStream(cv);
             fis.add(input);
             dat.add(new DataInputStream(input));
-        }
+            }
            for (DataInputStream myInput : dat) {
            int i=0;
            arList = new ArrayList();
@@ -67,7 +67,7 @@ public class ExcelConverter {
            try
            {
                for (File cv : cvs) {
-                   
+                   System.out.println("cv = " + cv.getName());
                    HSSFSheet sheet = hwb.createSheet(cv.getName());   
                    String formatStr = "";
                     HSSFCellStyle style = hwb.createCellStyle();
@@ -86,10 +86,13 @@ public class ExcelConverter {
                    arList.add(al);
                    i++;
                    }
+                   HSSFRow header = sheet.createRow(0);
+                   HSSFCell createCell = header.createCell(0);
+                   createCell.setCellValue(cv.getName());
                for(int k=0;k<arList.size();k++)
                {
                    ArrayList ardata = (ArrayList)arList.get(k);
-                   HSSFRow row = sheet.createRow((short) 0+k);
+                   HSSFRow row = sheet.createRow((short) 1+k);
                    for(int p=0;p<ardata.size();p++)
                    {
                        HSSFCell cell = row.createCell((short) p);

@@ -46,7 +46,11 @@ public class Pegawaigaji extends Laporan implements Serializable {
     public Pegawaigaji(Integer gajiid) {
     }
 
-
+    @Override
+    public String getRelation()
+    {
+        return pegawaigajiid.getNama();
+    }
     public Pegawai getPegawaigajiid() {
         return pegawaigajiid;
     }

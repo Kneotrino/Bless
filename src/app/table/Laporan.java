@@ -101,7 +101,7 @@ public class Laporan implements Serializable {
     
     public String getRelation()
     {
-        return "null";
+        return "";
     }
 
     public Saldo getTransaksi() {
