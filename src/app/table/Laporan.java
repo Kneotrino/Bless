@@ -98,6 +98,11 @@ public class Laporan implements Serializable {
     public Map<String, Object> getOldValue() {
         return oldValue;
     }
+    
+    public String getRelation()
+    {
+        return "null";
+    }
 
     public Saldo getTransaksi() {
         return Transaksi;

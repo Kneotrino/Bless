@@ -284,7 +284,7 @@ public class panelBagiLaba extends JPanel {
         saveButton3.addActionListener(formListener);
         jPanel1.add(saveButton3);
 
-        saveButton5.setText("HILANGKAN");
+        saveButton5.setText("BATALKAN");
         saveButton5.addActionListener(formListener);
         jPanel1.add(saveButton5);
 

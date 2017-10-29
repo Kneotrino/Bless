@@ -449,11 +449,11 @@ public class panelPerjalanan extends JPanel {
             else if (evt.getSource() == deleteDetailButton) {
                 panelPerjalanan.this.deleteDetailButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == refreshButton) {
-                panelPerjalanan.this.refreshButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == saveButton) {
                 panelPerjalanan.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == refreshButton) {
+                panelPerjalanan.this.refreshButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newButton) {
                 panelPerjalanan.this.newButtonActionPerformed(evt);
