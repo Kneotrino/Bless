@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -77,6 +78,26 @@ public class BagiLaba implements Serializable {
      *
      * @return the value of Keterangan
      */
+    public List<? extends Laporan> getLaporans()
+    {
+        if (m != null) {
+            return m.getKeuanganMobil2();
+        }
+        else if ( h != null)
+        {
+            return h.getBayarhutangs();
+        }
+        else if ( r!= null)
+        {
+            r.getBayarrentalList();
+        }
+        else if ( b != null)
+        {
+            b.getBayarjasaList();
+        }
+        return null;
+
+    }
     public String getKeterangan() {
         if (m != null) {
             Keterangan = m.toString();

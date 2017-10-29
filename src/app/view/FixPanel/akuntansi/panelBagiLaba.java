@@ -19,6 +19,7 @@ import app.table.Laporanlaba;
 import app.table.Saldo;
 import app.table.Transfer;
 import app.view.ShowRoom;
+import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
 import java.lang.reflect.InvocationTargetException;
@@ -117,8 +118,12 @@ public class panelBagiLaba extends JPanel {
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
         list1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         saveButton6 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         saveButton = new javax.swing.JButton();
+        jDialog2 = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        saveButton7 = new javax.swing.JButton();
         saveButton1 = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton2 = new javax.swing.JButton();
@@ -258,11 +263,53 @@ public class panelBagiLaba extends JPanel {
         saveButton6.setText("HAPUS DUPLIKAT");
         saveButton6.addActionListener(formListener);
 
+        saveButton.setText("Simpan");
+        saveButton.setEnabled(false);
+        saveButton.addActionListener(formListener);
+
+        jDialog2.setMinimumSize(new java.awt.Dimension(800, 500));
+
+        jTable2.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        jTable2.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        jTable2.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
+        jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.laporans}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, jTable2);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+        columnBinding.setColumnName("REF");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
+        columnBinding.setColumnName("Tanggal");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId.namaBank}"));
+        columnBinding.setColumnName("Transaksi.bank Id.nama Bank");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane2.setViewportView(jTable2);
+
+        jDialog2.getContentPane().add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
         setLayout(new java.awt.BorderLayout());
 
-        saveButton.setText("Simpan");
-        saveButton.addActionListener(formListener);
-        jPanel1.add(saveButton);
+        saveButton7.setText("DETAIL");
+        saveButton7.addActionListener(formListener);
+        jPanel1.add(saveButton7);
 
         saveButton1.setText("CLOSE TO SELESAI");
         saveButton1.addActionListener(formListener);
@@ -298,12 +345,13 @@ public class panelBagiLaba extends JPanel {
 
         masterScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("SEMUA"));
 
+        masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setAutoCreateRowSorter(true);
         masterTable.setRowHeight(25);
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("REF");
         columnBinding.setColumnClass(Integer.class);
         columnBinding.setEditable(false);
@@ -314,10 +362,10 @@ public class panelBagiLaba extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laba}"));
         columnBinding.setColumnName("Status");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -404,6 +452,9 @@ public class panelBagiLaba extends JPanel {
             }
             else if (evt.getSource() == saveButton6) {
                 panelBagiLaba.this.saveButton6ActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton7) {
+                panelBagiLaba.this.saveButton7ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -862,6 +913,12 @@ public class panelBagiLaba extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void saveButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton7ActionPerformed
+        jDialog2.setLocationRelativeTo(null);
+        jDialog2.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButton7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -880,6 +937,7 @@ public class panelBagiLaba extends JPanel {
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
@@ -899,8 +957,10 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField keteranganField;
@@ -919,6 +979,7 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JButton saveButton4;
     private javax.swing.JButton saveButton5;
     private javax.swing.JButton saveButton6;
+    private javax.swing.JButton saveButton7;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {

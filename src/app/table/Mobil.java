@@ -689,6 +689,8 @@ public class Mobil implements Serializable {
         return "Mobil [" + noPolisiAktif 
                 + ";"+""+noPolisiLama
                 + ";"+""+ type
+                + ";"+""+ debitur.getNama()
+                + ";"+""+ getKeterangan()
                 +" ]";
     }
 
