@@ -55,6 +55,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author SEED
@@ -65,8 +68,10 @@ public class Printer {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-                            File dir = new File("D:\\Print");
-                            Printing(dir);
+        fixPrintInvestor(getDataList(app.table.Investor.class));
+        
+//                            File dir = new File("D:\\Print");
+//                            Printing(dir);
        }
     public static void  Print_Semua(File rootdir)
     {
@@ -419,10 +424,149 @@ public class Printer {
     
     
     }
+    
+    public static void fixPrintInvestor(List list)
+    {
+        //file choser
+       JFileChooser chooser=new JFileChooser(".");
+       FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+       chooser.addChoosableFileFilter(filter);
+       chooser.setFileFilter(filter);
+       chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+       chooser.setDialogTitle("Save File");
+       File filetemp;
+       filetemp = new File( System.getProperties().getProperty("user.home"),"Data Investor.xls");
+       chooser.setSelectedFile(filetemp);
+       int x= 0;
+       while ( chooser.getSelectedFile().exists()) {
+              x++;
+              JOptionPane.showMessageDialog(null,"File telah ada\nGanti Nama");
+              filetemp = new File( System.getProperties().getProperty("user.home"),"Data Investor "+new Date().toString().replace(":", "-")+".xls");
+              System.out.println("filetemp = " + filetemp);
+              chooser.setSelectedFile(filetemp);
+              int result = chooser.showSaveDialog(null);
+                    if (result == JFileChooser.CANCEL_OPTION)
+                    {
+                        System.out.println("Cancel was selected");
+                        return;
+                    }
+              }
+       
+       //manipulasi data
+//              List<app.table.Investor> resultList = getDataList(app.table.Investor.class);
+              List<app.table.Investor> resultList = list;
+              System.out.println("resultList = " + resultList.size());
+              app.table.Investor temp = new Investor(0);
+              BigInteger total3 = BigInteger.ZERO;
+              BigInteger total4 = BigInteger.ZERO;
+              BigInteger total5 = BigInteger.ZERO;
+              DecimalFormat df = new DecimalFormat();
+              for (Investor investor : resultList) {
+                List<Saham> sahamList = investor.getSahamList();
+                BigInteger total1 = BigInteger.ZERO;
+                BigInteger total2 = BigInteger.ZERO;
+                for (Saham saham : sahamList) {
+                    total1 = total1.add(saham.getModal() == null? BigInteger.ZERO : saham.getModal().getJumlah());
+                    total2 = total2.add(saham.getPrive()== null? BigInteger.ZERO : saham.getPrive().getJumlah());                    
+                    }
+                investor.setPrive(total2);
+                investor.setModal(total1.subtract(total2));
+                total3 = total3.add(investor.getModal());
+                total4 = total4.add(total2);                
+                total5 = total5.add(investor.getjumlahPembagaian());                
+                }
+                float t = total3.floatValue();
+                for (Investor investor : resultList) {
+                    float p = investor.getModal().floatValue();
+                    investor.setPer(df.format((p/t)*100)+"%");
+                }
+                temp.setModal(total3);
+                temp.setPrive(total4);
+                temp.setLaba(total5);
+                System.out.println("total5 = " + total5);
+                System.out.println("temp = " + temp.getLaba());
+                temp.setPer("100%");
+                resultList.add(temp);
+                
+                //printing csv
+                List<File> cvs = new java.util.LinkedList<>(); 
+                cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Laporan Investor.CSV"));
+                WriteStep investorData = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Laporan Investor.CSV"))
+                        .type(app.table.Investor.class)
+                            .properties(
+                                    Tuple.of("id","id", d-> d),
+                                    Tuple.of("nama","nama", d-> d),
+                                    Tuple.of("alamat","alamat", d-> d),
+                                    Tuple.of("kontak","kontak", d-> d),
+                                    Tuple.of("Total modal","modal", d-> IDR.format(d)),
+                                    Tuple.of("Total prive","prive", d-> IDR.format(d)),
+                                    Tuple.of("Total pembagian Laba","laba", d-> IDR.format(d)),
+                                    Tuple.of("persentas %","per", d-> d)
+                    ).dataList(list);
+                try {
+                    investorData.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+
+                for (Investor peg : resultList) {
+                  String pe = 
+                          peg.getId()+"-"+
+                          peg.getNama()+"-"
+                          +peg.getAlamat()+"-"
+                          +peg.getKontak()+"-"+
+                          ".CSV";
+                  File Folder =new File(chooser.getSelectedFile().getParentFile(), "Data Transaksi"+new Date().toString().replace(":", "-"));
+                  Folder.mkdirs();
+                  File p = new File(Folder, pe);
+                  List<Saham> pegawaigajiList = peg.getSahamList();
+                  System.out.println("pegawaigajiList = " + pegawaigajiList.size());
+                  List b = pegawaigajiList;
+                  cvs.add(p);
+                  WriteStep data = CSVUtil.of(p)
+                        .type(app.table.Saham.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("modal","mod", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("prive","pri", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Pembagian Laba","lab", d -> d==null?" ":IDR.format(d)),
+//                                Tuple.of("Pemasukan/Modal", "modal.jumlah", d -> d==null?"0":IDR.format(d) ),
+//                                Tuple.of("Pengeluaran/Prive", "prive.jumlah", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "b.namaBank", d -> d)
+                    ).dataList(b);
+                try {
+                    data.write();
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+        }        
+
+                System.out.println("cvs = " + cvs.size());
+        try {
+            ExcelConverter(cvs, chooser.getSelectedFile());
+            System.out.println("\n File Berhasil Di Print");
+            JOptionPane.showMessageDialog(null,"File Created. \n"+ chooser.getSelectedFile());
+            Desktop.getDesktop().open(chooser.getSelectedFile());
+//            Desktop.getDesktop().open(filetemp);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,"File gagal. \n"+ chooser.getSelectedFile());            
+        }
+                
+
+    }
     public static void PrintInvestor(File place)
     {
+              System.out.println("place = " + place);
               List<File> cvs = new java.util.LinkedList<>();
-              File T = new File(place, "Data");
+              File T = new File(place.getParentFile(), "Data");
               T.mkdirs();
               File f = new File(T, "Data Investor.CSV");
               cvs.add(f);
@@ -508,17 +652,15 @@ public class Printer {
                                 Tuple.of("Pembagian Laba","lab", d -> d==null?" ":IDR.format(d)),
 //                                Tuple.of("Pemasukan/Modal", "modal.jumlah", d -> d==null?"0":IDR.format(d) ),
 //                                Tuple.of("Pengeluaran/Prive", "prive.jumlah", d -> d==null?"0":IDR.format(d) ),
-                                Tuple.of("Bank", "b", d -> d)
+                                Tuple.of("Bank", "b.namaBank", d -> d)
                     ).dataList(b);
                 try {
                     data.write();
-                    ExcelConverter(cvs, new File(place, "Data Investor.xls"));
-
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Gagal Print, Karena file sementara terbuka\n"+e);
                     e.printStackTrace();
-//                    return ;
+                    return ;
                 }
         }        
                 
