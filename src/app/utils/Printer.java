@@ -441,7 +441,8 @@ public class Printer {
        while ( chooser.getSelectedFile().exists()) {
               x++;
               JOptionPane.showMessageDialog(null,"File telah ada\nGanti Nama");
-              filetemp = new File( System.getProperties().getProperty("user.home"),"Data Investor "+new Date().toString().replace(":", "-")+".xls");
+              filetemp = new File( System.getProperties().getProperty("user.home"),
+                      "Data Investor "+new Date().toString().replace(":", "-")+".xls");
               System.out.println("filetemp = " + filetemp);
               chooser.setSelectedFile(filetemp);
               int result = chooser.showSaveDialog(null);
@@ -456,52 +457,56 @@ public class Printer {
 //              List<app.table.Investor> resultList = getDataList(app.table.Investor.class);
               List<app.table.Investor> resultList = list;
               System.out.println("resultList = " + resultList.size());
-              app.table.Investor temp = new Investor(0);
-              BigInteger total3 = BigInteger.ZERO;
-              BigInteger total4 = BigInteger.ZERO;
-              BigInteger total5 = BigInteger.ZERO;
-              DecimalFormat df = new DecimalFormat();
-              for (Investor investor : resultList) {
-                List<Saham> sahamList = investor.getSahamList();
-                BigInteger total1 = BigInteger.ZERO;
-                BigInteger total2 = BigInteger.ZERO;
-                for (Saham saham : sahamList) {
-                    total1 = total1.add(saham.getModal() == null? BigInteger.ZERO : saham.getModal().getJumlah());
-                    total2 = total2.add(saham.getPrive()== null? BigInteger.ZERO : saham.getPrive().getJumlah());                    
-                    }
-                investor.setPrive(total2);
-                investor.setModal(total1.subtract(total2));
-                total3 = total3.add(investor.getModal());
-                total4 = total4.add(total2);                
-                total5 = total5.add(investor.getjumlahPembagaian());                
-                }
-                float t = total3.floatValue();
-                for (Investor investor : resultList) {
-                    float p = investor.getModal().floatValue();
-                    investor.setPer(df.format((p/t)*100)+"%");
-                }
-                temp.setModal(total3);
-                temp.setPrive(total4);
-                temp.setLaba(total5);
-                System.out.println("total5 = " + total5);
-                System.out.println("temp = " + temp.getLaba());
-                temp.setPer("100%");
-                resultList.add(temp);
-                
+//              app.table.Investor temp = new Investor(0);
+//              BigInteger total3 = BigInteger.ZERO;
+//              BigInteger total4 = BigInteger.ZERO;
+//              BigInteger total5 = BigInteger.ZERO;
+//              DecimalFormat df = new DecimalFormat();
+//              for (Investor investor : resultList) {
+//                List<Saham> sahamList = investor.getSahamList();
+//                BigInteger total1 = BigInteger.ZERO;
+//                BigInteger total2 = BigInteger.ZERO;
+//                for (Saham saham : sahamList) {
+//                    total1 = total1.add(saham.getModal() == null? BigInteger.ZERO : saham.getModal().getJumlah());
+//                    total2 = total2.add(saham.getPrive()== null? BigInteger.ZERO : saham.getPrive().getJumlah());                    
+//                    }
+//                investor.setPrive(total2);
+//                investor.setModal(total1.subtract(total2));
+//                total3 = total3.add(investor.getModal());
+//                total4 = total4.add(total2);                
+//                total5 = total5.add(investor.getjumlahPembagaian());                
+//                }
+//                float t = total3.floatValue();
+//                for (Investor investor : resultList) {
+//                    float p = investor.getModal().floatValue();
+//                    investor.setPer(df.format((p/t)*100)+"%");
+//                }
+//                temp.setModal(total3);
+//                temp.setPrive(total4);
+//                temp.setLaba(total5);
+//                System.out.println("total5 = " + total5);
+//                System.out.println("temp = " + temp.getLaba());
+//                temp.setPer("100%");
+//                resultList.add(temp);
+//                
                 //printing csv
                 List<File> cvs = new java.util.LinkedList<>(); 
-                cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Laporan Investor.CSV"));
-                WriteStep investorData = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Laporan Investor.CSV"))
+                cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Laporan Investor"
+                        +new Date().toString().replace(":", "-")
+                        +".CSV"));
+                WriteStep investorData = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Laporan Investor"
+                        +new Date().toString().replace(":", "-")
+                        + ".CSV"))
                         .type(app.table.Investor.class)
                             .properties(
-                                    Tuple.of("id","id", d-> d),
-                                    Tuple.of("nama","nama", d-> d),
-                                    Tuple.of("alamat","alamat", d-> d),
-                                    Tuple.of("kontak","kontak", d-> d),
-                                    Tuple.of("Total modal","modal", d-> IDR.format(d)),
-                                    Tuple.of("Total prive","prive", d-> IDR.format(d)),
-                                    Tuple.of("Total pembagian Laba","laba", d-> IDR.format(d)),
-                                    Tuple.of("persentas %","per", d-> d)
+                                    Tuple.of("id","id", fungsi),
+                                    Tuple.of("nama","nama", fungsi),
+                                    Tuple.of("alamat","alamat", fungsi),
+                                    Tuple.of("kontak","kontak", fungsi),
+                                    Tuple.of("Total modal","modal", fungsiIDR),
+                                    Tuple.of("Total prive","prive", fungsiIDR),
+                                    Tuple.of("Total pembagian Laba","laba", fungsiIDR),
+                                    Tuple.of("persentas %","per", fungsi)
                     ).dataList(list);
                 try {
                     investorData.write();            
@@ -529,9 +534,9 @@ public class Printer {
                   WriteStep data = CSVUtil.of(p)
                         .type(app.table.Saham.class)
                             .properties(
-                                Tuple.of("Ref", "id", null),
-                                Tuple.of("Keterangan", "keterangan", d -> d),
-                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Ref", "id", fungsi),
+                                Tuple.of("Keterangan", "keterangan", fungsi),
+                                Tuple.of("Tanggal", "tanggal", tanggal),
                                 Tuple.of("modal","mod", d -> d==null?" ":IDR.format(d)),
                                 Tuple.of("prive","pri", d -> d==null?" ":IDR.format(d)),
                                 Tuple.of("Pembagian Laba","lab", d -> d==null?" ":IDR.format(d)),
@@ -562,6 +567,12 @@ public class Printer {
                 
 
     }
+//            static SimpleDateFormat formator = new SimpleDateFormat();
+//            static DecimalFormat IDR = new DecimalFormat("Rp #,##0");
+//            static Function fungsi = d -> d==null?"":d;         
+//            static Function tanggal = d -> d==null?"":formator.format(d);
+            static Function fungsiIDR =  d->d==null?" ":IDR.format(d);
+
     public static void PrintInvestor(File place)
     {
               System.out.println("place = " + place);

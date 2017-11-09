@@ -10,11 +10,13 @@ import app.table.Investor;
 import app.table.Modal;
 import app.table.Saham;
 import app.table.Saldo;
+import app.utils.Printer;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -25,8 +27,11 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.RollbackException;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -91,6 +96,7 @@ public class panelInvestor extends JPanel {
         deleteButton = new javax.swing.JButton();
         refreshButton1 = new javax.swing.JButton();
         saveButton1 = new javax.swing.JButton();
+        saveButton2 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -210,10 +216,13 @@ public class panelInvestor extends JPanel {
         saveButton1.addActionListener(formListener);
         jPanel2.add(saveButton1);
 
+        saveButton2.setText("Print Laporan");
+        saveButton2.addActionListener(formListener);
+        jPanel2.add(saveButton2);
+
         jPanel3.add(jPanel2);
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setColumnSelectionAllowed(false);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
@@ -301,7 +310,6 @@ public class panelInvestor extends JPanel {
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoCreateRowSorter(true);
-        detailTable.setColumnSelectionAllowed(false);
         detailTable.setRowHeight(25);
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.sahamList}");
@@ -395,6 +403,9 @@ public class panelInvestor extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelInvestor.this.newDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveButton2) {
+                panelInvestor.this.saveButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -631,6 +642,11 @@ public class panelInvestor extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void saveButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton2ActionPerformed
+        Printer.fixPrintInvestor(list);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -676,6 +692,7 @@ public class panelInvestor extends JPanel {
     private javax.swing.JButton refreshButton1;
     private javax.swing.JButton saveButton;
     private javax.swing.JButton saveButton1;
+    private javax.swing.JButton saveButton2;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {

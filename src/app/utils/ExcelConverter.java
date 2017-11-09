@@ -67,7 +67,7 @@ public class ExcelConverter {
            try
            {
                for (File cv : cvs) {
-                   System.out.println("cv = " + cv.getName());
+//                   System.out.println("cv = " + cv.getName());
                    HSSFSheet sheet = hwb.createSheet(cv.getName());   
                    String formatStr = "";
                     HSSFCellStyle style = hwb.createCellStyle();
@@ -127,6 +127,7 @@ public class ExcelConverter {
                FileOutputStream fileOut = new FileOutputStream(Excel);
                hwb.write(fileOut);
                fileOut.close();
+               JOptionPane.showMessageDialog(null,"Your excel file has been generated = "+Excel.getCanonicalPath());
                System.out.println("Your excel file has been generated = "+Excel.getCanonicalPath());
            }
            catch ( Exception ex ) {
