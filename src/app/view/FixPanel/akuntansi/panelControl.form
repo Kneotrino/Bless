@@ -32,6 +32,8 @@
         <Property name="observable" type="boolean" value="true"/>
       </Properties>
       <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="String que = &quot;SELECT en FROM &quot; + clazz.getSimpleName() + &quot; en &quot;;&#xa;TypedQuery&lt;? extends Laporan&gt; createQuery = entityManager.createQuery(que, clazz);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="list.clear();&#xa;list.addAll(createQuery.getResultList());"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;app.table.Laporan&gt;"/>
         <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
@@ -391,11 +393,6 @@
                   </Editor>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
               </TableColumnModel>
             </Property>
             <Property name="rowHeight" type="int" value="25"/>
@@ -425,19 +422,16 @@
               <Subbinding sourcePath="${tipe}">
                 <BindingParameter name="NAME" value="Status"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${jenis}">
-                <BindingParameter name="NAME" value="type x"/>
+                <BindingParameter name="NAME" value="Tipe"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${transaksi.bankId}">
                 <BindingParameter name="NAME" value="Bank"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="app.table.Bank.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${relation}">
-                <BindingParameter name="NAME" value="Relation"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
             </BindingProperty>

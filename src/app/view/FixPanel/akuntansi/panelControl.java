@@ -92,7 +92,6 @@ public class panelControl extends JPanel {
         if (!Beans.isDesignTime()) {
             entityManager.getTransaction().begin();
         }
-//        this.refreshButtonActionPerformed(null);
         String info = clazz.getSimpleName()
                 .equals("Pengeluaran") ? "Operasional":clazz.getSimpleName();
         this.jLabel2.setText("Laporan "+  info + " Bulan ini"
@@ -179,6 +178,8 @@ public void Restall()
         awalBulan = new Date(akhirBulan.getYear(), akhirBulan.getMonth(), 0);
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("blessingPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Laporan l");
+        String que = "SELECT en FROM " + clazz.getSimpleName() + " en ";
+        TypedQuery<? extends Laporan> createQuery = entityManager.createQuery(que, clazz);
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         jDialog1 = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
@@ -227,6 +228,9 @@ public void Restall()
         newButton1 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
+
+        list.clear();
+        list.addAll(createQuery.getResultList());
 
         jDialog1.setTitle("Data Baru");
         jDialog1.setAlwaysOnTop(true);
@@ -380,16 +384,14 @@ public void Restall()
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipe}"));
         columnBinding.setColumnName("Status");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
-        columnBinding.setColumnName("type x");
+        columnBinding.setColumnName("Tipe");
         columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
         columnBinding.setColumnName("Bank");
         columnBinding.setColumnClass(app.table.Bank.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${relation}"));
-        columnBinding.setColumnName("Relation");
-        columnBinding.setColumnClass(String.class);
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -778,37 +780,34 @@ public void Restall()
         chooser.showSaveDialog(this);        
     }
        File file1 = chooser.getSelectedFile();
-              List a = list;
-              WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CSV"))
-                .type(clazz)
-                .properties(
-                        Tuple.of("Ref", "id", d -> d==null?"":d),
-                        Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
-                        Tuple.of("Jumlah", "jumlah", d -> d==null?"":d ),
-                        Tuple.of("Status", "tipe", d -> d==null?"":d),
-                        Tuple.of("Tipe", "jenis", d -> d==null?"":d),
-                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d),
-                        Tuple.of("Keterangan", "keterangan", d -> d==null?"":d)
-                )
-                .dataList(a);
-                    try {
-                    dataList.write();
-                    List<File> cvs = new java.util.LinkedList<>();
-                    cvs.add(new File(file1.getParentFile(), "Data Laporan.CVS"));
-                    ExcelConverter(cvs, file1);
-                    Desktop.getDesktop().open(file1);
+       List a = list;
+       WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CSV"))
+            .type(clazz)
+            .properties(
+                Tuple.of("Ref", "id", d -> d==null?"":d),
+                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                Tuple.of("Jumlah", "jumlah", d -> d==null?"":d ),
+                Tuple.of("Status", "tipe", d -> d==null?"":d),
+                Tuple.of("Tipe", "jenis", d -> d==null?"":d),
+                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d),
+                Tuple.of("Keterangan", "keterangan", d -> d==null?"":d)
+        )
+            .dataList(a);
+        try {
+            dataList.write();
+            List<File> cvs = new java.util.LinkedList<>();
+            cvs.add(new File(file1.getParentFile(), "Data Laporan.CVS"));
+            ExcelConverter(cvs, file1);
+            Desktop.getDesktop().open(file1);
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
-                    return ;
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
+            return ;
                 } 
-                    finally {
+            finally {
                         JOptionPane.showMessageDialog(this,"File Created. \n"+ file1);
-                    }
+            }
 
-
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
 
     private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
@@ -897,7 +896,6 @@ public void Restall()
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
-//                frame.setContentPane(new panelMaster(1));
                 frame.setContentPane(new panelControl(app.table.Pegawaigaji.class));
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
