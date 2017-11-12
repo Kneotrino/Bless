@@ -97,7 +97,7 @@ public class Pegawaigaji extends Laporan implements Serializable {
     @Override
     public String getJenis()
     {
-        return "Table Pegawai Gaji";
+        return "Pegawai Gaji "+getPegawaigajiid().getNama();
     }    
     @Override
     public String getKelas() {
