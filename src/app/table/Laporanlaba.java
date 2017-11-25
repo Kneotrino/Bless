@@ -56,7 +56,7 @@ public class Laporanlaba implements Serializable {
     @Column(name = "REF", nullable = false)
     private Integer ref;
     @Column(name = "KE")
-    private Integer ke;
+    private Integer ke = 0;
     @Column(name = "KETERANGAN", length = 255)
     private String keterangan;
     @Column(name = "TANGGAL")

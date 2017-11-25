@@ -102,17 +102,6 @@ public class panelBagiLaba extends JPanel {
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jDateChooser4 = new com.toedter.calendar.JDateChooser();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
         bankQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT b FROM Bank b");
         bankList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : bankQuery.getResultList();
@@ -122,6 +111,33 @@ public class panelBagiLaba extends JPanel {
         jDialog2 = new javax.swing.JDialog();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jDialog3 = new javax.swing.JDialog();
+        jButton6 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jFormattedTextField5 = new javax.swing.JFormattedTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jFormattedTextField4 = new javax.swing.JFormattedTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jFormattedTextField7 = new javax.swing.JFormattedTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jFormattedTextField6 = new javax.swing.JFormattedTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jFormattedTextField10 = new javax.swing.JFormattedTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jFormattedTextField8 = new javax.swing.JFormattedTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jFormattedTextField9 = new javax.swing.JFormattedTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jDateChooser4 = new com.toedter.calendar.JDateChooser();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         saveButton7 = new javax.swing.JButton();
         saveButton1 = new javax.swing.JButton();
@@ -182,7 +198,7 @@ public class panelBagiLaba extends JPanel {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("LAPORAN PEMBAGIAN LABA"));
         jPanel3.setLayout(new java.awt.GridLayout(0, 2));
 
-        jLabel1.setText("Pembagian Laporan KE");
+        jLabel1.setText("PEMBAGIAN LAPORAN KE");
         jPanel3.add(jLabel1);
 
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
@@ -213,48 +229,9 @@ public class panelBagiLaba extends JPanel {
 
         jPanel5.add(jPanel3);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("LABA DI TAHAN"));
-        jPanel4.setLayout(new java.awt.GridLayout(0, 2));
-
-        jLabel11.setText("JUMLAH PROFIT");
-        jPanel4.add(jLabel11);
-
-        jFormattedTextField3.setEditable(false);
-        jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jPanel4.add(jFormattedTextField3);
-
-        jLabel7.setText("JUMLAH MODAL DI TAHAN");
-        jPanel4.add(jLabel7);
-
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        jPanel4.add(jFormattedTextField1);
-
-        jLabel10.setText("TANGGAL MODAL DI TAHAN");
-        jPanel4.add(jLabel10);
-
-        jDateChooser4.setDate(new java.util.Date());
-        jPanel4.add(jDateChooser4);
-
-        jLabel8.setText("KETERANGAN MODAL DI TAHAN");
-        jPanel4.add(jLabel8);
-        jPanel4.add(jTextField3);
-
-        jLabel9.setText("BANK TUJUAN MODAL DI TAHAN");
-        jPanel4.add(jLabel9);
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
-        bindingGroup.addBinding(jComboBoxBinding);
-
-        jPanel4.add(jComboBox2);
-
-        jPanel5.add(jPanel4);
-
         jDialog1.getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
-        jButton5.setText("SIMPAN BARU");
+        jButton5.setText("PROSES");
         jButton5.addActionListener(formListener);
         jDialog1.getContentPane().add(jButton5, java.awt.BorderLayout.NORTH);
 
@@ -274,7 +251,7 @@ public class panelBagiLaba extends JPanel {
         jTable2.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
 
-        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.laporans}");
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.laporans}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, jTable2);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
         columnBinding.setColumnName("REF");
@@ -304,6 +281,100 @@ public class panelBagiLaba extends JPanel {
         jScrollPane2.setViewportView(jTable2);
 
         jDialog2.getContentPane().add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jDialog3.setSize(1000, 700);
+
+        jButton6.setText("PROSES");
+        jButton6.addActionListener(formListener);
+        jDialog3.getContentPane().add(jButton6, java.awt.BorderLayout.NORTH);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("LABA DI TAHAN"));
+        jPanel4.setLayout(new java.awt.GridLayout(0, 2));
+
+        jLabel11.setText("JUMLAH PROFIT");
+        jPanel4.add(jLabel11);
+
+        jFormattedTextField3.setEditable(false);
+        jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField3);
+
+        jLabel13.setText("JUMLAH OPERASIONAL");
+        jPanel4.add(jLabel13);
+
+        jFormattedTextField5.setEditable(false);
+        jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField5);
+
+        jLabel12.setText("JUMLAH GAJI PEGAWAI");
+        jPanel4.add(jLabel12);
+
+        jFormattedTextField4.setEditable(false);
+        jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField4);
+
+        jLabel15.setText("JUMLAH ASSET");
+        jPanel4.add(jLabel15);
+
+        jFormattedTextField7.setEditable(false);
+        jFormattedTextField7.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField7);
+
+        jLabel14.setText("JUMLAH BUNGA BANK");
+        jPanel4.add(jLabel14);
+
+        jFormattedTextField6.setEditable(false);
+        jFormattedTextField6.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField6);
+
+        jLabel18.setText("JUMLAH BIAYA PERJALANAN");
+        jPanel4.add(jLabel18);
+
+        jFormattedTextField10.setEditable(false);
+        jFormattedTextField10.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField10);
+
+        jLabel16.setText("JUMLAH TOTAL PENGELURAN");
+        jPanel4.add(jLabel16);
+
+        jFormattedTextField8.setEditable(false);
+        jFormattedTextField8.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField8);
+
+        jLabel17.setText("JUMLAH LABA BERSIH");
+        jPanel4.add(jLabel17);
+
+        jFormattedTextField9.setEditable(false);
+        jFormattedTextField9.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField9);
+
+        jLabel7.setText("JUMLAH MODAL DI TAHAN");
+        jPanel4.add(jLabel7);
+
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField1);
+
+        jLabel10.setText("TANGGAL MODAL DI TAHAN");
+        jPanel4.add(jLabel10);
+
+        jDateChooser4.setDate(new java.util.Date());
+        jPanel4.add(jDateChooser4);
+
+        jLabel8.setText("KETERANGAN MODAL DI TAHAN");
+        jPanel4.add(jLabel8);
+        jPanel4.add(jTextField3);
+
+        jLabel9.setText("BANK TUJUAN MODAL DI TAHAN");
+        jPanel4.add(jLabel9);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jPanel4.add(jComboBox2);
+
+        jDialog3.getContentPane().add(jPanel4, java.awt.BorderLayout.CENTER);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -417,8 +488,8 @@ public class panelBagiLaba extends JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == saveButton) {
-                panelBagiLaba.this.saveButtonActionPerformed(evt);
+            if (evt.getSource() == saveButton7) {
+                panelBagiLaba.this.saveButton7ActionPerformed(evt);
             }
             else if (evt.getSource() == saveButton1) {
                 panelBagiLaba.this.saveButton1ActionPerformed(evt);
@@ -453,8 +524,11 @@ public class panelBagiLaba extends JPanel {
             else if (evt.getSource() == saveButton6) {
                 panelBagiLaba.this.saveButton6ActionPerformed(evt);
             }
-            else if (evt.getSource() == saveButton7) {
-                panelBagiLaba.this.saveButton7ActionPerformed(evt);
+            else if (evt.getSource() == saveButton) {
+                panelBagiLaba.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton6) {
+                panelBagiLaba.this.jButton6ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -643,6 +717,16 @@ public class panelBagiLaba extends JPanel {
         }
         return temp;
     }
+        
+        private BigInteger sumAllBigInteger(List<? extends Laporan> laporanList)
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Laporan lap : laporanList) {
+                temp = temp.add(lap.getPengeluaran());
+        }
+        System.out.println("temp = " + temp);
+        return temp;
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
         this.jDialog1.hide();
@@ -783,7 +867,7 @@ public class panelBagiLaba extends JPanel {
         int[] selected = jTable1.getSelectedRows();
         List<app.table.BagiLaba> toRemove = new ArrayList<app.table.BagiLaba>(selected.length);
         for (int idx = 0; idx < selected.length; idx++) {
-            app.table.BagiLaba b = list1.get(masterTable.convertRowIndexToModel(selected[idx]));
+            app.table.BagiLaba b = list1.get(jTable1.convertRowIndexToModel(selected[idx]));
             toRemove.add(b);
 //            entityManager.remove(b);
         }
@@ -803,17 +887,21 @@ public class panelBagiLaba extends JPanel {
 //        al.addAll(hs);        // TODO add your handling code here:
     }//GEN-LAST:event_saveButton6ActionPerformed
 
+        Laporanlaba laporanlaba;
+        java.util.List<Class> KelasList;
+        Map nama;
+        final SimpleDateFormat ff = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar cal;
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         System.out.println("app.view.panel.inven.Inventaris.jButton1ActionPerformed()");
         this.jDialog1.hide();
-//        this.jDialog2.show();
-        Laporanlaba laporanlaba = new Laporanlaba();
+        laporanlaba = new Laporanlaba();
         Long foo = (Long) jFormattedTextField2.getValue();
         Integer correctButComplicated = Integer.valueOf(foo.intValue());
         laporanlaba.setKeterangan(jTextField2.getText());
         laporanlaba.setKe(correctButComplicated);
         laporanlaba.setTanggal(jDateChooser1.getDate());
-        Calendar cal = Calendar.getInstance();
+        cal = Calendar.getInstance();
         Date Awal = jDateChooser2.getDate();
         cal.setTime(Awal);
         cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
@@ -836,28 +924,139 @@ public class panelBagiLaba extends JPanel {
             l.setLaporanlabaRef(laporanlaba);
             entityManager.persist(l);
         }
-         java.util.List<Class> KelasList = new LinkedList<>();
+        KelasList = new LinkedList<>();
         KelasList.add(app.table.Pengeluaran.class);
         KelasList.add(app.table.Pegawaigaji.class);
         KelasList.add(app.table.Asset.class);
         KelasList.add(app.table.BayarPihutangBunga.class);
         KelasList.add(app.table.PerjalananPengeluaran.class);
-        Map nama = new HashMap();
+        nama = new HashMap();
         nama.put(app.table.Pengeluaran.class, "Operasional");
         nama.put(app.table.Asset.class, "Asset");
         nama.put(app.table.Pegawaigaji.class, "Gaji Pegawai");
         nama.put(app.table.PerjalananPengeluaran.class, "Biaya Perjalanan Bisnis");
         nama.put(app.table.BayarPihutangBunga.class, "Beban Bunga Bank Pinjaman");
         System.out.println(nama.size());
-        final SimpleDateFormat ff = new SimpleDateFormat("dd-MM-yyyy");
+        jFormattedTextField4.setValue(sumAllBigInteger(getMonthList(app.table.Pegawaigaji.class, Awal, Akhir)));
+        jFormattedTextField5.setValue(sumAllBigInteger(getMonthList(app.table.Pengeluaran.class, Awal, Akhir)));
+        jFormattedTextField6.setValue(sumAllBigInteger(getMonthList(app.table.BayarPihutangBunga.class, Awal, Akhir)));
+        jFormattedTextField7.setValue(sumAllBigInteger(getMonthList(app.table.Asset.class, Awal, Akhir)));
+        jFormattedTextField10.setValue(sumAllBigInteger(getMonthList(app.table.PerjalananPengeluaran.class, Awal, Akhir)));
+
+        List<JFormattedTextField> listBig = new LinkedList<>();
+        listBig.add(jFormattedTextField4);
+        listBig.add(jFormattedTextField5);
+        listBig.add(jFormattedTextField6);
+        listBig.add(jFormattedTextField7);
+        listBig.add(jFormattedTextField10);
+        BigInteger totalKeluar = BigInteger.ZERO;
+        Long totalMasukLong = (Long) jFormattedTextField3.getValue();                
+        BigInteger totalMasuk = BigInteger.valueOf(totalMasukLong);
+        for (JFormattedTextField jFormattedTextField : listBig) {
+            BigInteger temp = (BigInteger) jFormattedTextField.getValue();
+            totalKeluar = totalKeluar.add(temp);
+        }
+        System.out.println("totalKeluar = " + totalKeluar);
+        jFormattedTextField8.setValue(totalKeluar);
+        jFormattedTextField9.setValue( totalMasuk.subtract(totalKeluar));
+        BigInteger subtract = totalMasuk.subtract(totalKeluar);
+        jFormattedTextField1.setValue(
+                subtract.divide(new BigInteger("100")).multiply(new BigInteger(Value)));
+//        for (Class class1 : KelasList) {
+//            Laba l = new Laba();
+//            l.setKeterangan("Pengeluaran "+ nama.get(class1) + " "+ff.format(jDateChooser2.getDate())+"->"+ff.format(jDateChooser3.getDate()));
+//            l.setPengeluaran( sumAll(getMonthList(class1, Awal, Akhir), laporanlaba.getRef(), laporanlaba.getKe()));
+//            l.setLaporanlabaRef(laporanlaba);
+//            entityManager.persist(l);
+//        }  
+//        String selesai = "SELESAI LAP KE "+ laporanlaba.getKe() + " REF " + laporanlaba.getRef();
+//        String selesai = "SELESAI";
+//        System.out.println("selesai = " + selesai);
+//        for (BagiLaba a : list1) {
+//             if (a.getM() != null) {
+//                 if (a.getM().getStatusMobil().equals("CLOSE")) {
+//                     a.getM().setStatusMobil(selesai );
+//                 }
+//            }
+//            else if ( a.getH() != null)
+//            {
+//                if (a.getH().getLABA().equals("CLOSE")) {
+//                    a.getH().setLABA(selesai);               
+//                }
+//            }
+//            else if ( a.getR() != null)
+//            {
+//                if (a.getR().getLABA().equals("CLOSE")) {
+//                a.getR().setLABA(selesai);      
+//                }
+//            }
+//            else if ( a.getB() != null)
+//            {                
+//                if (a.getB().getLaba().equals("CLOSE")) {
+//                    a.getB().setLaba(selesai);
+//                }
+//            }
+//        }
+//        BayarSewaMasuk asset = new BayarSewaMasuk();
+//        Transfer transfer = new Transfer();
+//        long v = (long) jFormattedTextField1.getValue();
+//        BigInteger ml = BigInteger.valueOf(v);
+//        asset.setPemasukan(ml);
+//        asset.setKeterangan(jTextField3.getText());
+//        Saldo saldo = new Saldo();
+//        saldo.setBankId((Bank) this.jComboBox2.getSelectedItem());
+//        Saldo saldo2 = new Saldo();
+//        saldo2.setBankId((Bank) this.jComboBox2.getSelectedItem());
+//        asset.setTanggal(jDateChooser4.getDate());
+//        asset.setTransaksi(saldo);
+//        asset.setLaporanlaba(laporanlaba);
+//        laporanlaba.setModalTahan(asset);
+//
+//        transfer.setJumlah(ml);
+//        transfer.setKeterangan(jTextField3.getText());
+//        transfer.setTanggal(jDateChooser4.getDate());
+//        transfer.setTransaksi(saldo2);
+//        asset.setTransfer(transfer);
+//
+//        entityManager.persist(laporanlaba);
+//        entityManager.persist(asset);        
+//        entityManager.persist(transfer);
+//        saveButtonActionPerformed(evt);
+        this.jDialog3.show();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void saveButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton7ActionPerformed
+        jDialog2.setLocationRelativeTo(null);
+        jDialog2.show();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        jDialog3.setLocationRelativeTo(null);
+        //        String selesai = "SELESAI LAP KE "+ laporanlaba.getKe() + " REF " + laporanlaba.getRef();
+        Date Awal = jDateChooser2.getDate();
+        cal.setTime(Awal);
+        cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
+        cal.set(Calendar.MINUTE, cal.getActualMinimum(Calendar.MINUTE));   
+        cal.add(Calendar.MINUTE, -1);
+        Awal = cal.getTime();
+        System.out.println("Awal = " + Awal);
+        Date Akhir = jDateChooser3.getDate();
+        cal.setTime(Akhir);
+        cal.set(Calendar.HOUR_OF_DAY, cal.getActualMinimum(Calendar.HOUR_OF_DAY));
+        cal.set(Calendar.MINUTE, cal.getActualMinimum(Calendar.MINUTE));   
+        cal.add(Calendar.DATE, 1);
+        cal.add(Calendar.MINUTE, 1);
+        Akhir = cal.getTime();
         for (Class class1 : KelasList) {
             Laba l = new Laba();
             l.setKeterangan("Pengeluaran "+ nama.get(class1) + " "+ff.format(jDateChooser2.getDate())+"->"+ff.format(jDateChooser3.getDate()));
             l.setPengeluaran( sumAll(getMonthList(class1, Awal, Akhir), laporanlaba.getRef(), laporanlaba.getKe()));
             l.setLaporanlabaRef(laporanlaba);
             entityManager.persist(l);
-        }  
-//        String selesai = "SELESAI LAP KE "+ laporanlaba.getKe() + " REF " + laporanlaba.getRef();
+        } 
         String selesai = "SELESAI";
         System.out.println("selesai = " + selesai);
         for (BagiLaba a : list1) {
@@ -887,8 +1086,8 @@ public class panelBagiLaba extends JPanel {
         }
         BayarSewaMasuk asset = new BayarSewaMasuk();
         Transfer transfer = new Transfer();
-        long v = (long) jFormattedTextField1.getValue();
-        BigInteger ml = BigInteger.valueOf(v);
+        BigInteger v = (BigInteger) jFormattedTextField1.getValue();
+        BigInteger ml = v;
         asset.setPemasukan(ml);
         asset.setKeterangan(jTextField3.getText());
         Saldo saldo = new Saldo();
@@ -910,14 +1109,9 @@ public class panelBagiLaba extends JPanel {
         entityManager.persist(asset);        
         entityManager.persist(transfer);
         saveButtonActionPerformed(evt);
+        jDialog3.hide();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void saveButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton7ActionPerformed
-        jDialog2.setLocationRelativeTo(null);
-        jDialog2.show();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveButton7ActionPerformed
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -929,6 +1123,7 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JLabel idLabel;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -938,12 +1133,27 @@ public class panelBagiLaba extends JPanel {
     private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField10;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
+    private javax.swing.JFormattedTextField jFormattedTextField4;
+    private javax.swing.JFormattedTextField jFormattedTextField5;
+    private javax.swing.JFormattedTextField jFormattedTextField6;
+    private javax.swing.JFormattedTextField jFormattedTextField7;
+    private javax.swing.JFormattedTextField jFormattedTextField8;
+    private javax.swing.JFormattedTextField jFormattedTextField9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

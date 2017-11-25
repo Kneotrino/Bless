@@ -63,6 +63,15 @@ public class panelAkuntansi extends JPanel {
     }
     private List<Akun> Open = new ArrayList<>();
     private List<Akun> Closed = new ArrayList<>();
+    private List<Akun> Posisi = new ArrayList<>();
+
+    public List<Akun> getPosisi() {
+        return Posisi;
+    }
+
+    public void setPosisi(List<Akun> Posisi) {
+        this.Posisi = Posisi;
+    }
 
     public List<Akun> getOpen() {
         return Open;
@@ -760,6 +769,68 @@ public class panelAkuntansi extends JPanel {
             );
         panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba(Value);
         
+        //Posisi uang dan barang
+        List<app.table.Bank> listBank = entityManager
+                .createQuery("SELECT b FROM Bank b order by b")
+                .getResultList();
+        int nn = 1;
+        //Bank
+        for (Bank bank : listBank) {
+            Akun temp = new Akun()
+                .setAkun(bank.toString());
+            temp.setNomor(nn);
+            temp.setPemasukan(bank.getTotalDebit());
+            temp.setPengeluaran(bank.getTotalKredit());
+//            temp.setProfit(bank.getTotalSaldo());
+            Posisi.add(temp);
+            nn++;
+        }
+        //Mobil
+//        i = 0;
+        mobilList.removeIf( a -> a.getStatusMobil().equals("CLOSE"));
+        mobilList.removeIf( a -> a.getStatusMobil().equals("SELESAI"));
+        for (Mobil mobil : mobilList) {
+            BigInteger pemasukan = BigInteger.ZERO;
+            BigInteger pengeluaran = BigInteger.ZERO;
+            List<KeuanganMobil> KM = mobil.getKeuanganMobil2();
+            for (KeuanganMobil k : KM) {
+                pemasukan = pemasukan.add(k.getPemasukan());
+                pengeluaran = pengeluaran.add(k.getPengeluaran());
+            }
+            Akun veh = new Akun(nn)
+                    .setAkun(
+                            mobil+ " " +
+                            mobil.getMerk()+ " " +
+                            mobil.getType()+ " " +
+                            mobil.getWarna()+ " " +
+                            mobil.getTahun()+ " " +
+                            mobil.getDebitur().getNama() 
+                    )
+                    .setPengeluaran(pemasukan)
+                    .setPemasukan(pengeluaran)
+                    ;
+            veh.setKeterangan(mobil.getStatusMobil());
+            veh.setTanggalClose(mobil.getTangglPelunasanPembelian());
+//            TotalMobil.addPemasukan(pemasukan)
+//                    .addPengeluaran(pengeluaran);
+            Posisi.add(veh);
+            nn++;
+        }
+        //Hutang
+        HutangList.removeIf( a -> a.getLABA().equals("CLOSE"));
+        HutangList.removeIf( a -> a.getLABA().equals("SELESAI"));
+        for (Hutang r : HutangList) {
+            Akun temp = new Akun()
+                    .setAkun(r.toString());
+            temp.setNomor(nn);
+            temp.setKeterangan(r.getLABA());
+            temp.setPengeluaran(r.gettotalPemasukan());
+            temp.setPemasukan(r.gettotalPengeluaran());
+            Posisi.add(temp);   
+            nn++;
+        }
+
+        
         initComponents();
     }
     public panelAkuntansi(String Value, Date awal) {
@@ -1277,6 +1348,8 @@ public class panelAkuntansi extends JPanel {
         jTable7 = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable8 = new javax.swing.JTable();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jTable10 = new javax.swing.JTable();
         panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba();
 
         FormListener formListener = new FormListener();
@@ -1546,6 +1619,35 @@ public class panelAkuntansi extends JPanel {
 
         jTabbedPane1.addTab("PROFIT CLOSE", jScrollPane8);
 
+        jTable10.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable10.setAutoCreateRowSorter(true);
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${posisi}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable10);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomor}"));
+        columnBinding.setColumnName("Nomor");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
+        columnBinding.setColumnName("Akun");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding.setColumnName("Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding.setColumnName("Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane10.setViewportView(jTable10);
+
+        jTabbedPane1.addTab("POSISI UANG DAN BARANG", jScrollPane10);
+
         panelBagiLaba1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTabbedPane1.addTab("BAGI LABA", panelBagiLaba1);
 
@@ -1738,6 +1840,7 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1748,6 +1851,7 @@ public class panelAkuntansi extends JPanel {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable10;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
