@@ -917,21 +917,28 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="Form" sourcePath="${posisi}" target="jTable10" targetPath="elements" updateStrategy="0" immediately="true">
                       <Subbinding sourcePath="${nomor}">
+                        <BindingParameter name="NAME" value="Nomor"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${akun}">
+                        <BindingParameter name="NAME" value="Akun"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
-                      <Subbinding sourcePath="${pemasukan}">
+                      <Subbinding sourcePath="${pengeluaran}">
+                        <BindingParameter name="NAME" value="Pemasukan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
-                      <Subbinding sourcePath="${pengeluaran}">
+                      <Subbinding sourcePath="${pemasukan}">
+                        <BindingParameter name="NAME" value="Pengeluaran"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${profit}">
+                        <BindingParameter name="NAME" value="Saldo"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                       </Subbinding>
                       <Subbinding sourcePath="${keterangan}">
+                        <BindingParameter name="NAME" value="Keterangan"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
                     </BindingProperty>

@@ -770,21 +770,20 @@ public class panelAkuntansi extends JPanel {
         panelBagiLaba1 = new app.view.FixPanel.akuntansi.panelBagiLaba(Value);
         
         //Posisi uang dan barang
-        List<app.table.Bank> listBank = entityManager
-                .createQuery("SELECT b FROM Bank b order by b")
-                .getResultList();
+//        List<app.table.Bank> listBank = entityManager
+//                .createQuery("SELECT b FROM Bank b order by b")
+//                .getResultList();
         int nn = 1;
         //Bank
-        for (Bank bank : listBank) {
-            Akun temp = new Akun()
-                .setAkun(bank.toString());
-            temp.setNomor(nn);
-            temp.setPemasukan(bank.getTotalDebit());
-            temp.setPengeluaran(bank.getTotalKredit());
-//            temp.setProfit(bank.getTotalSaldo());
-            Posisi.add(temp);
-            nn++;
-        }
+//        for (Bank bank : listBank) {
+//            Akun temp = new Akun()
+//                .setAkun(bank.toString());
+//            temp.setNomor(nn);
+//            temp.setPemasukan(bank.getTotalDebit());
+//            temp.setPengeluaran(bank.getTotalKredit());
+//            Posisi.add(temp);
+//            nn++;
+//        }
         //Mobil
 //        i = 0;
         mobilList.removeIf( a -> a.getStatusMobil().equals("CLOSE"));
@@ -1630,15 +1629,16 @@ public class panelAkuntansi extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${akun}"));
         columnBinding.setColumnName("Akun");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
         columnBinding.setColumnName("Pemasukan");
         columnBinding.setColumnClass(java.math.BigInteger.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pengeluaran}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pemasukan}"));
         columnBinding.setColumnName("Pengeluaran");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${profit}"));
-        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnName("Saldo");
         columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
         columnBinding.setColumnName("Keterangan");
         columnBinding.setColumnClass(String.class);
