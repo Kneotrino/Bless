@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -104,6 +105,15 @@ public class Trips implements Serializable {
         Integer oldTripsId = this.tripsId;
         this.tripsId = tripsId;
         changeSupport.firePropertyChange("tripsId", oldTripsId, tripsId);
+    }
+    @Transient
+    final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
+
+    public String getInfo()
+    {
+        return "Perjalanan Ke ="+perjalananke +";"
+                +formator.format(tanggalBerangkat) + "->"
+                +formator.format(tanggalKembali);
     }
 
     public String getKeterangan() {

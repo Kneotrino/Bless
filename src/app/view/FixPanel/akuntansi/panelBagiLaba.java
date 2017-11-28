@@ -132,6 +132,8 @@ public class panelBagiLaba extends JPanel {
         jFormattedTextField9 = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jFormattedTextField11 = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
         jDateChooser4 = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
@@ -352,6 +354,13 @@ public class panelBagiLaba extends JPanel {
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
         jPanel4.add(jFormattedTextField1);
+
+        jLabel19.setText("JUMLAH TOTAL SIAP BAGI");
+        jPanel4.add(jLabel19);
+
+        jFormattedTextField11.setEditable(false);
+        jFormattedTextField11.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jPanel4.add(jFormattedTextField11);
 
         jLabel10.setText("TANGGAL MODAL DI TAHAN");
         jPanel4.add(jLabel10);
@@ -960,8 +969,11 @@ public class panelBagiLaba extends JPanel {
         jFormattedTextField8.setValue(totalKeluar);
         jFormattedTextField9.setValue( totalMasuk.subtract(totalKeluar));
         BigInteger subtract = totalMasuk.subtract(totalKeluar);
+        BigInteger modalTahan = subtract.divide(new BigInteger("100")).multiply(new BigInteger(Value));
+        BigInteger bersih = subtract.subtract(modalTahan);
         jFormattedTextField1.setValue(
-                subtract.divide(new BigInteger("100")).multiply(new BigInteger(Value)));
+                modalTahan);
+        jFormattedTextField11.setValue(bersih);
 //        for (Class class1 : KelasList) {
 //            Laba l = new Laba();
 //            l.setKeterangan("Pengeluaran "+ nama.get(class1) + " "+ff.format(jDateChooser2.getDate())+"->"+ff.format(jDateChooser3.getDate()));
@@ -1136,6 +1148,7 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JDialog jDialog3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField10;
+    private javax.swing.JFormattedTextField jFormattedTextField11;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
@@ -1154,6 +1167,7 @@ public class panelBagiLaba extends JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

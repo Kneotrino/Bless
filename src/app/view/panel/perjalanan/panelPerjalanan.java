@@ -86,15 +86,18 @@ public class panelPerjalanan extends JPanel {
         inputPanel2 = new app.utils.inputPanel(app.table.PerjalananPemasukan.class);
         jLabel1 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jTextField2 = new javax.swing.JTextField();
         newButton2 = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
         inputPanel3 = new app.utils.inputPanel(app.table.PerjalananKembalikan.class);
         jLabel2 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
+        jTextField3 = new javax.swing.JTextField();
         newButton3 = new javax.swing.JButton();
         jDialog4 = new javax.swing.JDialog();
         inputPanel4 = new app.utils.inputPanel(app.table.PerjalananPengeluaran.class);
         jLabel3 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
         newButton4 = new javax.swing.JButton();
         jDialog5 = new javax.swing.JDialog();
         inputPanel5 = new app.utils.inputPanel(app.table.MobilPengeluaran.class);
@@ -102,6 +105,7 @@ public class panelPerjalanan extends JPanel {
         newButton6 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jComboBox5 = new javax.swing.JComboBox<>();
+        jTextField5 = new javax.swing.JTextField();
         newButton5 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox4 = new javax.swing.JComboBox<>();
@@ -160,6 +164,13 @@ public class panelPerjalanan extends JPanel {
         jComboBox2.addActionListener(formListener);
         inputPanel2.add(jComboBox2);
 
+        jTextField2.setEditable(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.info}"), jTextField2, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        inputPanel2.add(jTextField2);
+
         newButton2.setText("Simpan");
         newButton2.addActionListener(formListener);
         inputPanel2.add(newButton2);
@@ -181,6 +192,13 @@ public class panelPerjalanan extends JPanel {
 
         inputPanel3.add(jComboBox3);
 
+        jTextField3.setEditable(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.info}"), jTextField3, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        inputPanel3.add(jTextField3);
+
         newButton3.setText("Simpan");
         newButton3.addActionListener(formListener);
         inputPanel3.add(newButton3);
@@ -194,6 +212,13 @@ public class panelPerjalanan extends JPanel {
         bindingGroup.addBinding(binding);
 
         inputPanel4.add(jLabel3);
+
+        jTextField4.setEditable(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.info}"), jTextField4, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        inputPanel4.add(jTextField4);
 
         newButton4.setText("Simpan");
         newButton4.addActionListener(formListener);
@@ -219,6 +244,13 @@ public class panelPerjalanan extends JPanel {
         bindingGroup.addBinding(jComboBoxBinding);
 
         inputPanel5.add(jComboBox5);
+
+        jTextField5.setEditable(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.info}"), jTextField5, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        inputPanel5.add(jTextField5);
 
         newButton5.setText("Simpan");
         newButton5.addActionListener(formListener);
@@ -789,6 +821,10 @@ public class panelPerjalanan extends JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private java.util.List<app.table.Trips> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Sat Nov 25 21:59:01 SGT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015f-f379-67d1-00000087f6e8 
-on database directory C:\Users\blessing with class loader sun.misc.Launcher$AppClassLoader@a881b5 
+Tue Nov 28 23:52:25 SGT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-0354-4f3e-0000031d06f8 
+on database directory C:\Users\blessing with class loader sun.misc.Launcher$AppClassLoader@24d46ca6 
 Loaded from file:/C:/Program%20Files%20(x86)/Java/jdk1.8.0_77/db/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_77-b03
+java.runtime.version=1.8.0_152-b16
 user.dir=C:\Users\SEED\Documents\jo\blessing
 os.name=Windows 7
-os.arch=x86
+os.arch=amd64
 os.version=6.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

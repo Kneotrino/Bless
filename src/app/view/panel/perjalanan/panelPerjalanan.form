@@ -161,6 +161,14 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
+            <Component class="javax.swing.JTextField" name="jTextField2">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.info}" target="jTextField2" targetPath="text" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+            </Component>
             <Component class="javax.swing.JButton" name="newButton2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Simpan"/>
@@ -224,6 +232,14 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
+            <Component class="javax.swing.JTextField" name="jTextField3">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.info}" target="jTextField3" targetPath="text" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+            </Component>
             <Component class="javax.swing.JButton" name="newButton3">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Simpan"/>
@@ -266,6 +282,14 @@
             <Component class="javax.swing.JLabel" name="jLabel3">
               <BindingProperties>
                 <BindingProperty name="text" source="Form" sourcePath="${peter.foo}" target="jLabel3" targetPath="text" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField4">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.info}" target="jTextField4" targetPath="text" updateStrategy="0" immediately="false"/>
               </BindingProperties>
             </Component>
             <Component class="javax.swing.JButton" name="newButton4">
@@ -336,6 +360,14 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField5">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="masterTable" sourcePath="${selectedElement.info}" target="jTextField5" targetPath="text" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
             </Component>
             <Component class="javax.swing.JButton" name="newButton5">
               <Properties>
