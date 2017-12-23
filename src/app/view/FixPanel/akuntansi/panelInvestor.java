@@ -238,15 +238,19 @@ public class panelInvestor extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${kontak}"));
         columnBinding.setColumnName("Kontak");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${modal}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalModal}"));
         columnBinding.setColumnName("Total Modal");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${prive}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPrive}"));
         columnBinding.setColumnName("Total Prive");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlahPembagaian}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalModal - totalPrive}"));
+        columnBinding.setColumnName("Total Sisa");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPembagianLaba}"));
         columnBinding.setColumnName("Total Pembagian Laba");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
@@ -368,6 +372,9 @@ public class panelInvestor extends JPanel {
             else if (evt.getSource() == saveButton1) {
                 panelInvestor.this.saveButton1ActionPerformed(evt);
             }
+            else if (evt.getSource() == saveButton2) {
+                panelInvestor.this.saveButton2ActionPerformed(evt);
+            }
             else if (evt.getSource() == newDetailButton1) {
                 panelInvestor.this.newDetailButton1ActionPerformed(evt);
             }
@@ -403,9 +410,6 @@ public class panelInvestor extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelInvestor.this.newDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == saveButton2) {
-                panelInvestor.this.saveButton2ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -488,36 +492,31 @@ public class panelInvestor extends JPanel {
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
         app.table.Investor temp = new Investor();
+        List<Saham> tempList = new LinkedList<>();
         BigInteger total3 = BigInteger.ZERO;
-        BigInteger total4 = BigInteger.ZERO;
-        BigInteger total5 = BigInteger.ZERO;
-        BigInteger total6 = BigInteger.ZERO;
+//        BigInteger total4 = BigInteger.ZERO;
+//        BigInteger total5 = BigInteger.ZERO;
+//        BigInteger total6 = BigInteger.ZERO;
+        BigInteger totalModal = BigInteger.ZERO;
+        BigInteger totalSisa = BigInteger.ZERO;
+        BigInteger totalPrive = BigInteger.ZERO;
+        BigInteger totalBagiLaba = BigInteger.ZERO;
         java.util.List<app.table.Investor> data = query.getResultList();
         for (Investor entity : data) {                   
-            List<Saham> sahamList = entity.getSahamList();
-                BigInteger total1 = BigInteger.ZERO;
-                BigInteger total2 = BigInteger.ZERO;
-            for (Saham saham : sahamList) {
-                    total1 = total1.add(saham.getModal() == null? BigInteger.ZERO : saham.getModal().getJumlah());
-                    total2 = total2.add(saham.getPrive()== null? BigInteger.ZERO : saham.getPrive().getJumlah());                    
-                    total6 = total6.add(saham.getLaba() == null? BigInteger.ZERO : saham.getLaba().getJumlah());
-            }
-                entity.setPrive(total2);
-                entity.setModal(total1.subtract(total2));
-                total5 = total5.add(entity.getPrive());
-                total3 = total3.add(entity.getModal());
+                total3 = total3.add(entity.getTotalModal().subtract(entity.getTotalPrive()));
+                tempList.addAll(entity.getSahamList());
         }
-        System.out.println("total6 = " + total6);
         float t = total3.floatValue();
+        System.out.println("t = " + t);
         for (Investor investor : data) {
-            float p = investor.getModal().floatValue();
+            float p = investor.getTotalModal().subtract(investor.getTotalPrive()).floatValue();
+            System.out.println("p = " + p);
             investor.setPer(df.format((p/t)*100)+"%");
+            totalModal = totalModal.add(investor.getTotalModal());
+            totalPrive = totalPrive.add(investor.getTotalPrive());
+            totalBagiLaba = totalBagiLaba.add(investor.getjumlahPembagaian());
         }
-        temp.setModal(total3);
-        temp.setPrive(total5);
-        temp.setLaba(total6);
-        temp.setjumlahPembagaian(total6);
-        System.out.println("temp.get = " + temp.getjumlahPembagaian());
+        temp.setSahamList(tempList);
         temp.setPer("100%");
         list.add(temp);
     }

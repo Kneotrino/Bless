@@ -130,7 +130,32 @@ public class Investor implements Serializable {
     public BigInteger getModal() {
         return modal;
     }
-
+    public BigInteger getTotalModal()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Saham saham : sahamList) {
+            temp = temp.add(saham.getModal() == null? BigInteger.ZERO : saham.getModal().getJumlah());
+        }
+        return temp;
+    }
+    
+    public BigInteger getTotalPrive()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Saham saham : sahamList) {
+            temp = temp.add(saham.getPrive()== null? BigInteger.ZERO : saham.getPrive().getJumlah());                    
+        }
+        return temp;
+    }
+    public BigInteger getTotalPembagianLaba()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Saham saham : sahamList) {
+            temp = temp.add(saham.getLaba() == null? BigInteger.ZERO : saham.getLaba().getJumlah());
+        }
+        return temp;
+    }
+    
     public void setModal(BigInteger modal) {
         BigInteger oldModal = this.modal;
         this.modal = modal;
