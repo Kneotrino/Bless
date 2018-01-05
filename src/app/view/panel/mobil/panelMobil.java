@@ -227,7 +227,7 @@ public void Refresh()
         editMobil = new javax.swing.JDialog();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
+        jButton35 = new javax.swing.JButton();
         jLabel107 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
@@ -814,7 +814,14 @@ public void Refresh()
         jPanel15.setLayout(new java.awt.GridLayout(0, 2));
 
         jPanel16.setLayout(new java.awt.GridLayout(0, 1, 0, 1));
-        jPanel16.add(jLabel17);
+
+        jButton35.setText("PRINT DATA MOBIL");
+        jButton35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton35ActionPerformed(evt);
+            }
+        });
+        jPanel16.add(jButton35);
 
         jLabel107.setText("DEBITUR");
         jPanel16.add(jLabel107);
@@ -3667,6 +3674,209 @@ public void FileSave() throws IOException
     private void jTextField25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField25ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField25ActionPerformed
+
+    private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
+   JFileChooser chooser=new JFileChooser(".");
+   FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+   chooser.addChoosableFileFilter(filter);
+   chooser.setFileFilter(filter);
+   chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+   chooser.setDialogTitle("Save File");
+   File filetemp = new File( System.getProperties().getProperty("user.home"), 
+           "Data Mobil "+                            
+                hapus.getNoPolisiAktif()+ "-" +
+                hapus.getType().replace("/", " ")+ "-" +
+                hapus.getTahun()+ "-" +
+                hapus.getWarna()+ "-" +
+                hapus.getStatusMobil()+ "-" +
+                hapus.getDebitur().getNama() + "-"+
+                hapus.getMobilId()+" "+
+                   new Date().toString().replace(":", "-")                   
+                   +".xls");
+   chooser.setSelectedFile(filetemp);
+//   int returnVal1=chooser.showSaveDialog(this);
+    while ( chooser.getSelectedFile().exists()) {
+        JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+        int result = chooser.showSaveDialog(this);
+        if (result == JFileChooser.CANCEL_OPTION)
+        {
+            System.out.println("Cancel was selected");
+            return;
+        }
+    }
+    File file1 = chooser.getSelectedFile();
+    List<Mobil> singleMobil = new LinkedList<>();
+    singleMobil.add(hapus);
+    List a = singleMobil;
+              Function fungsi = d -> d==null?"":d;         
+              SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              Function tanggal = d -> d==null?" ":formator.format(d);
+              List<File> cvs = new java.util.LinkedList<>(); 
+              cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"));
+              WriteStep data = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"))
+                        .type(app.table.Mobil.class)
+                            .properties(
+                                    Tuple.of("REF/No","nomor", d-> d),
+                                    Tuple.of("Status Mobil","statusMobil", fungsi),
+                                    Tuple.of("Harga Pembelian","hargaPembelian", fungsi),
+                                    Tuple.of("Harga Pembelian","hargaJual", fungsi),
+                                    Tuple.of("Tanggal Beli","tanggalBeli", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Tanggal Smp Kupang","tanggalSampaiKupang", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Tanggal Jual","tanggalJual", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("Tanggal Pelunas","tangglPelunasanPembelian", d -> d == null? " ": formator.format(d)),
+                                    Tuple.of("No Polisi Aktif","noPolisiAktif", fungsi),
+                                    Tuple.of("No Polisi Lama","noPolisiLama", fungsi),
+                                    Tuple.of("Merk","merk", fungsi),
+                                    Tuple.of("Type","type", fungsi),
+                                    Tuple.of("Tahun","tahun", fungsi),
+                                    Tuple.of("Warna","warna", fungsi),
+                                    Tuple.of("Jenis","jenis", fungsi),
+                                    Tuple.of("BBM","bahanBakar", fungsi),
+                                    Tuple.of("No Mesin","noMesin", fungsi),
+                                    Tuple.of("No Rangka","noRangka", fungsi),
+                                    Tuple.of("Pemilik Baru","pemilikBaru", fungsi),
+                                    Tuple.of("Pemilik Lama","pemilikLama", fungsi),
+                                    Tuple.of("Silinder","silinder", fungsi),
+                                    Tuple.of("Penjual","penjual", fungsi),
+                                    Tuple.of("Hp Penjual","no_Hp_Penjual", fungsi),
+                                    Tuple.of("Ref BPKB","bpkb.bpkbId", fungsi),
+                                    Tuple.of("Atas Nama BPKB","bpkb.anBpkb", fungsi),
+                                    Tuple.of("Ref Pembeli","debitur.debiturId", fungsi),
+                                    Tuple.of("Nama Pembeli","debitur.nama", fungsi),
+                                    Tuple.of("Total Pemasukan","totalPemasukan", fungsi),
+                                    Tuple.of("Total Pengeluaran","totalPengeluaran", fungsi),
+                                    Tuple.of("Total Profit","totalProfit", fungsi),
+                                    Tuple.of("Leasing","listleasing.leasingLeasingId.nama", fungsi),
+                                    Tuple.of("keterangan","keterangan", fungsi)
+                    ).dataList(a);
+              data.write();
+              cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Debitur.CSV"));
+              WriteStep debitur = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar debitur.CSV"))
+                        .type(app.table.Debitur.class)
+                            .properties(
+                                    Tuple.of("debitur REF","debitur.debiturId", d -> d==null?" ":d),
+                                    Tuple.of("No Polisi Aktif","noPolisiAktif", fungsi),
+                                    Tuple.of("No Polisi Lama","noPolisiLama", fungsi),
+                                    Tuple.of("Merk","merk", fungsi),
+                                    Tuple.of("Type","type", fungsi),
+                                    Tuple.of("Nama","debitur.nama", d -> d==null?" ":d),
+                                    Tuple.of("Nomot HP","debitur.noHp", d -> d==null?" ":d),
+                                    Tuple.of("Nomor Identitas","debitur.noKtp", d -> d==null?" ":d),
+//                                    Tuple.of("norek","norek", d -> d==null?" ":d),
+                                    Tuple.of("Nama ke-2","debitur.bank", d -> d==null?" ":d),
+                                    Tuple.of("Nomor HP ke-2","debitur.pembayaran", d -> d==null?" ":d),
+                                    Tuple.of("Alamat","debitur.alamat", d -> d==null?" ":d )
+//                                    Tuple.of("scan","scan", d -> d==null?" ":d),
+//                                    Tuple.of("mobil REF","mobil", d -> d==null?" ":d)
+                    ).dataList(a);
+              debitur.write();
+              cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar BPKB.CSV"));
+              WriteStep bpkb = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar BPKB.CSV"))
+                        .type(app.table.Bpkb.class)
+                            .properties(
+                                    Tuple.of("REF","bpkb.bpkbId", d -> d==null?" ":d),
+                                    Tuple.of("No Polisi Aktif","noPolisiAktif", fungsi),
+                                    Tuple.of("No Polisi Lama","noPolisiLama", fungsi),
+                                    Tuple.of("Merk","merk", fungsi),
+                                    Tuple.of("Type","type", fungsi),                                    
+                                    Tuple.of("Atas Nama BPKB","bpkb.anBpkb", d -> d==null?" ":d),
+                                    Tuple.of("No BPKB","bpkb.noBpkb", d -> d==null?" ":d),
+                                    Tuple.of("No BPKB Lama","bpkb.status", d -> d==null?" ":d),
+                                    Tuple.of("Posisi BPKB","bpkb.posisi", d -> d==null?" ":d),
+                                    Tuple.of("Posisi Faktur","bpkb.noPolisiAktif", d -> d==null?" ":d),
+                                    Tuple.of("STNK","bpkb.stnk", d -> d==null?" ":d),
+                                    Tuple.of("tgl Bbn","bpkb.tglBbn", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Kembali Bbn","bpkb.tglKembaliBbn", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Cb","bpkb.tglCb", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Kembali Cb","bpkb.tglKembaliCb", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Leasing","bpkb.tglLeasing", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Terima","bpkb.tglTerima", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("tgl Pajak EXP","bpkb.tanggalExp", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("Keterangan","bpkb.ket", d -> d==null?" ":d),
+                                    Tuple.of("mobil REF","bpkb.mobil", d -> d==null?" ":d)
+                    ).dataList(a);
+              bpkb.write();
+              
+
+                          //mobil laporan
+            for (Mobil mobil : singleMobil) {
+                    String mo = 
+                            mobil.getNoPolisiAktif()+ "-" +
+//                            mobil.getMerk() + "-" +
+                            mobil.getType().replace("/", " ")+ "-" +
+//                            mobil.getJenis().replace("/", " ")+ "-" +
+                            mobil.getTahun()+ "-" +
+                            mobil.getWarna()+ "-" +
+                            mobil.getStatusMobil()+ "-" +
+                            mobil.getDebitur().getNama() + "-"+
+                            mobil.getMobilId()+".CSV" ;
+//                      mo = st.replaceAll("\\s+","");
+                      File Folder =new File(chooser.getSelectedFile().getParentFile(), "Data Mobil");
+                      Folder.mkdirs();
+                      File p = new File(Folder, mo);
+                      cvs.add(p);
+                      List<KeuanganMobil> b = mobil.getKeuanganMobils();
+                      KeuanganMobil total1 = new MobilPemasukan();
+                      total1.setId(0l);
+                      total1.setKeterangan("Total Pemasukan");
+                      KeuanganMobil total2 = new MobilPengeluaran();
+                      total2.setId(0l);
+                      total2.setKeterangan("Total Pengeluaran");
+                      KeuanganMobil laba = new MobilPemasukan();
+                      laba.setKeterangan("Profit");
+                      BigInteger temp1 = BigInteger.ZERO;
+                      BigInteger temp2 = BigInteger.ZERO;
+                      Saldo saldo1 = new Saldo();
+                      Bank bank = new Bank();
+                      saldo1.setBankId(bank);                      
+                      for (KeuanganMobil m : b) {                          
+                          temp1 = temp1.add(m.getPemasukan());
+                          temp2 = temp2.add(m.getPengeluaran());
+                      }
+                      total1.setTransaksi(saldo1);
+                      total2.setTransaksi(saldo1);
+                      laba.setTransaksi(saldo1);
+                      total1.setJumlah(temp1);
+                      total2.setJumlah(temp2);
+                      BigInteger profit = BigInteger.ZERO;
+                      profit = profit.subtract(temp2);
+                      profit = profit.add(temp1);
+                      laba.setJumlah(profit);
+                      b.add(total1);
+                      b.add(total2);
+                      b.add(laba);
+                      List c = b;
+                      WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.KeuanganMobil.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Pemasukan", "pemasukan", d -> IDR.format(d) ),
+                                Tuple.of("Pengeluaran", "pengeluaran", d -> IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                ).dataList(c);
+                    try {
+                    dataList.write();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    return ;
+                } 
+
+        }
+            //end
+        try {
+            ExcelConverter(cvs, chooser.getSelectedFile());
+            System.out.println("\n File Berhasil Di Print");
+            JOptionPane.showMessageDialog(this,"File Created. \n"+ file1);
+            Desktop.getDesktop().open(filetemp);
+            // TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(panelMobil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton35ActionPerformed
         private AtomicBoolean stop;
     public List<Bpkb> getBpkbList1() {
         return bpkbList1;
@@ -3735,6 +3945,7 @@ public void FileSave() throws IOException
     private javax.swing.JButton jButton32;
     private javax.swing.JButton jButton33;
     private javax.swing.JButton jButton34;
+    private javax.swing.JButton jButton35;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -3805,7 +4016,6 @@ public void FileSave() throws IOException
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
