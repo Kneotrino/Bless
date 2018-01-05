@@ -1706,8 +1706,8 @@ public class panelAkuntansi extends JPanel {
         List g = Closed;
         List j = ProfitJasa;
         final DecimalFormat IDR = new DecimalFormat("###0");              
-        Function f = d -> d==null?"0":IDR.format(d);
         SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
+        Function f = d -> d==null?"0":IDR.format(d);
         Function tanggal = d -> d==null?" ":form.format(d);
 
         WriteStep AkunPrinter = CSVUtil.of(akun)

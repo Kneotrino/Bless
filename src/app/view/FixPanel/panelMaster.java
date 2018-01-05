@@ -765,7 +765,6 @@ public void Restall()
             File filetemp = new File( System.getProperties().getProperty("user.home"), 
            "Data Laporan "+clazz.getSimpleName() +".xls");
    chooser.setSelectedFile(filetemp);
-//   int returnVal1=chooser.showSaveDialog(this);
     while ( chooser.getSelectedFile().exists()) {
         JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
         chooser.showSaveDialog(this);        

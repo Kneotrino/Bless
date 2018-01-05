@@ -18,10 +18,15 @@ import app.table.Laporan;
 import app.table.Laporanlaba;
 import app.table.Saldo;
 import app.table.Transfer;
+import static app.utils.ExcelConverter.ExcelConverter;
 import app.view.ShowRoom;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
@@ -36,14 +41,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javaslang.Tuple;
 import javaslang.collection.HashSet;
 import javax.persistence.RollbackException;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -111,6 +120,7 @@ public class panelBagiLaba extends JPanel {
         jDialog2 = new javax.swing.JDialog();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
         jButton6 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -248,10 +258,14 @@ public class panelBagiLaba extends JPanel {
 
         jDialog2.setMinimumSize(new java.awt.Dimension(800, 500));
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.keterangan}"), jDialog2, org.jdesktop.beansbinding.BeanProperty.create("title"));
+        bindingGroup.addBinding(binding);
+
         jTable2.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         jTable2.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         jTable2.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         jTable2.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        jTable2.setAutoCreateRowSorter(true);
 
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${selectedElement.laporans}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, eLProperty, jTable2);
@@ -283,6 +297,10 @@ public class panelBagiLaba extends JPanel {
         jScrollPane2.setViewportView(jTable2);
 
         jDialog2.getContentPane().add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jButton1.setText("PRINT");
+        jButton1.addActionListener(formListener);
+        jDialog2.getContentPane().add(jButton1, java.awt.BorderLayout.PAGE_START);
 
         jDialog3.setSize(1000, 700);
 
@@ -538,6 +556,9 @@ public class panelBagiLaba extends JPanel {
             }
             else if (evt.getSource() == jButton6) {
                 panelBagiLaba.this.jButton6ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton1) {
+                panelBagiLaba.this.jButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -1040,6 +1061,7 @@ public class panelBagiLaba extends JPanel {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void saveButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton7ActionPerformed
+
         jDialog2.setLocationRelativeTo(null);
         jDialog2.show();
         // TODO add your handling code here:
@@ -1124,6 +1146,68 @@ public class panelBagiLaba extends JPanel {
         jDialog3.hide();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+    final SimpleDateFormat formator = new SimpleDateFormat("dd-MM-yyyy");
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int index = masterTable.getSelectedRow();
+        app.table.BagiLaba b = list.get(masterTable.convertRowIndexToModel(index));
+        List a = b.getLaporans();
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        String temp = b.getKeterangan();
+        temp = temp.replace("/", "");
+        temp = temp.replace("[", "");
+        temp = temp.replace("]", "");
+        System.out.println("temp = " + temp);
+        File filetemp = new File( System.getProperties().getProperty("user.home"), 
+            temp + " " +               
+                   new Date().toString().replace(":", "-")                   
+                   +".xls");
+        chooser.setSelectedFile(filetemp);
+        chooser.showSaveDialog(null);
+        File Folder =new File(chooser.getSelectedFile().getParentFile(), "Data Mobil");
+        Folder.mkdirs();
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            int result = chooser.showSaveDialog(this);
+            if (result == JFileChooser.CANCEL_OPTION)
+            {
+                System.out.println("Cancel was selected");
+                return;
+            }
+        }
+        File file1 = chooser.getSelectedFile();
+        File p = new File(Folder, temp+".CVS");
+        WriteStep AkunPrinter = CSVUtil.of(p)
+                .type(Laporan.class)
+                .properties(
+                        Tuple.of("Ref", "id", d -> d==null?"":d),
+                        Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                        Tuple.of("Pemasukan", "pemasukan", d -> d==null?"":d ),
+                        Tuple.of("Pengeluaran", "pengeluaran", d -> d==null?"":d ),
+//                        Tuple.of("Status", "tipe", d -> d==null?"":d),
+//                        Tuple.of("Tipe", "jenis", d -> d==null?"":d),
+                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d),
+                        Tuple.of("Keterangan", "keterangan", d -> d==null?"":d)
+                )
+                .dataList(a);        
+        try {
+            AkunPrinter.write();
+            List<File> cvs = new java.util.LinkedList<>();
+            cvs.add(p);
+            ExcelConverter(cvs, file1);
+            Desktop.getDesktop().open(file1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
+            return ;
+        } 
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1133,6 +1217,7 @@ public class panelBagiLaba extends JPanel {
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel idLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
