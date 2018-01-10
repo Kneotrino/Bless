@@ -10,12 +10,19 @@ import app.table.BayarPihutangPemasukan;
 import app.table.Bayarpihutang;
 import app.table.Piutang;
 import app.table.Saldo;
+import static app.utils.ExcelConverter.ExcelConverter;
+import static app.utils.Printer.getDataList;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,10 +30,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javaslang.Tuple;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -241,6 +252,7 @@ public class panelPiutang extends JPanel {
         jPanel1.add(saveButton1);
 
         jButton1.setText("Print");
+        jButton1.addActionListener(formListener);
         jPanel1.add(jButton1);
 
         jButton8.setText("Cari Keterangan");
@@ -444,6 +456,9 @@ public class panelPiutang extends JPanel {
             }
             else if (evt.getSource() == jButton8) {
                 panelPiutang.this.jButton8ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton1) {
+                panelPiutang.this.jButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -706,6 +721,87 @@ public class panelPiutang extends JPanel {
         list.addAll(res);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        File filetemp = new File( System.getProperties().getProperty("user.home"), 
+        "Data Laporan Piutang "+new Date().toString().replace(":", "-")+".xls");
+        chooser.setSelectedFile(filetemp);
+        int reply = chooser.showSaveDialog(this);        
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            reply = chooser.showSaveDialog(this);
+        }
+        System.out.println("reply = " + reply);
+        if (reply == 1 ) {
+            return;
+        }
+              File file1 = chooser.getSelectedFile();
+              File f = new File(file1.getParentFile(), "Data");
+              f.mkdirs();
+              SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              DecimalFormat IDR = new DecimalFormat("###0");
+              List a = list;
+              File T = new File(f, "Daftar Pinjaman.CSV");
+              List<File> cvs = new java.util.LinkedList<>();
+              cvs.add(T);
+              WriteStep data = CSVUtil.of(T)
+                        .type(app.table.Piutang.class)
+                            .properties(
+                                    Tuple.of("REF","piutangid", d -> d==null?" ":d),
+                                    Tuple.of("keterangan","keterangan", d -> d==null?" ":d),
+                                    Tuple.of("Tanggal Bayar","tglbyr", d -> d==null?" ":formator.format(d)),
+                                    Tuple.of("jaminan","jaminan", d -> d==null?" ":d),
+                                    Tuple.of("Total Peminjaman","jumlahPelunasan", d -> d==null?" ":IDR.format(d)),
+                                    Tuple.of("Total Pelunasan","jumlahPimjaman", d -> d==null?" ":IDR.format(d)),
+                                    Tuple.of("Total Bunga","totalBunga", d -> d==null?" ":IDR.format(d))
+                            ).dataList(a);
+              try {
+                    data.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                } 
+              for (Piutang peg : list) {
+                  String pe = peg.getPiutangid()+"-"
+                          +peg.getKeterangan()+"-"+
+                          ".CSV";
+                  File p = new File(f, pe);
+                  cvs.add(p);
+                  List<app.table.Bayarpihutang> pegawaigajiList = peg.getBayarpihutangList();
+                  List b = pegawaigajiList;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Bayarpihutang.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Peminjaman/Pemasukan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pelunasan/Pengeluaran", "pengeluaran2", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bunga/Pengeluaran", "bunga", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                    ).dataList(b);
+                    dataList.write();       
+              }
+                try {
+                    ExcelConverter(cvs, file1);
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Berhasil Print");
+                    Desktop.getDesktop().open(file1);
+
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                }
+              
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public List<Bank> getBankList() {
         return bankList;

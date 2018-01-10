@@ -742,7 +742,7 @@ public class panelHutang extends JPanel {
         if (reply == 1 ) {
             return;
         }
-        File file1 = chooser.getSelectedFile();
+              File file1 = chooser.getSelectedFile();
               File f = new File(file1.getParentFile(), "Data");
               f.mkdirs();
               final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
