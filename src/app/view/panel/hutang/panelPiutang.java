@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -90,6 +91,9 @@ public class panelPiutang extends JPanel {
         deleteButton = new javax.swing.JButton();
         refreshButton1 = new javax.swing.JButton();
         saveButton1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -236,10 +240,20 @@ public class panelPiutang extends JPanel {
         saveButton1.addActionListener(formListener);
         jPanel1.add(saveButton1);
 
+        jButton1.setText("Print");
+        jPanel1.add(jButton1);
+
+        jButton8.setText("Cari Keterangan");
+        jButton8.addActionListener(formListener);
+        jPanel1.add(jButton8);
+
+        jTextField1.setMinimumSize(new java.awt.Dimension(300, 20));
+        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
+        jPanel1.add(jTextField1);
+
         add(jPanel1);
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
@@ -428,6 +442,9 @@ public class panelPiutang extends JPanel {
             else if (evt.getSource() == newDetailButton) {
                 panelPiutang.this.newDetailButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton8) {
+                panelPiutang.this.jButton8ActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
 
@@ -516,8 +533,43 @@ public class panelPiutang extends JPanel {
         for (Piutang piutang : data) {
             entityManager.refresh(piutang);
         }
+        Piutang total = new Piutang();
+        BigInteger totalKeluar = BigInteger.ZERO;
+        BigInteger totalKembali = BigInteger.ZERO;
+        BigInteger totalBunga = BigInteger.ZERO;
+        for (Piutang hutang : data) {
+            entityManager.refresh(hutang);
+            totalKeluar = totalKeluar.add(hutang.getJumlahPelunasan());
+            totalKembali = totalKembali.add(hutang.getJumlahPimjaman());
+            totalBunga = totalBunga.add(hutang.getTotalBunga());
+        }
+
+        
+        
+        Collection<app.table.Bayarpihutang> bs = total.getBayarpihutangList();
+        if (bs == null) {
+            bs = new LinkedList<app.table.Bayarpihutang>();
+            total.setBayarpihutangList((List) bs);
+        }
+            app.table.Bayarpihutang pemasukan = new app.table.BayarPihutangPemasukan();
+            app.table.Bayarpihutang pengeluaran = new app.table.BayarPihutangPengeluaran();
+            app.table.Bayarpihutang bunga = new app.table.BayarPihutangBunga();
+            pemasukan.setKeterangan("Total Pemasukan");
+            pemasukan.setJumlah(totalKeluar);
+            pengeluaran.setKeterangan("Total Pengeluaran");
+            pengeluaran.setJumlah(totalKembali);
+            bunga.setKeterangan("Total Bunga");
+            bunga.setJumlah(totalBunga);
+            bs.add(pemasukan);
+            bs.add(pengeluaran);
+            bs.add(bunga);
+            pengeluaran.setPihutangid(total);
+            pemasukan.setPihutangid(total);
+            bunga.setPihutangid(total);
+        total.setKeterangan("Total");
         list.clear();
         list.addAll(data);
+        list.add(total);
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -639,6 +691,22 @@ public class panelPiutang extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton5ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        String nama = "%";
+        nama += jTextField1.getText();
+        nama += "%";
+        System.out.println("nama = " + nama);
+        Query setParameter = entityManager.createQuery("SELECT h FROM Piutang h WHERE h.keterangan LIKE :carian")
+            .setParameter("carian", nama);
+        List<Piutang> res = setParameter.getResultList();
+        res.forEach((re) -> {
+            entityManager.refresh(re);
+        });
+        list.clear();
+        list.addAll(res);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     public List<Bank> getBankList() {
         return bankList;
     }
@@ -660,6 +728,8 @@ public class panelPiutang extends JPanel {
     private app.utils.inputPanel inputPanel2;
     private app.utils.inputPanel inputPanel3;
     private app.utils.inputPanel inputPanel4;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox5;
@@ -682,6 +752,7 @@ public class panelPiutang extends JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
     private java.util.List<app.table.Piutang> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

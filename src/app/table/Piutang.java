@@ -234,6 +234,9 @@ public class Piutang implements Serializable {
 
     @XmlTransient
     public List<Bayarpihutang> getBayarpihutangList() {
+        if (bayarpihutangList == null) {
+            return null;
+        }
         BigInteger temp = BigInteger.ZERO;
         for (Bayarpihutang lap : bayarpihutangList) {
             if (lap instanceof BayarPihutangPemasukan) {

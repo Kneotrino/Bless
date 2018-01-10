@@ -531,22 +531,35 @@ public class panelHutang extends JPanel {
         bankList.addAll(bankQuery.getResultList());
         java.util.Collection<Hutang> data = query.getResultList();
         Hutang total = new Hutang();
-        BigInteger totalPinjaman = BigInteger.ZERO;
-        BigInteger totalSisa = BigInteger.ZERO;
+        BigInteger totalKeluar = BigInteger.ZERO;
+        BigInteger totalKembali = BigInteger.ZERO;
         BigInteger totalBunga = BigInteger.ZERO;
         for (Hutang hutang : data) {
             entityManager.refresh(hutang);
-            totalPinjaman = totalPinjaman.add(hutang.getJumlahpinjaman());
-            totalSisa = totalSisa.add(hutang.getSisapinjaman());
+            totalKeluar = totalKeluar.add(hutang.getJumlahKeluar());
+            totalKembali = totalKembali.add(hutang.getJumlahKembali());
             totalBunga = totalBunga.add(hutang.getBunga());
-//            System.out.println("totalBunga = " + totalBunga);
-//            System.out.println("hutang bunga = " + hutang.getBunga());
         }
-        total.setJumlahpinjaman(totalPinjaman);
+
+        
+        
+        Collection<app.table.Bayarhutang> bs = total.getBayarhutangs();
+        if (bs == null) {
+            bs = new LinkedList<app.table.Bayarhutang>();
+            total.setBayarhutangs((List) bs);
+        }
+            app.table.Bayarhutang pemasukan = new app.table.BayarhutangPemasukan();
+            pemasukan.setKeterangan("Total Pemasukan");
+            pemasukan.setJumlah(totalKembali);
+            app.table.Bayarhutang pengeluaran = new app.table.BayarhutangPengeluaran();
+            pengeluaran.setKeterangan("Total Pengeluaran");
+            pengeluaran.setJumlah(totalKeluar);
+            bs.add(pemasukan);
+            bs.add(pengeluaran);
+            pengeluaran.setHutangid(total);
+            pemasukan.setHutangid(total);
+
         total.setBunga(totalBunga);
-        total.setSisapinjaman(totalSisa);
-//        data.forEach((entity) -> {
-//        });               
         list.clear();
         list.addAll(data);
         list.add(total);
