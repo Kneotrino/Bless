@@ -10,14 +10,23 @@ import app.table.Bank;
 import app.table.Bayarhutang;
 import app.table.BayarhutangPengeluaran;
 import app.table.Hutang;
+import app.table.Laporan;
 import app.table.Saldo;
+import static app.utils.ExcelConverter.ExcelConverter;
+import static app.utils.Printer.getDataList;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -26,9 +35,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javaslang.Tuple;
+import javax.persistence.Query;
 import javax.persistence.RollbackException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -82,6 +96,11 @@ public class panelHutang extends JPanel {
         deleteButton = new javax.swing.JButton();
         refreshButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jComboBox5 = new javax.swing.JComboBox<>();
+        jButton8 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -191,6 +210,25 @@ public class panelHutang extends JPanel {
         jButton4.setText("Simpan");
         jButton4.addActionListener(formListener);
         jPanel3.add(jButton4);
+
+        jButton6.setText("Print");
+        jButton6.addActionListener(formListener);
+        jPanel3.add(jButton6);
+
+        jButton7.setText("Filter");
+        jButton7.addActionListener(formListener);
+        jPanel3.add(jButton7);
+
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SELESAI" }));
+        jPanel3.add(jComboBox5);
+
+        jButton8.setText("Cari Nama");
+        jButton8.addActionListener(formListener);
+        jPanel3.add(jButton8);
+
+        jTextField1.setMinimumSize(new java.awt.Dimension(300, 20));
+        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
+        jPanel3.add(jTextField1);
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
@@ -404,6 +442,15 @@ public class panelHutang extends JPanel {
             }
             else if (evt.getSource() == newButton1) {
                 panelHutang.this.newButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton7) {
+                panelHutang.this.jButton7ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton8) {
+                panelHutang.this.jButton8ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton6) {
+                panelHutang.this.jButton6ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -639,6 +686,123 @@ public class panelHutang extends JPanel {
         jDialog1.hide();
     }//GEN-LAST:event_newButton1ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        refreshButtonActionPerformed(evt);
+        String toString = jComboBox5.getSelectedItem().toString();
+        System.out.println("toString = " + toString);
+        list.removeIf(a -> !a.getLABA().equals(toString));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        String nama = "%";
+        nama += jTextField1.getText();
+        nama += "%";        
+        System.out.println("nama = " + nama);
+        Query setParameter = entityManager.createQuery("SELECT h FROM Hutang h WHERE h.nama LIKE :carian")
+                .setParameter("carian", nama);
+        List<Hutang> res = setParameter.getResultList();           
+        res.forEach((re) -> {
+            entityManager.refresh(re);
+        });
+        list.clear();
+        list.addAll(res);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        File filetemp = new File( System.getProperties().getProperty("user.home"), 
+        "Data Laporan Hutang "+new Date().toString().replace(":", "-")+".xls");
+        chooser.setSelectedFile(filetemp);
+        int reply = chooser.showSaveDialog(this);        
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            reply = chooser.showSaveDialog(this);
+        }
+        System.out.println("reply = " + reply);
+        if (reply == 1 ) {
+            return;
+        }
+        File file1 = chooser.getSelectedFile();
+              File f = new File(file1.getParentFile(), "Data");
+              f.mkdirs();
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              DecimalFormat IDR = new DecimalFormat("###0");
+              List a = list;
+              File T = new File(f, "Daftar Peminjam.CSV");
+              List<File> cvs = new java.util.LinkedList<>();
+              cvs.add(T);
+              WriteStep data = CSVUtil.of(T)
+                        .type(app.table.Hutang.class)
+                            .properties(
+                                Tuple.of("REF","hutangid", d -> d==null?" ":d),
+                                Tuple.of("Nama","nama", d -> d==null?" ":d),
+                                Tuple.of("Alamat","alamat", d -> d==null?" ":d),
+                                Tuple.of("Nomor HP","nomorhp", d -> d==null?" ":d),
+                                Tuple.of("Nomor KTP","nomorktp", d -> d==null?" ":d),
+                                Tuple.of("T. Keluar","jumlahKeluar", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("T. Kembali","jumlahKembali", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Total","kembaliKurangKeluar", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("T. Bunga","bunga", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Total + Bunga","kembaliKurangKeluarKurangBunga", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Tanggal Lunas","tanggallunas", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("Tanggal Pinjam","tanggalpinjam", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("Status","LABA", d -> d==null?" ":d),
+                                Tuple.of("Lunas","lunas", d -> d==null?" ":d),
+                                Tuple.of("Keterangan","keterangan", d -> d==null?" ":d)
+                            ).dataList(a);
+              try {
+                    data.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                } 
+              for (Hutang peg : list) {
+                  String pe = peg.getHutangid()+"-"
+                          +peg.getNama()+
+//                          +peg.getKeterangan()+
+                          ".CSV";
+                  File p = new File(f, pe);
+                  cvs.add(p);
+                  List<Bayarhutang> pegawaigajiList = peg.getBayarhutangs();
+                  List b = pegawaigajiList;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Bayarhutang.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Pengeluaran/Peminjaman", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pemasukan/Pelunasan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                    ).dataList(b);
+                    dataList.write();
+              }
+                try {
+                    ExcelConverter(cvs, file1);
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Berhasil Print");
+                    Desktop.getDesktop().open(file1);
+
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                }
+                
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -656,10 +820,14 @@ public class panelHutang extends JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog4;
     private javax.swing.JDialog jDialog5;
@@ -669,6 +837,7 @@ public class panelHutang extends JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JTextField jTextField1;
     private java.util.List<app.table.Hutang> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

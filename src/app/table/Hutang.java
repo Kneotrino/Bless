@@ -8,10 +8,13 @@ package app.table;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,6 +35,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  *
@@ -209,6 +213,14 @@ public  BigInteger gettotalPemasukan()
         }
         return temp;
     }
+    public BigInteger getKembaliKurangKeluar()
+    {
+        return getJumlahKembali().subtract(getJumlahKeluar());        
+    }
+    public BigInteger getKembaliKurangKeluarKurangBunga()
+    {
+        return getJumlahKembali().subtract(getJumlahKeluar()).subtract(getBunga());        
+    }
     public BigInteger getJumlahTotal() {        
         return getJumlahKeluar().subtract(getJumlahKembali());
     }
@@ -226,13 +238,14 @@ public  BigInteger gettotalPemasukan()
     public String getLunas()
     {
         if (sisapinjaman != null) {
-        int res = this.getJumlahKembali()
-                .subtract(getJumlahKeluar())
-                .compareTo(BigInteger.ZERO);                
-        String temp =  (res >= 0)?"[Lunas]":"[Belum Lunas]";
-        return temp;
+            int res = this.getJumlahKembali()
+                    .subtract(getJumlahKeluar())
+                    .subtract(getBunga())
+                    .compareTo(BigInteger.ZERO);                
+            String tem =  (res >= 0)?"[Lunas]":"[Belum Lunas]";
+            return tem;
         }
-        return "Null";
+        return "";
     }
     public void setKeterangan(String keterangan) {
         String oldKeterangan = this.keterangan;
