@@ -94,7 +94,7 @@ public class panelMaster extends JPanel {
 //        this.refreshButtonActionPerformed(null);
         String info = clazz.getSimpleName()
                 .equals("Pengeluaran") ? "Operasional":clazz.getSimpleName();
-        this.jLabel2.setText("Laporan "+  info + " Bulan ini"
+        this.jLabel2.setText("Laporan "+  info
         );
     }
       Map m1 = new HashMap();
@@ -755,24 +755,28 @@ public void Restall()
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
         System.out.println("app.view.FixPanel.panelMaster.newButton1ActionPerformed()");
-           JFileChooser chooser=new JFileChooser(".");
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
-            chooser.addChoosableFileFilter(filter);
-            chooser.setFileFilter(filter);
-            chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
-            chooser.setDialogTitle("Save File");
-//        Date date = new Date();
-            File filetemp = new File( System.getProperties().getProperty("user.home"), 
-           "Data Laporan "+clazz.getSimpleName() +".xls");
-   chooser.setSelectedFile(filetemp);
-    while ( chooser.getSelectedFile().exists()) {
-        JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
-        chooser.showSaveDialog(this);        
-    }
-       File file1 = chooser.getSelectedFile();
-              List a = list;
-              WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CSV"))
-                .type(clazz)
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        File filetemp = new File( System.getProperties().getProperty("user.home"), 
+        "Data Laporan "+clazz.getSimpleName() + " "+new Date().toString().replace(":", "-")+".xls");
+        chooser.setSelectedFile(filetemp);
+        int reply = chooser.showSaveDialog(this);        
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            reply = chooser.showSaveDialog(this);
+        }
+        System.out.println("reply = " + reply);
+        if (reply == 1 ) {
+            return;
+        }
+        File file1 = chooser.getSelectedFile();
+        List a = list;
+        WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CSV"))
+            .type(clazz)
                 .properties(
                         Tuple.of("Ref", "id", d -> d==null?"":d),
                         Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
@@ -798,9 +802,6 @@ public void Restall()
                         JOptionPane.showMessageDialog(this,"File Created. \n"+ file1);
                     }
 
-
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_newButton1ActionPerformed
 
     private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
