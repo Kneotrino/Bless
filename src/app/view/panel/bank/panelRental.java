@@ -7,15 +7,27 @@ package app.view.panel.bank;
 
 import app.table.BagiLaba;
 import app.table.Bank;
+import app.table.Bayarjasa;
 import app.table.Bayarrental;
+import app.table.Bpkbtitipan;
 import app.table.Laporan;
 import app.table.Mobilrental;
+import app.table.Rental;
 import app.table.Saldo;
+import static app.utils.ExcelConverter.ExcelConverter;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 import java.beans.Beans;
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,9 +35,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javaslang.Tuple;
+import javax.persistence.Query;
 import javax.persistence.RollbackException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -84,6 +101,11 @@ public class panelRental extends JPanel {
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jComboBox6 = new javax.swing.JComboBox<>();
+        jButton8 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -213,6 +235,25 @@ public class panelRental extends JPanel {
         saveButton.addActionListener(formListener);
         jPanel4.add(saveButton);
 
+        jButton1.setText("Print");
+        jButton1.addActionListener(formListener);
+        jPanel4.add(jButton1);
+
+        jButton7.setText("Filter");
+        jButton7.addActionListener(formListener);
+        jPanel4.add(jButton7);
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SELESAI" }));
+        jPanel4.add(jComboBox6);
+
+        jButton8.setText("Cari Nama");
+        jButton8.addActionListener(formListener);
+        jPanel4.add(jButton8);
+
+        jTextField1.setMinimumSize(new java.awt.Dimension(300, 20));
+        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
+        jPanel4.add(jTextField1);
+
         jPanel3.add(jPanel4);
 
         masterTable.setAutoCreateRowSorter(true);
@@ -249,6 +290,15 @@ public class panelRental extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${LABA}"));
         columnBinding.setColumnName("P. Laba");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPemasukan}"));
+        columnBinding.setColumnName("T. Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPengeluaran}"));
+        columnBinding.setColumnName("T. Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPemasukan-totalPengeluaran}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -306,6 +356,11 @@ public class panelRental extends JPanel {
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
 
+        masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
+        masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
+        detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
+        detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         detailTable.setColumnSelectionAllowed(true);
         detailTable.setRowHeight(25);
@@ -414,6 +469,15 @@ public class panelRental extends JPanel {
             else if (evt.getSource() == newDetailButton) {
                 panelRental.this.newDetailButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton7) {
+                panelRental.this.jButton7ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton8) {
+                panelRental.this.jButton8ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton1) {
+                panelRental.this.jButton1ActionPerformed(evt);
+            }
         }
 
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -498,7 +562,10 @@ public class panelRental extends JPanel {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
         this.bankList.clear();
         this.bankList.addAll(this.bankQuery.getResultList());
         java.util.List data = query.getResultList();
@@ -616,6 +683,120 @@ public class panelRental extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButton1ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        refreshButtonActionPerformed(evt);
+        String toString = jComboBox6.getSelectedItem().toString();
+        System.out.println("toString = " + toString);
+        list.removeIf(a -> !a.getLABA().equals(toString));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        String nama = "%";
+        nama += jTextField1.getText();
+        nama += "%";
+        System.out.println("nama = " + nama);
+        Query setParameter = entityManager.createQuery("SELECT h FROM Rental h WHERE h.pemakai LIKE :carian")
+            .setParameter("carian", nama);
+        List<Rental> res = setParameter.getResultList();
+        res.forEach((re) -> {
+            entityManager.refresh(re);
+        });
+        list.clear();
+        list.addAll(res);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        File filetemp = new File( System.getProperties().getProperty("user.home"), 
+        "Data Laporan Jasa Rental "+new Date().toString().replace(":", "-")+".xls");
+        chooser.setSelectedFile(filetemp);
+        int reply = chooser.showSaveDialog(this);        
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            reply = chooser.showSaveDialog(this);
+        }
+        System.out.println("reply = " + reply);
+        if (reply == 1 ) {
+            return;
+        }
+              File file1 = chooser.getSelectedFile();
+              File f = new File(file1.getParentFile(), "Data");
+              f.mkdirs();
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              DecimalFormat IDR = new DecimalFormat("###0");
+              List a = list;
+              File T = new File(f, "Daftar Rental.CSV");
+              List<File> cvs = new java.util.LinkedList<>();
+              cvs.add(T);
+              
+              WriteStep data = CSVUtil.of(T)
+                        .type(app.table.Rental.class)
+                            .properties(
+                                Tuple.of("REF","rentalid", d -> d==null?" ":d),
+                                Tuple.of("Tanggal Mulai","tglmulai", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("Tanggal Selesai","tglselesai", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("Pemakai","pemakai", d -> d==null?" ":d),
+                                Tuple.of("Driver","driver", d -> d==null?" ":d),
+                                Tuple.of("Mobil Rental","mobilrental", d -> d==null?" ":d),
+                                Tuple.of("Status Laba","LABA", d -> d==null?" ":d),
+                                Tuple.of("T. Pemasukan","totalPemasukan", d -> d==null?"0":IDR.format(d)),
+                                Tuple.of("T. Pengeluaran","totalPengeluaran", d -> d==null?"0":IDR.format(d))
+                            ).dataList(a);
+              try {
+                    data.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                } 
+              
+              for (Rental rental : list) {
+                  String pe = 
+                          rental.getRentalid()+ "-"+
+                          rental.getPemakai()+"-"+
+                          rental.getDriver()+"-"+
+                          ".CSV";
+                  File p = new File(f, pe);
+                  cvs.add(p);
+                  List<Bayarrental> pegawaigajiList = rental.getBayarrentalList();
+                  List b = pegawaigajiList;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Bayarrental.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d==null?"":d),
+                                Tuple.of("Pengeluaran/Peminjaman", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pemasukan/Pelunasan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                    ).dataList(b);
+                  try {
+                    dataList.write();                      
+                  } catch (Exception e) {
+                  }
+              }
+                try {
+                    ExcelConverter(cvs, file1);
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Berhasil Print");
+                    Desktop.getDesktop().open(file1);
+
+                } catch (HeadlessException | IOException e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -628,11 +809,15 @@ public class panelRental extends JPanel {
     private app.utils.inputPanel inputPanel1;
     private app.utils.inputPanel inputPanel2;
     private app.utils.inputPanel inputPanel3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -643,6 +828,7 @@ public class panelRental extends JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private java.util.List<app.table.Rental> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

@@ -410,6 +410,15 @@ public class panelHutang extends JPanel {
             else if (evt.getSource() == jButton4) {
                 panelHutang.this.jButton4ActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton6) {
+                panelHutang.this.jButton6ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton7) {
+                panelHutang.this.jButton7ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton8) {
+                panelHutang.this.jButton8ActionPerformed(evt);
+            }
             else if (evt.getSource() == jButton2) {
                 panelHutang.this.jButton2ActionPerformed(evt);
             }
@@ -442,15 +451,6 @@ public class panelHutang extends JPanel {
             }
             else if (evt.getSource() == newButton1) {
                 panelHutang.this.newButton1ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton7) {
-                panelHutang.this.jButton7ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton8) {
-                panelHutang.this.jButton8ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton6) {
-                panelHutang.this.jButton6ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

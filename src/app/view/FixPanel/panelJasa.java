@@ -7,24 +7,41 @@ package app.view.FixPanel;
 
 import app.table.BagiLaba;
 import app.table.Bank;
+import app.table.Bayarhutang;
+import app.table.Bayarjasa;
 import app.table.Bpkbtitipan;
+import app.table.Hutang;
 import app.table.Laporan;
 import app.table.Saldo;
+import static app.utils.ExcelConverter.ExcelConverter;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 import java.beans.Beans;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javaslang.Tuple;
+import javax.persistence.Query;
 import javax.persistence.RollbackException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -81,6 +98,11 @@ public class panelJasa extends JPanel {
         deleteButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jComboBox5 = new javax.swing.JComboBox<>();
+        jButton8 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -120,6 +142,8 @@ public class panelJasa extends JPanel {
         newButton1.addActionListener(formListener);
         jDialog3.getContentPane().add(newButton1, java.awt.BorderLayout.PAGE_START);
 
+        jComboBox3.setPreferredSize(new java.awt.Dimension(28, 50));
+
         org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox3);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -136,6 +160,8 @@ public class panelJasa extends JPanel {
         newButton2.setText("Simpan");
         newButton2.addActionListener(formListener);
         jDialog4.getContentPane().add(newButton2, java.awt.BorderLayout.PAGE_START);
+
+        jComboBox2.setPreferredSize(new java.awt.Dimension(28, 50));
 
         eLProperty = org.jdesktop.beansbinding.ELProperty.create("${bankList}");
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jComboBox2);
@@ -174,6 +200,25 @@ public class panelJasa extends JPanel {
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
+
+        jButton1.setText("Print");
+        jButton1.addActionListener(formListener);
+        jPanel1.add(jButton1);
+
+        jButton7.setText("Filter");
+        jButton7.addActionListener(formListener);
+        jPanel1.add(jButton7);
+
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OPEN", "CLOSE", "SELESAI" }));
+        jPanel1.add(jComboBox5);
+
+        jButton8.setText("Cari Nama");
+        jButton8.addActionListener(formListener);
+        jPanel1.add(jButton8);
+
+        jTextField1.setMinimumSize(new java.awt.Dimension(300, 20));
+        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
+        jPanel1.add(jTextField1);
 
         add(jPanel1);
 
@@ -233,6 +278,15 @@ public class panelJasa extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${laba}"));
         columnBinding.setColumnName("P.Laba");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPemasukan}"));
+        columnBinding.setColumnName("T. Pemasukan");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPengeluaran}"));
+        columnBinding.setColumnName("T. Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPemasukan-totalPengeluaran}"));
+        columnBinding.setColumnName("Profit");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${a}"), masterTable, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
@@ -281,9 +335,11 @@ public class panelJasa extends JPanel {
 
         detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
+        masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         detailTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         detailTable.setCellSelectionEnabled(true);
         detailTable.setRowHeight(25);
@@ -347,6 +403,15 @@ public class panelJasa extends JPanel {
             }
             else if (evt.getSource() == saveButton) {
                 panelJasa.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton1) {
+                panelJasa.this.jButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton7) {
+                panelJasa.this.jButton7ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton8) {
+                panelJasa.this.jButton8ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton3) {
                 panelJasa.this.jButton3ActionPerformed(evt);
@@ -451,7 +516,10 @@ public class panelJasa extends JPanel {
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
         java.util.List Res = this.bankQuery.getResultList();
-       ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();
+        try {
+        ((app.view.FixPanel.PanelBank)ShowRoom.jPanel5).Reset();            
+        } catch (Exception e) {
+        }
         this.bankList.clear();
         this.bankList.addAll(Res);
         java.util.List data = query.getResultList();
@@ -554,6 +622,125 @@ public class panelJasa extends JPanel {
 // TODO add your handling code here:
     }//GEN-LAST:event_saveButton1ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        refreshButtonActionPerformed(evt);
+        String toString = jComboBox5.getSelectedItem().toString();
+        System.out.println("toString = " + toString);
+        list.removeIf(a -> !a.getLaba().equals(toString));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        String nama = "%";
+        nama += jTextField1.getText();
+        nama += "%";
+        System.out.println("nama = " + nama);
+        Query setParameter = entityManager.createQuery("SELECT h FROM Bpkbtitipan h WHERE h.anBpkb LIKE :carian")
+        .setParameter("carian", nama);
+        List<Bpkbtitipan> res = setParameter.getResultList();
+        res.forEach((re) -> {
+            entityManager.refresh(re);
+        });
+        list.clear();
+        list.addAll(res);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        File filetemp = new File( System.getProperties().getProperty("user.home"), 
+        "Data Laporan Jasa Cabut Berkas "+new Date().toString().replace(":", "-")+".xls");
+        chooser.setSelectedFile(filetemp);
+        int reply = chooser.showSaveDialog(this);        
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            reply = chooser.showSaveDialog(this);
+        }
+        System.out.println("reply = " + reply);
+        if (reply == 1 ) {
+            return;
+        }
+              File file1 = chooser.getSelectedFile();
+              File f = new File(file1.getParentFile(), "Data");
+              f.mkdirs();
+              final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+              DecimalFormat IDR = new DecimalFormat("###0");
+              List a = list;
+              File T = new File(f, "Daftar Jasa.CSV");
+              List<File> cvs = new java.util.LinkedList<>();
+              cvs.add(T);
+              WriteStep data = CSVUtil.of(T)
+                        .type(app.table.Bpkbtitipan.class)
+                            .properties(
+                                Tuple.of("REF","bpkbId", d -> d==null?" ":d),
+                                Tuple.of("Atas Nama BPKB","anBpkb", d -> d==null?" ":d),
+                                Tuple.of("Keterangan","ket", d -> d==null?" ":d),
+                                Tuple.of("noBpkb","noBpkb", d -> d==null?" ":d),
+                                Tuple.of("noPolisiAktif","noPolisiAktif", d -> d==null?" ":d),
+                                Tuple.of("posisi","posisi", d -> d==null?" ":d),
+                                Tuple.of("status","status", d -> d==null?" ":d),
+                                Tuple.of("stnk","stnk", d -> d==null?" ":d),
+                                Tuple.of("tglBbn","tglBbn", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglCb","tglCb", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglKembaliBbn","tglKembaliBbn", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglKembaliCb","tglKembaliCb", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglLeasing","tglLeasing", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglTerima","tglTerima", d -> d==null?" ":formator.format(d))                                  
+                            ).dataList(a);
+              try {
+                    data.write();            
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                    e.printStackTrace();
+                    return ;
+                } 
+              
+              for (Bpkbtitipan bpkbtitipan : list) {
+                  String pe = bpkbtitipan.getBpkbId()+"-" +
+                          bpkbtitipan.getAnBpkb()+"-" +
+                          bpkbtitipan.getNoBpkb()+"-" +
+                          bpkbtitipan.getNoPolisiAktif()+"-" +
+                          ".CSV";
+                  File p = new File(f, pe);
+                  cvs.add(p);
+                  List<Bayarjasa> pegawaigajiList = bpkbtitipan.getBayarjasaList();
+                  List b = pegawaigajiList;
+                  WriteStep dataList = CSVUtil.of(p)
+                        .type(app.table.Bayarjasa.class)
+                            .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d==null?"":d),
+                                Tuple.of("Pengeluaran/Peminjaman", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Pemasukan/Pelunasan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                    ).dataList(b);
+                  try {
+                    dataList.write();                      
+                  } catch (Exception e) {
+                  }
+              }
+                try {
+                    ExcelConverter(cvs, file1);
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Berhasil Print");
+                    Desktop.getDesktop().open(file1);
+
+                } catch (HeadlessException | IOException e) {
+                    javax.swing.JOptionPane.showMessageDialog(null
+                            , "Gagal Print, Karena file sementara terbuka\n"+e);
+                }
+                
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -566,18 +753,23 @@ public class panelJasa extends JPanel {
     private app.utils.inputPanel inputPanel1;
     private app.utils.inputPanel inputPanel2;
     private app.utils.inputPanel inputPanel3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
     private javax.swing.JDialog jDialog4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
     private java.util.List<app.table.Bpkbtitipan> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

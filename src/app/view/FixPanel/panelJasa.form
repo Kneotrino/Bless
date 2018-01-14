@@ -134,6 +134,9 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[28, 50]"/>
+            </Property>
           </Properties>
           <BindingProperties>
             <BindingProperty name="elements" source="Form" sourcePath="${bankList}" target="jComboBox3" targetPath="elements" updateStrategy="0" immediately="false"/>
@@ -189,6 +192,11 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox2">
+          <Properties>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[28, 50]"/>
+            </Property>
+          </Properties>
           <BindingProperties>
             <BindingProperty name="elements" source="Form" sourcePath="${bankList}" target="jComboBox2" targetPath="elements" updateStrategy="0" immediately="false"/>
           </BindingProperties>
@@ -324,6 +332,54 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
           </AuxValues>
         </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Print"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton7">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Filter"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox5">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value="OPEN"/>
+                <StringItem index="1" value="CLOSE"/>
+                <StringItem index="2" value="SELESAI"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton8">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cari Nama"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextField1">
+          <Properties>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[300, 20]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[200, 30]"/>
+            </Property>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JScrollPane" name="masterScrollPane">
@@ -422,6 +478,21 @@
                   </Editor>
                   <Renderer/>
                 </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
               </TableColumnModel>
             </Property>
             <Property name="rowHeight" type="int" value="25"/>
@@ -495,6 +566,18 @@
               <Subbinding sourcePath="${laba}">
                 <BindingParameter name="NAME" value="P.Laba"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${totalPemasukan}">
+                <BindingParameter name="NAME" value="T. Pemasukan"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${totalPengeluaran}">
+                <BindingParameter name="NAME" value="T. Pengeluaran"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${totalPemasukan-totalPengeluaran}">
+                <BindingParameter name="NAME" value="Profit"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.math.BigInteger.class"/>
               </Subbinding>
             </BindingProperty>
             <BindingProperty name="selectedElement" source="Form" sourcePath="${a}" target="masterTable" targetPath="selectedElement" updateStrategy="0" immediately="false">
@@ -681,7 +764,7 @@
             </BindingProperty>
           </BindingProperties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="detailTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());&#xa;masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());&#xa;detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());&#xa;detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());&#xa;masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());"/>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="2"/>
           </AuxValues>
