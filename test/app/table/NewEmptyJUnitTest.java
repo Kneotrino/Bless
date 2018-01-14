@@ -5,7 +5,14 @@
  */
 package app.table;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,12 +50,20 @@ public class NewEmptyJUnitTest {
     //
      @Test
      public void hello() {
-     String temp = "M / T";
-     temp = temp.replace("//", "");
-     String nee = temp.replace("/", "");
-         System.out.println("nee = " + nee);
+        String[] items1 = {"book", "coin", "pencil"};
+        String[] items2 = {"pen", "chair", "lamp"};
+        String[] items3 = {"ball", "bowl", "spectacles"};
 
-         System.out.println("temp = " + temp);
-     
+        List<String[]> entries = new ArrayList<>();
+        entries.add(items1);
+        entries.add(items2);
+        entries.add(items3);
+        File file = new File("INFO.CSV");
+        System.out.println("file = " + file.getAbsolutePath());
+        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
+            writer.writeAll(entries);
+        } catch (IOException ex) {
+            Logger.getLogger(NewEmptyJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
      }
 }

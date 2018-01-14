@@ -25,6 +25,8 @@ import static app.view.FixPanel.panelLaporan.toTableModel;
 import app.view.FixPanel.panelLeasing;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
+import static au.com.bytecode.opencsv.CSVParser.DEFAULT_SEPARATOR;
+import au.com.bytecode.opencsv.CSVWriter;
 import com.joobar.csvbless.CSVUtil;
 import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
@@ -34,12 +36,15 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -3694,7 +3699,7 @@ public void FileSave() throws IOException
                    new Date().toString().replace(":", "-")                   
                    +".xls");
    chooser.setSelectedFile(filetemp);
-//   int returnVal1=chooser.showSaveDialog(this);
+   int returnVal1=chooser.showSaveDialog(this);
     while ( chooser.getSelectedFile().exists()) {
         JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
         int result = chooser.showSaveDialog(this);
@@ -3707,11 +3712,89 @@ public void FileSave() throws IOException
     File file1 = chooser.getSelectedFile();
     List<Mobil> singleMobil = new LinkedList<>();
     singleMobil.add(hapus);
-    List a = singleMobil;
+                  SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+
+    //
+        String[] items1 = {"INFO", "Value"};
+        String[] items2 = {"REF/No", hapus.getMobilId()+""};
+        String[] items3 = {"Harga Pembelian", hapus.getHargaPembelian()+""};
+        String[] items4 = {"Harga Penjualan", hapus.getHargaJual()+""};
+        String[] items5 = {"Tanggal Beli", hapus.getTanggalBeli()==null?"":formator.format(hapus.getTanggalBeli()) };
+        String[] items6 = {"Tanggal smp Kupang", hapus.getTanggalSampaiKupang()==null?"":formator.format(hapus.getTanggalSampaiKupang())};
+        String[] items7 = {"Tanggal Jual", hapus.getTanggalJual()==null?"":formator.format(hapus.getTanggalJual())};
+        String[] items8 = {"Tanggal Pelunasan", hapus.getTangglPelunasanPembelian()==null?"":formator.format(hapus.getTangglPelunasanPembelian())};
+        String[] items9 = {"No Polisi Aktif", hapus.getNoPolisiAktif()};
+        String[] items10 = {"No Polisi Lama", hapus.getNoPolisiLama()};
+        String[] items11 = {"Merk", hapus.getMerk()};
+        String[] items12 = {"Type", hapus.getType()};
+        String[] items13 = {"Tahun Mobil", hapus.getTahun()+""};
+        String[] items14 = {"Warna Mobil", hapus.getWarna()};
+        String[] items15 = {"Jenis Mobil", hapus.getJenis()};
+        String[] items16 = {"BBM Mobil", hapus.getBahanBakar()};
+        String[] items17 = {"No Mesin Mobil", hapus.getNoMesin()};
+        String[] items18 = {"No Rangka Mobil", hapus.getNoRangka()};
+        String[] items19 = {"Pemilik Baru Mobil", hapus.getPemilikBaru()};
+        String[] items20 = {"Pemilik Lama", hapus.getPemilikLama()};
+        String[] items21 = {"Silinder Mobil", hapus.getSilinder()+""};
+        String[] items22 = {"Penjual Mobil", hapus.getPenjual()};
+        String[] items23 = {"Hp Penjual", hapus.getNo_Hp_Penjual()};
+        String[] items24 = {"REF BPKB", hapus.getBpkb().getBpkbId()+""};
+        String[] items25 = {"Atas Nama BPKB", hapus.getBpkb().getAnBpkb()};
+        String[] items26 = {"REF Pembeli Mobil", hapus.getDebitur().getDebiturId()+""};
+        String[] items27 = {"Nama Pembeli", hapus.getDebitur().getNama()};
+        String[] items28 = {"Total Pemasukan Mobil", hapus.getTotalPemasukan().toString()};
+        String[] items29 = {"Total Pengeluaran Mobil", hapus.getTotalPengeluaran().toString()};
+        String[] items30 = {"Total Profit Mobil", hapus.getTotalProfit().toString()};
+        String[] items31 = {"Leasing Mobil", hapus.getListleasing().getLeasingLeasingId().getNama()};
+        String[] items32 = {"Keterangan Mobil", hapus.getKeterangan()};
+
+        List<String[]> entries = new ArrayList<>();
+        entries.add(items1);
+        entries.add(items2);
+        entries.add(items3);
+        entries.add(items4);
+        entries.add(items5);
+        entries.add(items6);
+        entries.add(items7);
+        entries.add(items8);
+        entries.add(items9);
+        entries.add(items10);
+        entries.add(items11);
+        entries.add(items12);
+        entries.add(items13);
+        entries.add(items14);
+        entries.add(items15);
+        entries.add(items16);
+        entries.add(items17);
+        entries.add(items18);
+        entries.add(items19);
+        entries.add(items20);
+        entries.add(items21);
+        entries.add(items22);
+        entries.add(items23);
+        entries.add(items24);
+        entries.add(items25);
+        entries.add(items26);
+        entries.add(items27);
+        entries.add(items28);
+        entries.add(items29);
+        entries.add(items30);
+        entries.add(items31);
+        entries.add(items32);
+
+        File file = new File(chooser.getSelectedFile().getParentFile(), "INFO "+hapus.getMobilId()+".CSV");
+        System.out.println("file = " + file.getAbsolutePath());
+        try 
+            (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
+            writer.writeAll(entries);
+        } catch (IOException ex) {
+        }
+    //
+              List a = singleMobil;
               Function fungsi = d -> d==null?"":d;         
-              SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
               Function tanggal = d -> d==null?" ":formator.format(d);
               List<File> cvs = new java.util.LinkedList<>(); 
+              cvs.add(file);
               cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"));
               WriteStep data = CSVUtil.of(new File(chooser.getSelectedFile().getParentFile(), "Daftar Mobil.CSV"))
                         .type(app.table.Mobil.class)
@@ -3719,7 +3802,7 @@ public void FileSave() throws IOException
                                     Tuple.of("REF/No","nomor", d-> d),
                                     Tuple.of("Status Mobil","statusMobil", fungsi),
                                     Tuple.of("Harga Pembelian","hargaPembelian", fungsi),
-                                    Tuple.of("Harga Pembelian","hargaJual", fungsi),
+                                    Tuple.of("Harga Penjualan ","hargaJual", fungsi),
                                     Tuple.of("Tanggal Beli","tanggalBeli", d -> d == null? " ": formator.format(d)),
                                     Tuple.of("Tanggal Smp Kupang","tanggalSampaiKupang", d -> d == null? " ": formator.format(d)),
                                     Tuple.of("Tanggal Jual","tanggalJual", d -> d == null? " ": formator.format(d)),
@@ -3762,12 +3845,9 @@ public void FileSave() throws IOException
                                     Tuple.of("Nama","debitur.nama", d -> d==null?" ":d),
                                     Tuple.of("Nomot HP","debitur.noHp", d -> d==null?" ":d),
                                     Tuple.of("Nomor Identitas","debitur.noKtp", d -> d==null?" ":d),
-//                                    Tuple.of("norek","norek", d -> d==null?" ":d),
                                     Tuple.of("Nama ke-2","debitur.bank", d -> d==null?" ":d),
                                     Tuple.of("Nomor HP ke-2","debitur.pembayaran", d -> d==null?" ":d),
                                     Tuple.of("Alamat","debitur.alamat", d -> d==null?" ":d )
-//                                    Tuple.of("scan","scan", d -> d==null?" ":d),
-//                                    Tuple.of("mobil REF","mobil", d -> d==null?" ":d)
                     ).dataList(a);
               debitur.write();
               cvs.add(new File(chooser.getSelectedFile().getParentFile(), "Daftar BPKB.CSV"));
