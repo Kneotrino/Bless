@@ -477,14 +477,14 @@ public void Restall()
             else if (evt.getSource() == jButton1) {
                 panelMaster.this.jButton1ActionPerformed(evt);
             }
+            else if (evt.getSource() == jComboBox5) {
+                panelMaster.this.jComboBox5ActionPerformed(evt);
+            }
             else if (evt.getSource() == jButton2) {
                 panelMaster.this.jButton2ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton3) {
                 panelMaster.this.jButton3ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jComboBox5) {
-                panelMaster.this.jComboBox5ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -775,11 +775,15 @@ public void Restall()
         }
         File file1 = chooser.getSelectedFile();
         List a = list;
-        WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CSV"))
-            .type(clazz)
+        System.out.println("a = " + a.size());
+        File ff = new File(file1.getParentFile(), "Data Laporan "+clazz.getName()+" "+new Date().toString().replace(":", "-")+".CSV");
+        System.out.println("ff = " + ff);
+        WriteStep dataList = 
+        CSVUtil.of(ff)
+                .type(Laporan.class)
                 .properties(
                         Tuple.of("Ref", "id", d -> d==null?"":d),
-                        Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                        Tuple.of("Tanggal", "tanggal", d -> d==null?"":formator.format(d)),
                         Tuple.of("Jumlah", "jumlah", d -> d==null?"":d ),
                         Tuple.of("Status", "tipe", d -> d==null?"":d),
                         Tuple.of("Tipe", "jenis", d -> d==null?"":d),
@@ -790,7 +794,8 @@ public void Restall()
                     try {
                     dataList.write();
                     List<File> cvs = new java.util.LinkedList<>();
-                    cvs.add(new File(file1.getParentFile(), "Data Laporan.CVS"));
+                    cvs.add(ff);
+//                    cvs.add( new File(file1.getParentFile(), "Data Laporan"+new Date().toString().replace(":", "-")+".CSV")));
                     ExcelConverter(cvs, file1);
                     Desktop.getDesktop().open(file1);
                 } catch (Exception e) {

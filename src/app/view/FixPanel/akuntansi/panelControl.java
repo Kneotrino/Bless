@@ -764,49 +764,57 @@ public void Restall()
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
         System.out.println("app.view.FixPanel.panelMaster.newButton1ActionPerformed()");
-           JFileChooser chooser=new JFileChooser(".");
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
-            chooser.addChoosableFileFilter(filter);
-            chooser.setFileFilter(filter);
-            chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
-            chooser.setDialogTitle("Save File");
-//        Date date = new Date();
-            File filetemp = new File( System.getProperties().getProperty("user.home"), 
-           "Data Laporan "+clazz.getSimpleName() +".xls");
-   chooser.setSelectedFile(filetemp);
-//   int returnVal1=chooser.showSaveDialog(this);
-    while ( chooser.getSelectedFile().exists()) {
-        JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
-        chooser.showSaveDialog(this);        
-    }
-       File file1 = chooser.getSelectedFile();
-       List a = list;
-       WriteStep dataList = CSVUtil.of(new File(file1.getParentFile(), "Data Laporan.CSV"))
-            .type(clazz)
-            .properties(
-                Tuple.of("Ref", "id", d -> d==null?"":d),
-                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
-                Tuple.of("Jumlah", "jumlah", d -> d==null?"":d ),
-                Tuple.of("Status", "tipe", d -> d==null?"":d),
-                Tuple.of("Tipe", "jenis", d -> d==null?"":d),
-                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d),
-                Tuple.of("Keterangan", "keterangan", d -> d==null?"":d)
-        )
-            .dataList(a);
-        try {
-            dataList.write();
-            List<File> cvs = new java.util.LinkedList<>();
-            cvs.add(new File(file1.getParentFile(), "Data Laporan.CVS"));
-            ExcelConverter(cvs, file1);
-            Desktop.getDesktop().open(file1);
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        File filetemp = new File( System.getProperties().getProperty("user.home"), 
+        "Data Laporan "+clazz.getSimpleName() + " "+new Date().toString().replace(":", "-")+".xls");
+        chooser.setSelectedFile(filetemp);
+        int reply = chooser.showSaveDialog(this);        
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            reply = chooser.showSaveDialog(this);
+        }
+        System.out.println("reply = " + reply);
+        if (reply == 1 ) {
+            return;
+        }
+        File file1 = chooser.getSelectedFile();
+        List a = list;
+        System.out.println("a = " + a.size());
+        File ff = new File(file1.getParentFile(), "Data Laporan "+clazz.getName()+" "+new Date().toString().replace(":", "-")+".CSV");
+        System.out.println("ff = " + ff);
+        WriteStep dataList = 
+        CSVUtil.of(ff)
+                .type(Laporan.class)
+                .properties(
+                        Tuple.of("Ref", "id", d -> d==null?"":d),
+                        Tuple.of("Tanggal", "tanggal", d -> d==null?"":formator.format(d)),
+                        Tuple.of("Jumlah", "jumlah", d -> d==null?"":d ),
+                        Tuple.of("Status", "tipe", d -> d==null?"":d),
+                        Tuple.of("Tipe", "jenis", d -> d==null?"":d),
+                        Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d),
+                        Tuple.of("Keterangan", "keterangan", d -> d==null?"":d)
+                )
+                .dataList(a);
+                    try {
+                    dataList.write();
+                    List<File> cvs = new java.util.LinkedList<>();
+                    cvs.add(ff);
+//                    cvs.add( new File(file1.getParentFile(), "Data Laporan"+new Date().toString().replace(":", "-")+".CSV")));
+                    ExcelConverter(cvs, file1);
+                    Desktop.getDesktop().open(file1);
                 } catch (Exception e) {
-            e.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
-            return ;
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(null, "Gagal Print, Karena file sementara terbuka\n"+e);
+                    return ;
                 } 
-            finally {
+                    finally {
                         JOptionPane.showMessageDialog(this,"File Created. \n"+ file1);
-            }
+                    }
 
     }//GEN-LAST:event_newButton1ActionPerformed
 

@@ -50,20 +50,10 @@ public class NewEmptyJUnitTest {
     //
      @Test
      public void hello() {
-        String[] items1 = {"book", "coin", "pencil"};
-        String[] items2 = {"pen", "chair", "lamp"};
-        String[] items3 = {"ball", "bowl", "spectacles"};
-
-        List<String[]> entries = new ArrayList<>();
-        entries.add(items1);
-        entries.add(items2);
-        entries.add(items3);
-        File file = new File("INFO.CSV");
-        System.out.println("file = " + file.getAbsolutePath());
-        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-            writer.writeAll(entries);
-        } catch (IOException ex) {
-            Logger.getLogger(NewEmptyJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         Integer x = Integer.MAX_VALUE;
+         System.out.println("x = " + x);
+         int y = Integer.MIN_VALUE;
+         System.out.println("y = " + y);
+         System.out.println(" = " + Integer.MAX_VALUE);
      }
 }

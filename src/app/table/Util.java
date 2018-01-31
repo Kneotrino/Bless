@@ -61,6 +61,29 @@ public class Util {
                  manager.refresh(laporan);
             });
     }
+    
+    public static List<? extends Laporan> hitungSaldo
+        (List<? extends Laporan> LaporanList
+                , Laporan pemasukan
+                , Laporan pengeluaran        
+        )
+    {
+        BigInteger temp = BigInteger.ZERO;
+        BigInteger totalPemasukan = BigInteger.ZERO;
+        BigInteger totalPengeluaran = BigInteger.ZERO;
+        for (Laporan lap : LaporanList) {
+            temp = temp.add(lap.getPemasukan());
+            temp = temp.subtract(lap.getPengeluaran());
+            totalPemasukan = totalPemasukan.add(lap.getPemasukan());
+            totalPengeluaran = totalPengeluaran.add(lap.getPengeluaran());
+            lap.setSaldo(temp);
+        }
+        pemasukan.setKeterangan("Total Pemasukan");
+        pemasukan.setJumlah(totalPemasukan);
+        pengeluaran.setKeterangan("Total Pengeluran");
+        pengeluaran.setJumlah(totalPengeluaran);
+        return LaporanList;        
+    }
     public static List<? extends Laporan> hitungSaldo(List<? extends Laporan> LaporanList)
     {
         BigInteger temp = BigInteger.ZERO;

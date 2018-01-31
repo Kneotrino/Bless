@@ -912,7 +912,6 @@ public class ShowRoom extends javax.swing.JFrame {
             public void run() {
                 JFrame frame = new JFrame();
                 frame.setContentPane(new panelControl(app.table.Pegawaigaji.class));
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
             }

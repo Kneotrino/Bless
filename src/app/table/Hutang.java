@@ -157,7 +157,15 @@ public class Hutang implements Serializable {
     
 
     public List<Bayarhutang> getBayarhutangs() {
-        return (List<Bayarhutang>) app.table.Util.hitungSaldo(bayarhutangs);
+        List<Bayarhutang> name;
+        BayarhutangPemasukan pemasukan = new BayarhutangPemasukan();
+        BayarhutangPengeluaran pengeluaran = new BayarhutangPengeluaran();
+        name = (List<Bayarhutang>) app.table.Util.hitungSaldo(bayarhutangs, pemasukan,pengeluaran);
+        if (!name.contains(pemasukan)) {
+            name.add(pemasukan);            
+            name.add(pengeluaran);            
+        } 
+        return name;
     }
 
     public void setBayarhutangs(List<Bayarhutang> bayarhutangs) {
