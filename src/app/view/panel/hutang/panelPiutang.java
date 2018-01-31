@@ -7,6 +7,7 @@ package app.view.panel.hutang;
 
 import app.table.Bank;
 import app.table.BayarPihutangPemasukan;
+import app.table.BayarPihutangPengeluaran;
 import app.table.Bayarpihutang;
 import app.table.Piutang;
 import app.table.Saldo;
@@ -127,6 +128,8 @@ public class panelPiutang extends JPanel {
 
         jLabel7.setText("Tanggal Transaksi");
         inputPanel1.add(jLabel7);
+
+        jDateChooser3.setDate(new Date());
         inputPanel1.add(jDateChooser3);
 
         jLabel3.setText("Bank Tujuan");
@@ -418,6 +421,12 @@ public class panelPiutang extends JPanel {
             else if (evt.getSource() == saveButton1) {
                 panelPiutang.this.saveButton1ActionPerformed(evt);
             }
+            else if (evt.getSource() == jButton1) {
+                panelPiutang.this.jButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton8) {
+                panelPiutang.this.jButton8ActionPerformed(evt);
+            }
             else if (evt.getSource() == newDetailButton1) {
                 panelPiutang.this.newDetailButton1ActionPerformed(evt);
             }
@@ -453,12 +462,6 @@ public class panelPiutang extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelPiutang.this.newDetailButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton8) {
-                panelPiutang.this.jButton8ActionPerformed(evt);
-            }
-            else if (evt.getSource() == jButton1) {
-                panelPiutang.this.jButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -773,8 +776,13 @@ public class panelPiutang extends JPanel {
                           ".CSV";
                   File p = new File(f, pe);
                   cvs.add(p);
-                  List<app.table.Bayarpihutang> pegawaigajiList = peg.getBayarpihutangList();
-                  List b = pegawaigajiList;
+//                  List<app.table.Bayarpihutang> pegawaigajiList = peg.getBayarpihutangList2();
+//                  List b = pegawaigajiList;
+                  BayarPihutangPemasukan pemasukan = new BayarPihutangPemasukan();
+                  BayarPihutangPengeluaran pengeluaran = new BayarPihutangPengeluaran();
+                  List b = app.table.Util.hitungSaldo(peg.getBayarpihutangList(), pemasukan,pengeluaran);
+                  b.add(pemasukan);
+                  b.add(pengeluaran);
                   WriteStep dataList = CSVUtil.of(p)
                         .type(app.table.Bayarpihutang.class)
                             .properties(
@@ -785,7 +793,7 @@ public class panelPiutang extends JPanel {
                                 Tuple.of("Pelunasan/Pengeluaran", "pengeluaran2", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Bunga/Pengeluaran", "bunga", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),                        
-                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                                Tuple.of("Bank", "transaksi", d -> d==null?"":d)
                     ).dataList(b);
                     dataList.write();       
               }

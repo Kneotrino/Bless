@@ -7,6 +7,10 @@ package app.view.panel.bank;
 
 import app.table.BagiLaba;
 import app.table.Bank;
+import app.table.BayarPihutangPemasukan;
+import app.table.BayarPihutangPengeluaran;
+import app.table.BayarRentalPemasukan;
+import app.table.BayarRentalPenngeluaran;
 import app.table.Bayarjasa;
 import app.table.Bayarrental;
 import app.table.Bpkbtitipan;
@@ -747,7 +751,8 @@ public class panelRental extends JPanel {
                                 Tuple.of("Mobil Rental","mobilrental", d -> d==null?" ":d),
                                 Tuple.of("Status Laba","LABA", d -> d==null?" ":d),
                                 Tuple.of("T. Pemasukan","totalPemasukan", d -> d==null?"0":IDR.format(d)),
-                                Tuple.of("T. Pengeluaran","totalPengeluaran", d -> d==null?"0":IDR.format(d))
+                                Tuple.of("T. Pengeluaran","totalPengeluaran", d -> d==null?"0":IDR.format(d)),
+                                Tuple.of("T. Profit","totalProfit", d -> d==null?"0":IDR.format(d))
                             ).dataList(a);
               try {
                     data.write();            
@@ -766,8 +771,13 @@ public class panelRental extends JPanel {
                           ".CSV";
                   File p = new File(f, pe);
                   cvs.add(p);
-                  List<Bayarrental> pegawaigajiList = rental.getBayarrentalList();
-                  List b = pegawaigajiList;
+//                  List<Bayarrental> pegawaigajiList = rental.getBayarrentalList();
+//                  List b = pegawaigajiList;
+                  BayarRentalPemasukan pemasukan = new BayarRentalPemasukan();
+                  BayarRentalPenngeluaran pengeluaran = new BayarRentalPenngeluaran();
+                  List b = app.table.Util.hitungSaldo(rental.getBayarrentalList(), pemasukan,pengeluaran);
+                  b.add(pemasukan);
+                  b.add(pengeluaran);
                   WriteStep dataList = CSVUtil.of(p)
                         .type(app.table.Bayarrental.class)
                             .properties(

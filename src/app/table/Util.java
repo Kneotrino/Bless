@@ -68,9 +68,12 @@ public class Util {
                 , Laporan pengeluaran        
         )
     {
-        Saldo saldo = new Saldo();
+        Saldo saldo1 = new Saldo();
+        Saldo saldo2 = new Saldo();
         Bank bank = new Bank();
-        saldo.setBankId(bank);
+        bank.setNamaBank("-");
+        saldo1.setBankId(bank);
+        saldo2.setBankId(bank);
         BigInteger temp = BigInteger.ZERO;
         BigInteger totalPemasukan = BigInteger.ZERO;
         BigInteger totalPengeluaran = BigInteger.ZERO;
@@ -85,9 +88,10 @@ public class Util {
         pemasukan.setJumlah(totalPemasukan);
         pengeluaran.setKeterangan("Total Pengeluran");
         pengeluaran.setJumlah(totalPengeluaran);
-        
-        pemasukan.setTransaksi(saldo);
-        pengeluaran.setTransaksi(saldo);
+        saldo1.setLaporan(pemasukan);
+        saldo2.setLaporan(pengeluaran);
+        pemasukan.setTransaksi(saldo1);
+        pengeluaran.setTransaksi(saldo2);
         return LaporanList;        
     }
     public static List<? extends Laporan> hitungSaldo(List<? extends Laporan> LaporanList)

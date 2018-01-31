@@ -626,9 +626,6 @@ public class panelHutang extends JPanel {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
             refreshButton1ActionPerformed(evt);
-//            refreshButton1ActionPerformed(evt);
-//            list.clear();
-//            list.addAll(query.getResultList());
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
@@ -785,7 +782,7 @@ public class panelHutang extends JPanel {
                           ".CSV";
                   File p = new File(f, pe);
                   cvs.add(p);
-                  List<Bayarhutang> pegawaigajiList = peg.getBayarhutangs();
+                  List<Bayarhutang> pegawaigajiList = peg.getBayarhutangs2();
                   List b = pegawaigajiList;
                   WriteStep dataList = CSVUtil.of(p)
                         .type(app.table.Bayarhutang.class)
@@ -796,7 +793,7 @@ public class panelHutang extends JPanel {
                                 Tuple.of("Pengeluaran/Peminjaman", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Pemasukan/Pelunasan", "pemasukan", d -> d==null?"0":IDR.format(d) ),
                                 Tuple.of("Profit/Balance", "saldo", d -> d==null?"0":IDR.format(d) ),
-                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                                Tuple.of("Bank", "transaksi", d -> d==null?"":d)
                     ).dataList(b);
                     dataList.write();
               }

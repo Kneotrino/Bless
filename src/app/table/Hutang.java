@@ -155,8 +155,12 @@ public class Hutang implements Serializable {
         changeSupport.firePropertyChange(PROP_BUNGA, oldBunga, bunga);
     }
     
-
     public List<Bayarhutang> getBayarhutangs() {
+        
+        return (List<Bayarhutang>) app.table.Util.hitungSaldo(bayarhutangs);
+    }
+
+    public List<Bayarhutang> getBayarhutangs2() {
         List<Bayarhutang> name = new LinkedList<>(bayarhutangs);
         BayarhutangPemasukan pemasukan = new BayarhutangPemasukan();
         BayarhutangPengeluaran pengeluaran = new BayarhutangPengeluaran();

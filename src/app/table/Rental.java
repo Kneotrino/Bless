@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -25,6 +26,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -107,6 +109,7 @@ public class Rental implements Serializable {
     @Column(name = "DRIVER", length = 255)
     private String driver;
     @OneToMany(mappedBy = "rentalId",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+    @OrderBy("tanggal ASC")
     private List<Bayarrental> bayarrentalList;
     @ManyToOne
     private Mobilrental mobilrental;
@@ -198,7 +201,12 @@ public class Rental implements Serializable {
         this.jammulai = jammulai;
         changeSupport.firePropertyChange("jammulai", oldJammulai, jammulai);
     }
-public  BigInteger gettotalPemasukan()
+    
+    public BigInteger gettotalProfit()
+    {
+        return gettotalPemasukan().subtract(gettotalPengeluaran());
+    }
+    public  BigInteger gettotalPemasukan()
     {
         return Util.getTotalPemasukan(bayarrentalList);
     }

@@ -235,6 +235,15 @@ public class Piutang implements Serializable {
 
     @XmlTransient
     public List<Bayarpihutang> getBayarpihutangList() {
+        if (bayarpihutangList == null) {
+            return null;
+        }
+        return  (List<Bayarpihutang>) app.table.Util.hitungSaldo(bayarpihutangList);
+    }
+    public List<Bayarpihutang> getBayarpihutangList2() {
+        if (bayarpihutangList == null) {
+            return null;
+        }
         List<Bayarpihutang> name = new LinkedList<>(bayarpihutangList);
         BayarPihutangPemasukan pemasukan = new BayarPihutangPemasukan();
         BayarPihutangPengeluaran pengeluaran = new BayarPihutangPengeluaran();
@@ -244,7 +253,6 @@ public class Piutang implements Serializable {
             name.add(pengeluaran);            
         } 
         return name;
-
     }
 
     public void setBayarpihutangList(List<Bayarpihutang> bayarpihutangList) {

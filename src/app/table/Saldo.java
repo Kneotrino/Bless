@@ -201,7 +201,7 @@ public class Saldo implements Serializable {
 
     @Override
     public String toString() {
-        return "[ Transaksi Id=" + saldoId + " ]";
+        return getBankId().getNamaBank();
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
