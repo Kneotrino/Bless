@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.persistence.Basic;
@@ -234,22 +235,16 @@ public class Piutang implements Serializable {
 
     @XmlTransient
     public List<Bayarpihutang> getBayarpihutangList() {
-        if (bayarpihutangList == null) {
-            return null;
-        }
-        BigInteger temp = BigInteger.ZERO;
-        for (Bayarpihutang lap : bayarpihutangList) {
-            if (lap instanceof BayarPihutangPemasukan) {
-                    temp = temp.add(lap.getPemasukan());
-            }
-            else if (lap instanceof BayarPihutangPengeluaran) {
-            temp = temp.subtract(lap.getPengeluaran());                
-            }
-//            temp = temp.subtract(lap.getBunga());
-            lap.setSaldo(temp);
-        }
-            return bayarpihutangList;
-//        return (List<Bayarpihutang>) Util.hitungSaldo(bayarpihutangList);
+        List<Bayarpihutang> name = new LinkedList<>(bayarpihutangList);
+        BayarPihutangPemasukan pemasukan = new BayarPihutangPemasukan();
+        BayarPihutangPengeluaran pengeluaran = new BayarPihutangPengeluaran();
+        name = (List<Bayarpihutang>) app.table.Util.hitungSaldo(name, pemasukan,pengeluaran);
+        if (!name.contains(pemasukan)) {
+            name.add(pemasukan);            
+            name.add(pengeluaran);            
+        } 
+        return name;
+
     }
 
     public void setBayarpihutangList(List<Bayarpihutang> bayarpihutangList) {
