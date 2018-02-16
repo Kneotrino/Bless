@@ -362,4 +362,9 @@ public class Bpkbtitipan implements Serializable {
     {
         return Util.getTotalPengeluaran(bayarjasaList);
     }
+    public  BigInteger gettotalMasukKeluar()
+    {
+        return gettotalPemasukan().subtract(gettotalPengeluaran());
+    }
+
 }

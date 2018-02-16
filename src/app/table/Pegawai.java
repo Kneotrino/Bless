@@ -8,6 +8,7 @@ package app.table;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -194,5 +195,9 @@ public class Pegawai implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+    public  BigInteger gettotalPengeluaran()
+    {
+        return Util.getTotalPengeluaran(pegawaigajiList);
+    }
+
 }

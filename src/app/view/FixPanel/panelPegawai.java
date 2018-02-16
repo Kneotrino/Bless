@@ -5,24 +5,41 @@
  */
 package app.view.FixPanel;
 
+import javax.swing.JFileChooser;
 import app.table.Bank;
+import app.table.BayarPihutangPemasukan;
+import app.table.BayarPihutangPengeluaran;
+import app.table.Laporan;
 import app.table.Pegawai;
 import app.table.Pegawaigaji;
 import app.table.Saldo;
+import app.table.Util;
+import static app.utils.ExcelConverter.ExcelConverter;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 import java.beans.Beans;
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javaslang.Tuple;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -82,6 +99,7 @@ public class panelPegawai extends JPanel {
         newButton2 = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -156,6 +174,10 @@ public class panelPegawai extends JPanel {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggalMasuk}"));
         columnBinding.setColumnName("Tanggal Masuk");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPengeluaran}"));
+        columnBinding.setColumnName("Total Pengeluaran");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterScrollPane.setViewportView(masterTable);
@@ -175,6 +197,7 @@ public class panelPegawai extends JPanel {
         detailTable.setDefaultEditor(java.math.BigInteger.class, new app.utils.TablePopupEditor());
         detailTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
+        masterTable.setDefaultRenderer(java.math.BigInteger.class, new app.utils.NominalRender());
         masterTable.setDefaultEditor(String.class, new app.utils.TablePopupEditor());
         masterTable.setDefaultEditor(Date.class, new JDateChooserCellEditor());
         detailTable.setAutoCreateRowSorter(true);
@@ -260,6 +283,10 @@ public class panelPegawai extends JPanel {
         saveButton.addActionListener(formListener);
         jPanel1.add(saveButton);
 
+        jButton1.setText("Print");
+        jButton1.addActionListener(formListener);
+        jPanel1.add(jButton1);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -298,6 +325,9 @@ public class panelPegawai extends JPanel {
             }
             else if (evt.getSource() == newDetailButton) {
                 panelPegawai.this.newDetailButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton1) {
+                panelPegawai.this.jButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -434,6 +464,93 @@ public class panelPegawai extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_newButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        File filetemp = new File( System.getProperties().getProperty("user.home"),
+            "Data Laporan Pegawai Blessing "+new Date().toString().replace(":", "-")+".xls");
+        chooser.setSelectedFile(filetemp);
+        int reply = chooser.showSaveDialog(this);
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            reply = chooser.showSaveDialog(this);
+        }
+        System.out.println("reply = " + reply);
+        if (reply == 1 ) {
+            return;
+        }
+        File file1 = chooser.getSelectedFile();
+        File f = new File(file1.getParentFile(), "Data");
+        f.mkdirs();
+        final SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+        DecimalFormat IDR = new DecimalFormat("###0");
+        List a = list;
+        File T = new File(f, "Daftar Jasa.CSV");
+        List<File> cvs = new java.util.LinkedList<>();
+        cvs.add(T);
+        WriteStep data = CSVUtil.of(T)
+            .type(app.table.Bpkbtitipan.class)
+            .properties(
+                Tuple.of("id","id", d-> d),
+                Tuple.of("alamat","alamat", d-> d),
+                Tuple.of("nama","nama", d-> d),
+                Tuple.of("nomorhp","nomorhp", d-> d),
+                Tuple.of("status","status", d-> d),
+                Tuple.of("tanggalGajian","tanggalGajian", d-> formator.format(d)),
+                Tuple.of("tanggalMasuk","tanggalMasuk", d-> formator.format(d)),
+                Tuple.of("Total Pengeluaran","totalPengeluaran", d-> IDR.format(d))
+            ).dataList(a);
+        try {
+            data.write();
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null
+                , "Gagal Print, Karena file sementara terbuka\n"+e);
+            e.printStackTrace();
+            return ;
+        }
+
+        for (Pegawai bpkbtitipan : list) {
+            String pe = bpkbtitipan.getId()+"-" +
+            bpkbtitipan.getNama()+"-" +
+            bpkbtitipan.getAlamat()+"-" +
+            ".CSV";
+            File p = new File(f, pe);
+            cvs.add(p);
+            List b = bpkbtitipan.getPegawaigajiList();            
+//            Pegawaigaji pengeluaran = new Pegawaigaji(-1);
+//            pengeluaran.setJumlah(Util.getTotalPengeluaran(b));
+//            b.add(pengeluaran);            
+            WriteStep dataList = CSVUtil.of(p)
+                .type(app.table.Pegawaigaji.class)
+                .properties(
+                                Tuple.of("Ref", "id", null),
+                                Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                                Tuple.of("Keterangan", "keterangan", d -> d),
+                                Tuple.of("Nominal", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                                Tuple.of("Bank", "transaksi.bankId.namaBank", d -> d==null?"":d)
+                ).dataList(b);
+            try {
+                dataList.write();
+            } catch (Exception e) {
+            }
+        }
+        try {
+            ExcelConverter(cvs, file1);
+            javax.swing.JOptionPane.showMessageDialog(null
+                , "Berhasil Print");
+            Desktop.getDesktop().open(file1);
+
+        } catch (HeadlessException | IOException e) {
+            javax.swing.JOptionPane.showMessageDialog(null
+                , "Gagal Print, Karena file sementara terbuka\n"+e);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -445,6 +562,7 @@ public class panelPegawai extends JPanel {
     private javax.persistence.EntityManager entityManager;
     private app.utils.inputPanel inputPanel1;
     private app.utils.inputPanel inputPanel2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

@@ -7,6 +7,10 @@ package app.view.FixPanel;
 
 import app.table.BagiLaba;
 import app.table.Bank;
+import app.table.BayarJasaPemasukan;
+import app.table.BayarJasaPengeluaran;
+import app.table.BayarPihutangPemasukan;
+import app.table.BayarPihutangPengeluaran;
 import app.table.Bayarhutang;
 import app.table.Bayarjasa;
 import app.table.Bpkbtitipan;
@@ -690,7 +694,12 @@ public class panelJasa extends JPanel {
                                 Tuple.of("tglKembaliBbn","tglKembaliBbn", d -> d==null?" ":formator.format(d)),
                                 Tuple.of("tglKembaliCb","tglKembaliCb", d -> d==null?" ":formator.format(d)),
                                 Tuple.of("tglLeasing","tglLeasing", d -> d==null?" ":formator.format(d)),
-                                Tuple.of("tglTerima","tglTerima", d -> d==null?" ":formator.format(d))                                  
+                                Tuple.of("tglLeasing","tglLeasing", d -> d==null?" ":formator.format(d)),
+                                Tuple.of("tglTerima","tglTerima", d -> d==null?" ":formator.format(d)),                                  
+                                Tuple.of("Total Pemasukan","totalPemasukan", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Total Pengeluaran","totalPengeluaran", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Total Profit","totalMasukKeluar", d -> d==null?" ":IDR.format(d)),
+                                Tuple.of("Laba","laba", d -> d==null?" ":d)
                             ).dataList(a);
               try {
                     data.write();            
@@ -709,8 +718,11 @@ public class panelJasa extends JPanel {
                           ".CSV";
                   File p = new File(f, pe);
                   cvs.add(p);
-                  List<Bayarjasa> pegawaigajiList = bpkbtitipan.getBayarjasaList();
-                  List b = pegawaigajiList;
+                  BayarJasaPemasukan pemasukan = new BayarJasaPemasukan();
+                  BayarJasaPengeluaran pengeluaran = new BayarJasaPengeluaran();
+                  List b = app.table.Util.hitungSaldo(bpkbtitipan.getBayarjasaList(), pemasukan,pengeluaran);
+                  b.add(pemasukan);
+                  b.add(pengeluaran);
                   WriteStep dataList = CSVUtil.of(p)
                         .type(app.table.Bayarjasa.class)
                             .properties(
