@@ -259,6 +259,16 @@ public class Trips implements Serializable {
         }
         return temp;
     }
+    public BigInteger getTotalKembali()
+    {
+        BigInteger temp = BigInteger.ZERO;
+        for (Perjalanan p : perjalananList) {
+            if (p instanceof PerjalananKembalikan) {
+                temp = temp.add(p.getJumlah());                
+            }
+        }
+        return temp;
+    }
     @Transient
     private BigInteger kembalikan;
 

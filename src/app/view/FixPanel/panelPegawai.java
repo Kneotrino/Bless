@@ -543,6 +543,7 @@ public class panelPegawai extends JPanel {
             javax.swing.JOptionPane.showMessageDialog(null
                 , "Berhasil Print");
             Desktop.getDesktop().open(file1);
+            refreshButtonActionPerformed(evt);
 
         } catch (HeadlessException | IOException e) {
             javax.swing.JOptionPane.showMessageDialog(null

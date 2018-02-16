@@ -16,13 +16,24 @@ import app.table.PerjalananPengeluaran;
 import app.table.Saldo;
 import app.table.Trips;
 import app.table.Util;
+import static app.utils.ExcelConverter.ExcelConverter;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import app.view.ShowRoom;
 import app.view.utilsPanel;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -30,8 +41,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javaslang.Tuple;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -116,6 +129,7 @@ public class panelPerjalanan extends JPanel {
         deleteButton = new javax.swing.JButton();
         refreshButton1 = new javax.swing.JButton();
         saveButton1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -296,6 +310,10 @@ public class panelPerjalanan extends JPanel {
         saveButton1.addActionListener(formListener);
         jPanel1.add(saveButton1);
 
+        jButton1.setText("Print");
+        jButton1.addActionListener(formListener);
+        jPanel1.add(jButton1);
+
         add(jPanel1);
 
         masterTable.setAutoCreateRowSorter(true);
@@ -323,6 +341,10 @@ public class panelPerjalanan extends JPanel {
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalPakai}"));
         columnBinding.setColumnName("Total Pakai");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalKembali}"));
+        columnBinding.setColumnName("Total Kembali");
         columnBinding.setColumnClass(java.math.BigInteger.class);
         columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${totalSaldo}"));
@@ -510,6 +532,9 @@ public class panelPerjalanan extends JPanel {
             }
             else if (evt.getSource() == newButton5) {
                 panelPerjalanan.this.newButton5ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton1) {
+                panelPerjalanan.this.jButton1ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -790,6 +815,93 @@ public class panelPerjalanan extends JPanel {
         mobilList.addAll(createQuery.getResultList());        // TODO add your handling code here:
     }//GEN-LAST:event_newButton6ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser=new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files","xls","excel");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(chooser.FILES_AND_DIRECTORIES);
+        chooser.setDialogTitle("Save File");
+        File filetemp = new File( System.getProperties().getProperty("user.home"),
+            "Data Laporan Perjalanan "+new Date().toString().replace(":", "-")+".xls");
+        chooser.setSelectedFile(filetemp);
+        int reply = chooser.showSaveDialog(this);
+        while ( chooser.getSelectedFile().exists()) {
+            JOptionPane.showMessageDialog(this,"File telah ada\nGanti Nama");
+            reply = chooser.showSaveDialog(this);
+        }
+        System.out.println("reply = " + reply);
+        if (reply == 1 ) {
+            return;
+        }
+        File file1 = chooser.getSelectedFile();
+        File f = new File(file1.getParentFile(), "Data");
+        f.mkdirs();
+        SimpleDateFormat formator = new SimpleDateFormat("dd/MM/yyyy");
+        DecimalFormat IDR = new DecimalFormat("###0");
+        List a = list;
+        File T = new File(f, "Daftar Pinjaman.CSV");
+        List<File> cvs = new java.util.LinkedList<>();
+        cvs.add(T);
+        WriteStep data = CSVUtil.of(T)
+            .type(app.table.Perjalanan.class)
+            .properties(
+                Tuple.of("Ref","tripsId", d -> d==null?" ":d),
+                Tuple.of("keterangan","keterangan", d -> d==null?" ":d),
+                Tuple.of("perjalananke","perjalananke", d -> d==null?" ":d),
+                Tuple.of("tanggalBerangkat","tanggalBerangkat", d -> d==null?" ":formator.format(d)),
+                Tuple.of("tanggalKembali","tanggalKembali", d -> d==null?" ":formator.format(d)),
+                Tuple.of("totalKembali", "totalKembali", d -> d==null?"0":IDR.format(d) ),
+                Tuple.of("totalKirim","totalKirim", d -> d==null?" ":IDR.format(d)),
+                Tuple.of("totalPakai","totalPakai", d -> d==null?" ":IDR.format(d)),
+                Tuple.of("totalSaldo","totalSaldo", d -> d==null?" ":IDR.format(d))
+        ).dataList(a);
+        try {
+            data.write();
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null
+                , "Gagal Print, Karena file sementara terbuka\n"+e);
+        }
+        for (Trips peg : list) {
+            String pe = peg.getTripsId()+"- KE "+
+                        peg.getPerjalananke()+ " Berangkat" +
+                        peg.getTanggalBerangkat().toString().replace(":", "-") +
+                        ".CSV";
+            File p = new File(f, pe);
+            cvs.add(p);
+//            List b = peg.getPerjalananList();
+            PerjalananPemasukan pemasukan = new PerjalananPemasukan();
+            PerjalananPengeluaran pengeluaran = new PerjalananPengeluaran();
+            List b = app.table.Util.hitungSaldo(peg.getPerjalananList(), pemasukan,pengeluaran);
+            b.add(pemasukan);
+            b.add(pengeluaran);
+            WriteStep dataList = CSVUtil.of(p)
+            .type(app.table.Perjalanan.class)
+            .properties(
+                    Tuple.of("Ref", "id", null),
+                    Tuple.of("Tanggal", "tanggal", d -> formator.format(d)),
+                    Tuple.of("Keterangan", "keterangan", d -> d),
+                    Tuple.of("Kirim", "kirim2", d -> d==null?"0":IDR.format(d) ),
+                    Tuple.of("Kembalikan", "kembali2", d -> d==null?"0":IDR.format(d) ),
+                    Tuple.of("Pakai", "pengeluaran", d -> d==null?"0":IDR.format(d) ),
+                    Tuple.of("Saldo", "saldo", d -> IDR.format(d) )
+            ).dataList(b);
+            dataList.write();
+        }
+        try {
+            ExcelConverter(cvs, file1);
+            javax.swing.JOptionPane.showMessageDialog(null
+                , "Berhasil Print");
+            Desktop.getDesktop().open(file1);
+            refreshButtonActionPerformed(evt);
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null
+                , "Gagal Print, Karena file sementara terbuka\n"+e);
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -804,6 +916,7 @@ public class panelPerjalanan extends JPanel {
     private app.utils.inputPanel inputPanel3;
     private app.utils.inputPanel inputPanel4;
     private app.utils.inputPanel inputPanel5;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

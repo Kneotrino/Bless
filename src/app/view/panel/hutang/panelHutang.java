@@ -802,6 +802,7 @@ public class panelHutang extends JPanel {
                     javax.swing.JOptionPane.showMessageDialog(null
                             , "Berhasil Print");
                     Desktop.getDesktop().open(file1);
+                    refreshButtonActionPerformed(evt);
 
                 } catch (Exception e) {
                     javax.swing.JOptionPane.showMessageDialog(null
