@@ -6,20 +6,30 @@
 package app.view.FixPanel;
 
 import app.table.Leasing;
+import javax.swing.JFileChooser;
 import app.table.Listleasing;
 import app.table.Mobil;
+import com.joobar.csvbless.CSVUtil;
+import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javaslang.Tuple;
 import javax.persistence.RollbackException;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -109,7 +119,7 @@ public class panelLeasing extends JPanel {
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setAutoCreateRowSorter(true);
-        masterTable.setCellSelectionEnabled(true);
+        masterTable.setColumnSelectionAllowed(false);
         masterTable.setRowHeight(25);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
