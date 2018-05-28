@@ -35,11 +35,11 @@ public class utilsPanel {
      public static boolean simpan(javax.persistence.EntityManager entityManager, Laporan obj)
      {
          BigInteger bank = obj.getTransaksi().getBankId().getFoo();
-//         System.out.println("bank = " + bank);
+//         System.out.println("Saldo Bank = " + bank);
          BigInteger keluar = obj.getPengeluaran();
-//         System.out.println("keluar = " + keluar);
+//         System.out.println("Keluar = " + keluar);
          bank = bank.subtract(keluar);
-//         System.out.println("bank = " + bank);
+//         System.out.println("Sisa = " + bank);
          boolean minus;
          minus = bank.min(BigInteger.ZERO).equals(BigInteger.ZERO);
          if (minus) {

@@ -15,18 +15,27 @@ import app.table.Terima;
 import app.table.Util;
 import java.awt.EventQueue;
 import java.beans.Beans;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -114,6 +123,15 @@ public class PanelBank extends JPanel {
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        transferjDialog = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        listTerima = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(new LinkedList<>())
+        ;
+        listKirim = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(new LinkedList<>())
+        ;
         masterScrollPane = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -123,6 +141,7 @@ public class PanelBank extends JPanel {
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -258,6 +277,75 @@ public class PanelBank extends JPanel {
         jButton7.addActionListener(formListener);
         jDialog3.getContentPane().add(jButton7);
 
+        transferjDialog.setMinimumSize(new java.awt.Dimension(1200, 600));
+        transferjDialog.getContentPane().setLayout(new java.awt.GridLayout());
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("KIRIM"));
+
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listKirim, jTable1);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+        columnBinding.setColumnName("REF");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
+        columnBinding.setColumnName("Tanggal");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
+        columnBinding.setColumnName("Jumlah");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
+        columnBinding.setColumnName("Jenis");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding.setColumnName("Bank");
+        columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane1.setViewportView(jTable1);
+
+        transferjDialog.getContentPane().add(jScrollPane1);
+
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("TERIMA"));
+
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listTerima, jTable2);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
+        columnBinding.setColumnName("REF");
+        columnBinding.setColumnClass(Long.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tanggal}"));
+        columnBinding.setColumnName("Tanggal");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${keterangan}"));
+        columnBinding.setColumnName("Keterangan");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jumlah}"));
+        columnBinding.setColumnName("Jumlah");
+        columnBinding.setColumnClass(java.math.BigInteger.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${jenis}"));
+        columnBinding.setColumnName("Jenis");
+        columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${transaksi.bankId}"));
+        columnBinding.setColumnName("Bank");
+        columnBinding.setColumnClass(app.table.Bank.class);
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane2.setViewportView(jTable2);
+
+        transferjDialog.getContentPane().add(jScrollPane2);
+
         setLayout(new java.awt.BorderLayout());
 
         masterTable.setAutoCreateRowSorter(true);
@@ -335,6 +423,10 @@ public class PanelBank extends JPanel {
         jButton5.addActionListener(formListener);
         jPanel1.add(jButton5);
 
+        jButton8.setText("Lihat Bukti Transfer");
+        jButton8.addActionListener(formListener);
+        jPanel1.add(jButton8);
+
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
         bindingGroup.bind();
@@ -380,6 +472,9 @@ public class PanelBank extends JPanel {
             }
             else if (evt.getSource() == jButton7) {
                 PanelBank.this.jButton7ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton8) {
+                PanelBank.this.jButton8ActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -594,6 +689,24 @@ public class PanelBank extends JPanel {
         entityManager.persist(terima);
         saveButtonActionPerformed(evt);
         refreshButtonActionPerformed(evt);
+        try {
+        Map<String, Laporan> mapping = new LinkedHashMap<>();
+        mapping.put("kirim", kirim);
+        mapping.put("terima", terima);
+        Date date = new Date();        
+        String file = "C:\\Users\\blessing\\Bukti Transfer "
+                + date.getDate()+"."+
+                (date.getMonth()+1)+"."+
+                (date.getYear()+1900)+"-"+
+                date.getHours()+"."+
+                date.getMinutes()+"-"+
+                kirim.getId() +"-"+ terima.getId()+".TRF"; 
+            app.utils.SerializationUtil.serialize(mapping, file);
+            javax.swing.JOptionPane.showMessageDialog(null,  "TRANSFER BERHASIL\n"+ file);            
+        } catch (IOException ex) {
+            javax.swing.JOptionPane.showMessageDialog(null,  "Gagal Menyimpan\n"+ex.getMessage());            
+            Logger.getLogger(PanelBank.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.jDialog3.hide();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -602,6 +715,43 @@ public class PanelBank extends JPanel {
         this.jDialog3.hide();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+
+        JFileChooser jfc = new JFileChooser();
+        jfc.setFileFilter(new FileNameExtensionFilter("Transfer Files", "TRF"));
+        jfc.setCurrentDirectory(new File("C:\\Users\\blessing"));
+        jfc.setMultiSelectionEnabled(true);
+
+        int r = jfc.showOpenDialog(null);
+        if (r == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+        listKirim.clear();
+        listTerima.clear();
+        
+        ArrayList<File> arrayList = new ArrayList<File> ( Arrays.asList(jfc.getSelectedFiles()));
+        
+        for (File file : arrayList) {
+            try {
+                Map<String,Laporan> deserialize = (Map<String,Laporan>) app.utils.SerializationUtil.deserialize(file.getPath());
+                Laporan terima = deserialize.get("terima");
+                Laporan kirim = deserialize.get("kirim");
+                listKirim.add(kirim);
+                listTerima.add(terima);
+                System.out.println("deserialize = " + deserialize);
+            } catch (IOException ex) {
+                Logger.getLogger(PanelBank.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(PanelBank.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+//        this.transferjDialog.setSize(800, 600);
+        this.transferjDialog.setLocationRelativeTo(null);
+        this.transferjDialog.show();        
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -618,6 +768,7 @@ public class PanelBank extends JPanel {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -634,9 +785,15 @@ public class PanelBank extends JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private java.util.List<app.table.Bank> list;
+    private java.util.List<app.table.Laporan> listKirim;
+    private java.util.List<app.table.Laporan> listTerima;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;
     private javax.swing.JButton newButton;
@@ -644,6 +801,7 @@ public class PanelBank extends JPanel {
     private javax.persistence.Query query;
     private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveButton;
+    private javax.swing.JDialog transferjDialog;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
