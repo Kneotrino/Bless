@@ -21,6 +21,7 @@ import com.joobar.csvbless.WriteStep;
 import com.toedter.calendar.JDateChooserCellEditor;
 import java.awt.Desktop;
 import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.beans.Beans;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -35,6 +36,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javaslang.Tuple;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
@@ -112,6 +114,9 @@ public class panelHutang extends JPanel {
         deleteDetailButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         FormListener formListener = new FormListener();
 
@@ -372,7 +377,7 @@ public class panelHutang extends JPanel {
 
         deleteDetailButton.setText("Hapus");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, detailTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), deleteDetailButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
         deleteDetailButton.addActionListener(formListener);
@@ -385,6 +390,25 @@ public class panelHutang extends JPanel {
         saveButton.setText("Simpan");
         saveButton.addActionListener(formListener);
         jPanel4.add(saveButton);
+
+        jButton9.setText("Cari Keterangan Next");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jButton9, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jButton9.addActionListener(formListener);
+        jPanel4.add(jButton9);
+
+        jTextField2.setMinimumSize(new java.awt.Dimension(300, 20));
+        jTextField2.setPreferredSize(new java.awt.Dimension(200, 30));
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, masterTable, org.jdesktop.beansbinding.ELProperty.create("${selectedElement != null}"), jTextField2, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        jPanel4.add(jTextField2);
+
+        jLabel1.setText("0 DATA");
+        jPanel4.add(jLabel1);
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.NORTH);
 
@@ -433,6 +457,9 @@ public class panelHutang extends JPanel {
             }
             else if (evt.getSource() == saveButton) {
                 panelHutang.this.saveButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton9) {
+                panelHutang.this.jButton9ActionPerformed(evt);
             }
             else if (evt.getSource() == jButton3) {
                 panelHutang.this.jButton3ActionPerformed(evt);
@@ -814,6 +841,42 @@ public class panelHutang extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    int indexCari = 0;
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        int selectedRow = masterTable.getSelectedRow();
+        app.table.Hutang h = list.get(masterTable.convertRowIndexToModel(selectedRow));
+        String cariKeterangan = jTextField2.getText();
+        List<Bayarhutang> cari = new LinkedList<>();
+        
+        for (Bayarhutang bayarhutang : h.getBayarhutangs()) {
+            if (bayarhutang.getKeterangan().contains(cariKeterangan))
+                cari.add(bayarhutang);
+        }        
+        
+        jLabel1.setText(cari.size() + " Laporan");
+        if (cari.size() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(null, "PENCARIAN GAGAL");
+            indexCari = 0;
+        }
+        else {
+            try {
+                Bayarhutang get = cari.get(indexCari);                
+                int indexOf = h.getBayarhutangs().indexOf(get);
+                detailTable.setRowSelectionInterval(indexOf, indexOf);
+                detailTable.scrollRectToVisible(new Rectangle(detailTable.getCellRect(indexOf, 0, true)));
+                indexCari++;        
+            } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "PENCARIAN BERAKHIR");
+            indexCari = 0;                                
+            }
+        }
+        
+        
+
+//        list.
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<app.table.Bank> bankList;
@@ -834,6 +897,7 @@ public class panelHutang extends JPanel {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -842,6 +906,7 @@ public class panelHutang extends JPanel {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog4;
     private javax.swing.JDialog jDialog5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
@@ -849,6 +914,7 @@ public class panelHutang extends JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private java.util.List<app.table.Hutang> list;
     private javax.swing.JScrollPane masterScrollPane;
     private javax.swing.JTable masterTable;

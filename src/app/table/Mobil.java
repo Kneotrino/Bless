@@ -89,7 +89,7 @@ public class Mobil implements Serializable {
     @Lob
     @Column(name = "INTERIOR_II")
     private String interiorIi;
-    @Column(name = "KETERANGAN", length = 64)
+    @Column(name = "KETERANGAN", length = 255)
     private String keterangan;
     @Column(name = "MERK", length = 32)
     private String merk;
